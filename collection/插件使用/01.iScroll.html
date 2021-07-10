@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1.0">
+	<style type="text/css">
+		.box1 {
+			position: relative;
+			overflow: hidden;
+			width: 300px;
+			height: 40px;
+			background-color: #eee;
+		}
+		a {
+			text-decoration: none;
+			color: #333;
+		}
+		ul {
+			list-style-type: none;
+			margin: 0;
+			padding: 0;
+		}
+		.box1 ul {
+			position: absolute;
+			white-space: nowrap;
+		}
+		.box1 ul li {
+			/*float: left;*/
+			display: inline-block;
+			line-height: 40px;
+		}
+		.box1 ul li a {
+			display: block;
+			padding: 0 15px;
+		}
+
+		.box2 {
+			position: relative;
+			overflow: hidden;
+			width: 90px;
+			height: 200px;
+			margin-top: 30px;
+			background-color: #eee;
+		}
+		.box2 ul {
+			position: absolute;
+			left: 0;
+			right: 7px;
+			text-align: center;
+		}
+		.box2 ul li {
+			line-height: 40px;
+		}
+	</style>
+
+</head>
+<body>
+	<div class="box1">
+		<ul>
+			<li><a href="#">首页</a></li>
+			<li><a href="#">首页</a></li>
+			<li><a href="#">首页</a></li>
+			<li><a href="#">首页</a></li>
+			<li><a href="#">首页</a></li>
+			<li><a href="#">首页</a></li>
+			<li><a href="#">首页</a></li>
+			<li><a href="#">首页</a></li>
+			<li><a href="#">首页</a></li>
+			<li><a href="#">首页</a></li>
+			<li><a href="#">首页</a></li>
+			<li><a href="#">首页</a></li>
+			<li><a href="#">首页</a></li>
+		</ul>
+	</div>	
+	<div class="box2">
+		<ul>
+			<li><a href="#">首页</a></li>
+			<li><a href="#">首页</a></li>
+			<li><a href="#">首页</a></li>
+			<li><a href="#">首页</a></li>
+			<li><a href="#">首页</a></li>
+			<li><a href="#">首页</a></li>
+			<li><a href="#">首页</a></li>
+			<li><a href="#">首页</a></li>
+			<li><a href="#">首页</a></li>
+			<li><a href="#">首页</a></li>
+			<li><a href="#">首页</a></li>
+			<li><a href="#">首页</a></li>
+			<li><a href="#">首页</a></li>
+			<li><a href="#">首页</a></li>
+			<li><a href="#">首页</a></li>
+			<li><a href="#">首页</a></li>
+			<li><a href="#">首页</a></li>
+		</ul>
+	</div>	
+<script type="text/javascript" src="assets/js/jquery.min.js"></script>
+<script type="text/javascript" src="assets/js/scroll.js"></script>
+<script type="text/javascript">
+	// 1.解决换行问题
+ 	var $navTabs = $('.box1 ul');
+ 	var width = 0;
+ 	$navTabs.find('li').each(function(itemm){
+ 		var $currLi = $(this);
+ 		var liWidth = $currLi.outerWidth(true); //true
+ 		width += liWidth; 
+ 	});
+ 	console.log(width);
+ 	$navTabs.width(width);
+
+ 	// 2.修改结构使之区域的滑动的结构
+ 	// 加一个父容器  overflow:hidden;
+
+ 	// 3.自己实现滑动效果
+ 	new IScroll($('.box1')[0],{
+ 		scrollX: true,
+ 		scrollY: false,
+ 		scrollbars: true,
+ 		click: true
+ 	});
+ 	new IScroll($('.box2')[0],{
+ 		scrollX: false,
+ 		scrollY: true,
+ 		scrollbars: true,
+ 		click: true
+ 	});
+ 	// 4.移动端很难滑动的问题
+ 	document.querySelector('.box1').addEventListener('touchmove', function(e){ 
+		e.preventDefault();
+	});
+	document.querySelector('.box2').addEventListener('touchmove', function(e){ 
+		// e.preventDefault();
+	});
+</script>
+</body>
+</html>

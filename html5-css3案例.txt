@@ -1,0 +1,27 @@
+==========================collection中
+1.  滑动门技术  a左背景 > span右背景
+2. hover显示边框  absolute  百分比 left值  都是相对于padding-box
+3. hover过渡效果  单侧阴影: box-shadow: 0 4px 5px -3px rgba(0,0,0,.8);
+4. 旋转轮播图  transform: translateZ(400px); 最关键
+5. 小黄人 主要是position的使用   z-index层叠顺序   border与border-radius的样式效果
+   
+=========================知识点
+1. 伪元素本质  默认是inline元素   需要设置content属性  不占位置的
+2. rotateX 正值 上向里  rotateY 正值 右向里   rotateZ 正值  顺时针
+3. 透视 perspective
+4. preseve-3d  子元素在3d中显示
+5. 动画技巧:  计算出等的百分比和动画的百分比  保证回到原始位置(如果起始位置需要等待) 最后那个值需要动画的百分比
+
+
+=========================css3中
+1.  flex布局实战--携程
+2. 百度钱包  transform-3d  transform: rotateY(180deg) backface-visibility: hidden;
+3. 音乐盒  transform-3d  transform: rotateX(180deg)  transform-origin: bottom center;
+4. 滚动导航条  inline-block;   间隙使用font-size: 0;   preserve-3d;
+5. 会翻转的文字  transform: rotateY(-40deg); skew(0, 20deg); scale(1,1.1);
+============ =============知识点
+1. flex: 1 1 33%;   flex-grow  flex-shrink   flex-basis
+
+
+==========================dom与dom
+1.

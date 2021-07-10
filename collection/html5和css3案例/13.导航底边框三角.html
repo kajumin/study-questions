@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		* {
+			margin: 0;
+			padding: 0;
+		}
+		a {
+			color: #333;
+			text-decoration: none;
+		}
+		.inner {
+			width: 1000px;
+			margin: 0 auto;
+		}
+		.header {
+			height: 64px;
+			line-height: 60px;
+			background-color: #096;
+		}
+		.header .logo {
+			float: left;
+		}
+		.header .nav {
+			float: left;
+		}
+		.header .nav ul {
+			list-style-type: none;
+		}
+		.header .nav ul li {
+			float: left;
+		}
+		.header .nav ul li a {
+			padding: 0 15px;
+		}
+		.header .nav ul li:hover a{
+			color: yellow;
+		}
+		.header .nav ul li:hover {
+			position: relative;
+			border-bottom: 4px solid yellow;
+		}
+		.header .nav ul li:hover:before {
+			content: '';
+			position: absolute;
+			bottom: 0;
+			left: 50%;
+			width: 0;
+			height: 0;
+			margin-left: -6px;
+			border: 6px solid transparent;
+			border-bottom-color: yellow;
+		}
+	</style>
+</head>
+<body>
+<header class="header">
+	<div class="inner">
+		<div class="logo"></div>
+		<nav class="nav">
+			<ul>
+				<li><a href="#">首页</a></li>
+				<li><a href="#">智能家居</a></li>
+			</ul>
+		</nav>
+	</div>
+	
+</header>
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.box1 {
+			/*vertical-align: text-top;*/
+		}
+		.box1 span{
+			/*vertical-align: text-top;*/
+			background-color: #ccc;
+		}
+		.box1 img{
+			vertical-align: text-top;
+		}
+		.box2 {
+			/*vertical-align: text-bottom;*/
+		}
+		.box2 span{
+			/*vertical-align: text-bottom;*/
+			background-color: #ccc;
+		}
+		.box2 img{
+			vertical-align: text-bottom;
+		}
+	</style>
+</head>
+<body>
+	<!-- text-top text-bottm  跟父元素的font-size有关 -->
+<div class="box1">
+	<img src="../../images/1.jpg"><span style="font-size: 16px;">16px</span><span style="font-size: 24px;">24px</span><span style="font-size: 32px;">32px</span>
+</div>
+<div class="box2">
+	<img src="../../images/1.jpg"><span style="font-size: 16px;">16px</span><span style="font-size: 24px;">24px</span><span style="font-size: 32px;">32px</span>
+</div>
+<p><button class="btn">增大字体</button></p>
+<script type="text/javascript">
+	var btn = document.querySelector('.btn')
+	var box1 = document.querySelector('.box1')
+	var box2 = document.querySelector('.box2')
+	btn.addEventListener('click', function () {
+		console.log(window.getComputedStyle(box1).fontSize)
+		console.log(parseInt(window.getComputedStyle(box1).fontSize))
+		box1.style.fontSize = parseInt(window.getComputedStyle(box1).fontSize) + 2 + 'px'; 
+		box2.style.fontSize = parseInt(window.getComputedStyle(box2).fontSize) + 2 + 'px'; 
+		
+	})
+</script>	
+</body>
+</html>

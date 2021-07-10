@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			#box {
+				width: 100px;
+				height: 100px;
+				background-color: red;
+				margin: 100px;
+			}
+		</style>
+	</head>
+	<body>
+	<div id="box"></div>
+	</body>
+	<script>
+		//=====1.事件对象:event==========================================================
+		
+		//事件对象： 当触发事件的时候会产生一个事件对象event ,这个事件对象中包含与这个事件有关的所有信息
+		//====a>  ie和谷歌，在全局window下面，可以直接打印event相关的信息,会是未定义（在没有事件发生的时候），
+		//有事件发生的时候会打印出关于这个事件的所有信息
+		//====b>  火狐只支持以事件处理函数的第一个参数的形式,而ie6,7,8不支持以事件函数的第一个参数的形式，但不会报错
+		var oBox = document.getElementById('box');
+		oBox.onclick = function() {
+			oBox.style.height = "200px";
+			console.log(event);//关于oBox事件的所有相关信息
+		}
+		console.log(event);//undefiend
+		//火狐下
+		oBox.onclick = function(e) {
+			oBox.style.height = "200px";
+			console.log(e);
+		}
+	
+		//event的兼容性处理
+		oBox.onclick = function(e) {
+			//因为火狐不认识event会报错，所有这样的形式兼容
+			e = e || event;
+			//也可以下面这样,把event,挂载到window下面就不会报错，不如上面的书写简单
+			e = window.event || e;
+			oBox.style.height = "200px";
+			console.log(e);
+		}
+		//=======2.事件源==========================================================
+		// 事件对象里面有一个属性叫事件源，事件源就是那个对象触发的这个事件，
+		//比如点击的oBox.这个盒子，那么整个盒子就是这个事件的事件源
+		//标准浏览器下：target
+		//ie浏览器下: sreElement 
+		//谷歌支持上面的两种
+		//兼容处理
+		oBox.onclick = function(e) {
+			e = e || event;
+			target = e.target || e.sreElement;
+			oBox.style.height = "200px";
+			console.log(e);
+			console.log(target);
+		}
+		
+		//=======4.事件的绑定和解绑=====================================================
+		//===a>  w3c认为有事件捕获和事件冒泡，但ie认为没有事件捕获
+		//===b>  事件的绑定
+		//标准浏览器下支持：obj.addEventListener(事件名称，事件函数，false);//第三个参数表示是否捕获，false:不捕获
+		//ie浏览器下支持：obj.attachEvent("on"+事件名，事件函数);
+		// 下面是绑定方式的兼容性函数
+			function bind(obj,evType,evFn) {
+				// 根据浏览器能力进行检测  如果识别支持addEventListener 就直接使用这个绑定方式
+				// 如果不支持这个方法 则按照后面的方式进行绑定
+				
+				obj.handle = function(){
+					evFn.call(obj);
+				}
+				
+				if(obj.addEventListener){
+					// 标准浏览器走这个绑定
+					obj.addEventListener(evType,evFn,false);
+					obj.handle = evFn;
+				}else if(obj.attachEvent) {
+					//IE6 7 8 走这个绑定方式
+					obj.attachEvent("on"+evType,obj.handle);
+				} else {
+					// 以上方法都不支持的很老的浏览器 走这个方法
+					obj["on"+evType] = evFn;
+					
+				}
+			}
+		//====c> 事件的解绑
+		//标准浏览器： obj.removeEventListenter(事件名,事件函数，false);
+		//ie下：obj.detachEvent("on"+事件名,事件函数);
+		//事件解绑的兼容性函数封装
+		function unbind(obj,evType,evFn) {
+			
+			if(obj.removeEventListener) {
+			//标准浏览器走这个
+			obj.removeEventListener(evType,obj.handle,false);
+			
+			}else if(obj.detachEvent) {
+				//ie走这个
+			obj.detachEvent("on"+evType,obj.handle);
+			}else {
+				//上面都不支持，最老的支持这个
+			obj["on"+evType] = null;
+			}	
+		}
+		
+		//====注意：1.如果用绑定函数绑定的事件，必须使用解绑函数进行解绑
+		//        2.如果用绑定函数绑定了多个事件，解绑的时候只能解绑最后绑定的一个事件
+		
+		
+		//=======3.滚动事件========================================================
+		//滚动事件为：onscroll
+		//在标准浏览器下：window.onscroll或document.onscroll
+		//ie6,7,8,认为document没有onscroll事件，使用尽量window
+		//垂直方向滚动条滚动过的距离顶部的距离 ：scrollTop
+		//火狐下获取页面scrollTop的距离：document.documentEelement.scrollTop （谷歌不支持）
+		//谷歌和ie：document.body.scrollTop 
+		//兼容处理
+		var scrollT = document.documentElement.scrollTop || document.body.scrollTop;
+				
+	</script>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.p1 {
+			padding-left: 100px;
+			letter-spacing: 2em;
+		}
+		.p2 {
+			/*重叠*/
+			letter-spacing: -10px;
+		}
+		.p3 {
+			padding-left: 100px;
+			/*反序*/
+			letter-spacing: -2em;
+		}
+
+		.animation {
+			animation: textIn 2s linear 2s infinite;
+			animation-delay: 2s;
+		}
+		@keyframes textIn {
+			0% {
+				letter-spacing: -200px;
+			}
+			50% {
+				letter-spacing: 0;
+			}
+			100% {
+				letter-spacing: 0;
+			}
+		}
+	</style>
+</head>
+<body>
+	<!-- 
+		字符间距 => 英文字母,汉字以及空格
+		1.继承性 
+		2.默认值normal
+		3.支持负值  够大可以反序  ie不行  还可以重叠
+		4.第一个字不会动
+		5.支持小数值
+		6.不支持百分比
+	-->
+	<!-- 
+		1.正值 间隔效果 
+		2.负值 容易覆盖
+		3.负值 反向
+	-->
+<p class="p1">一二三四五</p>
+<p class="p2">一二三四五</p>
+<p class="p3">一二三四五</p>
+
+<p class="animation">中国人民共和国</p>
+</body>
+</html>

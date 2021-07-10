@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.box {
+			width: 300px;
+			height: 300px;
+			margin: 0 auto;
+			border:  1px solid red;
+		}
+		.flex1 {
+			display: flex;
+			flex-wrap: wrap;
+			/*默认*/
+		}
+		.item {
+			width: 40px;
+			height: 40px;
+			border: 1px solid pink;
+			font-size: 24px;
+			line-height: 40px;
+			text-align: center;
+		}
+		.item:nth-child(1) {
+			/*默认  最大*/
+			order: 0;
+		}
+		.item:nth-child(2) {
+			order: 3;
+		}
+		.item:nth-child(3) {
+			order: 2;
+		}
+		.item:nth-child(4) {
+			order: 1;
+		}
+	</style>
+</head>
+<body>
+	<!-- order: 默认0;  越小越在前 -->
+<div class="box flex1">
+	<div class="item">1</div>
+	<div class="item">2</div>
+	<div class="item">3</div>
+	<div class="item">4</div>
+	
+
+</div>
+
+</body>
+</html>

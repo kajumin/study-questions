@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<div>
+		<p>p1</p>
+		<p>p2</p>
+		<p>p3</p>
+		<p>p4</p>
+		<p>p5</p>
+	</div>
+	<script type="text/javascript" src="index.js">
+	</script>
+	<script type="text/javascript">
+		// 闭包作用  JS私有属性和私有方法
+		function fun(n,o) {
+			// var n = 0   n = 1
+			console.log(o);
+			return {
+				fun: function(m) {
+					// var m = 1;
+					return fun(m,n)
+				}
+			}
+		}
+
+		var a  = fun(0);  //undefined
+		a.fun(1); // 0  
+		a.fun(2); // 0
+		a.fun(3); // 0
+
+		var b = fun(0).fun(1).fun(2).fun(3).fun(50); //undefined 0,1,2,3
+		//n:0 o:undefined
+		//n:1 o:0
+		//n:2 o:1
+		var c = fun(0).fun(1); //undefined 0
+		c.fun(2)  //1
+		c.fun(3)  //1
+		c.fun(4)  //1
+		var d = fun(0).fun(1).fun(2); //undefined 0 1
+		d.fun(3)  //2
+		d.fun(4)  //2
+		// for 循环中打印
+		// 方法一
+		for (var i = 0; i < 4; i++) {
+		  setTimeout(
+		    (function(i) {
+		      return function() {
+		        console.log(i);
+		      };
+		    })(i),
+		    300
+		  );
+		}
+		for (var i = 0; i < 4; i++) {
+		  setTimeout(
+		    (function() {
+		      var temp = i;
+		      return function() {
+		        console.log(temp);
+		      };
+		    })(),
+		    300
+		  );
+		}
+		//方法发二:
+		for (var i = 0; i < 4; i++) {
+		  (function(i) {
+		    setTimeout(function() {
+		      console.log(i);
+		    }, 300);
+		  })(i);
+		}
+
+		// 多个元素并添加点击事件
+		var op = document.querySelectorAll("p");
+		// for (var j = 0; j < op.length; j++) {
+		//   op[j].onclick = function() {
+		//     alert(j);
+		//   };
+		// }
+		//alert出来的值是一样的
+		// 解决办法一:
+		// for (var j = 0; j < op.length; j++) {
+		//   (function(j) {
+		//     op[j].onclick = function() {
+		//       alert(j);
+		//     };
+		//   })(j);
+		// }
+		// // 解决办法二:
+		// for (var j = 0; j < op.length; j++) {
+		//   op[j].onclick = (function(j) {
+		//     return function() {
+		//       alert(j);
+		//     };
+		//   })(j);
+		// }
+		// //解决方法三其实和二类似
+		// for (var j = 0; j < op.length; j++) {
+		//   op[j].onclick = (function() {
+		//     var temp = j;
+		//     return function() {
+		//       alert(temp);
+		//     };
+		//   })();
+		// }
+		function outerFun(){
+	 		var a=0;
+		 	function innerFun(){
+	  			a++;
+	  			console.log(a);
+	 		}
+	 		return innerFun;  //注意这里
+		}
+		var obj=outerFun();
+		obj();  //结果为1
+		obj();  //结果为2
+		var obj2=outerFun();
+		obj2();  //结果为1
+		obj2();  //结果为2
+
+	</script>
+</body>
+</html>

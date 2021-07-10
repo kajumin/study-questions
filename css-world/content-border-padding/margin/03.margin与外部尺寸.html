@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.box1 {
+			background-color: red;
+			/*height: 200px;*/
+		}
+		.box1 img {
+			height: 100px;
+			margin: 50px 0;
+		}
+		body {
+			padding: 0;
+			margin: 0;
+		}
+		.container {
+			overflow: hidden;
+		}
+		.column-left,
+		.column-right {
+			width: 50%;
+			float: left;
+			margin-bottom: -9999px;
+		    /*padding-bottom: 9999px;*/
+		    border-bottom: 9999px solid transparent;
+		}
+		.column-left {
+		    background-color: #34538b;
+		}
+		.column-right {
+		    background-color: #cd0000;
+		}
+	</style>
+</head>
+<body>
+<!-- 
+4.
+(1)滚动容器底部留白不推荐使用padding-bottom  兼容问题  firefox ie会忽略
+可以使用margin实现底部空白 
+(2)等高布局
+   margin负值: 子元素定位到容器外, 触发定位或者使用DOM.scrollIntoview()方法的时候, 出现奇怪定位问题.
+   border: 兼容性好, 没有锚点隐患, 不足之处最多三栏, 至少有一侧定宽
+   table-cell天然等高, ie8以上才兼容   不需要兼容首选
+--> 
+<div class="box1">
+	<img src="../../images/1.jpg">
+</div>
+</body>
+</html>

@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<title>Document</title>
+	<style>
+		#box {
+			width: 100px;
+			height: 100px;
+			background-color: red;
+		}
+	</style>
+</head>
+<body>
+	<div id="box"></div>
+	<ul id="oul">
+		<li>11</li>
+		<li>22</li>
+		<li>33</li>
+		<li>44</li>
+	</ul>
+</body>
+	<script>
+		//一般面试官会问,遇到过什么兼容性问题,,一开始怎么做的,怎么发现的问题,有哪些方案,
+		//最后选择哪一种,为什么? 如果这么有条理的回答会更好些
+//		大部分情况下咱们都是在兼容ie6,7,8,,回答的时候尽量是从css和js中两方面回答,
+//		最好是自己比较在行的兼容问题,面试官可能会深入的问你这个兼容性问题
+		
+		
+		
+		//                  js中兼容性问题		
+		//========1.在获取元素css样式的时候，============================================
+		// a> 标准浏览器(标准浏览器包括：谷歌，火狐，ie9以上)下使用： 《  getComputedStyle(obj元素).属性 》 
+		// b> 在ie8以下不支持上面的方法会报错，ie内核支持： 《    obj元素.currentStyle.属性   》   
+		//currentStyle这个方法火狐和谷歌不支持
+		
+		//下面是一个获取样式的兼容性函数封装
+		var oBox = document.getElementById('box');
+		//方法一
+		function getStyle(obj,attr) {
+			if(obj.currentStyle) {
+				return oBox.currentStyle[attr];
+			} else {
+				return getComputedStyle(obj)[attr];
+			}
+			
+			
+		//方法二：如果要先判断getComputedStyle，在ie8以下不支持此属性，会报错；
+		//但是把这个属性挂载到window，这个属性不会存在，会是未定义，就不会报错
+		function getStyle(obj,attr) {
+			
+			if(window.getComputedStyle) {
+				return getComputedStyle(obj)[attr];
+			} else {
+				return obj.currentStyle[attr];
+			}
+		}		
+		console.log(getStyle(oBox,"width"));
+		
+		//==============2.节点操作，获取子节点===============================
+		//===a> 获取子节点的方法： obj.childNodes
+		//标准浏览器： childNodes 获取到的的内容包括空白节点和元素节点
+		//非标准浏览器下： 只包含元素节点
+		//解决方法：使用    children 获取子元素；       没有兼容性问题
+		
+		var oUl = document.getElementById('oul');
+		var aLi = oUl.childNodes;
+		console.log(aLi.innerHTML);//标准下： 9 ；非标准下：
+		
+		//===b> 获取第一个子元素    obj.firstChild
+		//obj.firstChild  这个方法标准浏览器获取到包括空白节点  和   元素节点  
+		//标准浏览器下的另一个方法：obj.firstElementChild 获取的只有元素节点
+		
+		//下面是获取第一个元素节点的兼容性函数封装
+		function first(obj) {
+			//标准浏览器识别firstElementChild，走前面，
+			//非标准浏览器不识别firstElementChild，走后边
+			//加上判断获取到的节点类型是否是节点元素，限制住文本
+			//如果获取不到，则没有第一个子元素，返回null;
+			var firstEle = obj.firstElementChild || obj.firstChild;
+			if(firstEle && firstEle.nodeType == 1) {
+				return firstEle;
+			}else {
+				return null;
+			}
+		}
+			
+		//====c> 获取下前一个兄弟节点的兼容性函数封装
+		function prev(obj) {
+			var prevEle = obj.previousElementSibling || obj.previousSibling;
+		
+			if(prevEle && prevEle.nodeType == 1) {
+				return prevEle;
+			}else {
+				return null;
+			}
+		}
+		//=====d> 获取到下一个兄弟节点的兼容性函数封装
+		function next(obj) {
+			var nextEle = obj.nextElementSibling || obj.nextSibling;
+		
+			if(nextEle && nextEle.nodeType == 1){
+				return nextEle;
+			}else {
+				return null;
+			}
+		}
+		//====e>  获取到最后一个子节点的兼容性函数封装
+		function last(obj) {
+			var lastEle = obj.lastElementSibling || obj.lastSibling;
+		
+			if(lastEle && lastEle.nodeType == 1) {
+				return lastEle;
+			}else {
+				return null;
+			}
+		}
+		
+																
+		
+	</script>
+</html>

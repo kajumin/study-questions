@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no,maximum-scale=1.0">
+	<style type="text/css">
+		html,
+		body {
+			height: 100%;
+			margin: 0;
+			background-image: url('../../images/1.jpg');
+		}
+		.fixed {
+			display: none;
+			position: fixed;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			top: 0;
+			background-color: rgba(0,0,0,0.8);
+		}
+		form {
+			position: absolute;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			top: 0;
+			margin: auto;
+			width: 300px;
+			height: 200px;
+			padding: 20px 40px;
+			box-sizing: border-box;
+			z-index: 1;
+			background-color: #fff;
+		}
+		h3 {
+			margin: 0 10px;
+			text-align: center;
+		}
+		input{
+			width: 100%;
+			height: 30px;
+		}
+	</style>
+</head>
+<body>
+	<!-- 
+	3.fixed与背景锁定
+	(1) 蒙层是fixed实现的所以没法覆盖浏览器右侧的滚动条, 并且鼠标可以滚动 
+	    移动端: 阻止touchmove事件的默认行为可以防止滚动
+	    桌面端: 根元素overflow: hidden; 滚动条使用border占位
+	(2) 利用absolute模拟fixed定位则没有这个问题
+	-->
+	<div class="fixed">
+		<form onsubmit="return false;" class="form">
+			<h3>登录中心</h3>
+			<p><input type="text" name="username"></p>
+			<p><input type="password" name="password"></p>
+			<button class="hidden">隐藏</button>
+		</form>
+	</div>
+	
+	<div class="page">
+		<div style="height: 1000px;">
+			<div><button class="show">按钮</button></div>
+			<div>中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国</div>
+			
+		</div>
+	</div>
+	
+<script type="text/javascript">
+	var show = document.querySelector('.show')
+	var fixed = document.querySelector('.fixed')
+	show.addEventListener('click', function() {
+
+		var widthBar = 17;
+		var root = document.documentElement;
+		if (typeof window.innerWidth == 'number') {
+			widthBar = window.innerWidth - root.clientWidth
+		}
+		console.log(window.innerWidth)//1366
+		console.log(root.clientWidth)//1349
+		console.log(widthBar)
+		// 可以实现隐藏导航栏
+		root.style.overflow = 'hidden'
+		// 可以让文体不会闪动
+		root.style.borderRight = widthBar + 'px solid transparent'
+		fixed.style.display = 'block'
+	})
+	
+	var hidden = document.querySelector('.hidden')
+	hidden.addEventListener('click', function() {
+
+		var fixed = document.querySelector('.fixed')
+		var form = document.querySelector('.form')
+		console.log(fixed)
+		fixed.style.display = 'none'
+		form.style.display = 'none'
+		root.style.overflow = ''
+		root.style.borderRight = ''
+	})
+
+</script>
+</body>
+</html>

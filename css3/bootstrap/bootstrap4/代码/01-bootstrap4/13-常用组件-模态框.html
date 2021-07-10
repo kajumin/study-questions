@@ -1,0 +1,43 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="lib/css/bootstrap.css">
+    <title></title>
+</head>
+<body>
+
+<!-- 触发按钮 -->
+<button type="button" class="btn btn-success" data-toggle="modal" data-target="#my_model">
+   弹窗
+</button>
+
+<!-- 模态框 -->
+<div class="modal fade" id="my_model" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">撩课学院</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                今天天气很好呀！~
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-success">撩课一下</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- bootstrap依赖于JQ -->
+<script src="lib/js/jquery-3.3.1.js"></script>
+<!--弹窗、提示、下拉菜单 -->
+<script src="lib/js/popper.js"></script>
+<script src="lib/js/bootstrap.js"></script>
+</body>
+</html>

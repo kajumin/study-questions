@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+	.parent {
+    	width: 400px;
+    	height: 400px;
+    	line-height: 400px;
+    	border: 1px solid red;
+    	text-align: center;
+   	 	position: relative;
+	}
+	.child {
+
+		display: inline-block;
+	}
+	.child {
+   	 	/*background: blue;*/
+    	font-size: 12px;
+	}
+	.par {
+		position: relative;
+		border: 4px solid red;
+		padding: 6px;
+	}
+	.box1 {
+		position: absolute;
+		top: 8px;
+		left: 8px;
+		width: 100px;
+		height: 100px;
+		padding: 15px;
+		border: 12px solid #096;
+		background-color: red;
+	}
+	</style>
+</head>
+<body>
+	<div class="parent">
+    	<div class="child">child</div>
+	</div>
+	<div class="par">
+		<div class="box1"></div>
+	</div>
+	
+<!-- 
+1. 首屏
+2. 异步加载
+3. 文件压缩
+4. 去除无用
+
+1.有选择地使用选择器
+2.减少昂贵的属性
+3.优化重排与重绘
+4.不用使用@import
+
+
+1.内联首屏关键CSS  14.6kb文件限制
+2.异步加载css
+  (1)js创建 
+  var link = document.createElement('link')
+  (2)ref 
+  <link rel="alternate stylesheet" href="mystyles.css" onload="this.rel='stylesheet'">
+  之后设置disabled= false
+  (3)preload
+  <link rel="preload" href="mystyles.css" as="style" onload="this.rel='stylesheet'">
+3.文件压缩
+4.去除无用css Unss库 地址: https://github.com/uncss/uncss
+5.有选择地使用选择器  
+	(1) 保持简单，不要使用嵌套过多过于复杂的选择器。
+	(2) 通配符和属性选择器效率最低，需要匹配的元素最多，尽量避免使用。
+	(3) 不要使用类选择器和ID选择器修饰元素标签，如h3#markdown-content，这样多此一举，还会降低效率。
+	(4) 不要为了追求速度而放弃可读性与可维护性。
+6.减少使用昂贵的属性
+  box-shadow border-radius filter opacity nth-child
+7.减少重绘重排 -> 回流必定会发生重绘，重绘不一定会引发回流
+  	重排(回流): 元素位置变化
+	  	(1)页面首次渲染
+		(2)浏览器窗口大小发生变化 
+		(3)元素尺寸或者位置发生变化 改变元素的内外边距 content
+		(4)元素内容变化(文字数量或图片大小)
+		(5)元素字体大小变化  改变font-size和font-family
+		(6)添加删除可见dom元素
+		(7)CSS伪类激活 (:hover)
+		(8)JS获取DOM元素的位置相关属性
+		clientWidth、clientHeight、offsetWidth、offsetHeight
+		clientTop、clientLeft、offsetTop、offsetLeft
+		scrollWidth、scrollHeight、scrollTop、scrollLeft
+		getComputedStyle()
+		getBoundingClientRect()
+
+		scrollIntoView()、scrollIntoViewIfNeeded()
+		scrollTo()
+  	重绘: 改变背景颜色
+  	 	color background-color visibility
+8.不使用@import 顺序乱
+ -->
+<!-- 
+现代浏览器会对频繁的回流或重绘操作进行优化：
+   浏览器会维护一个队列，把所有引起回流和重绘的操作放入队列中，如果队列中的任务数量或者时间间隔达到一个阈(yu)值的，浏览器就会将队列清空，进行一次批处理，这样可以把多次回流和重绘变成一次。
+当你访问引起重排的属性或方法时，浏览器会立刻清空队列
+
+(1) 避免频繁操作样式，最好一次性重写style属性，或者将样式列表定义为class并一次性更改class属性
+(2) 避免频繁操作DOM，创建一个documentFragment，在它上面应用所有DOM操作，最后再把它添加到文档中
+(3) 也可以先为元素设置display: none，操作结束后再把它显示出来。因为在display属性为none的元素上进行的DOM操作不会引发回流和重绘
+(4) 避免频繁读取会引发回流/重绘的属性，如果确实需要多次使用，就用一个变量缓存起来
+(5) 对具有复杂动画的元素使用绝对定位, 使它脱离文档流, 否则会引起父元素及后续元素频繁回流
+-->
+ <script type="text/javascript">
+ 	var box1 = document.querySelector('.box1')
+ 	console.log(box1.offsetWidth) //border +padding + content - 滚动条
+ 	console.log(box1.clientWidth) //padding + content - 滚动条
+ 	console.log(box1.clientTop) //border的宽度 + 滚动条
+ 	console.log(box1.offsetLeft) //absolute中left值
+ </script>
+</body>
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.container {
+			width: 400px;
+			background-color: #eee;
+		}
+		.book-title-x {
+			height: 21px;
+		}
+		.book-cover {
+		    width: 54px;
+		    height: 72px;
+		    float: left;
+		    margin-right: 15px;
+		}
+		.book-title-r {
+			float: right;
+			margin-right: 20px;
+			color: #969ba3;
+		}
+		h4 {
+			margin: 0;
+		}
+		a {
+			text-decoration: none;
+		}
+		
+		.book-title {
+		    position:relative;
+		    float: left;
+		    color: #333;
+		}
+		.book-title > .area {
+		    position: absolute;
+		    left: 0; top: 0;
+		    width: 100%; height: 100%;
+		}
+		.book-meta {
+    		margin: 5px 0;
+    		color: #969ba3;
+		}
+		img {
+			width: 50px;
+			height: 100px;
+		}
+	</style>
+</head>
+<body>
+	<!-- 
+	usemap属性: 其值对应<map>的id或者name值
+	shape:支持矩形rect, 圆形circle, 多边形poly
+	coords:
+	   (1)居中四个值 左上角坐标  右下角坐标
+	   (2)圆形三个值 圆心 半径
+	   (3)多边形 每两个数值组合表示一个坐标点
+	href 和a元素的href链接 area也同样支持target属性和rel属性 alt属性
+	 -->
+	 <!-- 
+	应用: 
+	(1)嵌套
+	  外层使用a  里面使用map > area
+
+	  -->
+<img src="../images/zza/1.jpg" alt="美女" usemap="#MM" width="256" height="191">
+<map id="MM" name="MM">
+    <area shape="rect" coords="20,20,80,80" href="#rect" alt="矩形">
+    <area shape="circle" coords="200,50,50" href="#circle" alt="圆形">
+    <area shape="poly" coords="150,100,200,120,180,130,190,180,150,150,100,160,140,120,100,110" href="#poly" alt="多边形">
+</map>
+
+<div class="container">
+	<a href="#0" class="book-layout">
+	    <img src="../images/zza/1.jpg" class="book-cover" alt="都市猎人 限时免费" usemap="#bookCover">
+	    <map id="bookCover" name="bookCover">
+	        <area shape="rect" coords="0,0,54,72" href="#1" alt="都市猎人 限时免费" >
+	    </map>
+	    <div class="book-cell">
+	        <div class="book-title-x">
+	           	<h4 class="book-title">
+	    			<img src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" class="area" usemap="#mapTitle">
+	    			都市猎人
+				</h4>
+				<map id="mapTitle" name="mapTitle">
+	    			<area shape="rect" coords="0,0,200,21" href="#2" target="_blank">
+				</map>
+	            <div class="book-title-r">继续阅读</div>
+	        </div>
+	        <div class="book-meta">都市猎人 | 读至第六百四十二章 不在意章</div>
+	        <div class="book-meta">
+	            <time class="book-meta-r">1天前</time>更新至 第六百四十二章 不在意
+	        </div>
+	    </div>
+	</a>
+</div>
+</body>
+</html>

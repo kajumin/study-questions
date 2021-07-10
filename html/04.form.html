@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title></title>
+  <style>
+    span[role=button] {
+      display: inline-block;
+			padding: 4px 12px;
+			border-radius: 6px;
+      background-color: #cd0000;
+      color: #fff;
+    }
+    span[role=button]:focus {
+      /* 可以不用 */
+      /* outline: 1px dotted Highlight;
+			outline: 5px auto -webkit-focus-ring-color; */
+    }
+    a[role=button] {
+      display: inline-block;
+      border-radius: 6px;
+      padding: 4px 12px;
+      text-decoration: none;
+      background-color: #cd0000;
+      color: #fff;
+    } 
+  </style>
+</head>
+<body>
+  <form action="1.php">
+    <input type="text" name="username" id="username">
+    <input type="text" name="pwd" id="pwd">
+    <span role="button" tabindex="0">提交</span>
+    <a href="#" role="button">按钮</a>
+  </form>
+</body>
+</html>

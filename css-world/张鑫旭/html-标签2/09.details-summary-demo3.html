@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		/* 隐藏默认三角 */
+		::-webkit-details-marker {
+		    display: none;
+		}
+		::-moz-list-bullet {
+		    font-size: 0;
+		    float: left;
+		}
+		summary {
+		    display: inline-block;
+		    width: 105px;
+		    /*padding: 5px 28px;*/
+		    text-indent: -15px;
+		    user-select: none;
+		    outline: none;
+		    position: relative;
+		    z-index: 1;
+		    background-color: #eee;
+		}
+		summary::after {
+		    content: '';
+		    position: absolute;
+		    width: 12px; height: 12px;
+		    margin: 4px 0 0 .5ch;
+		    background: url(https://www.zhangxinxu.com/study/201801/arrow-on.svg) no-repeat;
+		    background-size: 100% 100%;
+		    transition: transform .2s;
+		}
+		[open] summary,
+		summary:hover {
+		    background-color: #fff;
+		    box-shadow: inset 1px 0 #ddd, inset -1px 0 #ddd;
+		}
+		[open] summary::after {
+		    transform: rotate(180deg);
+		}
+		.box {
+		    position: absolute;
+		    border: 1px solid #ddd;
+		    background-color: #fff;
+		    min-width: 100px;
+		    padding: 5px 0;
+		    margin-top: -1px;
+		}
+		.box a {
+		    display: block;
+		    padding: 5px 10px;
+		    color: inherit;
+		}
+		.box a:hover {
+		    background-color: #f0f0f0;
+		}
+		.box sup {
+		    position: absolute;
+		    color: #cd0000;
+		    font-size: 12px;
+		    margin-top: -.25em;
+		}
+	</style>
+</head>
+<body>
+<details>
+    <summary>我的消息</summary> 
+    <div class="box">
+        <a href>我的回答<sup>12</sup></a>
+        <a href>我的私信</a>
+        <a href>未评价订单<sup>2</sup></a>
+        <a href>我的关注</a>
+    </div>
+</details>
+</body>
+</html>

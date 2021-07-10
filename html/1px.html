@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
+	<style type="text/css">
+		body {
+			margin: 0;
+		}
+		.box1 {
+			width: 0.5rem;
+			height: 0.5rem;
+			border-bottom: 1px solid red;
+		}
+		.box2 {
+			width: 10rem;
+			height: 10rem;
+			margin-top: 20px;
+			background-color: red;
+		}
+	</style>
+</head>
+<body>
+	<div class="box1"></div>
+	<div class="box2">
+		<div style="font-size: 16px;">中国</div>
+	</div>
+<script type="text/javascript">
+	var dpr = window.devicePixelRatio || 1;
+	var viewport = document.querySelector('meta[name="viewport"]');
+	var scale = 1 / dpr;
+	console.log(dpr)
+	viewport.setAttribute('content','width=device-width,initial-scale='+ scale +',user-scalable=no');
+	var width = document.documentElement.clientWidth;
+	// var htmlFS = document.querySelector('html').style.fontSize = width * 1 / dpr + 'px';
+	var htmlFS = document.querySelector('html').style.fontSize = width / 10 + 'px';
+	console.log(width)
+	console.log(htmlFS)
+
+	var box1 = document.querySelector('.box1')
+	console.log(window.getComputedStyle(box1)['borderBottomWidth'])
+
+	console.log(document.documentElement.clientWidth) //750
+	console.log(window.innerWidth) // 750
+	console.log(window.screen.width) //375
+</script>
+</body>
+</html>

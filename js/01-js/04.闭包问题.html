@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<script type="text/javascript">
+	function fun(n, o) {
+		console.log(o) //undefined
+		// n一直等于0
+		return {
+			fun: function(m) {
+				return fun(m, n)
+			}
+		}
+	}
+	// n=0之后的调用没有改变n的值, 所以o的值一直为0
+	var a = fun(0)//undefined
+	a.fun(1) //0
+	a.fun(2) //0
+	a.fun(3) //0
+
+
+	function fun(n, o) {
+		console.log(o) //undefined
+		// n一直在变, 闭包也在变
+		return {
+			fun: function(m) {
+				return fun(m, n)
+			}
+		}
+	}
+	// 先从fun(0)开始看，肯定是调用的第一层fun函数；而他的返回值是一个对象，所以第二个fun(1)调用的是第二层fun函数，后面几个也是调用的第二层fun函数。
+	var a = fun(0).fun(1).fun(2).fun(3)//undefined 0 1 2
+
+	function fun(n, o) {
+		console.log(o) //undefined
+		// n一直在变, 闭包也在变
+		return {
+			fun: function(m) {
+				return fun(m, n)
+			}
+		}
+	}
+	// 先从fun(0)开始看，肯定是调用的第一层fun函数；而他的返回值是一个对象，所以第二个fun(1)调用的是第二层fun函数，后面几个也是调用的第二层fun函数。
+	var a = fun(0).fun(1)//undefined 0
+	fun(2) //1
+	fun(3) //1
+
+</script>
+</body>
+</html>

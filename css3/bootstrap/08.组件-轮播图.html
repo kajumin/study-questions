@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title></title>
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <style type="text/css">
+  	.carousel-inner .item {
+  		height: 410px;
+  		background: center center/cover no-repeat;
+  	}
+  	.carousel-inner .item:nth-child(1) {
+  		background-image: url(images/slide_01_2000x410.jpg);
+  	}
+  	.carousel-inner .item:nth-child(2) {
+  		background-image: url(images/slide_02_2000x410.jpg);
+  	}	
+  	.carousel-inner .item:nth-child(3) {
+  		background-image: url(images/slide_03_2000x410.jpg);
+  	}
+  	.affix-header {
+  		height: 40px;
+  		background-color: #096;
+  	}
+  	.affix {
+  		left: 0;
+  		right: 0;
+  	}
+  </style>
+  <!--[if lt IE 9]>
+    <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<!-- <div id="affix" class="affix-header" data-spy="affix"  data-offset-top="60" > 
+top html(api执行)
+</div> -->
+<div id="affix2" class="affix-header"> 
+top
+</div>
+<section class="carousel">
+	<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+	  <!-- Indicators -->
+	  <ol class="carousel-indicators">
+	    <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+	    <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+	    <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+	  </ol>
+
+	  <!-- Wrapper for slides -->
+	  <div class="carousel-inner" role="listbox">
+	    <div class="item active">
+	      <div class="carousel-caption">
+	        <h3>标题1</h3>
+    			<p>文本1</p>
+	      </div>
+	    </div>
+	    <div class="item">
+	      <div class="carousel-caption">
+	        <h3>标题2</h3>
+    			<p>内容2</p>
+	      </div>
+	    </div>
+	    <div class="item">
+	      <div class="carousel-caption">
+	        <h3>标题2</h3>
+    			<p>内容2</p>
+	      </div>
+	    </div>
+	  </div>
+
+	  <!-- Controls -->
+	  <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+	    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+	    <span class="sr-only">Previous</span>
+	  </a>
+	  <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+	    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+	    <span class="sr-only">Next</span>
+	  </a>
+	</div>
+</section>
+<div style="height: 10000px;background-color: red;"></div>
+<script src="js/jquery-3.4.1.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script type="text/javascript">
+	$('#affix2').affix({
+	  offset: {
+	    top: 100,
+	    bottom: function () {
+	      return (this.bottom = $('.footer').outerHeight(true))
+	    }
+	  }
+	})
+</script>
+</body>
+</html>
+	

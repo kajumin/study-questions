@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<style type="text/css">
+		html {
+			font-family: simsun;
+		}
+		h1 {
+			font-family: serif;
+			font-family: sans-serif;
+			font-family: monospace;
+			font-family: fantasy;
+			font-family: system-ui;
+		}
+		.select {
+			font-family: Consolas;
+		}
+		.ch1 {
+			width: 1ch;
+			transition: 1s;
+			overflow: hidden;
+		}
+		.ch1:hover {
+			width: 7ch;
+		}
+	</style>
+</head>
+<body>
+<!--
+font-family: 默认值由系统和浏览器共同决定,
+osx 和windows下的chrome默认字体是不一样的, 同一台window系统的chrome和firefox浏览器默认字体也不一样的
+firefox: sans-serif(字体族)
+chrome: "Microsoft YaHei"(字体名)
+包含空格需要用引号
+不区分大小写
+从左到右, 查找本地是否有该字体
+
+分类: 字体名 字体族
+字体名: simsun 'Microsoft Yahei'  'PingFang SC'  多个使用逗号(,)分隔, 
+字体族: 
+serif       衬线字体     宋体  Times New Roman Georgia   
+sans-serif  无衬线字体   雅黑   Arial tahoma  Verdana
+monospace   等宽字体     Consolas  Monaco  ch与等宽字体布局
+cursive     手写字体 
+fantasy     奇幻字体
+system-ui   系统UI字体
+
+字体族在字体名之后  不然字体名会无效, 通常字体族会有满足的条件的字体
+
+1.等宽字体与代码呈现
+2.等宽字体与图形呈现案例
+3.ch单位与等宽字体布局
+  ch与数字0字符相关
+
+  可以使用关键字menu让字体跟这系统字体走
+ -->
+ <h2>中国</h2>
+ <h1>中国</h1>
+
+<!-- 1ch等于0的宽度 -->
+ <p style="width: 6ch;border: 1px solid #ccc;">000000</p>
+
+ <select class="select">
+ 	<option value="dashed">------</option>
+ 	<option value="dotted">......</option>
+ </select>
+<!-- 11电话号码 11ch -->
+ <input type="text" name="" style="width: 4ch;overflow: hidden;" maxlength="4">
+ <div class="ch2">123456</div>
+
+<script type="text/javascript">
+	var dom = document.documentElement
+	console.log(window.getComputedStyle(dom).fontFamily)
+</script>
+</body>
+</html>

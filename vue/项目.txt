@@ -1,0 +1,206 @@
+npm list -g --depth 0
+npm fund  查看全部
+http-server -p 9000
+
+vue init webpack cms_project
+cd cms_project
+npm run dev
+npm install mint-ui -S
+//按需引入: 使用插件plugin-component  再通过自写vue插件把组件都添加进来  
+npm install babel-plugin-component -D
+.babelrc  或者  babel.config.js   加上
+"plugins": [["component", [
+    {
+      "libraryName": "mint-ui",
+      "style": true
+    }
+  ]]]
+import { Cell, Checklist } from 'mint-ui';
+Vue.component(Cell.name, Cell);
+Vue.component(Checklist.name, Checklist);
+// 引入全部组件
+import Vue  from 'vue';
+import Mint  from 'mint-ui';
+Vue.use(Mint);
+import 'mint-ui/lib/style.css'
+
+
+========app.vue
+//顶部标题
+<transition name="fade" mode="out-in">
+      <router-view class= "tmpl"/>  //初始加载home组件
+</transition>
+//底部导航
+
+
+========home.vue
+//轮播图
+//九宫格     路由链接 params  query
+
+========NewsList.vue
+//nav-bar
+//新闻列表    //获取新闻列表  
+
+========newsDetail.vue
+//nav-bar
+//获取具体新闻信息
+
+=========PhotoList.vue
+//nav-bar
+//图片分类列表
+//图片列表
+=========GoodsShow.vue
+//nav-bar
+//商品列表  滚动加载(loadmore)  获取数据   分类加载数据
+=========GoodsDetail.vue
+//nav-bar
+//swipe
+//商品详情   获取图片信息  获取文字信息
+//点击导航 到评价列表 
+this.$router.push({
+       name: 'NewsDetail',
+       params: {id: this.$route.params.id}
+});  
+=========Comment.vue
+//nav-bar
+//评论列表   获取数据
+
+
+
+
+删除index.html的最顶一行
+
+1. ssr服务端渲染  
+2. 页面预先渲染
+
+//第二天
+moment
+vue-preview
+提取 九宫格
+moment().format('YYYY-MM-DD HH:mm:ss');
+npm i moment -S
+
+
+
+:to="{ name: 'NewsDetail',params:{  id: news.id} }"
+let { id } = this.$route.params;
+v-html中的样式要使用全局样式才有效果  不能用scoped
+
+图文分享: 
+query:{category:0}
+
+{
+id: 1,
+title:'有气质且可爱的美女',
+img_url: '../../../static/img/textbox/imgs1.jpg',
+zhaiyao: '有气质且可爱的美女'
+}
+
+// 第三天
+slot中不能设置样式  它不存在的
+query: /xxx?id=1 配置路由  path: '/xxx'  组件接收: this.$route.query.id      传递 :to="{name:xxx,query: { id: 1} }" 
+params /xxx/1                   path:'/xxx/:id'             this.$route.params.id           :to="{name:xxx,params: { id: 1} }" 
+
+插件 vue-preview
+this.$toast
+
+
+//第四天
+navbar  title="商品详情"
+获取page
+发请求  拿数据
+
+父盒子需要设置一个高度  让子元素完全显示了才加载数据  touch事件
+卷进去的高度 +  可视高度  =  子元素总宽度
+
+总结:  loadmore中的属性 
+ *     1:buttomLoad 函数  
+ *     2:禁止buttomLoad  bottom-all-loaded 默认为false ,true就禁止
+ *     3: auto-fill 默认true，自动检测父容器，并调用buttomLoad直到撑满父容器
+ *     4: pull 拉动未满足70px ,  drop 达到70px ,loading加载中
+ *     5: loadmore组件对象的 onBottomLoaded() 通知结束loading进入Pull状态
+ *     6: 在组件上写ref="xxx"   在js中通过this.$refs.xxx        获取组件对象
+ *     6: 在普通元素上写ref="xxx"   在js中通过this.$refs.xxx  获取DOM对象   
+ *     7: 上拉加载更多公式
+ *         进入检测机制 =>   可视高度 + 卷入高度 = (子元素)所有的数据高度
+
+
+ let imgReq = this.$axios.get(`http://api/goods/get-thumimages?imgId=${this.goodsId}`);
+ let infoReq = this.$axios.get(`http://api/goods/get-info?goodsId=${this.goodsId}`);
+ //合并请求 $axios.all([]).then(传播响应).catch()
+ this.$axios.all([imgReq,infoReq])
+            .then(
+                this.$axios.spread(
+                    (imgRes,infoRes)=>{
+                    
+                 })
+            )
+            .catch(err=>console.log)
+
+提取成组件  提取的是子组件  调用的组件是父组件
+<my-swipe :imgs="imgs"/>  父组件调用
+[{"src":"../../../static/img/phones/huawei1.jpg"},{"src":"../../../static/img/phones/huawei1.jpg"},{"src":"../../../static/img/phones/huawei1.jpg"}]
+
+
+
+商品详情  使用路由守卫做 
+ // 直接进入到新闻详情   通过事件点击
+                this.$router.push({
+                    name:'NewsDetail',
+                    params:{
+                        id:this.$route.query.id
+                    }
+                });
+css样式: 动画
+=================
+自己加的需要响应式 
+this.$set(goods,'buyNum',num); 
+Object.defineProperty(this, GoodsCart,function(){ set(){} })   set方法会更新视图  但是GoodsCart属性中的属性不会更新视图
+=============
+Vuex  管理全局共享数据(改变数据  获取方式  业务行为(有异步行为)) state getter mutation action mudule
+1.引入  import Vuex from 'vuex'
+2.挂载  Vue.use(Vuex)
+3.创建store对象  let store =new Vuex({ state:{num:1}})
+4.导出store对象  
+5.使用 $store.state.num
+
+使用mapGetters对象
+computed:{
+ ...mapGetters([
+      'getNum',
+      'getText',
+      'getName'
+    ])
+}
+
+调用流程 dispatch(调用actions)->actions(调用mutations)->mutations(直接改变数据)-> state(数据)  -> getters(被改变))
+
+============
+webpack分析网站
+============
+开发中必须要踩的坑:
+1.业务中添加state添加属性
+   Vue.set(state,'myName',name);
+2.
+按需加载
+npm info  babel-core version
+npm un    babel-core -D
+npm i       @babel/core -D //用不了
+=======路由懒加载
+需要安装一个插件  还有更改路由写法
+"babel-plugin-syntax-dynamic-import": "^6.18.0",
+Vue-cli3.x则不需要  因为2.x使用的是babel   3.x使用的是vue-plugin-babel
+============
+优化:
+路由懒加载
+服务器优化  压缩 
+============项目优化打包  npm run build
+1.路由懒加载(使用import)  const Home = () => import('@/components/Home')
+2.按需引入mint-ui
+3.
+图片小于10000byte  则修改为url(base64)  减少请求
+===========
+题外话:
+客户端渲染(单页面) 和 服务端渲染(数据量大)
+客户端第一次渲染也是数据量大
+

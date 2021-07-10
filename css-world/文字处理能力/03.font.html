@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.f100 {
+			font-weight: 100;
+		}.f200 {
+			font-weight: 200;
+		}.f300 {
+			font-weight: 300;
+		}.f400 {
+			font-weight: 400;
+		}.f500 {
+			font-weight: 500;
+		}.f600 {
+			font-weight: 600;
+		}.f700 {
+			font-weight: 700;
+		}.f800 {
+			font-weight: 800;
+		}.f900 {
+			font-weight: 900;
+		}
+	</style>
+</head>
+<body>
+	<!-- font属性 可以使用关键字
+		style variant weight size line-heihgt family 
+		font简写必须写font-size  font-family
+		[ [font-style || font-variant || font-weight]? font-size [/ line-height]? font-family]
+	-->
+	<!-- 
+		font-weight:bold  normal 
+		相对单位bolder lighter
+		有些数值(如300,400,500)无效是因为字体没有对应的字重
+	-->
+	<!--
+		font-italic:
+		italic 当前字体的斜体字体
+		退而求其次 oblique  oblique是无用的 
+	-->
+	<!-- 
+		font-variant: 不符合国情 
+		samll-caps 小体形大写字母
+	-->
+	<!-- 
+	@font-face {
+		svg: 兼容ios4.1之前的版本
+		eot: ie私有 所有ie都支持eot格式, ie6-ie8只支持eot
+		woff:字体格式  android4.4开始支持
+		woff2: 比woff尺寸更小的字体, 首选
+		ttf: 字体老板android支持
+	}
+	1.svg可以果断舍弃
+	2.无须ie8 eot格式果断舍弃
+	3.无须兼容android4.3之前的手机 ttf格式果断舍弃
+	
+	@font-face与字体图形技术
+
+	与svg图标技术相比, 兼容老的ie浏览器, 过几年就没有必要使用了
+	字体文件就是一个商品房, 里面有很多房间, 门牌号是唯一的, 门牌号就是字符集, 房间里的名画就是我们的字体图形
+	伪类ie7才支持
+	<i class="icon">$#x1f3a4</i> 不推荐使用, 不好维护, 无须让搜索引擎和辅助设备读取
+	-->
+<p class="f100">清如鸿毛, 重如泰山</p>
+<p class="f200">清如鸿毛, 重如泰山</p>
+<p class="f300">清如鸿毛, 重如泰山</p>
+<p class="f400">清如鸿毛, 重如泰山</p>
+<p class="f500">清如鸿毛, 重如泰山</p>
+<p class="f600">清如鸿毛, 重如泰山</p>
+<p class="f700">清如鸿毛, 重如泰山</p>
+<p class="f800">清如鸿毛, 重如泰山</p>
+<p class="f900">清如鸿毛, 重如泰山</p>
+
+<p style="font-style: normal;">Georgia normal</p>
+<p style="font-style: italic;">Georgia italic</p>
+<p style="font-style: oblique;">Georgia oblique</p>
+
+<a href="#">http:wwww/ <span style="font-variant: small-caps;">baidu</span>.com</a>
+
+<p class="font" style="font: 30px/30px '$';font-family: inherit;">中国中国中国中国中国</p>
+</body>
+</html>

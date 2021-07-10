@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.dotted {
+			width: 150px;
+			height: 150px;
+			border: 149px dotted #cd0000;
+		}
+		.box2 {
+			width: 150px;
+			height: 150px;
+			overflow: hidden;
+		}
+		.box2 .dotted2 {
+			width: 100%;
+			height: 100%;
+			border: 149px dotted #cd0000;
+		}
+		input[type="search"] {
+		    width: 200px; 
+		    height: 40px;
+		    padding: 10px 40px 10px 10px;
+		    border: 1px solid #ccc;
+		    box-sizing: border-box;
+		}
+		.icon-clear {
+		    width: 20px; 
+		    height: 20px;
+		    margin: 1px 0 0 -38px;
+		    border: 11px solid transparent;
+		    border-radius: 50%;
+		    background: #999;
+		    background-clip: content-box;
+		    color: white;
+		    position: absolute;
+		    visibility: hidden;
+		}
+		.icon-clear:before {
+		    content: "×";
+		    position: relative;
+		    left: 4px;
+		}
+		input:valid + .icon-clear { 
+		    visibility: visible;
+		}
+	</style>
+</head>
+<body>
+<!-- 
+	1.
+	border不支持百分比 outline box-shadow text-shadow同样不支持百分比
+	thin    1px 
+	medium  3px 
+	thick   5px
+    
+    2.border-style
+    border-style默认值是none; 所以单独设置颜色和宽度无效, 设置类型有效
+    solid dashed dotted double
+	3.border-color默认是color的颜色值
+	  +号上传的实现(使用background-color vs border)
+	4.border与透明边框技巧
+	  (1)右下边backgound定位  因为padding-box边界
+	  (2)添加点击区域大小  优于使用padding
+	  (3)三角形绘制
+	5.图形构建 梯形 三角形(更窄)  一侧开口的三角形(两个三角形)
+	6.等高布局 border 
+	  	父不能使用overflow:hidden; 至少有一栏是定宽 不会有锚点定位带来的问题 
+	 	等高布局(height table-cell margin负值+padding正值)
+ -->
+<div class="dotted"></div>
+<div class="box2">
+	<div class="dotted2"></div>
+</div>
+<div class="box4-3">
+	<input id="search" type="search" value="我是初始值" required>
+	<label for="search" class="icon-clear"></label>
+</div>
+<script type="text/javascript">
+	var eleLabel = document.querySelector('label[for="search"]'),
+	eleSearch = document.getElementById('search');
+
+	if (eleLabel && eleSearch) {
+    	eleLabel.onclick = function() {
+        	eleSearch.value = '';
+    	};
+	}
+</script>
+</body>
+</html>

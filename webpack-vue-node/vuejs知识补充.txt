@@ -1,0 +1,53 @@
+1.@hook:updated   $on('hook:updated', () => {
+)
+(1) 内部监听生命周期函数  在组件内部this.$on('hook:updated', () => {})
+(2) 外部监听生命周期函数  @hook:updated="$_handleSelectUpdated" 监听子组件生命周期函数
+
+2.用Vue.observable手写一个状态管理系统
+  通过computed来获取数据, 使用响应式
+
+3.Vue.extend(子类构造器)是一个全局Api, 平时我们在开发业务的时候很少会用到它，
+   但有时候我们希望可以开发一些全局组件比如Loading, Notify, Message等组件时，
+   这时候就可以使用Vue.extend。
+   还需要学习 notify  message  loading
+
+4.is实现tab栏切换 <component :is="currentTabComponent" class="tab"></component>
+
+5.计算属性demo  音乐
+
+6.provide inject(类似props写法 默认值等)  没有响应式
+   响应式实现使用Object.defineProperty()
+
+7.extends  继承合并  propsData: {}  可以传递数据
+   extend  vue构造器, 用于创建子类, 再实例化
+
+8.mixins: [myMixins],   mixins中的data数据重名则被覆盖,  生命周期钩子函数先执行
+
+5.scrollBehavior(to, from, savePosition) {} 
+   savePosition         //浏览器回退时有值
+   position.selector= to.hash     //定位到hash位置   没有值的情况
+   position={x:0, y:0}    //定位到顶部
+
+
+改造为指令:
+项目中哪些场景可以自定义指令:
+(1)为组件添加loading效果
+(2)按钮级别权限控制 v-permission
+(3)代码埋点,根据操作类型定义指令
+(4)input输入框自动获取焦点
+
+4.为什么使用函数式组件? Vue2.5之前, 使用函数式组件只能通过JSX的方式, 之后可以通过模板语法来生命函数式组件
+(1)最主要最关键的原因是函数式组件不需要实例化，无状态，没有生命周期，
+     所以渲染性能要好于普通组件
+(2)函数式组件结构比较简单，代码结构更清晰
+1.函数式组件需要在声明组件时指定functional
+2.函数式组件不需要实例化，所以没有this,this通过render函数的第二个参数来代替
+3.函数式组件没有生命周期钩子函数，不能使用计算属性，watch等等
+4.函数式组件不能通过$emit对外暴露事件，
+   调用事件只能通过context.listeners.click的方式调用外部传入的事件
+5.因为函数式组件是没有实例化的，所以在外部通过ref去引用组件时，实际引用的是HTMLElement
+6.函数式组件的props可以不用显示声明，所以没有在props里面声明的属性都会被自动隐式解析为prop,
+而普通组件所有未声明的属性都被解析到$attrs里面，
+并自动挂载到组件根元素上面(可以通过inheritAttrs属性禁止)
+
+

@@ -1,0 +1,125 @@
+1.变量提升: js会将所有的声明提升到当前作用域的顶部
+2. use strict; 的作用: 主要的优势在于能够强制开发者避免使用未声明的变量
+3.解释下什么是 Event Bubbling 以及如何避免
+  某个事件不仅会触发当前元素，还会以嵌套顺序传递到父元素中
+  e.stopPropagation()   e.cancelBubble = true
+4.==与===的区别
+  严格相等，关键的区别在于=== 会同时比较类型与值
+5.解释下 null 与 undefined 的区别
+  null 是一个可以被分配的值，设置为 null 的变量意味着其无值
+  undefined 某个变量虽然声明了但是尚未进行过任何赋值
+
+
+
+56. 找出全部数字  '0123123123helloworld';
+let num = [...str].filter( s => !Number.isNaN(parseInt(s))).join("")  //不使用正则
+console.log(str.match(/\d/g).join(""))//0123123123
+
+
+57.内置对象  Math  Number JSON  Map Set
+
+58.异常
+    //throw 主动抛出异常
+    //diy err always 如何走到catch里面 ？ try里面主动抛出错误
+    try{
+        throw new Error('diy err')
+        console.log('ok')
+    }catch(err){
+        console.log(err)
+    }finally{
+        console.log('always')
+    }
+
+//自定义异常
+class ErrorApi extends Error{
+        constructor(url , ...args){
+            super(...args)
+            this.url = url
+            this.name = 'errorApi'
+        }
+    }
+    
+    function getPostData( url = '/post/blogs', code = '404'){
+        console.log('开始获取数据...')
+        throw new ErrorApi(url, code)
+    }
+    
+    try {
+        getPostData()
+    } catch (e) {
+        let {name, url, message} = e
+        console.log(e)
+        console.log(name,url,message)
+    }
+//处理不同异常   instanceof  ReferenceError  引用错误  SyntaxError语法错误 TypeError类型错误
+ try {
+        getPostData()
+    } catch (e) {
+        // instanceof 处理不同类型的异常
+        if( e instanceof ReferenceError){
+            console.log('程序异常')
+        }else if(e instanceof ErrorApi){
+            console.log('API 异常')
+        }
+    }
+
+
+
+60.原型链相关api   
+person instanceof  Person 
+o.hasOwnProperty(key)
+for var key in person   //会获取原型上的属性方法
+Object.getOwnPropertyNames(person)    Object.keys(person)  都不会获取原型上是属性方法
+Object.getPropertyOf(person)   //获取对象的原型
+Object.setPropertyOf(person ,newProperty) //设置
+Person.prototype.isPrototypeOf(person)  //true
+            getOwnPropertyDescriptors
+
+61.Object.defineProperty()
+ Object.defineProperty(o, 'a', {
+      get() { return 1; },
+      set(value) { a.push(value) },
+      configurable: false, //能不能删除 以及value和writable之外的特性是否可以被修改
+      writable: false   //能不能修改
+      enumberable:false   //是否能被Object.keys()  for in   枚举
+    });
+
+63.事件轮循  micro微任务   macro宏任务
+Event Queue事件队列  Event Loop事件循环
+setTimeout(fn,0)的含义是，指定某个任务在主线程最早可得的空闲时间执行，意思就是不用再等多少秒了，只要主线程执行栈内的同步任务全部执行完成，栈为空就马上执行  4毫秒最少
+setInterval会每隔指定的时间将注册的函数置入Event Queue
+
+64.前端常用的数据请求格式有哪些？都有些什么特点？
+    我们使用Get请求来获取数据
+    我们使用Post请求来发送数据
+    我们使用Put请求来更新数据
+    我们使用Delete请求来删除数据
+    我们使用Patch请求用于对资源应用部分修改。
+    1.Get 请求能缓存，Post 不能
+    2.Post 相对 Get 安全一点点，因为Get 请求都包含在 URL 里，
+    （当然你想写到 body 里也是可以的），且会被浏览器保存历史纪录。Post 不会，但是在抓包的情况下都是一样的。
+    4.URL有长度限制，会影响 Get 请求，但是这个长度限制是浏览器规定的，不是 RFC 规定的
+    5.Post 支持更多的编码类型且不对数据类型限制
+
+65.二次封装axios，描述一下你在项目中封装axios的思路和想法
+通常来说，我们在二次封装axios，一般会引入UI组件的一些Message和Loading组件用来做提示信息。
+    1.通过获取存储在浏览器端，或者是vuex中的token信息，判断是否跳转登录页面
+    2.在获取到token的情况下设置自定义请求头部信息
+    3.在响应事件中，根据返回的不同状态码，根据业务需求，使用switch判断跳转页面还是发出提示信息。
+    4.封装请求和响应事件的返回结果，使用Promise封装。
+    5.增加请求loading和提示信息。
+    简单版本大致如上，复杂版本需要根据业务进行对应的封装。
+
+66.组件化开发
+组件化开发的原则:
+专一  可配置性  标准性 复用性  可维护性
+模块化的好处
+   (1)避免变量污染，命名冲突
+   (2)提高代码复用率
+   (3)提高了可维护性
+   (4)方便依赖关系管理
+函数式  =>  污染全局变量
+对象写法 => 暴露所有模块成员，内部状态可以被外部改写
+立即执行函数  => 外部无法访问内部
+common.js   AMD  CMD(sea.js)  es6模块化
+

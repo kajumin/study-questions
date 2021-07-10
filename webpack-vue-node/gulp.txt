@@ -1,0 +1,410 @@
+gulp模块   前端构建工具  node第三方模块
+npm install gulp  -g 
+需要npm  版本为11.15.0  对应的gulp  3.9.1   版本问题很重要
+
+gulp和webpack区别:
+相同点: 都是前端自动化的构建工具
+不同点: 
+   gulp强调工作流程
+   webpack前端模块化开发的解决方案, 强调模块化, 压缩合并, 预处理都是它的附加功能
+
+gulp是工具链, 构建工具, 可以配合各种插件做js压缩, css压缩, less编译替代手动实现自动化工作
+主要作用: (1)构建工具  (2)自动化  (3)提高效率
+
+webpack是一个前端模块化方案，更侧重模块打包，
+我们可以把开发中所有的资源（图片、js文件、css资源, 
+通过loader(加载器)和plugins(插件)对资源进行处理，打包成符合生产环境部署的前端资源。
+主要特点: 
+(1)打包工具   (2)模块化识别   (3)编译模块代码方案
+
+能做:  
+(1) html  css  js  es6  less
+(2) 公共文件抽离
+(3) 修改文件浏览器自动刷新
+使用
+(1)创建gulpfile.js编写任务
+(2)项目放在src下   dist用于构建后存放
+(3)gulp命令执行任务  npm install gulp-cli -g
+    gulp  first   执行gulpfile.js  中的first任务   执行失败可以重新安装一下gulp-cli  更新一些文件
+
+插件:
+======html
+gulp-htmlmin        压缩html代码
+gulp-file-include   把抽离的代码重新插入指定位置  公共代码
+======css
+gulp-less
+gulp-csso  压缩  gulp-clean-css
+======js
+jshint = require('gulp-jshint'), //js代码规范性检查
+# Babel 7  最新版本
+$ npm install --save-dev gulp-babel @babel/core @babel/preset-env
+# Babel 6
+$ npm install --save-dev gulp-babel@7 babel-core babel-preset-env
+
+gulp-uglify      安装: npm i -D gulp-uglify 
+======其他
+notify=require('gulp-notify');   //提示
+gulp-concat  合并
+gulp-rename  重命名
+gulp-livereload   半自动实时监听
+open  服务
+gulp-connect  全自动
+gulp-load-plugins   所有插件合并到$对象中
+
+文件夹:   package.json  项目名称 版本 作者 githud 第三方依赖
+npm init -y   直接默认项目信息   产出package.json文件
+name  项目名称
+version  项目版本
+decription  项目描述
+main  主模块
+scritps   命令的别名
+keywords: []  关键字
+author   作者
+license  isc  协议
+拿到别人的package.json文件   运行npm  install 下载文件依赖 (全部依赖)
+dependencies         项目依赖
+devDependencies   开发依赖(gulp)  npm  install   gulp  --save-dev  
+下载生成  npm install  --production   线上运行  没有devDependencies依赖
+
+pack-lock.json
+防止版本错误
+加快下载速度  依赖明确
+
+别名运行  npm run build
+
+模块查找规则
+1.没有后缀  (1)先找js文件   (2)找不到index.js文件找package.json文件的main   (3)找同名文件夹里找index.js  没有就报错 
+   (4)不会找同名文件夹中的js文件
+2.没有路径没有后缀   (1)系统   (2)node_modules文件夹中  (3)node_modules下是否有该名js文件
+  (4)是否有该名字的文件夹  (5)文件夹下的package.json中main所指   (6)index.js文件 报错
+
+url     协议  服务器ip或者域名   端口   资源所在位置标示
+协议   http超文本传输协议  提供一种发布和接受HTML页面的方法  请求和应答的标准
+服务器ip或者域名
+端口  
+资源所在位置标示
+创建网站服务器
+const http  = require('http')
+const app = http.createServer();
+app.on('request',(req,res)=>{
+   req.method   //POST GET 
+   res.writeHead(200,{
+	'content-type':'text/html;charset=utf8'
+})
+   res.end('<h1>h1,user</h1>');
+})
+app.listen(3000);
+console.log('服务器已启动,监听3000端口,请访问localhost:3000');
+
+报文: 请求和响应的过程中传递的数据块
+req.url     /index   请求地址
+req.method   'POST'  'GET'   请求方式
+req.headers   请求报文
+res.writeHead(200,{   //设置请求状态码  status
+	// 'content-type':'text/plain'  //纯文本
+	'content-type':'text/html;charset=utf8',  //纯文本
+})  
+200  请求成功
+404  请求资源没有找到
+500  服务器错误
+400  客户端的请求有语法错误
+
+内容类型
+text/html
+text/css
+application/javascript
+application/json
+application/xml
+=============== 
+route:
+require('url')  模块
+url.parse(req.url)  返回对象
+// 设置content-type
+res.writeHead(200,{
+	'content-type': 'text/html;charset=utf8'
+})
+// 获取请求方式
+const method = req.method.toLowerCase();
+// 获取请求地址
+const pathname = url.parse(req.url).pathname;
+if(method === 'get'){
+	if(pathname === '/' || pathname ==='/index'){
+		res.end('欢迎来到首页');
+	}else if(pathname === '/list'){
+		res.end('欢迎来到列表页');
+	}else{
+		res.end('请求页面不存在!');
+	}
+}
+==============
+post请求参数获取
+const querystring =  require('querystring')
+req.on('data', params => {
+		
+	postParams += params;
+});
+req.on('end',() => {
+		
+	console.log(querystring.parse(postParams))
+});
+================
+静态资源  相同的请求地址资源一样
+动态资源  相同的请求地址不用的响应资源
+const mime = require('mime');
+let type = mime.getType(realPath);
+fs.readFile((err,result)=>{})
+===============
+同步api和异步api
+同步 :   从上到下执行   有返回值
+异步 :   不会阻塞后续代码的执行      读取文件 
+=======promise
+propmise函数  异步编程的改进
+let promise = new Promise((resolve,reject){
+	resolve(result);
+         	reject(err);
+})
+.then((res)=>{
+	console.log(res)
+})  
+.catch(err=>{
+	console.log(err)
+})
+==========async
+异步函数es7 async
+async 关键字  不用写promise  写在函数前面
+await 关键字  不用写then   跟promise对象
+throw  抛出错误
+return  返回值
+=============promisfiy
+// 改造异步函数  返回promise以支持异步函数
+const promisify = require('util').promisify;
+// 改造异步函数fs.readFile
+const readFile = promisify(fs.readFile);
+node的全局对象是global
+global.console.log('我是global对象下的console.log方法输出的')
+
+===========================express框架
+1.可以与任何第三方 数据库进行通信
+2.可以使用任何的用户认证方式
+3.可以使用 任何符合express接口定义的模板引擎
+4.可以按照需要定义的工程目录
+
+01.简单实用express  require('express');   app = express(); 
+02.中间件   next();专递给下一个继续执行
+03.app.use() 
+ app.use('/request',(req,res,next)=>{
+    console.log('请求走了app.use中间件');
+    next();
+ });
+04.中间件应用  是否登录(写在最前)  访问路径不存在(写在最后)
+(1)路由保护
+(2)网站维护
+(3)网站不存在输出
+(4)处理错误中间件
+接收请求  做出相应  可以交给下一个中间件继续处理
+app.use((req,res,next)=>{   //get post都执行
+})
+
+05.错误处理中间件   
+ throw new Error('程序发生未知错误!');  
+ app.use((err, req, res, next) => {  
+    res.status(500).send(err.message);
+ });
+06.异步函数的错误处理捕获 异步函数使用try catch  
+07.构建模块化路由基础代码  
+const home = express.Router(); //返回路由对象
+app.use('/home', home);
+home.get('/index',(req, res) => {   
+    res.send('index页面');
+})
+08.构建模块化路由
+09.如何获取get请求参数   res.send(req.query);
+10.如何获取post请求参数  
+const bodyParser = require('body-parser');
+app.use(bodyParser.urlencoded({ extended: false })); 
+res.send(req.body);
+11.app.use方法  返回一个函数即可
+12.路由参数      
+app.get('/index/:id/:name/:age',(req, res) =>{
+    res.send(req.params); //req.params是:id这种    req.query是id=1这种
+});
+13.静态资源访问
+app.use('/static',express.static(path.join(__dirname, 'public')));
+app.get('/', (req, res)=>{
+    res.send('ok')
+});
+http://localhost:3000/static/lyt/1.jpg    获取当前目录下public文件夹下lyt/1.jpg
+14.模板引擎
+// 1.模板后缀  模板引擎
+app.engine('art', require('express-art-template'));
+// 2.告诉express框架模板存放的位置
+app.set('views', path.join(__dirname, 'views'));
+// 3.设置模板引擎后缀
+app.set('view engine', 'art'); 
+// 1.拼接模板路径
+// 2.拼接模板后缀
+// 3.哪个模板使用哪个模板引擎
+// 4.将拼接结果响应给客户端
+res.render('index',{ msg: 'message' }) //.art省掉
+15.app.locals 放在对象下的users
+app.locals.users = [{
+        name: 'zhangsan',
+        age: 20
+    },{
+        name: 'joycechu',
+        age: 18
+    }];
+// 模板引擎渲染
+<ul>
+    {{each users}}
+    <li>{{$value.name}}</li>
+    <li>{{$value.age}}</li>
+    {{/each}}
+</ul>
+
+=======补充
+1.res的其他用法
+res.redirect('http://www.baidu.com');
+res.download('./01.js')
+res.jsonp('jack love rose');
+res.json([{name:'jack'}]);
+
+mongodb  非关系型数据库
+show dbs
+use test  使用数据库  不存在就新建
+db.test.insert({name:'林灿灿'})
+db.test.find()
+db.test.insertOne({name:'admin',password:123456})
+db.test.insertMany([
+{
+name:'张三',age:18
+},
+{
+name:'李四',age:19
+},
+{
+name:'王五',age:20
+}
+])
+db.test.find({age:18})
+操作符
+$lt  小于  $lte 小于等于
+$gt大于  $gte大于等于
+$ne  不等于
+db.test.find({age:{$lt: 18}})
+
+删除
+db.test.remove({age:20})
+
+db.test.remove()
+
+
+koa框架
+koa
+koa-router
+router =new Router()
+router.get('/',ctx=>{
+)
+
+rest client 检测接口的  vsc
+ej
+pug
+bcrypt  加密插件
+
+
+var gulp = require('gulp');
+// 插件
+var $ = require('gulp-load-plugins')() //引入的是函数，调用以后返回的是对象  所有插件都在$对象里
+var concat = require('gulp-concat');
+var rename = require('gulp-rename');
+var uglify = require('gulp-uglify');
+var less = require('gulp-less');
+// 用$使用驼峰命名
+var cssClean = require('gulp-clean-css');
+var htmlMin = require('gulp-htmlmin');
+// 实时更新
+var livereload = require('gulp-livereload');
+// var connect = require('gulp-connect');  //只有它用了$对象里的
+var open = require('open');
+
+//注册合并压缩js的任务
+gulp.task('js', function () {
+	//你的任务执行 具体过程  // 有return 是异步的  没有则是同步
+	return gulp.src('./src/js/*.js') //找目标原文件 将原文件的数据读取到gulp的内存中
+		// 'src/js/**/*.js' 深度遍历
+		.pipe($.concat('./build.js')) //合并js文件
+		.pipe(gulp.dest('dist/js/')) //临时输出
+		.pipe($.uglify()) //压缩js文件
+		.pipe($.rename({suffix:'.min'})) //重命名
+		.pipe(gulp.dest('dist/js/'))//输出
+		.pipe(livereload()) //实时加载
+		.pipe($.connect.reload()) //全自动需要
+});
+
+//注册编译less的任务
+gulp.task('less', function () {
+	return gulp.src('src/less/*.less')
+		.pipe($.less()) //将less文件转换为css文件
+		.pipe(gulp.dest('src/css/'))
+		.pipe(livereload())//实时加载
+		.pipe($.connect.reload()) //全自动需要
+});
+
+//注册合并压缩css的任务  less任务没有执行完就不能执行
+gulp.task('css',['less'],function () {
+
+	return gulp.src('src/css/*.css')
+		.pipe($.concat('build.css'))
+		.pipe(gulp.dest('dist/css/'))
+		.pipe($.rename({suffix:'.min'}))
+		.pipe($.cleanCss({compatibility: 'ie8'}))
+		.pipe(gulp.dest('dist/css/'))
+		.pipe(livereload())  //实时加载
+		.pipe($.connect.reload()) //全自动需要
+
+});
+
+//注册压缩html的任务
+gulp.task('html', function () {
+	return gulp.src('./src/index.html')
+		// 清楚空格
+		.pipe($.htmlmin({collapseWhitespace: true}))
+		.pipe(gulp.dest('dist/'))
+		.pipe(livereload())//实时加载
+		.pipe($.connect.reload()) //全自动需要
+});
+
+//注册监视的任务--->半自动
+gulp.task('watch',['default'], function () {
+	
+	//开启监视
+	livereload.listen();
+	//确认监视的目标并且绑定相应的任务
+	gulp.watch('src/js/*.js', ['js']);
+	gulp.watch(['src/css/*.css', 'src/less/*.less'], ['css', 'less']);//css任务依赖于less任务
+	// gulp.watch(['src/css/*.css', 'src/less/*.less'], ['css']);
+	gulp.watch(['src/*.html'], ['html']);
+});
+
+//注册一个全自动的任务
+gulp.task('server',['default'], function () {
+	//配置服务器选项
+	$.connect.server({
+		root : 'dist/',   //监视的源目标文件路径
+		livereload : true,//是否实时刷新
+		port : 5000       //开启端口号
+	});
+	open('http://localhost:5000/');
+
+	// 确认监视的目标并且绑定相应的任务  js变化的时候执行js任务
+	gulp.watch('src/js/*.js', ['js']);
+	gulp.watch(['src/css/*.css', 'src/less/*.less'], ['css']); 
+	// gulp.watch(['src/css/*.css', 'src/less/*.less'], ['css', 'less']);
+	gulp.watch(['src/*.html'], ['html']);
+})
+
+
+//注册一个默认任务
+gulp.task('default', ['js', 'less', 'css','html']);
+
+

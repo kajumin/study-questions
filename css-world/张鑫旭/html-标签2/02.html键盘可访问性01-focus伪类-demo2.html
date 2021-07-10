@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.outline {
+		    outline: 1px dotted Highlight;
+		    outline: 5px auto -webkit-focus-ring-color;
+		}
+		.container2 {
+		    display: inline-block;
+		}
+		.container2 .list {
+		    width: 80px;
+		    position: absolute;
+		    visibility: hidden;
+		    /*display: none;*/
+		    border: 1px solid #ccc;
+		    background: #fff;
+		}
+		.container2 .list a {
+		    display: block;
+		    padding: 5px 10px;
+		    color: #333;
+		}
+	</style>
+</head>
+<body>
+	<!-- 插件说明:
+	   1.监听document的键盘keydown事件和鼠标mousedown事件
+	   (1) 第一次tab到目标元素的时候  清除显示面板的outline状态
+	   (2) 
+	   上下左右事件时: 
+	   		判断是否为激活状态activeElement 
+	   		是否有对应面板 
+	   		对应面板是否显示状态
+	   		根据上下左右 加减索引 对应的子元素添加outline类状态 记录index索引和子元素
+	   enter事件时: 
+	        阻止默认行为, 让对应outline类的触发点击事件
+	    2.鼠标事件:  清除显示面板的outline状态
+
+	-->
+	<!-- 
+		a链接, focus状态下enter会触发点击事件
+	-->
+<div class="container2">
+	<a href="javascript:" class="trigger" data-target="list">更多操作▾</a>
+	<div class="list outline" id="list">
+	    <a href="javascript:">编辑</a>
+	    <a href="javascript:">删除</a>
+	</div>
+</div>
+<script type="text/javascript" src="../js/focus-keyword2.js"></script>
+<script type="text/javascript">
+	var trigger = document.querySelector('.trigger')
+	var list = document.querySelector('.list')
+	
+	trigger.onclick = function(e) {
+		console.log('click')
+		// click事件显示只能使用display:none隐藏 都可以
+		var visibility = list.style.visibility
+		if(visibility === 'visible') {
+			list.style.visibility = 'hidden'
+			// list.style.display = 'none'
+		} else {
+			list.style.visibility = 'visible'
+			// list.style.display = 'block'
+		}
+		e.stopPropagation();
+	}
+	document.onclick = function() {
+		var visibility = list.style.visibility
+		if(visibility === 'visible') {
+			list.style.visibility = 'hidden'
+			// list.style.display = 'none'
+		} 
+	}
+</script>
+</body>
+</html>

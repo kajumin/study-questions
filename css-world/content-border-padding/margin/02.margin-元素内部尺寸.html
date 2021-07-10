@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.section {
+			border: 1px solid red;
+		}
+		.p {
+			margin: 0;
+			border-bottom: 2px solid #adc;
+		}
+		.box1-1 {
+			width: 300px;
+			height: 100px;
+			padding: 15px;
+			background-color: red;
+		}
+		.box1-2 {
+			width: 300px;
+			margin: 0 auto;
+		}
+		.box1-2 .son {
+			margin: 0 -20px;
+			background-color: red;
+		}
+		.box2 {
+			width: 340px;
+			margin: 0 auto;
+		}
+		ul {
+			padding: 0;
+			margin-right: -20px;
+			background-color: red;
+			/*border: 1px solid red;*/
+		}
+		li {
+			float: left;
+			width: 100px;
+			margin-right: 20px;
+			background-color: #adc;
+			text-align: center;
+			list-style-type: none;
+		}
+		.clearFix:after {
+			content: "";
+			display: block;
+			clear: both;
+			height: 0;
+			font-size: 0;
+			visibility: hidden;
+		}
+	</style>
+</head>
+<body>
+<!-- 
+	2.margin与元素的内部尺寸
+	margin也可以改变元素的可视尺寸, 但是和padding是相反的, 对于padding, 元素设定了width或者保持包裹性的时候, padding才会改变元素的尺寸, 对于margin相反, 元素设定了width或者保持包裹性的时候, margin对尺寸没有影响, 
+
+    只有元素是充分利用可用空间状态的时候(width:auto;), margin才可以改变元素的可视尺寸
+  absolute对立方向都设置了同样可以
+  
+  	box1没有改变可视宽度, 因为宽度设置死了
+	1.增加可用的宽度 
+	2.两端对齐 ul增加可用宽度
+-->
+	<div class="section">
+		<p>padding与margin改变内部尺寸的不同, 可视尺寸</p>
+		<div class="box1-1">中国</div>
+	 	<div class="box1-2">
+	 		<div class="son">中国</div>
+	 	</div>
+	</div>
+ 	
+ 	<p class="p">两端对齐</p>
+ 	<div class="box2">
+	<ul class="clearFix">
+		<li>列表1</li>
+		<li>列表2</li>
+		<li>列表3</li>
+		<li>列表4</li>
+		<li>列表5</li>
+		<li>列表6</li>
+	</ul>
+</div>
+</body>
+</html>

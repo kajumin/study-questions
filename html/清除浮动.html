@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.clearfix::after {
+			content: '';
+			clear: both;
+			display: block;
+			height: 0;
+			visibility: hidden;
+		}
+		.clearfix {
+			*zoom: 1;
+		}
+		.par {
+			height: 200px;
+			background-color: red;
+			
+		}
+		.son{
+			float: left;
+			width: 200px;
+			height: 200px;
+			background-color: green;
+		}
+		.par2 {
+			/*display: table;*/
+			background-color: red;
+			overflow: auto;
+		}
+		.son2{
+			float: left;
+			width: 200px;
+			height: 200px;
+			background-color: green;
+		}
+		.par3 {
+			/*display: table;*/
+			/*display: table-cell;*/
+			display: table-caption;
+			background-color: red;
+		}
+		.son3{
+			float: left;
+			width: 200px;
+			height: 200px;
+			background-color: green;
+		}
+		.par4 {
+			display: inline-block;
+			background-color: red;
+		}
+		.son4{
+			float: left;
+			width: 200px;
+			height: 200px;
+			background-color: green;
+		}
+		.par5{
+			position: absolute;
+			left: 0;
+			top: 0;
+		}
+		.son5{
+			float: left;
+			width: 200px;
+			height: 200px;
+			background-color: green;
+		}
+		
+	</style>
+</head>
+<body>
+	<!-- 
+	1.伪元素
+	2.overflow: hidden
+	3.父元素 display: inline-block  table table-cell table-caption
+	4.父元素 absolute fixed
+	-->
+<div class="par clearfix">
+	<div class="son"></div>
+</div>
+
+<div class="par2">
+	<div class="son2"></div>
+</div>
+<div class="par3">
+	<div class="son3"></div>
+</div>
+<div class="par4">
+	<div class="son4"></div>
+</div>
+<div class="par5">
+	<div class="son5"></div>
+</div>
+<script type="text/javascript">
+	var arr = [1,2,3,2,5,4,8,7,5,6,9,5].find(function(item,index){
+		if(item == 2){
+			console.log(index)
+			return item;
+		}
+		// return item == 2;
+	});
+	console.log(arr)
+</script>
+</body>
+</html>

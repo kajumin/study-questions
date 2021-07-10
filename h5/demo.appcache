@@ -1,0 +1,13 @@
+CACHE MANIFEST
+#V1.0.0
+../images/lyt/1.jpg
+
+NETWORK:
+#../images/lyt/2.jpg
+
+
+FALLBACK:
+#替换不正确的路径  比如:http://127.0.0.1:8080/luan124545.html
+/ /404.html
+#替换不缓存的图片
+../images/ ../images/lyt/3.jpg

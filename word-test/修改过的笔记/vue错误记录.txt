@@ -1,0 +1,15 @@
+=============================
+ No valid exports main found for 'D:\计算机\vue\vue-demo\component-demo\node_modules\colorette'
+解决: 
+node_modules下autoprefixer.js文件
+var colorette = require('colorette');
+改为: var chalk = require('chalk');
+===koa版本太高 
+No valid exports main found for 'D:\计算机\vue\vue-demo\vue-ssr-tech\node_modules\koa'
+
+
+===============node-sass错误
+npm rebuild node-sass
+
+===============import进来的不是一个函数, 或者不存在
+[Vue warn]: Error in created hook: "TypeError: Object(...) is not a function"

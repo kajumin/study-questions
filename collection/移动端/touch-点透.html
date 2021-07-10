@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title></title>
+  <style>
+    .box1 {
+      position: relative;
+      width: 200px;
+      height: 200px;
+    }
+    .box1 .test-back {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 200px;
+      width: 200px;
+      background: transparent;
+    }
+    .box1 .test {
+      position: absolute;
+      top: 0;
+      left: 0;
+      opacity: 0.5;
+      height: 200px;
+      width: 200px;
+      background: lightblue;
+    }
+    
+    .box2 {
+      position: relative;
+      width: 200px;
+      height: 200px;
+    }
+    .box2 .son1 {
+      height: 200px;
+      background-color: red;
+    }
+    .box2 .son2 {
+      position: absolute;
+      top: 0;
+      left: 0;
+      opacity: 0.5;
+      height: 200px;
+      width: 200px;
+      background: lightblue;
+    }
+  </style>
+</head>
+<body>
+  <div class="box1">
+    <a href="https://baidu.com" class="a">百度</a>
+    <p>1246</p>
+    <div class="test-back">1234679</div>
+    <div id="test" class="test">1234679</div>
+  </div>
+  <div class="box2">
+    <div class="son1"></div>
+    <div class="son2"></div>
+  </div>
+  <p>123456798</p>
+  <div class="" style="height: 10000px;background-color: red;"></div>
+  
+  <script>
+    //浅蓝色的半透明div被点击(触发touch事件)后，如果点击位置正好位于链接的上方，则会触发链接跳转的默认行为。详细解释是，点击页面后，浏览器会记录所点击的页面坐标，300ms后，在该坐标找到元素。在该元素上触发点击行为。因此，如果300ms内同一页面坐标的上层元素消失后，300ms后在下层元素上触发点击行为。这就造成了点透问题
+
+    // 点击一个层叠元素后, 上面那个元素touch事件之后消失了, 300ms后, 会导致下面那个元素也会触发点击事件
+    (function () {
+      var
+        elesMap = {
+          touchObj: document.getElementById('test')
+        },
+        fnHide, onTouch;
+      fnHide = function (type) {
+        elesMap.touchObj.style.display = 'none';
+      };
+      onTouch = function (event) {
+          // setTimeout(function(){
+            fnHide();
+          // },300);
+      };
+      elesMap.touchObj.addEventListener('touchstart', function(event) {onTouch(event);});
+
+
+      var son1 = document.querySelector('.son1');
+      var son2 = document.querySelector('.son2');
+      
+      son1.onclick = function() {
+        console.log('son1 click')
+      }
+      son2.onclick = function() {
+        son2.style.display = 'none';
+        console.log('son2 click')
+      }
+
+      // 修复点透 
+      // (1) touch事件添加延迟
+      // (2) 缓动动画 增加300ms的过渡效果 display: none;
+      // (3) 加入中间层的dom元素，让中间层接受这个穿透事件，稍后隐藏
+      // (4) 上下两级都使用tap事件，但默认行为不可避免
+      // (5) document上touchstart 阻止默认行为
+      //  但是chrome浏览器在window document body中的touchstart touchmove wheel事件阻止默认行为是不行的
+      // 但是会导致页面无法滚动、文本无法选中, 恢复使用e.stopPropation()
+      var a = document.querySelector('.a'); 
+      var box1 = document.querySelector('.box1'); 
+      var testback = document.querySelector('.test-back'); 
+      // console.log(a)
+      testback.onclick = function() {
+        this.style.display = 'none';
+        console.log('testback hidden')
+      }
+      document.addEventListener('touchstart', function(e){
+        console.log('document touchstart')
+        // e.preventDefault(); //passive:false才能阻止默认行为
+        // true报错为: 
+        //    无法防止被动事件侦听器调用中的默认值。
+        // 不写报错为: 
+        //    由于目标被视为被动，因此无法防止被动事件侦听器中的默认值。
+
+      }, {
+        // passive: false
+      }); 
+      // a.addEventListener('touchstart', function(){
+      //   window.location.href = 'https://cnblogs.com';
+      //   console.log('a touchstart')  
+      // });
+      // box1.addEventListener('touchstart',function(e){
+      //   // 如果在某个元素上，需要恢复文本选中的行为，则可以使用阻止冒泡来恢复
+      //   e.stopPropagation();
+      // })
+      
+      // document.addEventListener('touchmove', function(e){
+      //   console.log('document touchmove')
+      //   e.preventDefault(); //passive:false才能阻止默认行为
+      // });
+      // document.addEventListener('wheel', function(e){
+      //   console.log('document wheel')
+      //   e.preventDefault(); //passive:false才能阻止默认行为
+      // });
+      // document.body.addEventListener('touchmove', function(e){
+      //   console.log('document touchmove')
+      //   e.preventDefault(); //passive:false才能阻止默认行为
+      // });
+      // document.body.addEventListener('wheel', function(e){
+      //   console.log('document wheel')
+      //   e.preventDefault(); //passive:false才能阻止默认行为
+      // });
+      // window.addEventListener('touchmove', function(e){
+      //   console.log('document touchmove')
+      //   e.preventDefault(); //passive:false才能阻止默认行为
+      // });
+      // window.addEventListener('wheel', function(e){
+      //   console.log('document wheel')
+      //   e.preventDefault(); //passive:false才能阻止默认行为
+      // });
+
+
+
+      // 控制监听器是在捕获阶段执行还是在冒泡阶段执行的 useCapture 参数
+      // (1)addEventListener(type, listener[, useCapture ])
+      // (2)addEventListener(type, listener[, options ])
+
+      // addEventListener(type, listener, {
+      //   capture: false,
+      //   passive: false,
+      //   once: false
+      // })
+    })(); 
+  </script>
+</body>
+</html>

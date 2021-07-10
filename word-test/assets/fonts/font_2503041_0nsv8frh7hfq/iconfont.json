@@ -1,0 +1,23 @@
+{
+  "id": "2503041",
+  "name": "sass",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "6352501",
+      "name": "扫一扫",
+      "font_class": "saoyisao",
+      "unicode": "e672",
+      "unicode_decimal": 58994
+    },
+    {
+      "icon_id": "1191867",
+      "name": "search",
+      "font_class": "search",
+      "unicode": "e61f",
+      "unicode_decimal": 58911
+    }
+  ]
+}

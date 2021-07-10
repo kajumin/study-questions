@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		body {
+			margin: 0;
+		}
+		.box1 {
+			line-height: 50px;
+		}
+		.box1 .son {
+			background-color: red;
+		}
+		.box1 .son:nth-child(2) {
+			vertical-align: 10px;
+		}
+		.box1 .son:nth-child(3) {
+			vertical-align: middle;
+		}
+		.box1 .son:nth-child(4) {
+			vertical-align: -10px;
+		}
+	</style>
+</head>
+<body>
+	<!-- 
+	1.vertical-align: 数值(px/ex) 关键字 百分比
+	middle top bottom text-top text-bottom
+	 -->
+<div class="box1">
+	<span class="son">中国</span>
+	<span class="son">中国</span>
+	<span class="son">中国</span>
+	<span class="son">中国</span>
+</div>
+</body>
+</html>

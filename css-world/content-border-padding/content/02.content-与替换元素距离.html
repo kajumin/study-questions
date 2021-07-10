@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.img1 {
+			width: 470px;
+			display: block;
+			outline: 1px solid;
+		}
+		.img2 {
+			content: url('../../images/1.jpg');
+		}
+		.box2 {
+			padding: 10px;
+			border: 10px solid #cd0000;
+		}
+		.box2::after {
+			content: '伪元素生成的内容';
+		}
+		.box2:empty {
+			border-style: dashed;
+		}
+	</style>
+</head>
+<body>
+<!-- 
+	1.普通元素和替换元素之间的距离
+	(1)src
+	(2)content
+	
+	2.content和替换元素之间的关系
+	content生成的内容都是替换元素, 所以替换元素和普通元素内容有很多不同的特性表现
+	(1)content生成的文本无法被选中,无法复制
+	(2)无法左右:empty伪类, 生成的内容依然当做是空
+	(3)无法获取动态生成的值
+ -->
+ <div>
+ 	<p>(1)src属性</p>
+ 	<img>
+ 	<img class="img1" alt="任意值">
+ </div>
+
+ <div>
+ 	<p>(2)content属性</p>
+ 	<img src="../../images/1.jpg">
+ 	<img class="img2">
+ </div>
+ <div>
+ 	<p>content生成的替换元素和普通元素</p>
+ 	<div class="box2">有内容</div>
+ 	<div class="box2"></div>
+ </div>
+ 
+</body>
+</html>

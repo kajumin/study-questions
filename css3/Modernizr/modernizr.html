@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.box1 {
+			width: 100px;
+			height: 100px;
+			background-color: #096;
+		}
+		.boxshadow .box1 {
+			box-shadow: 1px 1px 8px rgba(0,0,0,.5);
+		}
+		.no-boxshadow .box1 {
+			border: 1px solid red;
+		}
+	</style>
+	<!-- 使其支持min-width max-width -->
+	<!--[if lte IE 8]>
+ 	<script src="js/respond.min.js" type="text/javascript"></script>
+	<![endif]-->
+</head>
+<body>
+
+<div class="box1">中国</div>
+<script type="text/javascript" src="modernizr-custom.js"></script>
+<script type="text/javascript">
+	// 使用的网站: https://andthewinnerisnt.com/
+	
+	// 提供了load功能允许你加载一些shim/polyfill脚本来达到支持的目的（关于shim/polyfill的信息请访问：https://github.com/Modernizr/Modernizr/wiki/HTML5-Cross-Browser-Polyfills）
+
+	// 1.使用Modernizr的load()函数来动态加载脚本，该函数的test属性是表明要测试是否支持的新特性，如果测试成功支持的话，就加载yep属性设置的脚本，如果不支持就加载nope属性设置的脚本，不管是否支持，both属性里设置的脚本都会加载的。例子代码如下：
+	Modernizr.load({
+    	test: Modernizr.canvas,
+    	yep:  'needs-jQuery.js',
+    	nope: 'jquery-3.4.1.min.js', 
+    	both: 'jquery-3.4.1.min.js' 
+	});
+
+
+	// 2.加载cdn失败时, 可以加载备用的文件
+	// Modernizr.load([
+	//     {
+	//         load: 'https://cdn.bootcdn.net/ajax/libs/jquery/1.10.0/juery.min.js',
+	//         complete: function () {
+	//         	console.log('complete')
+	//             if (!window.jQuery) {
+	//                 Modernizr.load('jquery-3.4.1.min.js');
+	//             }
+	//         }
+	//     },
+	//     {
+	//         // This will wait for the fallback to load and
+	//         // execute if it needs to.
+	//         load: './needs-jQuery.js'
+	//     }
+	// ]);
+</script>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.img1 {
+			transition: transform 3s;
+		}
+		p:hover + .img1 {
+			transform: rotateX(60deg);
+		}
+		.img2 {
+			transition: transform 3s;
+		}
+		p:hover + .img2 {
+			transform: rotateY(60deg);
+		}
+		.img3 {
+			transition: transform 3s;
+		}
+		p:hover + .img3 {
+			transform: rotateZ(60deg);
+		}
+
+		.box1 {
+			perspective: 500px;
+		}
+		p:hover + .box1-img {
+			transform: rotateY(80deg);
+		}
+	</style>
+</head>
+<body>
+	<!-- 
+		1.rotateX 正值上向里 顺时针
+		2.rotateY 正值右向里 顺时针
+		3.rotateZ 正值顺时针 右向下
+		4.体会视距
+
+	 -->
+<p>rotateX 上向里</p>
+<img class="img1" src="../../images/1.jpg">
+<p>rotateY 右向里</p>
+<img class="img2" src="../../images/1.jpg">
+<p>rotateZ 正值顺时针</p>
+<img class="img3" src="../../images/1.jpg">
+
+<div class="box1">
+	<p>体会视距</p>
+	<img class="box1-img" src="../../images/1.jpg">
+</div>
+
+
+
+
+</body>
+</html>

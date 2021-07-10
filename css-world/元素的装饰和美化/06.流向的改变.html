@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		body {
+			margin: 0;
+		}
+		img {
+			width: 20px;
+			height: 20px;
+		}
+		.model {
+			position: absolute;
+			left: 0;
+			right: 0;
+			top: 0;
+			bottom: 0;
+			background-color: #eee;	
+		}
+		.dialog {
+			position: absolute;
+			left: 50%;
+			top: 50%;
+			width: 300px;
+			height: 200px;
+			margin-left: -150px;
+			margin-top: -100px;
+			background-color: #fff;
+		}
+		.dialog-content {
+			height: 150px;
+		}
+		.dialog-footer {
+			text-align: center;
+		}
+		a {
+			display: inline-block;
+			text-decoration: none;
+			box-sizing: border-box;
+			margin: 0 10px;
+			padding: 5px 25px;
+			border: 1px solid #eee;
+		}
+		.cancel {
+			background-color: #fff;
+			color: #000;
+		}
+		.confirm {
+			background-color: red;
+			color: #fff;
+		}
+		@media screen and (max-width: 480px) {
+			.dialog-footer {
+				direction: rtl;
+			}
+		}
+		.ell {
+			width: 240px;
+			white-space: nowrap;
+			text-overflow: ellipsis;
+			overflow: hidden;
+		}
+		.box {
+			direction: rtl;
+		}
+		.box1 {
+			direction: rtl;
+			unicode-bidi: normal;
+		}
+		.box5 {
+			direction: rtl;
+			unicode-bidi: bidi-override;
+		}
+		.box5 > span {
+			background-color: #ddd;
+		}
+	</style>
+</head>
+<body>
+<!-- <div class="model">
+	<div class="dialog">
+		<div class="dialog-content"></div>
+		<div class="dialog-footer">
+			<a href="#" class="confirm">确定</a>
+			<a href="#" class="cancel">取消</a>
+		</div>
+	</div>
+</div> -->
+<p class="ell" dir="ltr">开头是我, 这是中间, 然后就是结束</p>
+<p class="ell" dir="rtl">开头是我, 这是中间, 然后就是结束</p>
+
+<!--
+	改变水平流向的direction  可以被继承
+direction: rtl | ltr;
+unicode-bidi: normal | embed | bidi-override
+
+normal:
+dir="rtl" 图片 按钮 问号 加号之类的字符会从右到左
+中文 英文还是从左到右
+混合的话就从左到右
+
+embed:
+作用在内联元素上, 独立内嵌, 不受外部影响direction
+
+bidi-override: 全部反序 因为normal只有图片按钮 加号之类符号反序  
+-->
+<div class="box">
+	中国1中国2
+</div>
+<div class="box">
+	<span>中国1</span><span>中国2</span>
+</div>
+<div class="box">
+	<img src="../images/1.jpg">
+	<span>中国1</span>
+	<span>中国2</span>
+</div>
+<div class="box">
+	<img src="../images/1.jpg">
+	<span>hello world</span>
+	<span>hello2 world2</span>
+</div>
+<div class="box">
+	<img src="../images/1.jpg">
+	<span>hello world</span>
+	<span>&</span>
+</div>
+<div class="box">
+	<img src="../images/1.jpg">
+	<span>hello world</span>
+	<span>&</span>
+	<span>hello2 world2</span>
+	<span>?</span>
+</div>
+<div class="box">
+	<span>&?</span><span>+-</span>
+</div>
+
+<p>里面的span的符号同样是反序</p>
+<div class="box1">
+	<img src="../images/1.jpg">
+	<span>中国</span>
+	<span>?+</span>
+	<span>&*</span>
+</div>
+
+
+<p class="box5">开头是我, <span style="unicode-bidi: normal;">这是中间</span>,然后结束</p>
+<p class="box5">开头是我, <span>这是中间</span>,然后结束</p>
+<p class="box5">开头是我, <span style="unicode-bidi: embed;">这是中间</span>,然后结束</p>
+<p class="box5">开头是我, <span>&#x202A;这是中间&#x202C;</span>,然后结束</p>
+	
+<p class="box6">&#x202E;一二三四五六七八九十</p>
+<p class="box6" style="direction: rtl;unicode-bidi: bidi-override;">一二三四五六七八九十</p>
+</body>
+</html>

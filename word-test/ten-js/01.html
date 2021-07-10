@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title></title>
+  </head>
+  <body>
+    <!-- 
+    1.typeof null === object
+    因为值保存在32位的内存单元里, 包含1-3位的类型标志和实际数据的值(在最后)
+    而 object -> 000   null -> 全部都是0  所以判断类型会是object
+    2.0.1+0.2 === 0.3 -> false
+    3. a==1&&a==2&&a==3?  让它成立
+    4.反转字符串
+    5.输出1-10数字
+    6.this指向
+    7.数据类型 7个 6个
+    8.symbol作用: (1)命名冲突 (2)私有变量(不会被遍历) (3)symbol.iterator 统一的遍历接口编写
+    9.NaN  不是数字的数字 typeof NaN -> number
+    10.隐式类型转换
+      一般情况下，非基本数据类型的数据会 优先调用 valueOf() 来获取基本数据类型的值，
+      如果无法获取则继续调用 toString() 获取基本数据类型的值
+      (1)字符串和数字相加  转为字符串
+      (2)字符串和数字相减  转为number
+      (3)布尔值和数字运算  转为number
+      (4)对象与非对象 执行对象ToPrimitive(valueOf/toString）然后再进行比较
+   -->
+    <script>
+      // var var3 = {
+      //   value: 1,
+      //   valueOf() {
+      //     return this.value++
+      //   }
+      // }
+      // var var3 = {
+      //   value: 1,
+      //   toString() {
+      //     return this.value++
+      //   }
+      // }
+      var var3 = {
+        value: 1,
+        valueOf() {
+          console.log("valueOf");
+          return this.value++
+        },
+        toString() {
+          console.log("toString");
+          return this.value++
+        },
+      };
+      console.log(var3 == 1 && var3 == 2 && var3 == 3); //先调用valueOf
+      console.log(var3 + "abc"); //先调用valueOf
+      console.log(String(var3)); //先调用toString
+      console.log(!var3); //都不用调用 直接为false
+
+      var var4 = "bang";
+      console.log(var4.split("").reverse().join(""));
+
+      // 输出12345678910
+      for (var i = 0; i < 10; i++) {
+        (function (i) {
+          setTimeout(function timer() {
+            console.log(i);
+          }, i * 1000);
+        })(i);
+      }
+
+      // 隐式类型转换
+      console.log('a' + [[1]])
+      console.log(1 + [[1,2]])
+      console.log(false + [[1,2]])
+    </script>
+  </body>
+</html>

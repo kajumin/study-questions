@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.box1 {
+			width: 100px;
+			height: 100px;
+			background-color: red;
+		}
+		.son {
+			height: 50px;
+			background-color: green;
+		}
+	</style>
+</head>
+<body>
+<div class="box1">
+	<div class="son"></div>
+</div>
+<div style="height: 10000px; background: linear-gradient(to bottom, red, blue);" class="box2"></div>
+<script type="text/javascript">
+	var box1 = document.querySelector('.box1');
+	
+	var son = document.querySelector('.box1 .son');
+	// box1.addEventListener('click', function(e) {
+	//  	// 当设置useCapture: false/true;时
+	// 	console.log(e.target) // 没有区别
+	// 	console.log(e.currentTarget) // 没有区别
+	// 	console.log(e.eventPhase) //有区别 true(1捕获阶段) false(3冒泡阶段)
+	// 	console.log('click');
+	// }, false);
+
+
+	// box1.addEventListener('click', function(e) {
+	// 	console.log(e.eventPhase)
+	// 	console.log('click');
+	// }, {
+	// 	capture: false,
+	// 	once: true,
+	// 	passive: true
+	// });
+
+	//由于 touchstart 事件对象的 cancelable 属性为 true，也就是说它的默认行为可以被监听器通过 preventDefault() 方法阻止，那它的默认行为是什么呢，通常来说就是滚动当前页面（还可能是缩放页面），如果它的默认行为被阻止了，页面就必须静止不动。但浏览器无法预先知道一个监听器会不会调用 preventDefault()，它能做的只有等监听器执行完后再去执行默认行为，而监听器执行是要耗时的，有些甚至耗时很明显，这样就会导致页面卡顿。视频里也说了，即便监听器是个空函数，也会产生一定的卡顿，毕竟空函数的执行也会耗时。
+
+	// 有80%的滚动事件监听器是不会阻止默认行为的，也就是说大部分情况下，浏览器是白等了。所以，passive 监听器诞生了，passive 的意思是“顺从的”，表示它不会对事件的默认行为说 no，浏览器知道了一个监听器是 passive 的，它就可以在两个线程里同时执行监听器中的 JavaScript 代码和浏览器的默认行为了。
+
+	// 从 chrome56 开始，在 window、document 和 body 上注册的 touchstart 和 touchmove 事件处理函数，会默认为是 passive: true。浏览器忽略 preventDefault() 就可以第一时间滚动了。
+
+	// document document.body window下touch touchmove wheel阻止默认事件需要加passive: false; 默认为true;
+      
+	// document.addEventListener('touchmove', function(e){
+  	//   console.log('document touchmove')
+  	//   e.preventDefault(); //passive:false才能阻止默认行为
+  	// });
+
+	// true 比 false滑动更顺畅 chrome浏览器默认true
+	document.addEventListener('touchstart', function(e) {
+		console.log('document touchstart');
+		// e.preventDefault();
+	}, {
+		passive: true
+	})
+	document.addEventListener('touchmove', function(e) {
+		console.log('document touchmove');
+		// e.preventDefault();
+	}, {
+		passive: true
+	})
+	document.addEventListener('click', function(e) {
+		console.log('document click');
+	}, {
+		// passive: true
+	})
+
+	// 在passive的监听器里调用了preventDefault()，也无妨，因为 preventDefault() 不会产生任何效果
+
+	let event = new Event("foo", {  
+	// 创建一个 type为foo的事件对象，可以被阻止默认行为 
+	  "cancelable": true
+	})
+
+	document.addEventListener("foo", function(event) { // 在 document 上绑定 foo 事件的监听函数
+	  console.log(event.defaultPrevented) // false
+	  // event.preventDefault();
+	  console.log(event.defaultPrevented) // 还是 false，preventDefault() 无效
+	}, {
+	  passive: true
+	})
+	document.dispatchEvent(event) // 派发自定义事件
+
+
+	// 开发工具的支持
+	// 除了上面在 passive 的监听器里调用 preventDefault() 会发出警告外，Chrome 的开发者工具还会：
+
+    // 1. 发现耗时超过 100 毫秒的非 passive 的监听器，警告你加上 {passive: true}：
+    // 2. 给监听器对象增加 passive 属性，监听器对象在普通页面中是获取不到的，可以在 Event Listeners 面板中和通过调用 getEventListeners() Command Line API 获取到：
+	var box2 = document.querySelector('.box2');
+
+	// 如何删除事件removeEventListener
+	// 在第三个参数是布尔值的时候，addEventListener("foo", listener, true) 添加的监听器，必须用 removeEventListener("foo", listener, true) 才能删除掉。因为这个监听器也有可能还注册在了冒泡阶段，那样的话，同一个监听器实际上对应着两个监听器对象（通过 getEventListeners() 可看到）
+	var clickTrue = function(e) {
+		console.log('click true')
+		console.log(e.eventPhase)  //1
+	};
+	var clickFalse = function(e) {
+		console.log('click false') 
+		console.log(e.eventPhase) //3
+	};
+	// 
+	// box1.addEventListener('click', clickTrue, true)
+	// box1.addEventListener('click', clickTrue, true)
+	// box1.addEventListener('click', clickFalse, false)
+	// box1.addEventListener('click', clickFalse, false)
+	// passive和false绑定不能同时存在
+	// box1.addEventListener('click', clickFalse, { capture: true, passive: false})
+	// box1.addEventListener('click', clickFalse, {passive: true})
+	// box1.addEventListener('click', clickFalse, {passive: false})
+
+	// box1.removeEventListener('click', clickFalse);
+	// box1.removeEventListener('click', clickTrue, true);
+
+
+	box1.onclick = clickFalse;
+	box1.onclick = null;
+
+	// touchstart，touchmove，wheel优化的事件类型, 其他不可以
+	// 对于在同一个DOM对象身上添加的同一类型事件的监听器, 只要有一个不是 passive的，那浏览器就无法优化。
+	var supportsPassiveOption = false;
+	try {
+	  var opts = Object.defineProperty({}, 'passive', {
+	    get: function() {
+	      supportsPassiveOption = true;
+	    }
+	  });
+	  window.addEventListener('test', null, opts);
+	} catch (e) {}
+	// 可以这么用：
+	console.log('支持passive: true;', supportsPassiveOption) //true表示支持
+	if (supportsPassiveOption) {
+	    document.addEventListener("foo", clickFalse, { passive: true }) // 旧浏览器里第三参数会被自动转成 true，不是我们想要的
+	}
+	else {
+	    document.addEventListener("foo", clickFalse)
+	}
+</script>
+</body>
+</html>

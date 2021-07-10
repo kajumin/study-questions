@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<!-- 
+	1.直接使用script标签
+	2.设计成为通用的函数function myJsonp(src, callback, callbackname) {}
+	3.jquery方法使用 dataType指定为jsonp jsonpCallback指定callback函数名
+	 -->
+<script type="text/javascript" src="jquery-3.4.1.min.js"></script>
+<script type="text/javascript">
+	function fun(data) {
+		console.log(data)
+	}
+
+	function myjsonp(src, callback, callbackname){
+		// 给系统中创建一个全局变量，叫做callbackname，指向callback函数
+		// 定义
+		window[callbackname] = callback;
+		// 创建一个script节点
+		var script = document.createElement("script");
+		// 和image不一样，设置src并不会发出HTTP请求 
+		script.src = src;
+		script.type = "text/javascript";
+		// script标签的请求是在上树的时候发出，请求的是一个函数的执行语句
+		document.body.appendChild(script);
+		// 为了不污染页面，瞬间把script拿掉
+		document.body.removeChild(script);
+	}
+	myjsonp('data.txt?callback=fun', fun, 'fun')
+
+	// 不能在本地运行, 需要在http-sever下
+	$.ajax("./data.txt", {
+		// JSON跨域的时候要写一个dataType，注意不是type而是dataType
+		dataType: "jsonp",
+		// 要定义的函数名字，因为JSONP不缺执行，缺定义
+		jsonpCallback: "fun",
+		// 信息回来之后执行的事情
+		success: function(data){
+			console.log(data);  //这里得到了请求的数据
+		}
+	});
+</script>
+<script src='data.txt'></script>
+</body>
+</html>

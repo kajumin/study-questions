@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	
+<script type="text/javascript">
+	// 原型链继承
+	// (1)优点: 方法共享
+	// (2)缺点:
+	//  1.父类this.names和父类原型上引用数据类型被共享 一变全部实例都会变 
+	//    所以引用类型定义要在在自己构造函数体内
+	//  2.不能向父类传参
+	// function Father() {
+	//   this.names = ['ziyi1','ziyi1', 'ziyi1']
+	// }
+	// function Son() {}
+	// Father.prototype.sayName = 'hello'
+	// Father.prototype.hobby = ['音乐','游泳','跳舞'];
+	// // Son类的原型对象包含了Father类原型对象的方法和属性
+	// // 同时也包含了Father类实例对象的实例方法和实例属性
+	// Son.prototype = new Father()
+	// // 重写了Son类的原型对象
+	// Son.prototype.constructor = Son
+
+	// let son = new Son()
+	// let son2 = new Son()
+	// // 继承Father类实例对象的引用类型属性 
+	// // ["ziyi", "ziyi1", "ziyi2"]
+	// son.names.push('bang')
+	// // son.names = ['bang'] // 直接赋值新对象也是覆盖
+	// son.hobby.push('乒乓球')
+	// son.sayName = 'hello hello'
+
+	// // 父类上引用类型属性和原型上属性都是共享的
+	// console.log(son.hobby === son2.hobby)
+	// console.log(son2.hobby)
+
+	// console.log(son.names === son2.names)
+	// console.log(son2.names)
+
+	// // 修改基本类型会在对象中覆盖
+	// console.log(son.sayName === son2.sayName)
+	// console.log(son)
+	// for(let o in son) {
+	// 	// 包括原型链上的可遍历属性
+	// 	// console.log(o) //getName names hobby
+	// 	if(son.hasOwnProperty(o)){
+	// 		console.log(o) // getName 
+	// 	}
+		
+	// }
+
+	// 借助构造函数  
+	//1.解决父类this.names引用类型一改全改
+	//2.解决向父类传参
+	//缺点: 没有解决父类原型链上方法的实现  从而导致下面这个缺点
+	//缺点：方法都在构造函数中定义，每次创建实例都会创建一遍方法。
+	// function Father() {
+	//   this.names = ['ziyi','ziyi1', 'ziyi2']
+	// }
+	// Father.prototype.getNames = function() {
+	//   return this.names
+	// }
+	// function Son() {
+	//   // 让Son类的实例对象创建了和Father类实例对象一样的实例属性和实例方法
+	//   Father.call(this)
+	//   // Father.call(this)类似于在Son构造函数中执行
+	//   // this.names = ['ziyi','ziyi1', 'ziyi2']
+	// }
+	// let son = new Son()
+	// son.names.push('ziyi3')
+	// // ["ziyi", "ziyi1", "ziyi2", "ziyi3"]
+	// // 父类原型上的属性方法没有继承
+	// console.log(son.getNames) //undefined
+	// let son2 = new Son()
+
+	// // 解决了父类属性引用类型一改都改的缺点
+	// console.log(son.names === son2.names) //false
+	// console.log(son.names) 
+	// for(let o in son) {
+	// 	if(son.hasOwnProperty(o)){
+	// 		// 父类上的属性都是对象的属性
+	// 		console.log(o) //names  
+	// 	}	
+	// }
+
+
+	// 组合继承  结合原型链继承和借助构造函数继承
+	// (1)优点： 融合原型链继承和构造函数的优点，是JavaScript中最常用的继承模式
+	// (2)缺点:  父类属性方法多余  父类被调用两次
+	function Father(name,age) {
+	  this.name = name
+	  this.age = age
+	  // 引用类型的实例属性
+	  this.names = []
+	}
+	Father.prototype.getNames = function() {
+	  return this.names
+	}
+	function Son(name, age, job) {
+	  Father.call(this, name, age)
+	  this.job = job;
+	}
+	Son.prototype = new Father()
+	Son.prototype.constructor = Son
+	// console.log(Son.prototype.constructor)
+
+	// console.log(Object.getOwnPropertyDescriptors(Son.prototype))
+	// 原型式继承都存在防止constructor也能被遍历
+	// Object.defineProperty(Son.prototype, 'constructor' ,{
+	// 	value: Son,
+	// 	enumerable: false
+	// })
+
+	let son1 = new Son('ziyi2', 28, 'web')
+	son1.names.push('ziyi2')
+	
+	let son2 = new Son('ziyi2', 28, 'web')
+	son1.name = 'joycechu'
+	// 父类属性方法new时被创建新的
+	console.log(son1.names == son2.names) //false
+	console.log(son2.names)
+	
+	console.log(son1)
+
+	for(let o in son1) {
+		// console.log(o) //constructor也会被遍历
+		if(son1.hasOwnProperty(o)){
+			// 父类上的属性都是对象的属性
+			console.log(o) //names  
+		}
+	}
+</script>
+</body>
+</html>

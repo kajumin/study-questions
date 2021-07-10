@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<script type="text/javascript">
+
+	function memoize(fn) {
+	  const cache = {};
+	  return function (param) {
+	    if (cache[param]) {
+	      console.log('cached');
+	      return cache[param];
+	    } else {
+	      let result = fn(param);
+	      cache[param] = result;
+	      console.log(`not cached`);
+	      return result;
+	    }
+	  }
+	}
+
+	const toUpper = (str ="")=> str.toUpperCase();
+
+	const toUpperMemoized = memoize(toUpper);
+
+	toUpperMemoized("abcdef");
+	toUpperMemoized("abcdef");
+
+	// 接收一个个参数
+	console.log('接收一个个参数')
+	function memoize2(fn) {
+	  const cache = {};
+	  return (...args) => {
+	  	// console.log(args)
+	  	// console.log(cache)
+	    // const params = Array.prototype.slice.call(args);
+	    if (cache[args]) {
+	      console.log('cached');
+	      return cache[args];
+	    } else {
+	      let result = fn(...args);
+	      cache[args] = result;
+	      console.log(`not cached`);
+	      return cache[args];
+	    }
+	  }
+	}
+	const makeFullName = (fName, lName) => `${fName} ${lName}`;
+	const reduceAdd = (numbers, startingValue = 0) => numbers.reduce((total, cur) => total + cur, startingValue);
+
+	const memoizedMakeFullName = memoize2(makeFullName);
+	const memoizedReduceAdd = memoize2(reduceAdd);
+
+	console.log(memoizedMakeFullName("Marko", "Polo"));
+	console.log(memoizedMakeFullName("Marko", "Polo"));
+	// console.log(memoizedMakeFullName({name:"Marko"}, {age: 20}));
+
+	console.log(memoizedReduceAdd([1, 2, 3, 4, 5], 5)); //20
+	console.log(memoizedReduceAdd([1, 2, 3, 4, 5], 5)); //20
+
+	// console.log(Array.prototype.slice.call([1,2,3]));
+</script>
+</body>
+</html>

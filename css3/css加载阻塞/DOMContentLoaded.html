@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script type="text/javascript">
+		document.addEventListener('DOMContentLoaded', function() {
+			console.log(document.querySelector('h1').innerHTML)
+			console.log('DOMContentLoaded')
+		})
+		// 后面有js代码都会在css加载和js代码执行完之后执行DOMContentLoaded
+	</script>
+	<link rel="stylesheet" type="text/css" href="./bootstrap.css">
+	<!-- <script type="text/javascript">
+		
+		console.log('到我了没')
+	</script> -->
+</head>
+<body>
+	<h1>红色</h1>
+	<script type="text/javascript" src="./1.js"></script>
+	<!-- <script type="text/javascript">
+		console.log('再次到我了')
+	</script> -->
+</body>
+</html>

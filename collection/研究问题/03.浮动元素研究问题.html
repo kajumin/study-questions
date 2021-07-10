@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		body {
+			margin: 0;
+		}
+		.box {
+			margin-bottom: 20px;
+		}
+		.box1 > div {
+			width: 100px;
+			height: 100px;
+			/*无效*/
+			white-space: nowrap;
+			background-color: #eee;
+		}
+		.box1 .son {
+			float: left;
+			background-color: red;
+		}
+		.box1 .son:nth-child(4) {
+			margin-top: 1px;
+		}
+		.box1-4 {
+			width: 100px;
+			height: 100px;
+			background-color: #eee;
+		}
+		.box1-4 .son {
+			float: left;
+			width: 20px;
+			height: 20px;
+			margin: 3px;
+			background-color: red;
+		}
+		.box1-4 .son:nth-child(5) {
+			margin-top: 10px;
+		}
+		.box1-4 .son:nth-child(6) {
+			margin-top: -10px;
+		}
+		.box2 {
+			height: 21px;
+		}
+		.box2 .son {
+			float: left;
+		}
+		.box2 .son:nth-child(1) {
+			margin-top: -5px;
+		}
+		.box2 .son:nth-child(2) {
+			margin-top: 5px;
+		}
+		.box2 .son:nth-child(3) {
+			margin-right: 5px;
+		}
+		.box2 .son:nth-child(4) {
+			margin-left: 5px;
+		}
+		.clearfix:after {
+			content: '';
+			display: block;
+			clear: both;
+		}
+		.box2-1 span:nth-child(1) {
+			float: left;
+		}
+		.box2-2 div:nth-child(1) {
+			float: left;
+		}
+	</style>
+</head>
+<body>
+	<!-- 
+	1.浮动元素:
+		1.包裹性
+		2.块级化并格式上下文(bfc)
+		3.破坏文档流
+		4.没有任何margin合并, 可以控制上下左右, 并没有合并
+
+	2.第一个浮动元素 第二个内联元素(不会换行)/块级元素(不会换行) 第三个块级元素(都会换行)
+	3.清除浮动 clear: both;
+
+	-->
+<div class="box box1">
+	<div>
+		<div class="son">中国</div>
+		<div class="son">中国</div>
+		<div class="son">中国</div>
+		<div class="son">中国</div>
+		<div class="son">中国</div>
+		<div class="son">中国</div>
+		<div class="son">中国</div>
+	</div>
+</div>
+<div class="box box1-4">
+	<div class="son">中</div>
+	<div class="son">中</div>
+	<div class="son">中</div>
+	<div class="son">中</div>
+	<div class="son">中</div>
+	<div class="son">中</div>
+</div>
+
+<div class="box box2-1">
+	<span>中国</span>
+	<div>中国</div>
+	<p>123456</p>
+</div>
+<div class="box box2-2">
+	<div>中国</div>
+	<span>中国</span>
+	<p>123456</p>
+	
+</div>
+</body>
+</html>

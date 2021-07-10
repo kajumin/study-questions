@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<!--
+audio:  音频
+autoplay         自动播放
+controls         显示控件
+loop             循环播放
+preload          音频在页面加载时进行加载，并预备播放(若使用autoplay, 则忽略该属性)
+src              要播放的音频的URL     
+
+
+video: 视频
+src              要播放的视频的URL
+autoplay         自动播放
+controls         显示控件
+height           播放器高度
+width         　 播放器宽度
+loop             循环播放
+poster        　 规定视频下载时显示的图像，或者在用户点击播放按钮前显示的图像
+
+preload          视频在页面加载时进行加载，并预备播放(若使用autoplay,则忽略该属性)
+preload="none"   //当页面加载后不载入视频
+preload="auto"   //当页面加载后载入整个视频
+preload="meta"   //当页面加载后只载入元数据
+
+
+source: 为<video>和<audio>提供媒介资源
+src     规定媒体文件的URL
+type    规定媒体资源的MIME类型
+
+常见类型: 
+视频 [1]video/ogg [2]video/mp4 [3]video/webm
+音频 [1]audio/ogg [2]audio/mpeg
+
+方法: 
+canPlayType()  检测是否支持指定类型的音频或视频  返回值为:
+    'probable':浏览器最可能支持该类型
+ 	'maybe':浏览器也许支持该类型
+	'':浏览器不支持该类型
+load() 重新加载音频或视频元素
+play() 
+pause() 
+
+属性:
+1.buffer:
+buffered.length//获取已缓冲范围的数量
+buffered.start(index)//获取某个已缓冲范围的开始位置
+buffered.end(index)//获取某个已缓冲范围的结束位置
+buffered.end(0)//获取当前已缓冲的秒数
+2.currentSrc
+3.ended 是否已经结束
+4.duration  当前音频或视频的长度(以秒计)
+5.newworkState networkState
+6.paused  是否已经暂停
+7.played  已播范围是指音频或视频的时间范围 played.length played.start played.end
+8.readyState: 返回音频或视频的当前就绪状态
+readyState:0(没有关于音频或视频是否就绪的信息)
+readyState:1(关于音频或视频就绪的元数据)
+readyState:2(关于当前播放位置的数据是可用的，但没有足够的数据来播放下一帧)
+readyState:3(当前及至少下一帧的数据是可用的)
+readyState:4(可用数据足以开始播放)
+
+可读写: 
+1.autoplay  false true
+2.controls  false true
+3.crossOrigin  设置或返回CORS设置
+4.currentTime  设置或返回视频的当前位置
+5.defaultMuted 初始静音
+6.muted静音
+7.defaultPlaybackRate 初始倍速
+8.playbackRate  设置倍速
+9.loop 循环播放
+10.preload 设置或返回是否在页面加载后立即加载音频或视频 auto metadata none
+11.src 当前来源
+12.volume 设置或返回当前音量
+
+加载过程中事件: 
+loadstart:提示浏览器开始寻找指定的音频或视频
+progress:提示浏览器正在下载指定的音频或视频
+durationchange:提示音频或视频的时长已改变
+loadedmetadata:提示音频或视频的元数据已加载
+loadeddata:提示音频或视频的当前帧已加载，但没有足够数据播放下一帧
+canplay:提示浏览器能够开始播放指定的音频或视频
+canplaythrough:提示音频或视频能够不停顿地一直播放
+progress:提示浏览器正在下载指定的音频或视频
+
+影响视频数据加载的事件:
+abort:在音频或视频终止加载时触发
+error:在音频或视频加载发生错误时触发
+stalled:在浏览器尝试获取媒体数据，但数据不可用时触发
+suspend:在音频或视频数据被阻止加载时触发(可以是完成加载后触发，或者因为被暂停)
+empted:在发生故障并且文件突然不可用时触发
+
+按钮发生改变时触发:
+play:音频或视频文件已经就绪可以开始播放时触发
+playing:音频或视频已开始播放时触发
+ended:音频或视频文件播放完毕后触发
+pause:音频或视频文件暂停时触发
+ratechange:播放速度改变进触发
+seeked:指示定位已结束时触发
+seeking:正在进行指示定位时触发
+timeupdate:播放位置改变时触发[注意:播放和调整指示定位时都会触发]
+volumechange:音量改变时触发
+waiting:需要缓冲下一帧而停止时触发
+-->
+
+<video width="400" controls poster="./images/lyt/1.jpg">
+	<source src="images/123.mp4"  type="video/mp4">
+	<embed height="100" width="100" src="video/mp4" />
+</video>
+<video width="400" controls="controls">
+	<object data="video/mp4" width="320" height="240">
+		<!-- 备选内容 -->
+    	<embed src="images/123.mp4" width="320" height="240"/>
+  	</object>
+</video>
+<script type="text/javascript">
+	// var audio = document.querySelector('audio');
+	// console.log(audio.canPlayType('video/ogg'))
+</script>
+
+</body>
+</html>

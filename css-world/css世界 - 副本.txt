@@ -1,0 +1,269 @@
+1.流
+  流式css世界的一种基本的定位和布局机制 ,可以理解为现实世界的一套物理规则, 流跟现实世界的水流有异曲同工的表现
+  流体布局: 指的是利用流的特性实现的各类布局效果, 因为流具有自适应特性, 但是流体布局不等于自适应布局, 流体布局要窄得多
+                 常见的流体布局为div+css布局    table 布局不属于流体布局
+  css世界指的是css2.1   css2.1在IE8上全部支持
+2.专业术语
+   属性    height  color 
+   值       line-height: 1.5;中的1.5;  99px是一个长度值  #999是一个颜色值  百分比值  150%
+   关键字  solid  transparent  inherit
+   变量     currentColor
+   长度单位   s  ms  deg rad       numer + 长度单位 = length  
+                   相对长度单位:em ex vh vw 绝对长度单位: px  pt pc
+   功能符    url  calc  rgba hsla  attr scale  translate 
+   属性值    冒号后所有的内容  值 + 关键字 + 功能符
+   声明       color: transparent;
+   声明块    花括号{}
+   规则或规则集   .box1 {} 
+   选择器    类  id  属性  伪类  伪元素  
+   关系选择器   兄弟 ~   后代 空格    相邻后代 >   相邻兄弟 +
+   规则  以@开始的一些规则  @media  @font-face  @page  @support
+3.块级元素和内联元素
+   块级元素和display为block不是一个概念
+   块级元素的基本特征, 就是在一个水平流上只能单独显示一个元素, 多个块级元素则换行显示  div p table ul li
+   内联元素的基本特征, 就是可以和文字在一行显示, 图片 按钮 表单控件都是内联元素
+   外在盒子负责是否一行显示
+   内在盒子负责宽高, 内容显示
+
+   width:auto;
+   (1)充分利用可用空间
+   (2)收缩和包裹  浮动 绝对定位 inline-block table
+   (3)收缩到最小  table-layout:auto;
+   (4)超出容器限制
+   2.外部尺寸和流体特性
+   (1)正常流宽度
+   (2)格式化宽度
+   3.内部尺寸和流体特性
+  (1) 包裹性   包裹和自适应性 不超过包含块
+  (2) 首选最小宽度
+  (3) 最大宽度 等同于包裹性元素设置white-space:nowrap; 声明后的宽度
+       最大宽度的场景可以使用很大宽度(width: 2000px)
+  4.设置了宽度
+  (1)流动性丢失
+  (2)与现实世界表现一一致的困扰
+  5.height: 100%;生效
+     (1)设定显式的高度值
+     (2)使用绝对定位         百分比计算相对于padding-box
+   6.min-width/max-width  ie7支持
+      min-width/ min-height初始值是auto
+      (1)超越!important
+      (2)超越最大 min-width覆盖max-width
+
+    1.内联元素 和display为inline不是一个概念  inline-block  inline-table都是内联元素
+    特征: 可以和文字在一行显示 float元素不是内联元素
+    2.内联和模型
+    (1)内容区域  在ie/firefox下选择文字时的背景区域
+    (2)内联盒子  匿名内联盒子   em  span
+    (3)行框盒子  每一行就是一个行框盒子, 每一个横框盒子由一个一个内联盒子组成的
+    (4)包含盒子  该盒子由一行一行的行框盒子组成
+    3.幽灵空白节点
+    清除img下间隙 display: block;  float: left;  font-size: 0;  line-height: 0;
+4.content+padding+border+margin  盒尺寸
+   content:
+   替换元素:  通过修改某个属性值呈现的内容可以被替换的元素   img video iframe object textarea input 
+   替换元素特征: (1)内容外观不受页面css的影响, 只能通过样式接口
+                        (2)有自己的尺寸   300*150(video, iframe, canvas)  0(img) 不定(input) 
+                        (3)在很多css属性上有自己的一套表现规则  vertical-align
+   替换元素的尺寸计算规则:  (1)固有尺寸   img video(内容自己的尺寸) input不加修饰的尺寸
+                                         (2)html尺寸,  width = "200"
+                                         (3)css尺寸, 通过样式设置
+   注意: 
+   (1)固有尺寸含有固定的比例, 设置一边也可以
+   (2)内联替换元素和块级替换元素使用一套尺寸计算规则
+   (3)img标签没有src不会发请求
+   (4)img 默认是object-fit: fill;   img 没有src时伪元素才能生效
+
+   content生成和替换元素的关系:
+   (1)content生成的文本无法被选中,无法复制
+   (2)无法获取生成的值
+   (3)无法左右:empty伪类, 生成的内容依然当做是空
+
+    content生成技术都是使用在伪元素中::before ::after  也称为::before/::after伪元素技术
+    (1)辅助元素生成
+    (2)清除浮动
+    (3)生成字符内容 字体图标
+    (4)两端对齐
+    (5)图片生成  base64数据格式
+    (6)attr属性值内容生成
+    
+    counter计数器: 
+    counter-reset   普照源
+    counter-increment   普照
+    counter   输出  counter(name, style)
+    counter  输出   counters(name, style)   counters(wangxiaoer, '-') '. '
+    
+    padding 内边距
+    padding与元素尺寸:
+    (1)内联元素垂直方向上影响视觉表现, 内联元素没有可视宽度和可视高度的
+    (2)padding足够大, width无法约束
+    (3)登录 | 注册
+    (4) padding-top: 50px;     为fixed定位留出位置, 使用内联元素
+
+    padding与百分比值:   水平和垂直方向都相对于宽度  不支持赋值
+    (1)长方形2:1(20% 50%)  
+    (2)5:1头图(10% 50%)
+
+   padding 标签内置: 
+   (1)表单元素  input textarea button  select   
+   (2)checkbox radio没有padding
+   (3)button难以控制  使用a代替   有功能的按钮使用label代替
+
+   padding 与图形绘制
+   (1)三道杠
+   (2)双层圆点
+
+
+   margin  外边距
+   元素尺寸概念:
+   (1)元素尺寸(border-box)      =>box1.offsetWidth   =>  $('.box1').outerWidth()
+   (2)元素内部尺寸(padding-box) => box1.clientWidth    =>  $('.box1').innterWidth()
+   (3)元素外部尺寸(margin-box)  => 没有原生    =>  $('.box1').outerWidth(true)
+   
+   margin与内部尺寸:
+   margin可以改变内部尺寸, 与padding互补态势, 与padding前提相反, padding是元素设置了width或者保持包裹性的时候,
+   margin是元素充分利用可用空间的时候(absolute也可以), 可以改变元素的可视尺寸
+   在自适应布局中   左float: left;  右 margin-left: 200px;      两端对齐(低三栏不需要清除margin)   
+
+   margin与外部尺寸:
+   (1)底部留白  padding-bottom有兼容问题
+   (2)等高布局:
+      margin: 因为有overflow:hidden; 子元素定位带外面不行, 锚点定位时可能会乱
+      border: 兼容性好, 至少一侧定宽
+      table-cell: 天然等高布局  ie8以上                                              
+    
+   margin 与百分比值,  margin合并
+   margin百分比在垂直和水平方向上都是相对与宽度计算,   但垂直方向上存在margin合并 margin: 50%; 是2:1长方形
+
+  margin合并: 块级元素的上外边距和下外边距有时会合并为单个外边距      关键字: 块级元素和垂直方向上
+  场景: 相邻兄弟元素  父级和第一个/最后一个子元素, 空块级元素
+  阻止合并: margin-top合并
+	父元素设置为块级格式化上下文元素
+	父元素设置border-top值
+	父元素设置padding-top值
+	父元素和第一个子元素之间添加内联元素进行分割
+                阻止margin-bottom: 多一个height min-height max-height
+  计算规则: 正正取大值    正负取相加值   负负取最负值
+
+  margin: auto; 为闲置的尺寸而生   有时使用float: right;解决的问题可以使用width: auto;
+  填充规则: 
+  (1)如果一侧定值, 一侧auto,则auto为剩余空间大小
+  (2)如果两侧均是auto, 则平分剩余空间
+
+  margin无效情况:
+  (1)display:inline的非替换元素垂直方向的margin无效, 替换元素可以有效并且没有合并的问题
+  (2)tr td 和display:tabel-cell和table-row无效
+  (3)margin合并的时候,更改margin值不一定有效,  需要大于合并值
+  (4)绝对定位的非定位方向的margin值无效,  left:30%; margin-right: 30px;
+  (5)定高容器的子元素margin-bottom和宽度定死的子元素margin-right的定位无效
+  (6)鞭长莫及导致的margin无效  两栏布局中  margin-left小于左侧内容宽度 
+  (7)内联特性导致margin无效 大到一定值时  vertical-align
+
+  border: 边框
+  尺寸大小: thin  medium thick  
+  样式:  默认是none  solid dotted  dashed double
+
+  border与透明边框
+  (1) 右下方background定位的技巧
+  (2) 添加可点击区域大小
+  (3) 三角形绘制  梯形绘制
+  
+  等高布局技术: 左border-left的位置(通过计算浮动元素的高度撑高父元素)   右(overflow:hidden 通过内容高度撑高父元素)
+
+
+5.内联元素
+   字母x与css世界的基线   ->字母x的下边缘就是基线
+   字母x与css中的x-height ->  x的高度就是x-height    vertical-align:middle;  middle指的就是基线向上1/2x-height高度的位置
+         上行线高度   大写字母高度   中线  基线  下行线高度
+   字母x与css中的ex ->  ex就是字母x的高度, 相对单位,  可以用于图标与文字垂直居中
+   内联元素的高度之本 - line-height
+          行距 = line-height -font-size   行高不能设置负值   但是行距可以是负值
+          内容区域和em-box不相同,  宋体时相同,  宋体时显示出em-box和半行距
+          上半行距向上取整    下半行间距向下取整   
+   内联元素垂直居中  -> 单行  和 多行(幽灵空白节点, 创建行框盒子, 重置行高)
+   深入line-height的各类属性值   ->数值(1.5)  百分比值(150%)  长度值(1.5em 30px)
+         不同浏览器 不同操作系统下默认的字体不一样,  所以line-height默认值也会不一样  chrome微软雅黑  行高1.32  宋体1.141
+         line-height: 1.42857143; //20px   根据
+   line-height的大值特性  幽灵空白节点
+          div(96px ) > span(20px)    div(20px)  > span(96px)
+
+   vertical-align开启  -> line-height: 32px; font-size: 24px;  最终高度35px
+   vertical-align家族基本认识
+             线类:  baseline middle(相对于基线)   top  bottom(相对于行框盒子)
+             文本类:  text-top  text-bottom  没有什么作用
+             上标下标类:  sub super   内联元素: 元素顶部与当前行框盒子的顶部对齐  两张图片一起(一上一下)
+              数值百分比类:  20px 2em 20%;   百分比值很少用 , 因为行高通常是确定的
+   vertical-align作用的前提   内联元素和table-cell
+             图片垂直居中无效  幽灵空白节点高度不够 , 设置行高等于高度
+  vertical-align和line-height之间的关系 -> vertical-align百分比值是相对于line-height计算的
+            开启的案例中, 幽灵空白节点和span标签内的font-size大小不一致, font-size越大基线越向下, 导致上下位移
+                  解决办法: (1)font-size保持一致, (2) 该表垂直对齐方式  top bottom -3px
+            图片下间隙解决方案:  block  float font-size line-height  vertical-align
+
+   深入理解vertical-align线性类属性值
+          vertical-align与inline-block: 里面没有内联元素, overflow不是visible, 基线就是margin低边缘, 
+                    否则是最后一行内联元素的基线
+                    图标对齐技巧: 图标高度和当前行高都是20px, 图标标签里面有字符(伪元素)   图标css不使用hidden隐藏
+                           外部设置行高   内部设置行高   同时设置行高可以实现多个
+          vertical-align: top/bottom
+                    内联元素: 元素顶部和当前行框盒子的顶部对齐   与图片时
+          vertical-align: super/sub  对应的就是sub和sup标签
+
+6.流的破坏
+   浮动的本质就是为了实现文字环绕效果, 图文显示  后来用于布局
+   浮动特性: (1)包裹性 (2) 块级化并格式化上下文  (3)破坏文档流  (4) 没有任何margin合并
+   浮动作用机制:  浮动参考就是行框盒子
+         (1)float特性表现是父元素高度塌陷, 为了实现文字环绕
+         (2)行框黑照和浮动元素的不可重叠性, 导致设置margin-left负值无作用
+  浮动与流体布局: 
+        两栏自适应 和 三栏自适应(margin: 0 70px缩小)
+  浮动清除clear: 元素盒子的边不能和前面的浮动元素相邻  -> clear: both; (两行)
+         (1)clear:both;前面是浮动元素 margin-top;无效
+         (2)无法消除浮动对行框盒子的限制
+
+   BFC: 块级格式化上下文  内部子元素不影响外部的元素
+         触发BFC:
+               (1)html根元素   (2)float不为none  (3)overflow: auto scroll hidden;
+               (4)position不为relative和static   (5)display为table-cell, table-caption inline-block
+         BFC与流体布局   兼容到ie7以上的自适应布局
+               (1)overflow:hidden; 
+               (2)table-cell;
+        最佳结界overflow
+              剪裁界线border-box
+              overflow与滚动条 宽度17px   -> 页面不晃动技巧
+               依赖于overflow的样式表现  
+                     单行省略号  |  多行省略号
+                     overflow 与 锚点定位
+
+      position: absolute;绝对定位
+           包含块: (1)根元素   (2)其他元素content-box边界 (3)absolute: fixed;  (4)absolute, 边界是padding-box
+           absolute与常规元素相比: (1) 内联元素也可以作为包含块  (2)包含块的最近position不为static的祖先元素或根元素
+           具有相对特性的无依赖absolute绝对定位:  其定位位置是没有设置absolute时候的位置
+                  (1)各类图标定位  (2)超越常规排版 (3)下拉列表  (4) 占位符效果模拟
+           absolute和overflow: 不总是被裁剪
+                  (2) 只有overflow:hidden;  没有relative    (2) overflow属性在relative元素和absolute元素之间
+          absolute 与clip
+                   fixed固定定位的剪裁
+                   最佳的可访问性隐藏
+                        display:none; visibility:hidden; 屏幕阅读器会忽略
+                        text-index 缩进过大  屏幕阅读器也会忽略
+                        color:transparent  移动端是上策  桌面端是中策(ie)  不能阻止被选中 
+                        clip  剪裁视觉隐藏, 屏幕阅读器也支持很好
+          absolute的流体特性: 对位方向上同时发生定位的时候
+          absolute的margin: auto;居中
+                    (1)如果一侧定位, 一侧auto; auto为剩余空间大小
+                    (2)如果两侧均为auto; 则均分剩余空间
+
+
+           relative对absolute的限制
+           relative与定位: 
+                       (1) 定位位移是相对自身,
+                       (2) 百分比值的计算是包含块  
+                       (3) left优先于right   top优先于bottom
+           relative的最小化影响原则
+
+           fixed使用在局部, 把某个元素固定到某个模块右上角   无依赖的固定定位
+           fixed的absolute模拟
+           fixed与背景锁定  同样适用absolute模拟
+           
+7.css层叠规则
+8.文字处理

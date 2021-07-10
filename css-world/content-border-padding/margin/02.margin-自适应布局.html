@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.box {
+			margin-top: 20px;
+		}
+		.box1-1,
+		.box1-2,
+		.box1-3 {
+			overflow: hidden;
+			border: 1px solid red;
+		}
+		.box1-1 img {
+			float: left;
+			width: 128px;
+		}
+		.box1-1 p {
+			margin-left: 140px;
+		}
+		.box1-2 img {
+			float: right;
+			width: 128px;
+		}
+		.box1-2 p {
+			margin-right: 140px;
+		}
+		.full {
+			width: 100%;
+			float: left;
+		}
+		.box1-3 img {
+			width: 128px;
+			float: left;
+			margin-left: -128px;
+		}
+		.box1-3 p {
+			margin-right: 140px;
+		}
+	</style>
+</head>
+<body>
+
+
+<div class="box box1-1">
+	<img src="../../../images/zza/1.jpg">
+	<p>文字内容...</p>
+</div>
+
+<div class="box box1-2">
+	<img src="../../../images/zza/1.jpg">
+	<p>文字内容...</p>
+</div>
+<div class="box box1-3">
+	<div class="full"><p>文字内容...</p></div>
+	<img src="../../../images/zza/1.jpg">
+</div>
+</body>
+</html>

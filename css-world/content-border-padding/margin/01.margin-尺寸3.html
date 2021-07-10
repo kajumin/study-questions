@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<style type="text/css">
+		.box1 {
+			width: 100px;
+			height: 100px;
+			padding: 16px;
+			border: 12px solid #096;
+			background-color: #eee;
+			overflow: auto;
+		}
+		.box1 .son {
+			height: 300px;
+			background-color: red;
+		}
+		.box2 {
+			width: 100px;
+			height: 100px;
+			padding: 16px;
+			border: 12px solid #096;
+			background-color: #eee;
+			overflow: auto;
+		}
+		.box2 .son {
+			width: 300px;
+			height: 20px;
+			background-color: red;
+		}
+
+		.box3 {
+			width: 100px;
+			height: 100px;
+			padding: 16px;
+			border: 12px solid #096;
+			background-color: #eee;
+			overflow: auto;
+		}
+		.box3 .son {
+			width: 300px;
+			height: 300px;
+			background-color: red;
+		}
+	</style>
+</head>
+<body>
+<!-- 
+scrollHeight  scrollWidth值: 
+子的clientWidth/clientHeight + 父padding(一半) - 滚动条宽度
+
+padding(一半): chrome和firefox浏览器不一样 padding-bottom的chrome浏览器有效
+
+只有垂直滚动条: scrollWidth scrollHeight
+子的padding border不影响scrollWidth
+子的padding border影响scrollHeight (加上padding + border)
+
+子的clientWidth + 父padding - 滚动条宽度
+
+scrollWidth: 115 = 100 + 32(父padding) - 17
+scrollHeight: 332 = 300 + 32(父padding)
+
+只有水平滚动条: scrollWidth scrollHeight
+子的padding border影响scrollWidth(加上padding + border)
+子的padding border不影响scrollHeight 
+
+子的clientHeight + 父padding - 滚动条宽度
+scrollWidth: 316 = 300 + 16(父左padding)
+scrollHeight:  115 = 100 + 32(父padding) - 17
+
+同时存在垂直和水平滚动条:
+scrollWidth: 316 = 300 + 16(父左padding)
+scrollHeight: 332 = 300 + 32(父padding)
+
+研究scrollTop: 滚动条拉动的距离
+同时存在垂直和水平滚动条:
+scrollTop最大值: scrollHeight - clientHeight(113) = 330 - 113 = 217
+scrollLeft最大值: scrollWidth - clientWidth(113)  = 315 - 113 = 202
+
+只有垂直滚动条: 最大值
+200 = 330 - 130(clientHeight)
+只有水平滚动条
+185 = 315 - 130(clientWidth)
+
+scrollHeight代表包括当前不可见部分的元素的高度, scrollHeight>=clientHeight恒成立。
+在没有滚动条时scrollHeight==clientHeight恒成立。单位px，只读元素。
+
+在没有滚动条时scrollTop==0恒成立
+-->
+<div class="box1">
+	<div class="son"></div>
+</div>
+<div class="box2">
+	<div class="son"></div>
+</div>
+<div class="box3">
+	<div class="son"></div>
+</div>
+<div class="box3-1">
+	<div class="son"></div>
+</div>
+<div style="height: 1000px;background-color: #eee;"></div>
+<script type="text/javascript">
+	var box1 = document.querySelector('.box1')
+
+	console.log('只有垂直滚动条:')
+	console.log('box1.clientWidth: ', box1.clientWidth)
+	console.log('box1.clientHeight: ', box1.clientHeight)
+	console.log(box1.scrollWidth) //115
+	console.log(box1.scrollHeight) //316
+	
+
+	var box2 = document.querySelector('.box2')
+	var scrollHeight = box2.scrollHeight - parseInt(window.getComputedStyle(box2)['padding']) * 2 
+
+	console.log('只有水平滚动条:')
+	console.log('box2.clientWidth: ', box2.clientWidth)
+	console.log('box2.clientHeight: ', box2.clientHeight)
+	console.log(box2.scrollWidth) // 316=300+16
+	console.log(box2.scrollHeight) // 115=100+32-17
+	
+
+	var box3 = document.querySelector('.box3')
+	var scrollHeight = box3.scrollHeight - parseInt(window.getComputedStyle(box3)['padding']) * 2 
+
+	console.log('水平垂直同时存在:')
+	console.log('box3.clientWidth: ', box3.clientWidth)
+	console.log('box3.clientHeight: ', box3.clientHeight)
+	console.log(box3.scrollWidth) //316=300+16
+	console.log(box3.scrollHeight) //316=300+16
+	
+
+	var scrollHeight = box1.scrollHeight //316
+	var height = box1.clientHeight //132
+	console.log(scrollHeight, height)
+	// 316 - 132(父padding + content) = 184
+	box1.onscroll = function() {
+		console.log('box1.scrollTop', box1.scrollTop)
+		console.log('box1.scrollLeft', box1.scrollLeft)
+		var scrollTop = box1.scrollTop
+		if(scrollHeight - scrollTop <= height) {
+			console.log('滚动到最底部了')
+		} else if(scrollTop == 0) {
+			console.log('滚动到最顶部了')
+		}
+	}
+
+
+	var scrollWidth = box2.scrollWidth
+	var width = box2.clientWidth
+	console.log(scrollWidth, width)
+	// 316 - 132(父padding + content) = 184
+	box2.onscroll = function() {
+		console.log('box2.scrollTop', box2.scrollTop)
+		console.log('box2.scrollLeft', box2.scrollLeft)
+		var scrollLeft = box2.scrollLeft
+		if(scrollWidth - scrollLeft <= width) {
+			console.log('滚动到最右边了')
+		} else if(scrollLeft == 0) {
+			console.log('滚动到最左边了')
+		}
+	}
+
+</script>
+</body>
+</html>

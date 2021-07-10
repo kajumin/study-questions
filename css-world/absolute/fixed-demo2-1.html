@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no,maximum-scale=1.0">
+	<style type="text/css">
+		html,
+		body {
+			margin: 0;
+		}
+		.fixed {
+			position: absolute;
+			top: 0;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			background-color: rgba(0,0,0,0.5);
+		}
+		h3 {
+			font-size: 14px;
+		}
+		input {
+			text-indent: 0;
+            background: transparent;
+            border: 0 none;
+            resize:none; 
+            outline:none;  /*清除选中效果的默认蓝色边框 */
+            -webkit-appearance:none;  /*清除浏览器默认的样式 */
+            line-height: normal;   /*光标问题*/ 
+		}
+		input::-webkit-input-placeholder { /* WebKit browsers */
+			color: #8b8791;
+        }
+        input:focus {
+            color: #333;
+        }
+		form {
+			position: absolute;
+			top: 0;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			box-sizing: border-box;
+			padding: 10px 20px;
+			width: 400px;
+			height: 300px;
+			margin: auto;
+			z-index: 1;
+			background-color: #fff;
+		}
+		h3 {
+			text-align: center;
+		}
+		.form-group {
+			display: inline-block;
+			width: 100%;
+			height: 40px;
+			box-sizing: border-box;
+			margin-top: 20px;
+			border: 2px solid #096;
+		}
+		.form-group input {
+			width: 100%;
+			height: 30px;
+			padding-left: 2px;
+			box-sizing: border-box;
+		}
+	</style>
+</head>
+<body>
+	<!-- 3.fixed与背景锁定 -->
+	<div class="fixed"></div>
+	<form onsubmit="return false;">
+		<h3>登录中心</h3>
+		<div class="form-group"><input type="text" name="username" placeholder="请输入账号"></div>
+		<div class="form-group"><input type="password" name="password" placeholder="请输入密码"></div>
+		<button class="btn">隐藏</button>
+		<input type="text" name="" placeholder="请输入密码">
+	</form>
+	<div class="page">
+		<div style="height: 1000px;background-image: url('../../images/1.jpg');">
+		中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国
+		</div>
+	</div>
+	
+	<script type="text/javascript">
+		var widthBar = 17;
+		var root = document.documentElement;
+		if (typeof window.innerWidth == 'number') {
+			widthBar = window.innerWidth - root.clientWidth
+		}
+		console.log(window.innerWidth)//1366
+		console.log(root.clientWidth)//1349
+
+		console.log(widthBar)
+		// 可以实现隐藏导航栏
+		root.style.overflow = 'hidden'
+		// 可以让文体不会闪动
+		root.style.borderRight = widthBar + 'px solid transparent'
+		
+		var btn = document.querySelector('.btn')
+		
+		btn.addEventListener('click', function() {
+			var root = document.documentElement;
+			var fixed = document.querySelector('.fixed')
+			console.log(fixed)
+			fixed.style.display = 'none'
+			root.style.overflow = ''
+			root.style.borderRight = ''
+		})
+	</script>
+</body>
+</html>

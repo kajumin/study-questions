@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		a {
+			text-decoration: none;
+			color: #333;
+		}
+		input::-webkit-outer-spin-button,            
+		input::-webkit-inner-spin-button {                
+			-webkit-appearance: none !important; 
+
+		}
+		input[type=number]{
+			-moz-appearance:textfield;
+			color: red;
+		} 
+		.form1 {
+			width: 500px;
+			height: 300px;
+			margin: 0 auto;
+			background-color: #eee;
+		}
+		.form1 p {
+			padding-left: 15px;
+			line-height: 30px;
+		}
+		.form1 p label {
+			display: inline-block;
+			width: 100px;
+		}
+		.form1 input {
+			width: 200px;
+		}
+		.form1 p .tip {
+			position: absolute;
+			visibility: hidden;
+			opacity: 0;
+			padding-left: 18px;
+			font-size: 12px;
+			color: red;
+			transition: 0.5s;
+		}
+		.form1 p .tip:before {
+			content: '';
+			position: absolute;
+			top: 10px;
+			left: 0px;
+			width: 0;
+			height: 0;
+			border: 6px solid;
+			border-color: transparent red transparent transparent;
+		}
+		.form1 p .tip a {
+			padding-left: 2px;
+			color: #06f;
+		}
+	</style>
+</head>
+<body>
+<!-- 
+1.表单
+  (1) 阻止用户填写表单的事情(提示已经注册)
+  (2) 不标记必填字段(*提示必填选项)
+  (3) 不使用微调
+  (4) 只有一种按钮类型或最好每个表单就一个按钮
+      基本按钮都是一个色, 每页都只有一个按钮(非基本)
+  (5) 大块区域, 字段组长度大约为4。
+  (6) 通过告诉我们的优质用户我们为何需要问那样的问题再帮助它们
+  (7) 日期是个不安分的家伙
+  (8) 一个输入框可以搞定的时候就不要使用两个
+-->
+
+<form class="form1">
+	<p><label>电子邮箱:</label><input type="text" name="email" class="email"><span class="tip">该账号已绑定qq号, 可以直接<a href="#">开通微博</a></span></p>
+	<p><button disabled>提交</button></p>
+</form>
+
+<script type="text/javascript">
+	var email = document.querySelector('.email')
+	var tip = document.querySelector('.tip')
+	email.onchange = function (e) {
+		var value = e.target.value
+		console.log(value)
+		if (value == '404107262') {
+			// tip.style.display = 'inline-block'
+			tip.style.visibility = 'visible'
+			tip.style.opacity = '1'
+		} else {
+			// tip.style.display = 'none'
+			tip.style.visibility = 'hidden'
+			tip.style.opacity = '0'
+		}
+	}
+</script>
+</body>
+</html>

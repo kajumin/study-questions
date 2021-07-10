@@ -1,0 +1,180 @@
+1.数据绑定和双向数据绑定
+2.指令
+3.生命周期
+4.计算属性和侦听器
+5.事件绑定处理
+6.组件
+7.插槽
+8.数据通信
+9.动画
+10.渲染函数
+11.vue-router   vuex   axios
+
+vue开发注意:
+
+
+面试题: 
+1.vue.js的优势
+  轻量级   简单易学  双向数据绑定  组件化   视图,数据,结构分离 虚拟dom 运行速度快(虚拟dom)
+2.组件通信
+  props  $emit
+3.v-if   v-show
+4.keep-alive  内置组件  可以使用被包含组件保留状态, 避免重新渲染
+5.ref  获取元素或者组件
+6.vue-loader   vue文件的一个加载器   js可以使用es6 style可以使用scss或less template可以加jade
+
+7.key  需要使用key来给每个节点做一个唯一标识, diff算法就可以正确的识别此节点, 作用主要是为了更高效的虚拟dom
+8.v-model  用于表单元素的双向数据绑定, 其实它是一个语法糖, 绑定表单的value属性和表单的input事件
+9.
+assets      静态资源  
+components 放组件 
+router     定义路由相关的配置   
+app.vue   一个应用的主组件
+views       页面组件
+api       api接口 
+store    vuex相关的配置
+
+10.computed和watch
+computed   一个属性受多个属性影响的时候  典型例子: 购物车商品结算
+watch       当一个数据影响多条数据的时候     典型例子: 搜索数据
+
+11.v-on绑定多个方法   使用对象包裹起来
+
+12.$nextTick的使用  :下一次dom更新循环结束之后执行的延迟回调, 回调中可以获取到最新dom
+当你修改data的值然后马上获取这个dom元素的值, 是不能获取到更新后的值, 需要使用$nextTick这个回调
+让data值渲染更新到dom元素之后在获取, 才能成功
+
+13.data为什么必须是一个函数
+因为js的特性导致的, 
+
+14.渐进式框架
+   主张最少的, 可以根据不同的需求选择不同的层级
+
+15.数据双向绑定是如何实现的
+    vue双向数据绑定是通过 数据劫持 结合 发布订阅模式的方式实现的, 
+也就是数据和视图同步, 数据发生变化, 视图跟着变化, 视图变化, 数据也会发生变化
+Object.defineProperty劫持各个属性的getter和setter, 
+在数据发生变化时, 发布消息给订阅者, 触发响应的监听回调
+1.需要observe的数据对象, 通过getter setter 监听数据变化
+2.complie解析模板指令, 将模板中的变量替换成数据, 然后初始化渲染页面视图, 每个执行节点绑定更新函数
+添加监听函数的订阅者, 一旦数据发生变化, 收到通知,更新视图
+3.watcher订阅者是observe和complie之间的桥梁
+(1)在自身实例化时往属性订阅者里添加自己
+(2)自身在update方法
+(3)待属性发生变化时, 通知能调用的update方法, 并触发complie中绑定的回调
+
+mvvm作为数据绑定的入口, 整合observer complie watcher  
+通过observe监听model数据变化, 通过complie来解析编译模板指令
+最终利用watcher搭起observe和complie之间的桥梁
+    数据变化 => 视图更新
+    视图交互变化 => 数据更新
+
+
+16.assets 和 static
+相同点： assets 和 static 两个都是存放静态资源文件。项目中所需要的资源文件图片，字体图标，样式文件等都可以放在这两个文件下，这是相同点
+
+assets 中存放的静态资源文件在项目打包时，也就是运行 npm run build 时会将 assets 中放置的静态资源文件进行打包上传，所谓打包简单点可以理解为压缩体积，代码格式化。而压缩后的静态资源文件最终也都会放置在 static 文件中跟着 index.html 一同上传至服务器。static 中放置的静态资源文件就不会要走打包压缩格式化等流程，而是直接进入打包好的目录，直接上传至服务器。因为避免了压缩直接进行上传，在打包时会提高一定的效率，但是 static 中的资源文件由于没有进行压缩等操作，所以文件的体积也就相对于 assets 中打包后的文件提交较大点。在服务器中就会占据更大的空间。
+
+17.修饰符
+.stop()
+.prevent()
+.once()
+.self()
+.capture()  与事件冒泡的方向相反，事件捕获由外到内
+
+
+18.vue的两个核心
+答：数据驱动、组件系统
+数据驱动： ViewModel，保证数据和视图的一致性。
+组件系统： 应用类UI可以看作全部是由组件树构成的。
+
+19.delete和Vue.delete
+答：delete 只是被删除的元素变成了 empty/undefined 其他的元素的键值还是不变。Vue.delete 直接删除了数组 改变了数组的键值。
+
+20.SPA首屏加载慢如何解决
+安装动态懒加载所需插件；使用CDN资源。
+
+21.Vue2中注册在router-link上事件无效解决方法
+答：使用 @click.native 。原因：router-link会阻止click事件，.native指直接监听一个原生事件。
+
+
+22.封装组件
+(1)建立组件的模板，先把架子搭起来，写写样式，考虑好组件的基本逻辑。
+(2)准备好组件的数据输入。即分析好逻辑，定好 props 里面的数据、类型。　　
+(3)准备好组件的数据输出。即根据组件逻辑，做好要暴露出来的方法。　　
+(4)封装完毕了，直接调用即可
+
+
+23.vue初始化页面闪动问题
+首先：在css里加上 [v-cloak] { display: none; } 
+如果没有彻底解决问题，则在根元素加上 style="display: none;" :style="{display:  block }"
+
+24
+push()；pop()；shift()；unshift()；splice()；sort()；reverse()
+
+25.
+Mint UI，element，VUX, cube-ui  ant
+
+26静态资源路径修改
+publicPath
+assetsPublicPath
+
+27.第一次加载
+beforeCreate， created， beforeMount， mounted
+
+28.
+beforeCreate： 在new一个vue实例后，只有一些默认的生命周期钩子和默认事件，其他的东西都还没创建。在beforeCreate生命周期执行的时候，data和methods中的数据都还没有初始化。不能在这个阶段使用data中的数据和methods中的方法
+
+create： data 和 methods都已经被初始化好了，如果要调用 methods 中的方法，或者操作 data 中的数据，最早可以在这个阶段中操作
+
+beforeMount： 执行到这个钩子的时候，在内存中已经编译好了模板了，但是还没有挂载到页面中，此时，页面还是旧的
+
+mounted： 执行到这个钩子的时候，就表示Vue实例已经初始化完成了。此时组件脱离了创建阶段，进入到了运行阶段。如果我们想要通过插件操作页面上的DOM节点，最早可以在和这个阶段中进行
+
+beforeUpdate： 当执行这个钩子时，页面中的显示的数据还是旧的，data中的数据是更新后的， 页面还没有和最新的数据保持同步, 不能在这里更新数据
+
+updated： 页面显示的数据和data中的数据已经保持同步了，都是最新的
+
+beforeDestory： Vue实例从运行阶段进入到了销毁阶段，这个时候上所有的 data 和 methods ， 指令， 过滤器 ……都是处于可用状态。还没有真正被销毁
+destroyed： 这个时候上所有的 data 和 methods ， 指令， 过滤器 ……都是处于不可用状态。组件已经被销毁了。
+
+29.created 和 mounted
+created:在模板渲染成html前调用，即通常初始化某些属性值，然后再渲染成视图。mounted:在模板渲染成html后调用，通常是初始化页面完成后，再对html的dom节点进行一些需要的操作。
+
+
+30. 生命周期
+答：总共分为8个阶段创建前/后，载入前/后，更新前/后，销毁前/后。
+(1)创建前/后： 在beforeCreated阶段，vue实例的挂载元素 $el 和 数据对象 data 都为undefined，还未初始化。在    created阶段，vue实例的数据对象data有了， $el 还没有。
+(2)载入前/后： 在beforeMount阶段，vue实例的 $el 和data都初始化了，但还是挂载之前为虚拟的dom节点，data.message还未替换。在mounted阶段，vue实例挂载完成，data.message成功渲染。
+(3)更新前/后： 当data变化时，会触发beforeUpdate和updated方法。
+(4)销毁前/后： 在执行destroy方法后，对data的改变不会再触发周期函数，说明此时vue实例已经解除了事件监听以及和dom的绑定，但是dom结构依然存在。
+
+
+31.
+vue是实现了双向数据绑定的mvvm框架，当视图改变更新模型层，当模型层改变更新视图层。在vue中，使用了双向绑定技术，就是View的变化能实时让Model发生变化，而Model的变化也能实时更新到View。
+
+32.vue-router 是什么?它有哪些组件
+  前端路由插件
+  router-link、router-view
+
+
+33.
+怎么定义 vue-router 的动态路由? 怎么获取传过来的值？
+答：在router目录下的index.js文件中，对path属性加上/:id。使用router对象的params.id。
+
+34. 导航钩子
+第一种： 是全局导航钩子：router.beforeEach(to,from,next)，作用：跳转前进行判断拦截。
+第二种： 组件内的钩子  beforeRouteEnter  beforeRouteUpdate  afterEnter
+第三种： 单独路由独享组件
+
+34.`$route` 和 `$router` 的区别
+答：$router 是VueRouter的实例，在script标签中想要导航到不同的URL,使用 $router.push 方法。返回上一个历史history用 $router.go(-1)  $router.push()
+$route 为当前router跳转对象。里面可以获取当前路由的name,path,query,parmas等。
+
+
+35. vue-router的两种模式
+答: hash模式： 即地址栏 URL 中的 # 符号；
+history模式： window.history对象打印出来可以看到里边提供的方法和记录长度。利用了 HTML5 History Interface 中新增的 pushState() 和 replaceState() 方法。（需要特定浏览器支持）
+
+
+五大属性: State、 Getter、Mutation 、Action、 Module

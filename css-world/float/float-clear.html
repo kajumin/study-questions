@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		li {
+			width: 20px;height: 20px;
+			background-color: #ccc;
+			float: left;
+			margin-right: 10px;
+			list-style-type: none;
+		}
+		li:nth-child(3) {
+			clear: both;
+		}
+	</style>
+</head>
+<body>
+<!-- clear: 元素盒子的边不能和前面的浮动元素相邻 -->
+<ul>
+	<li>1</li>
+	<li>2</li>
+	<li>3</li>
+	<li>4</li>
+	<li>5</li>
+	<li>6</li>
+	<li>7</li>
+	<li>8</li>
+	<li>9</li>
+	<li>10</li>
+</ul>
+</body>
+</html>

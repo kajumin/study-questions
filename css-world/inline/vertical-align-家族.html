@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.icon-arrow {
+		    display: inline-block;
+		    width: 20px; height: 20px;
+		    background: url(https://demo.cssworld.cn/images/5/arrow.png);
+		}
+		.valign-1 {
+		    vertical-align: middle;
+		}
+		.valign-2 {
+		    vertical-align: -5px;
+		}
+	</style>
+</head>
+<body>
+
+	<!-- 
+	1.线类: baseline middle top bottom
+	2.文本类: text-top text-bottom
+	3.上标下标类: sub super
+	4.数值百分比类: 20px 2em 20%
+
+	负值向下  正值向上
+	百分比相对line-height, 因为line-height一般是固定的, 所以百分比类用得少
+
+	 -->
+	<p style="outline: 1px solid red;vertical-align: top;">
+		 <span id="vAlign">字母x</span>x<img src="../../images/1.jpg" width="128" height="92">
+	</p>
+	<!-- 92 + 21 - 16 = 5 / 2 -->
+
+<p>文字的vertical-align值：<select id="select">
+    <option value="baseline">baseline</option>  
+    <option value="middle">middle</option>
+    <option value="top">top</option>
+    <option value="10px">10px</option>
+    <option value="-10px">-10px</option>
+    <option value="1em">1ex</option>
+    <option value="-1em">-1ex</option>
+    <option value="50%">50%</option>
+    <option value="-50%">-50%</option>
+  
+</select>
+
+<p>请选择<i class="icon-arrow"></i></p>
+<p>请选择<i class="icon-arrow valign-1"></i></p>
+<p>请选择<i class="icon-arrow valign-2"></i></p>
+
+</p>
+<script type="text/javascript">
+	var eleSelect = document.getElementById('select');
+	var eleValign = document.getElementById('vAlign');
+
+	if (eleSelect && eleValign) {
+	    eleSelect.onchange = function() {
+	        eleValign.style.verticalAlign = this.value;
+	    };
+	}
+</script>
+</body>
+</html>

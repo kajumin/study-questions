@@ -1,0 +1,311 @@
+=======================vuex   
+Vuex 是一个专为 Vue.js 应用程序开发的状态管理模式。
+它采用集中式存储管理应用的所有组件的状态，并以相应的规则保证状态以一种可预测的方式发生变化。
+
+(1)编写store.js文件  
+(2)导入store     import store from './store'
+(3)映射store     store,
+
+多个组件共享的数据(状态)
+辅助函数  mapState  mapGetters  mapMutations  MapActions
+需要插件babel-preset-stage-3(6)   //"preset": ['es2015', 'stage-3'] 
+总结:  dispatch调用module(actions(终端请求)->(commit)->mutations->(mutate)->state(触发getters))->(render)->vuecomponent  保证数据稳定
+
+state             共享数据, 具有响应式, 辅助函数mapState, 可以直接改state(不好), 而是通过提交matutation来修改state
+mutations    更改Vuex的store中的状态的唯一方法是提交mutation    同步操作
+                     添加新属性state   (1)替换  (2)Vue.set(obj, 'newProp', 123)
+                     (state, options) options只接受一个参数   多个参数用对象包裹
+getters         获取方式    参数 (state,getters, rootState) 
+                     通过方法访问  return state.todos.find(todo => todo.id === id)
+actions        业务行为(调用改变方式)     this.$store.dispatch(某action,数据)  
+                    (1)可以包含任意异步操作 (2)提交mutation,不是直接修改
+      Action   函数接受一个与 store 实例具有相同方法和属性的 context 对象  {state,commit,getters}
+
+module:  Vuex 允许我们将 store 分割成模块（module）。每个模块拥有自己的 state、mutations、actions、getters
+
+1.放入实例中   store,   //很重要
+2.创建仓库store/index.js
+import Vuex from 'vuex';   //引入
+Vue.use('Vuex')   //使用
+let store =  new Vuex.store({
+	state:{
+		num:1
+	},
+	getters: {
+	    getNum:(state){ return state.num}   (state, getters)第二个参数getters代表了所有getters中的函数
+	}
+	mutations:{ 
+	    //第一个参数为state
+	     addNum(state){ state.num ++},
+                     //接收参数  参数只能一个
+                     addByNum(state,num) {state.num+num}
+	}
+	actions:{  
+                      //Action 函数接受一个与 store 实例具有相同方法和属性的 context 对象 但不是实例本身
+                      //commit  dipatch getters rootGetters  rootState state
+	      (rootState state commit)  //rootState获取根节点的state
+	      addByNumAction({ commit }, num){
+	      	setTimeout(()=>{
+			commit('addByNumSync',num);
+	    	  },2000)
+	      }
+	}
+
+	export default store
+});
+
+app.vue中
+{{$store.state.num}}            不这样使用
+{{$store.getters.getNum}}  不这样使用  配合computed使用  getNum() { retrun $store.getters.getNum }
+修改  add(){ 
+	//不建议   异步会少一步  只能同步
+	this.$store.commit('addNum');  //addNum在store中定义
+}
+addByNum(){ 
+	//不建议   异步会少一步  只能同步
+	this.$store.commit('addByNum',10);  //addNum在store中定义
+}
+addByNumSync(){ 
+	//不建议   异步会少一步  只能同步
+	this.$store.commit('addByNumSync',10);  //addByNumSync在store中定义
+	//推荐使用 
+	this.$store.dispatch('addByNumSync',10)
+	this.$store.dispatch('addByNumSync',{num: 10})   //多个参数用对象
+}
+==============mapState   放在methods中
+...mapState(['getName']) 
+     ...mapState({
+  	counter: 'count'   //couter别名   原名count
+     }),
+...mapState({ 
+	cart: state => state.cart.cart,    //模块化使用对象  getters  mutations  actions同理
+	count: state => state.cart.count
+}),
+
+...mapGetters(['getName'])  返回一个对象再...展开  需要写明哪几个
+...mapMutations([       //mutations是同步事务
+                                 // `mapMutations` 也支持载荷：
+      'incrementBy' // 将 `this.incrementBy(amount)` 映射为 `this.$store.commit('incrementBy', amount)`
+    ]),
+==============actions处理多个
+actions: {
+  async actionA ({ commit }) {
+    commit('gotData', await getData())
+  },
+  async actionB ({ dispatch, commit }) {
+    await dispatch('actionA') // 等待 actionA 完成
+    commit('gotOtherData', await getOtherData())
+  }
+
+=================知识点总结
+1.strict: true, // 外部无法修改  $store.store
+2.mutations中只能传递两个参数 (state, params)   多个数据就使用对象
+3.actions第一个参数context (commit dispatch getters  state rootGetters rootState  )
+   dispatch('user/getUser', { root: true })  //调用其他模块的actions
+
+eg: webpack分析网站
+开发必须踩得坑 1.业务中给state添加属性  新添加的不能显示 defineProperty
+实例对象vue.$xxx
+构造函数对象Vue.xxx
+Vue.set(state, 'num', name)    手动实现响应式  Vue.set(obj, 'newProp', 123)
+this.$set(obj, 'newProp', 123)
+
+
+项目结构
+ store
+    ├── index.js             # 我们组装模块并导出 store 的地方
+    ├── actions.js          # 根级别的 action
+    ├── mutations.js     # 根级别的 mutation
+    └── modules
+        ├── index.js
+        ├── cart.js       # 购物车模块
+        └── products.js   # 产品模块
+
+
+=========mixin  混入对象
+混入 (mixin) 提供了一种非常灵活的方式，来分发 Vue 组件中的可复用功能。一个混入对象可以包含任意组件选项。当组件使用混入对象时，所有混入对象的选项将被“混合”进入该组件本身的选项。
+(1)数据对象在内部会进行递归合并
+(2)钩子函数都调用  混入对象的钩子将在组件自身钩子之前调用。
+(3)值为对象的选项,合并为同一个对象   如methods component directives
+(4)可自定义选项合并策略
+实现一个公共的行为(混入 杂交)
+
+npm run dev
+import my_mixin from './my_minxin.js'
+mixins: [mixins]   //挨个使用
+====mixin.js
+created(){
+	this.$options.name  vue实例的名称
+}
+
+===所有的Vue的实例继承   全部使用
+import my_mixin from './my_minxin.js'
+Vue.mixin(my_mixin);   //全局混入
+
+============配合vue插件使用
+// 配置插件
+import MyPlugin from './myPlugin.js';
+// 没有配置
+Vue.use(MyPlugin);
+
+myPlugin.js
+function MyPlugin(options) {
+    return MyPlugin;
+}
+MyPlugin.install = function(Vue){    
+      // mixin 
+      Vue.mixin({
+        created() {
+              if(this.$options.name === 'about' || this.$options.name === 'home'){
+
+              // 根据vuex去调用，改变数据（谁改）？
+              this.$store.dispatch('addByAct');
+              console.log('mixin');
+              
+             }
+           
+        }
+      })
+}
+export default MyPlugin;
+引入插件(install函数最重要)    插件中使用mixin  mixin中调用vuex
+mixin(处理公共)  => 插件(优雅) =>   vuex配置(灵活)
+this.$options.name === 'about'    获取组件名
+
+//vue插件写法  必须有install函数方法
+MyPlugin.install = function (Vue, options) {
+  // 1. 添加全局方法或 property
+  Vue.myGlobalMethod = function () {
+    // 逻辑...
+  }
+
+  // 2. 添加全局资源
+  Vue.directive('my-directive', {
+    bind (el, binding, vnode, oldVnode) {
+      // 逻辑...
+    }
+    ...
+  })
+
+  // 3. 注入组件选项
+  Vue.mixin({
+    created: function () {
+      // 逻辑...
+    }
+    ...
+  })
+
+  // 4. 添加实例方法
+  Vue.prototype.$myMethod = function (methodOptions) {
+    // 逻辑...
+  }
+}
+
+}
+
+====================store是否会丢失
+1、hash 路由模式
+    使用 window.location.href 和 this.$router.push 或 replace
+    不管使用这三种方式的哪一种 store 都不会丢
+2、history路由
+this.router.replace    store 不丢
+window.location.href 页面刷新   store 丢
+总结: 只有路由模式是history 且用location.href跳转路由的时候 store会丢
+补充: 组件懒加载的三种方式的效果一样 : 都是加载组件的时候才加载对应的依赖js 切换回之前的tab js有缓存 不会重新加载
+
+========================vuex
+babel-preset-stage-1   支持...语法 -3也可以
+
+strict: true,   // 外部无法修改  开发环境配置
+mutations   //只能接收一个参数
+
+==========不带模块modules
+====state
+$store.state.count
+...mapState(['count']),     使用this.count
+...mapState({ countC(新名): 'count'(原名) }),   对象写法   this.countC
+====getters 参数三个(state, getters, rootState)    getters(可以获取全部的getters)  rootState可以获取其他模块的state
+$store.getters.getCount
+...mapGetters(['getCount'])   使用this.getCount
+====mutations  参数两个(state, data)
+this.$store.commit('updateCount', 2)
+...mapMutations(['updateCount']),     使用this.updateCount(2)
+====actions   参数两个({commit}, data)   第一个参数commit  getters rootGetters  rootState dispatch
+
+this.$store.dispatch('updateCountAync', { num: 3, time: 2000 })
+...mapActions(['updateCountAync'])    使用this.updateCountAync({num: 3,time: 1000})
+
+
+namespaced: true   //命名空间
+==========分模块modules
+modules: { 
+      a: {
+        namespaced: true  
+        state: {
+          text: 'a'
+        }
+      }, 
+      b: {
+        state: {
+          text: 'b'
+        }
+      }
+}
+=====没有添加namespace:true,
+除了state要采用对象写法, 其他都不需要特殊处理
+============state
+$store.state.a.text   获取state
+...mapState({firstname: (state) => state.a.firstName}),  //必须采用对象写法
+============getters
+this.$store.getters.getName   可以直接获取
+...mapGetters(['getName'])
+============mutations
+...mapMutations(['updateName']),   使用 this.updateName('commit')
+=============actions
+...mapActions(['updateNameAync'])  使用this.updateNameAync({ firstName: 'ayncA', time: 2000 })
+
+=========有namespace: true,
+state同样处理, 其他也需要加上命名空间前缀/.  commit方法调用其他模块的mutations, 需要加上第三个参数{root:true},
+该模块有命名空间, 则第一个参数需要加上命名空间/
+===========getters
+this.$store.getters["b/getNameB"]
+...mapGetters(['b/getNameB'])   使用this['b/getNameB']
+===========mutions
+...mapMutations(['b/updateNameB']),   使用this['b/updateNameB']('commitB')
+===========actions
+...mapActions(['b/updateNameAyncB'])  使用this['b/updateNameAyncB']({ firstName: 'ayncB', time: 2000 })
+return commit('b/updateNameB', data.firstName, { root: true })  //有namespace:true,时
+return commit('updateName', data.firstName, { root: true })   //没有namespace:true,时,  但是第三个参数还是要有
+
+motations会自动挂载全局, 使用其他模块的mutations时, 需要在commit时加上第三个参数{root:true}, 
+如果该模块使用namespaced命名空间的, 第一个参数mutations方法加上命名空间
+
+========(1)注册新模块
+store.registerModule('c',{ state, getters, mutations, actions })
+========(2)解绑一个模块
+store.unregisterModule('c')
+========(3)watch
+store.watch((state) => { state.count+1 }, (newcount) => { console.log(newcount) })
+
+=========(4)subscrible监听mutations
+vuex.subscrible((mutation, state) => {
+   console.log(mutation.type)  //名称
+   console.log(mutation.payload)  //参数数据
+})
+=========(5)subscrible监听actions
+vuex.subscribleAction((action, state) => {
+   console.log(action.type)   //名称
+   console.log(action.payload) //参数数据
+})
+==========(6)热更替
+if (module.hot) {   
+	module.hot.accept([
+	''
+ ])
+}
+==========(7)vuex插件
+ plugins: [
+   (store) => {
+       console.log('my plugin invoked')
+   }
+]

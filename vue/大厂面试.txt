@@ -1,0 +1,133 @@
+1.面试流程图解
+(1)面试轮数
+阿里  5-6轮  最后一面HR面(小心)前5轮技术面试  1个月(电话面试)
+腾讯  4-6   3-4面技术面试  最后HR(轻松)
+百度  4-5轮  1-3技术面试  HR(轻松)  1-2天
+头条  4轮     HR(轻松)    1天  给一周时间
+美团  4轮    一周结束
+
+p6  
+头条: 35-40k   15薪 1.5-2k住房补助   期权  300-500股  大小周  有一个周六上班
+阿里: 28-32k   16薪  期权不一定
+百度: 30k  15  股票10w
+腾讯: 28k-30k   股票0
+快手:没有期权  差不多薪资
+
+面试顺序: 
+阿里 -> 腾讯 -> 百度 -> 滴滴 -> 头条 -> 快手 -> 美团 
+职级:
+阿里:p6
+腾讯  2-3 3-1
+rollup  percel
+
+个人项目: 
+使用vue开发过一个开源ui库
+https://github/xxxxx
+
+项目: 
+使用了  xxx框架   并自己增加了loader/plugin/中间件/npm封装了xxx功能
+pc开发(to b) (to c  数量少)
+小程序/公众号   h5的业务迁移
+纯技术   (核心团队做框架)(weex/微信sdk)
+融合开发  (hybrid  / rn /nw.js /electron)  发版本(过ios审核\版本残留 \定时上线)
+node.js(中等需求量)
+
+css /正则 bom dom  闭包 this  节流去抖
+es6  ts  各类DSL
+promise背  ascyn/await  babel  -> 产出
+proxy(代理) ->babel  ->defineProperty   [] 数组方法
+ts ->重载  泛型
+
+框架: vue react   angular
+用法篇: 怎么使用  HOC(@decorators)  render-props  生命周期
+vue的双向绑定  defineProperty  get set 
+pop push   数组不能
+vdom  react  vdom  怎么实现的 DFS复杂度  手写一个简单的
+路由: 50%  vue-router  react-router  hash  pushState
+onpopstate  onhashchange
+数据流框架:  太小不划算  redux(性价比高)  mobx(不那么高)  vuex 手写
+----------------------------
+react   fiber 架构的实现
+跨端框架  week  uniapp
+
+node.js 
+登录  存储 并发  缓存  抽奖  -redis , 
+中间件(性价比高)   尝试抽离一下
+
+融合开发  hybrid  react-native  小程序  nw  election
+jshybrid  ios有几种实现方法  android几种实现方法
+小程序  -> hybrid -> js &客户端setData
+jssdk  -> callMethod(){  window.messageHandler.xx.call('asss0}
+en/小程序  渲染逻辑
+渲染层 -> 逻辑js不在一起
+
+xxx-cli  webpack eslint  npm  单测  流水线
+工程化(强行搞一下)
+前端工程化 -> webpack ->loader/plugin规约一些通用的小功能
+npm -> package.json
+
+网络  http: 缓存系列 http头
+cache-Control  expire  - 200(在客户端拦死)
+Etag  last-modify   --304(向服务端发起)
+cookies:cookies  set-cookie
+location 
+transfer-encoding
+200+304 = hash
+
+性能优化
+react.memo  -> react-router
+(动态lazy加载组件的技术)code  split  react.lazy
+ssr  用的少  (降级) (在检测到某一个qps量级时退化)  
+
+算法:   poj
+动态规划
+const  dp = arr =>{
+    let  res = [].concat(arr);
+    let  arrlen = arr.length
+for(let i = 0; i < arrlen; i ++ ){ 
+    for(let j = 0;  j<arrlen; j ++) {
+         if(arr[i] (>或者 <)  arr[i-j] +xxx) {
+                   arr[i]  重新赋值
+          }
+     }
+}
+}
+
+搜索算法
+const start = arr => {
+if (shot(xx)){
+   return xxx;
+}
+if (judge(xxx)){
+   dfs();
+}
+}
+
+const  bfs = () =>{
+  while(queqeu.length) {
+    const point = queueu.shift();
+    for(可达  in point ){
+     if(shot(可达)){
+       return  shot(可达)
+      }
+   }
+}
+}
+排序
+
+svg /canvas  图形(非必备)
+
+软技能  技术方案  文档 调研  推动能力 
+文档,方案(特别重要)   --大企业内部  
+
+编程能力
+函数式   纯函数   全局  局部变量
+
+创新与自驱动
+
+xxx-loader  xxx库 比较适合做众泰类型的项目
+runtime的插件  UBB的js-parser  还能兼容时髦的rn  flutter  小程序
+多学一些非js的东西  比如 shell  /  php
+shell  工程化这块很重要
+做一些中间件  比如登录业务 内部的业务RPC调用或者特殊格式解析
+redis  消息队列中间件(node.js)

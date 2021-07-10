@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.before {
+		    padding: 1em;
+		    background-color: #fff;
+		    -webkit-transition: 0.2s;
+		    transition: 0.2s;
+		}
+		.before:hover {
+		    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
+		}
+		.after {
+		    position: relative;
+		    padding: 1em;
+		    background-color: #fff;
+		}
+		.after:before {
+		    content: "";
+		    position: absolute;  
+		    top: 0;
+		    right: 0;
+		    bottom: 0;  
+		    left: 0;
+		    z-index: -1;
+		    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
+		    opacity: 0;
+		    will-change: opacity;
+		    -webkit-transition: 0.2s;
+		    transition: 0.2s;
+		}
+		.after:hover:before {
+		    opacity: 1;
+		}
+
+
+		ul.breadcrumb {
+		    padding: 8px 16px;
+		    list-style: none;
+		    background-color: #eee;
+		}
+		ul.breadcrumb li {
+		    display: inline;
+		}
+		ul.breadcrumb li+li:before {
+		    padding: 8px;
+		    color: black;
+		    content: "/\00a0";
+		}
+		ul.breadcrumb li a {
+		    color: green;
+		}
+		.arrow-left{
+			position: relative;
+		}
+		.arrow-left:before {
+		    content: "";
+		    display: block;
+		    width: 0;
+		    height: 0;
+		    border-top: 20px solid transparent;
+		    border-bottom: 20px solid transparent;
+		    border-right: 20px solid red;
+		    position: absolute;
+		    left: -20px;
+		    top: 80px; 
+		    z-index: 9999;
+		}
+
+
+		.tagline-skill_inner:after {
+		    content: "";
+		    position: absolute;
+		    top: -1px;
+		    right: 0;
+		    bottom: -2px;
+		    left: 0;
+		    border-left: 1px solid #fff;
+		    background-color: #2a2a28;
+		    -webkit-animation: animatetoright 1s steps(10) infinite alternate;
+		    animation: animatetoright 1s steps(10) infinite alternate;
+		}
+
+	</style>
+</head>
+<body>
+<div class="before">
+    <h1>Before</h1>
+    <p>Animate/transition box-shadow 可以使用box-shadow属性来实现盒子阴影效果，但重绘消耗较多</p>
+</div>
+ <hr />
+<div class="after">
+    <h1>After</h1>
+    <p>通过修改伪元素的透明度来实现同样的效果,没有重绘消耗</p>
+</div>
+
+<h1>面包屑</h1>
+<ul class="breadcrumb">
+    <li><a href="#">Home</a>
+    </li>
+    <li><a href="#">Pictures</a>
+    </li>
+    <li><a href="#">Summer 15</a>
+    </li>
+    <li>Italy</li>
+</ul>
+
+
+<h1>三角</h1>
+<div class='container'>
+    <div class='arrow-left'></div>
+</div>
+<div class='container new'>
+    <div class='arrow-right'></div>
+</div>
+
+<h1>自动打字</h1>
+<div>
+    <h1>Typing Animation</h1>
+    <p class="tagline">
+        <span class="tagline-skill"><span class="tagline-skill_inner">webdesign</span></span>
+    </p>
+</div>
+
+</body>
+</html>

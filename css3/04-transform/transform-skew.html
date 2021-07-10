@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.box {
+			width: 100px;
+			height: 100px;
+			margin-bottom: 20px;
+			background-color: red;
+		}
+		.box1 {
+			transform: skewX(30deg);
+		}
+		.box2 {
+			transform: skewY(-30deg);
+		}
+		.box3 {
+			transform: skew(30deg, -30deg);
+		}
+		.box3 {
+			transform-origin: left center;
+		}
+		.box4 {
+			transform: matrix(1,0.3,-0.3,1,0,0);
+		}
+	</style>
+</head>
+<body>
+	<!-- 
+		1.skewX(30deg) 正值向负方向
+		2.skewY(30deg) 正值向负方向
+		3.skew(30deg) 先x再y
+		4.matrix(1,0.2,-0.2,1,0,0); 实现skew(30deg)
+
+	 -->
+	<p>transform: skewX(30deg)</p>
+<div class="box box1">中国</div>
+
+	<p>transform: skewY(-30deg)</p>
+<div class="box box2">中国</div>
+
+<p>transform: skewY(30deg,-30deg)</p>
+<div class="box box3">中国</div>
+
+<p>transform: matrix(1,0.83,-0.83,1,0,0); 实现skew(30deg)</p>
+<div class="box box4">中国</div>
+</body>
+</html>

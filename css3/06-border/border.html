@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.box {
+			width: 100px;
+			height: 100px;
+			background-color: #eee;
+			margin-bottom: 20px;
+		}
+		.box1 {
+			border-style: dashed;
+			border-style: dotted;
+			border-style: double;
+			border-style: inset;
+			border-style: outset;
+		}
+		.box2-1 {
+			border-style: dotted;
+		}
+		.box2-2-par {
+			overflow: hidden;
+		}
+		.box2-2 {
+			width: 100px;
+			height: 100px;
+			border-width: 100px;
+			border-style: dotted;
+		}
+		.box3 {
+			border-style: solid;
+			border-width: thin;
+			border-width: thick;
+			border-width: medium;
+		}
+		.box4 {
+			display: inline;
+			padding-top: 5px;
+			border: 10px solid;
+		}
+	</style>
+</head>
+<body>
+	<!-- 
+	1. 虚线dashed，在chrome/firefox下，虚线宽高比是3/1；而在IE下，虚线宽高比为2/1。所以在IE下虚线显得比较密
+	2. 点线dotted，在chrome下，点线是方点；而在IE/firefox下，点线是圆点
+
+	3. thin 1px  medium(默认)3px  thick 5px  <length> 因为double至少为3px
+
+	4.边框有以下几个要点需要特别注意：
+		1、边框绘制在元素背景之上，如果边框样式有某种缝隙，可以通过这些缝隙看到元素的背景(有兼容问题)
+    	2、同一元素的边框相交处是斜线，可以用边框实现三角形
+   		3、行内元素的上下边框由于不影响行高，不影响布局；左右边框会影响布局
+  		4、在CSS2.1中，背景定位background-position只能相对于左上角定位。如果需要是相对于右侧，则可以使用一个右侧的透明边框来实现类似的效果
+
+  	5. 圆角 border-radius    IE9+ 
+  		1、<length>可以是具体值，也可以是百分比，但不是负数
+    	2、重置border-radius没有圆角，使用none无效，需要取值0
+    	3、border-radius对<img>没有任何效果
+    	4、如果取值为百分比，水平方向圆角百分比相对于宽度，垂直方向圆角百分比相对于高度
+	-->
+
+	<!-- 
+
+		3.thin medium thick
+		4.inline元素border垂直方向不影响布局
+	 -->
+<div class="box box1"></div>
+<div class="box box2-1"></div>
+<div class="box box2-2-par">
+	<div class="box2-2"></div>
+</div>
+
+<div class="box box3"></div>
+<div class="box box4">中国</div>
+<div>123</div>
+</body>
+</html>

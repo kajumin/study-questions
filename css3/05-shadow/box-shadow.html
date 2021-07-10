@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.box {
+			width: 100px;
+			height: 100px;
+			margin: 20px auto 0;
+			background-color: #096;
+		}
+		.box1-1 {
+			box-shadow: 0 8px 4px rgba(0, 0, 0, 0.5);
+		}
+		.box1-2 {
+			box-shadow: 0 8px 4px -5px rgba(0, 0, 0, 0.5);
+		}
+		.box2-1 {
+			box-shadow: 5px 5px 6px rgba(0, 0, 0, 0.5);
+		}
+		.box2-2 {
+			box-shadow: 5px 5px 6px -3px rgba(0, 0, 0, 0.5);
+		}
+		.box3 {
+			box-shadow: 5px 0 5px rgba(0, 0, 0, 0.5);
+			box-shadow: -5px 0 5px rgba(0, 0, 0, 0.5);
+			box-shadow: 5px 0 5px rgba(0, 0, 0, 0.5), -5px 0 5px rgba(0, 0, 0, 0.5);
+			box-shadow: 5px 0 5px -2px rgba(0, 0, 0, 0.5), -5px 0 5px -2px rgba(0, 0, 0, 0.5);
+		}
+	</style>
+</head>
+<body>
+<!-- 
+	box-shadow 边框阴影   IE9+
+	1、可以使用多重阴影，但使用过多会造成性能差
+    2、边框在内阴影之上，内阴影在背景图片之上，背景图片在背景色之上，背景色在外阴影之上
+    3、内阴影对<img>元素没有任何效果
+    4、最先写的阴影在最顶层
+    5、该属性与border-radius一脉相承，若通过border-radius设置为圆角，则box-shadow的最终呈现也将是圆角
+
+    案例: 1px最清晰
+    1. 单侧阴影 x/y一轴有值, 并扩展为负数
+    2. 临边阴影 x/y都有值, 可以不适用扩展
+    3. 对边阴影 x/一轴有值, 使用两个阴影, 类似于实现两个单侧阴影
+ -->
+<div class="box box1-1">中国</div>
+<div class="box box1-2">中国</div>
+<div class="box box2-1">中国</div>
+<div class="box box2-2">中国</div>
+<div class="box box3">中国</div>
+</body>
+</html>

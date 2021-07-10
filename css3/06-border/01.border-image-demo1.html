@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.box {
+			width: 300px;
+			height: 300px;
+			border: 30px solid transparent;
+			background-color: #eee;
+			margin-bottom: 30px;
+		}
+		.box1 {
+			border-image-source: url("../../images/border.jpg");
+			border-image-slice: 30;
+			border-image-width: 30px;
+			border-image-repeat: round;
+			border-image-repeat: space;
+			border-image-repeat: repeat;
+		}
+		.box2 {
+			border-image-source: url("../../images/btn_bg.png");
+			border-image-slice: 30 fill;
+			border-image-width: 30px;
+			/*border-image-repeat: stretch;*/
+		}
+		.box3 {
+			width: 320px;
+			border-image-source: url("../../images/border.jpg");
+			border-image-slice: 0 0 30 0;
+			border-image-repeat: round;
+			border-image-width: 30px;
+		}
+		.box4 {
+			border-image-source: url("../../images/border.jpg");
+			border-image-slice: 0 30 30 0;
+			border-image-repeat: round;
+			border-image-width: 30px;
+		}
+	</style>
+</head>
+<body>
+<div class="box box1"></div>
+<div class="box box2"></div>
+<div class="box box3"></div>
+<div class="box box4"></div>
+</body>
+</html>

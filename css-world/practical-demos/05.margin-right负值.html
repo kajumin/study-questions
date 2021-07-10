@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style>
+		.box1 {
+			overflow: hidden;
+			width: 1000px;
+			margin: 0 auto;
+		}
+		.box1 > div {
+			margin-right: -10px;
+		}
+		.box1 .son {
+			float: left;
+			width: 242.5px;
+			margin-right: 10px;
+			background-color: #adc;
+		}
+		/*970 / 4 = 242.5*/
+	</style>
+</head>
+<body>
+
+	<!-- 
+	margin-right: -10px; 扩展出多余的位置
+	-->
+<div class="box1">
+	<div>
+		<div class="son">1111111</div>
+		<div class="son">2222222</div>
+		<div class="son">3333333</div>
+		<div class="son">4444444</div>
+		<div class="son">5555555</div>
+		<div class="son">6666666</div>
+		<div class="son">7777777</div>
+	</div>
+	
+</div>
+</body>
+</html>

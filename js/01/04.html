@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<script type="text/javascript">
+	// 异步和单线程
+	// 何时需要异步  在可能等待的情况alert  setTimeout  setInterval  
+	// 网络请求: ajax  img加载    事件绑定
+	// 同步和异步的区别  不能同时干两件事
+	setTimeout(function(){
+		console.log('settimeout 0')
+	},0);
+	for(var i = 0;i < 10;i ++) {
+		console.log(i)
+	}
+
+	// 1.同步和异步的区别  举一个例子 
+	// (1)同步会阻塞代码执行 异步异步
+	// (2)alert同步 settimeout是异步的
+	console.log('123')
+	setTimeout(function() {
+		console.log('settimeout 2')
+	},2000)
+
+	// 日期和math
+	var date = new Date();
+	console.log(date)
+	var haomiaoshu = date.getTime();
+	var year = date.getFullYear();
+	var month = date.getMonth();
+	var day = date.getDate();
+	var hours = date.getHours();
+	var minutes = date.getMinutes();
+	var seconds = date.getSeconds();
+	console.log(haomiaoshu)
+	console.log(year)
+	console.log(month)
+	console.log(day)
+	console.log(hours)
+	console.log(minutes)
+	console.log(seconds)
+
+	console.log(Math.random() * 100)  //大于0 小于1
+	var num = Math.random() * 100;
+	num.toFixed(2);
+
+	// forEach  some  every sort map filter
+	var arr = [10,2,3,4,5,6,7,8,9];
+	var newarr = arr.sort(function(a,b) {
+		return a - b;
+	});
+
+	console.log(arr === newarr) //true 不是一个新数组
+	console.log(newarr)
+	arr.forEach(function(item,index,arr){
+		// console.log(item)
+		// console.log(index)
+		// console.log(arr)
+	})
+	var result = arr.filter(function(item,index,arr){
+		return item > 0;   // every filter都一样
+		// console.log(item)
+		// console.log(index)
+		// console.log(arr)
+	})
+	console.log(result === arr)  //false 新数组
+		
+
+	// 对象api  hasOwnProperty()
+	// for in 
+
+	function getdate(date) {
+		
+		if(!date) {
+			date = new Date();
+		}
+		var year = date.getFullYear();
+		var month = date.getMonth() >= 10 ? date.getMonth(): "0"+ date.getMonth();
+		var day = date.getDate() >= 10 ? date.getDate(): "0"+ date.getDate();
+		return year + "-" + month + "-" + day;
+	}
+	console.log(getdate())
+
+	
+	function getRandom(len) {
+		var random = Math.random().toString();
+		
+		console.log(random.padEnd(len,'0'))
+	}
+	getRandom(20);
+
+	function myForEach(obj,callback){
+		if(obj instanceof Array) {
+			for(var i = 0;i < obj.length;i ++) {
+				callback(obj[i],i,obj);
+			}
+		}else if(obj instanceof Object) {
+			for(var o in obj) {
+				if(obj.hasOwnProperty(o)) {
+					callback(obj[o],o,obj);
+				}
+				
+			}
+		}else {
+			throw Error('no object or array');
+		}
+	}
+
+	var obj = {name: "bang",age: 20};
+	myForEach(arr,function(item,index,arr){
+		console.log(item)
+	})
+	myForEach(obj,function(item,key,obj){
+		console.log(key,item)
+	})
+	// myForEach('123',function(item,key,obj){
+	// 	console.log(key,item)
+	// })
+
+</script>
+</body>
+</html>

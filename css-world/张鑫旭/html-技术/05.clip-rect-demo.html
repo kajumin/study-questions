@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<style type="text/css">
+		.l {
+			float:left;
+		}
+		.img {
+			margin-top:30px; 
+			position:absolute;
+		}
+	</style>
+</head>
+<body>
+<!-- 
+* 1. 旋转效果查看需通过在角度文本框中输入数值
+* 2. 后台处理图片需要5个参数，剪裁起始点，以及剪裁的高宽，这5个参数均可以通过id获取。其中角度值即旋转角度输入框的值，id为zxxRotAngle，坐标及高宽参数分别藏在4个隐藏的文本框中，id分别是：cropPosX, cropPosY, cropImageWidth, cropImageHeight
+* 3. 自动对比当前图片与原始图片尺寸比例，计算实际的剪裁值，对于高度及位置溢出也做了处理
+* 4. 如果出现由于图片旋转而发生遮挡的现象，设置遮挡元素的position属性为relative，z-index为1，可修复此问题
+* 5. 经我测试，excanvas.js需在头部加载以支持IE浏览器的canvas
+* 6. 由于一些补充与更新，请下载最新的js替换zip源文件中的js 
+-->
+<div class="l">
+    <img id="cropTestImg" src="../assets/images/lyt/2.jpg" height="381" />
+</div>
+<img id="rectTestImg" class="img" src="../assets/images/lyt/2.jpg" />
+<script type="text/javascript" src="../assets/js/excanvas.js"></script>
+<script type="text/javascript" src="../assets/js/crop_rotation.js"></script>
+<script>
+var $ = function(id) {
+    return document.getElementById(id);
+};
+var oCropImg = $("cropTestImg"), 
+    oRectImg = $("rectTestImg");
+fnImageCropRot(oCropImg);
+
+setInterval(function() {
+    var cropPosX = parseInt($("cropPosX").value) || 0,
+        cropPosY = parseInt($("cropPosY").value) || 0,
+        cropImageWidth = parseInt($("cropImageWidth").value) || 0,
+        cropImageHeight = parseInt($("cropImageHeight").value) || 0;
+    console.log(cropPosX, cropPosY, cropImageWidth, cropImageHeight)     
+    oRectImg.style.clip = "rect("+ cropPosY + "px "+ (cropImageWidth + cropPosX) +"px "+ (cropImageHeight + cropPosY) +"px "+ cropPosX +"px)";
+}, 500);
+</script>
+</body>
+</html>

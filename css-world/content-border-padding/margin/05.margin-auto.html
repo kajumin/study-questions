@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.box {
+			margin-top: 20px;
+		}
+		.box1 {
+			height: 200px;
+			background-color: red;
+		}
+		.box1 .son {
+			/*inline-block float absolute无效*/
+			/*display: inline-block;*/
+			/*float: left;*/
+			position: absolute;
+			width: 100px;
+			height: 100px;
+			margin-left: auto;
+			margin-right: 100px;
+			background-color: #ccc;
+		}
+		.box2 {
+			height: 200px;
+			background-color: red;
+		}
+		.box2 .son {
+			display: inline-block;
+			display: block;
+			width: 100px;
+			height: 100px;
+			margin-left: auto;
+			margin-right: 100px;
+			background-color: #ccc;
+		}
+		.box3 {
+			position: relative;
+			height: 200px;
+			background-color: red;
+		}
+		.box3 .son {
+			position: absolute;
+			display: block;
+			width: 100px;
+			height: 100px;
+			right: 100px;
+			background-color: #ccc;
+		}
+		.box4 {
+			position: relative;
+			height: 200px;
+			background-color: red;
+		}
+		.box4 .son {
+			position: absolute;
+			left: 0;
+			right: 0;
+			top: 0;
+			bottom: 0;
+			width: 100px;
+			height: 100px;
+			margin: auto;
+			background-color: #096;
+		}
+		.box5 {
+			position: relative;
+			height: 200px;
+			background-color: red;
+		}
+		.box5 a {
+			position: absolute;
+			right: 20px;
+			display: inline-block;
+			padding: 12px 15px;
+			/*width: 30px;*/
+			margin-left: auto;
+			margin-right: 20px;
+		}
+	</style>
+</head>
+<body>
+	<!-- margin-auto   为闲置的尺寸而生 
+	由对齐的时候可以使用  避免使用float:right;
+	1.对块级元素有用(float 定位元素(可修复)都没用)
+	2.对于内联元素和替换元素可以通过display: block;支持auto   inline和inline-block不行  
+	  float 定位元素修复不了 使用right属性
+	 -->
+<div class="box box1">
+	<div class="son">div</div>
+</div>
+<div class="box box2">
+	<span class="son">span span</span>
+</div>
+<div class="box box3">
+	<div class="son">div</div>
+</div>
+<div class="box box4">
+	<div class="son">div</div>
+</div>
+
+<!-- a 标签使用block不方便计算宽度, 所以使用inline-block, 又不能margin-left: auto; 所以使用absolute+right定位 -->
+<div class="box box5">
+	<a href="#">按钮</a>
+</div>
+
+</body>
+</html>

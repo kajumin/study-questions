@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style>
+		#box {
+		  	width: 100px;　height: 100px;
+		 	line-height: 100px;
+		  	background: pink;
+		  	margin: 30px auto 0;
+		  	text-align: center;
+		}  
+		#box2 {
+		  	width: 100px;
+		  	line-height: 100px;
+		  	height: 100px;
+		  	background: pink;
+		 	margin: 30px auto 0;
+		  	text-align: center;
+		} 
+		#box3{
+		  width: 100px;
+		  height: 100px;
+		  background: pink;
+		  margin: 30px auto 0;
+		  text-align: center;
+		} 
+		#box4 {
+		  width: 100px;
+		  height: 100px;
+		  background: pink;
+		  margin: 30px auto 0;
+		  text-align: center;
+		}    
+	</style>
+</head>
+<body>
+<div id="box">0</div>
+<div id="box2">0</div>
+<div id="box3">0</div>
+<div id="box4">0</div>
+
+<script type="text/javascript">
+	/*
+	横竖屏 orientation
+	设备方向 deviceorientation
+	设备移动 devicemotion
+	*/
+	//充电口对着的位置按照上右下左的顺序，该属性的结果分别是0、90、180、-90
+	console.log(window.orientation);
+    let oBox = document.getElementById('box');
+  	window.addEventListener('orientationchange', ()=>{
+  		alert(window.orientation)
+    	oBox.innerHTML = window.orientation
+  	})
+  	alert('ccc')
+
+	let oBox2 = document.getElementById('box2');
+	window.addEventListener('deviceorientation',(e)=>{
+	  oBox2.innerHTML = Math.round(e.beta)
+	  alert(e.beta)
+	  oBox2.style.transform = `rotate(${e.beta}deg)`
+	});
+
+	let oBox3 = document.getElementById('box3');
+	let lastX=0,lastY=0,lastZ=0;
+	window.addEventListener('devicemotion',(e)=>{
+	  requestAnimationFrame(()=>{
+	    let {x,y,z} = e.accelerationIncludingGravity
+	    x = 6*x
+	    y = 6*y
+	    z = 6*z
+	    oBox3.style.transform = `translate3d(${x+lastX}px,${y+lastY}px,${z+lastZ}px)`
+	    lastX = x
+	    lastY = y
+	    lastZ = z    
+	  })
+	})
+	
+	// let oBox4 = document.getElementById('box4');
+	// let lastX=0,lastY=0,lastZ=0;
+	// window.addEventListener('devicemotion',(e)=>{
+	//   requestAnimationFrame(()=>{
+	//     let {x,y,z} = e.accelerationIncludingGravity
+	//     x = 6*x
+	//     y = 6*y
+	//     z = 6*z
+	//     oBox4.style.transform = `translate3d(${x+lastX}px,${y+lastY}px,${z+lastZ}px)`
+	//     lastX = x
+	//     lastY = y
+	//     lastZ = z    
+	//   })
+	// })
+</script>
+</script>
+
+</body>
+</html>

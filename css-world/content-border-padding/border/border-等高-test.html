@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.container {
+			border-left: 200px solid #999; 
+			background-color: #eee;
+		}
+		.container:after {
+			content: '';
+			display: block;
+			clear: both;
+		}
+		.left {
+			float: left;
+			margin-left: -200px;
+		}
+		.right {
+			overflow: hidden;
+		}
+		p {
+			margin-top: 0;
+		}
+	</style>
+</head>
+<body>
+<div class="container">
+	<div class="left">
+		<p>123456</p>
+		<p>123456</p>
+		<p>123456</p>
+		<p>123456</p>
+		<p>123456</p>
+		<p>123456</p>
+
+	</div>
+	<div class="right">
+		<p>123456</p>
+		<p>123456</p>
+		
+	</div>
+</div>
+</body>
+</html>

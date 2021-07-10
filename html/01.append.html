@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title></title>
+</head>
+<body>
+  <div class="box1">box1</div>
+  <div class="box2">box2</div>
+  <div class="box3">box2</div>
+  <!-- 
+    append: 
+    可以: (1)直接将字符串当做文本节点 appendChild不行
+          (2)支持多个参数, appendChild不行
+          (3)方法没有返回值, appendChild会返回追加进去的那个节点
+          (4)一起加入规范的还有: prepend() 、before()、after()
+    不可以: <h1>h1</h1>HTML片段字符串不能当做元素节点添加进去, 跟jquery有区别
+
+
+    其他一些方法: prepend()前面加子元素 、before()当兄弟、after()当兄弟
+    其他一些方法: contains 包含子节点
+    isEqualNode 节点是否相等
+    insertBefore 参考节点之前插入一个拥有指定父节点的子节点
+    parentNode parentElement
+   -->
+   <script src="./jquery-3.4.1.min.js"></script>
+  <script>
+    
+    var box1 = document.querySelector('.box1')
+    var box2 = document.querySelector('.box2')
+    var text = document.createTextNode('text') //文本节点
+    var text2 = document.createTextNode('text2') //文本节点
+    var text3 = document.createTextNode('text3') //文本节点
+    var text4 = document.createTextNode('text4') //文本节点
+    var p = document.createElement('p') //元素节点
+    var p2 = document.createElement('p2') //元素节点
+    p.appendChild(text2)
+    p2.appendChild(text3)
+    console.log(p);
+
+
+    // box1.append('text') //支持text字符串
+    // box1.append('text1', 'test2') //支持添加多个
+    // box1.append('<h1>h1</h1>') //支持字符串 当做字符串处理
+    // console.log(box1.append('<h1>h1</h1>')); //undefined 返回值
+
+    box1.append(text) //支持文本节点 但不是复制, 而是移动
+    box1.append(p) //支持元素节点
+
+    // box2.appendChild('text') //不支持text字符串
+    // box2.appendChild('text1', 'test2') //不支持添加多个
+    // box2.appendChild('<h1>h1</h1>') //不支持
+    
+    console.log(typeof text4); //object
+    box2.appendChild(text4) //支持文本节点
+    console.log(box2.appendChild(p2)) //支持元素节点
+
+    console.log(text4.__proto__ === Text.prototype); //true
+    console.log(text4.__proto__.__proto__);
+
+
+    var text5 = document.createTextNode('text5') //文本节点
+    var p3 = document.createElement('p3') //元素节点
+    var p4 = document.createElement('p4') //元素节点
+    // 其他: after
+    box2.after(p3) //当做兄弟 之后
+    box2.before(p3) //当做兄弟 之前
+    box2.prepend(p4) //当做第一个子元素
+    
+    $('.box3').append('<h1>h1</h1>')
+  </script>
+</body>
+</html>

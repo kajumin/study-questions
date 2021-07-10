@@ -1,0 +1,26 @@
+vue vue-router eslint scss
+
+
+(1)scss import问题
+import 变量   编译过后并不存在, 不会影响打包后文件的大小
+import 样式   编译后会增大文件的大小
+%  @mixin    继承和混入  编译后不会影响打包后文件的大小
+
+(2)路由按需加载没有问题  正常使用
+    import(/**/ Admin.vue)
+
+(3) cdn
+     vue  vue-router
+ 
+(4).env.dev  VUE_APP开头的变量会嵌入到项目代码中
+    process.env.VUE_APP_** 访问
+
+(5)拆分runtime 但没有内嵌到html中
+     删除prefetch
+     删除productionSourceMap
+
+(6)有common  vendor情况下   user.js请求文件
+dist4  user.js只引用一次  所以user.js打包到了user-list.js
+
+(7)在6的基础上  增加一次user.js引用
+     user.js被打包到common.js中了

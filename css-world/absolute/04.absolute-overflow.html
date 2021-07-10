@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<style type="text/css">
+		.box + .box{
+			margin-top: 250px;
+		}
+	</style>
+</head>
+<body>
+<!-- 
+	1.也可能不会被剪裁的情况:
+	2.overflow会剪裁定位元素
+	 -->
+
+<!-- 1 overflow不是定位元素 且overflow 和 absolute之间没有定位元素-->
+<div style="overflow: hidden;" class="box">
+	<img src="../images/1.jpg" style="position: absolute;width: 200px;height: 200px;">
+</div>
+
+<!-- 2 overflow属性在relative元素和absolute元素之间-->
+<div style="position: relative;" class="box">
+	<div style="overflow: hidden;">
+		<img src="../images/1.jpg" style="position: absolute;width:200px;height:200px;">
+	</div>
+</div>
+
+<!-- 3 剪裁 overflow属性也是定位元素-->
+<div style="overflow: hidden;position: relative;" class="box">
+	<img src="../images/1.jpg" style="position: absolute;width: 200px;height: 200px;">
+</div>
+
+
+<!-- 4 剪裁 relative在overflow和absolute之间-->
+<div style="overflow: hidden;" class="box">
+	<div style="position: relative;">
+		<img src="../images/1.jpg" style="position: absolute;width: 200px;height: 200px;">
+	</div>
+</div>
+
+
+</body>
+</html>

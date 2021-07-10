@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.box3-1 {
+			width: 200px;
+			height: 200px;
+			background-color: red;
+		}
+		.box3-1 .son1 {
+			width: 100px;
+			height: 100px;
+			background-color: transparent;
+		}
+		.box3-1 .son2 {
+			width: 100px;
+			height: 100px;
+			background-color: #096;
+		}
+		.box3-2 {
+			width: 200px;
+			height: 200px;
+			background-color: red;
+			border: 10px solid;
+			border-color: #096 transparent transparent transparent;
+		}
+		.box3-3 {
+			width: 200px;
+			height: 200px;
+			background-color: red;
+			color: transparent;
+		}
+		.box5 {
+			width: 100px;
+			height: 100px;
+			background-color: red;
+			color: rgb(255,255,0);
+			color: rgba(255,255,0,0.5);
+			color: rgba(100%,100%,0%,0.5);
+			color: hsl(240,100%,50%);
+		}
+	</style>
+</head>
+<body>
+<!-- 
+color关键字: css3增加很多
+1.css3新增的颜色IE8浏览器都不支持
+2.html(font)会将非识别颜色关键字转换成另一个完全不同的颜色值,
+  css则是使用默认值
+3.tranparent关键字
+  background-color: transparent; IE6
+  border-color: transparent; IE7
+  color: transparent; IE9
+4. currentColor: IE9才支持 
+   默认值的表现 border text-shadow box-shadow  IE7
+5. 不支持rgba和hsla
+   支持百分比值 但是不能混合
+   rgba背景色 IE9
+   hsl hsla  IE9才支持 色调(0-360)  饱和度(0%-100%)  亮度(0%黑色-100%白色)
+  
+ -->
+ <h1 style="color: rebeccapurple;">CSS色和 <font color="rebeccapurple;">HTML色</font>解析差异测试</h1>
+ <div class="box3-1">
+ 	<div class="son1">中国</div>
+ 	<div class="son2">中国</div>
+ </div> 
+ <div class="box3-2"></div>
+ <div class="box3-3">中国</div>
+ <div class="box5">中国</div>
+</body>
+</html>

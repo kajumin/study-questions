@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1.0">
+	<style type="text/css">
+		.box1 {
+			width: 200px;
+			height: 200px;
+			background-color: red;
+		}
+	</style>
+</head>
+<body>
+	<div class="box1">中国</div>
+<script type="text/javascript" src="assets/js/jquery.min.js"></script>
+<script src="assets/js/fastclick.min.js"></script>
+<script type="text/javascript">
+	$(function() { 
+		// 1.js使用
+		// if ('addEventListener' in document) {
+		// 	document.addEventListener('DOMContentLoaded', function() {
+		// 	FastClick.attach(document.body);
+		// 	}, false);
+		// }
+		// console.log(FastClick)
+
+		// 2.jquery使用
+		// FastClick.attach(document.body); 
+		// $('.box1').on('touchstart', function(e) {
+		// 	console.log('touchstart')
+		// })
+		$('.box1').on('click', function(e) {
+			console.log('click')
+		})
+		// FastClick的实现原理是在检测到touchend事件的时候，会通过DOM自定义事件立即出发模拟一个click事件，并把浏览器在300ms之后的click事件阻止掉。
+
+		//点击事件能更快
+	});
+</script>
+</body>
+</html>

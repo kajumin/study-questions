@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		body {
+			margin: 0;
+		}
+		.par {
+			overflow: hidden;
+		}
+		.box1 {
+			height: 100px;
+			margin-bottom: 10px;
+			background-color: red;
+		}
+		.box2 {
+			/*父子margin合并*/
+			overflow: hidden;
+			height: 100px;
+			margin-top: 10px;
+			background-color: green;
+		}
+		.box2 .son {
+			height: 10px;
+			margin-top: 30px;
+			background-color: red;
+		}
+	</style>
+</head>
+<body>
+<!-- 
+BFC: 块级格式化上下文
+触发BFC:
+1.html根元素
+2.float不为none
+3.overflow为auto, scroll, hidden
+4.display为inline-block, table-cell, table-caption
+5.position不为relative, static
+
+1.清除浮动
+2.自适应布局
+3.去除margin合并
+-->
+<div class="par">
+	<div class="box1"></div>
+	<div class="box2">
+		<div class="son"></div>
+	</div>
+</div>
+
+</body>
+</html>

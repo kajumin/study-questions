@@ -1,0 +1,140 @@
+1.递归组件  组件中写自身组件
+2.内联模板
+3.动态组件   :is="component"
+4.异步组件   function(resolve, reject)
+
+其他: 
+1.$nextTick
+2.x-template   <script type="text/x-template" id="my-component"></script> template: '#my-component'
+3.手动挂载组件
+   var MyComponent = Vue.extend({})
+  (1) new component().$mount('#app') 
+  (2) new MyComponent({el:'#app'})
+  (3) var component = new MyComponent().$mount()
+       document.querySelector('#app').appendChild(component.$el)
+
+
+==================render 
+1.渲染多个相同元素/组件
+Array.apply(null, { length: 20 }).map(function () {
+      return createElement('p', 'hi')
+})
+
+2.v-if v-for用js替代   if(){ h() } else { h() }   map()
+
+3.
+v-model
+domProps: {
+      value: self.value
+},
+on: {
+      input: function (event) {
+        self.$emit('input', event.target.value)
+      } 
+}
+
+===============数据通信
+inject: ['msg', 'data']  孙子
+provide () {  //爷爷
+	var data = {}
+	// 实现响应式
+	Object.defineProperty(data, 'message', {
+		get: () => this.msg,
+		enumerable: true
+	})
+	return {
+		data,
+		msg: this.msg
+	}
+},
+===============watch   hander   immediate  deep
+watch: {
+    obj: {
+      handler () {
+        console.log('obj.a changed')
+      },
+      immediate: true,
+      deep: true
+    },
+
+const unwatch = app.$watch('text', (newV, oldV) => {}  //声明监听
+unwatch()   // 监听取消
+
+
+=================render渲染函数
+render函数通过createElement参数来创建Virtual Dom, 结构精简
+第一个参数  html标签 | 组件选项  | 一个函数
+第二个参数是个对应的数据对象
+第三个参数是子节点 是一个数组 | 字符串
+
+==================函数式组件
+     一些详情页面，列表界面等，它们有一个共同的特点是只需要将外部传入的数据进行展现，不需要有内部状态，不需要在生命周期钩子函数里面做处理，这时候你就可以考虑使用函数式组件。
+(1)最主要最关键的原因是函数式组件不需要实例化，无状态，没有生命周期，所以渲染性能要好于普通组件
+(2)函数式组件结构比较简单，代码结构更清晰
+
+不同: 
+(1)需要在声明组件是指定functional
+(2)不需要实例化，所以没有this,this通过render函数的第二个参数来代替
+(3)没有生命周期钩子函数，不能使用计算属性，watch等等
+(4)不能通过$emit对外暴露事件，调用事件只能通过context.listeners.click的方式调用外部传入的事件
+(5)为函数式组件是没有实例化的，所以在外部通过ref去引用组件时，实际引用的是HTMLElement
+(6)props可以不用显示声明，所以没有在props里面声明的属性都会被自动隐式解析为prop,而普通组件所有未声明的属性都被解析到$attrs里面，并自动挂载到组件根元素上面(可以通过inheritAttrs属性禁止)
+===================
+.sync使用  与v-model不同
+一个组件只能定义一个v-model, 但可以定义多个.sync
+v-model与.sync对于的事件名称不同，v-model默认事件为input, 可以通过配置model来修改，.sync事件名称固定为update:属性名
+
+==================jsx
+指令只有v-show
+v-model   使用value="{this.name}" onInput={this.$input} 模拟
+v-for  {list.map(item=>{return <li>{item}</li>})}
+v-if   const  isGirl = false  return isGirl ? <span>女</span> : <span>男</span>
+v-bind    value={this.name}
+props  父传入  组件自定义属性 
+attrs 父传入  子未定义的属性  
+domProps  (innterHTML textContent innerText  value)
+v-html domPropsInnerHTML={this.content}   
+v-text  domPropsInnerText={this.text}  或者 {this.text}
+事件 v-on   写成 onClick={this.$clickEvent}   元素nativeOnClick={this.$click}
+on={{ click: this.$click, input: this.$input }}
+nativeOn={{click: this.$click}}
+event.preventDefault()    .prevent
+event.stopPropagation()  .stop
+if (event.target !== event.currentTarget){  //.self
+  return
+}
+if(event.keyCode === 13) {  //.keyCode  .enter
+  // 执行逻辑
+}
+//其他
+on={{
+          // 相当于 :click.capture
+          '!click': this.$_handleClick,
+          // 相当于 :input.once
+          '~input': this.$_handleInput,
+          // 相当于 :mousedown.passive
+          '&mousedown': this.$_handleMouseDown,
+          // 相当于 :mouseup.capture.once
+          '~!mouseup': this.$_handleMouseUp
+}}
+{ this.$slot.default}    {/*这里就是默认插槽*/} 
+{this.$slots.footer}   {/**自定义具名插槽*/}
+不只是render函数内才能写jsx，你可以定义method，然后在method里面返回JSX,然后在render函数里面调用这个方法，不仅如此，JSX还可以直接赋值给变量
+
+===================object.freeze提高性能
+v-for 比v-if优先级高
+$_init定义私有的   _init会和vue冲突
+bigint也是基本类型  值存放在栈内存中  比较是值的比较 值是不会变的  对值的修改会在栈内存开辟新的空间
+基本类型上不能挂载新的属性
+引用类型的值保存在堆内存中, 而引用保存在栈内存中
+引用类型的值是按引用访问的
+引用类型的值是可变的(在堆内存中直接修改)
+引用类型上面可以挂载新的属性
+多个实例将共享引用同一个数据对象, 任何一个实例对数据的修改都会影响到其他实例, 而将组件上的数据定义为一个函数之后, 每个实例调用data函数, 都会返回初始数据的一个全新副本数据对象,从而避免引用.
+===============================vue使用注意
+组件名多个单词组成
+props尽量详细
+组件data是一个函数
+避免使用v-for  v-if混用
+v-for设置key
+复杂逻辑使用computed计算属性

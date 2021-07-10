@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
+	<style type="text/css">
+		html {
+    		/*touch-action: manipulation;*/
+		}
+		.box1 {
+			position: absolute;
+			top: 0;
+			width: 100px;
+			height: 100px;
+			background-color: rgba(0,0,0,0.2);
+		}
+	</style>
+</head>
+<body>
+	<!-- 
+	manipulation: 禁止了双击, 300ms延迟就不存在了
+	但是不能解决点透
+
+	 -->
+	 <a href="www.baidu.com">链接</a>
+	<div class="box1">
+		
+	</div>
+	<div style="height: 10000px;"></div>
+<script type="text/javascript">
+	document.addEventListener('click', function(e) {
+		console.log("click")
+		// e.preventDefault();
+	})
+	// document.addEventListener('touchstart', function(e) {
+	// 	console.log("touchstart")
+	// 	// e.preventDefault();
+	// })
+	
+	document.querySelector('.box1').addEventListener('touchstart', function(e) {
+		this.style.display = 'none'
+	})
+
+	// document.addEventListener('touchstart', function(e) {
+	// 	console.log("touchemove")
+	// 	e.preventDefault();
+	// }, {
+	// 	passive: false
+	// })
+</script>
+</body>
+</html>

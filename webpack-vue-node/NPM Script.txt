@@ -1,0 +1,87 @@
+=============NPM    第三方模块(包)管理工具
+--save参数表示将该模块写入dependencies(项目依赖)属性，--save-dev表示将该模块写入devDependencies(开发依赖)属性
+
+NPM帮助完成了第三方模块的发布、安装和依赖等。借助NPM，Node与第三方模块之间形成了很好的一个生态系统。借助NPM，可以帮助用户快速安装和管理依赖包。
+安装依赖包:  全局安装  本地安装
+
+npm -v
+npm init(问答)  ||  npm init -y
+npm config get registry   //查看镜像源
+npm config set registry https://registry.npm.taobao.org   //更改镜像源
+npm config set registry https://registry.npmjs.org/           //取消镜像
+npm i express (-D|-g)            //安装依赖
+npm uninstall express           //卸载依赖包
+npm list                               //当前目录下所安装的依赖
+
+npm view postcss-loader versions  //查看某个包的版本
+npm info jquery   //查看jquery版本
+npm ls  jquery     //查看本地下载好的版本
+
+npm root -g   查看全局安装目录
+npm i npm -g  //node.js中npm更新低于npm
+npm help
+npm help <command>可以查看具体的命令说明
+npm -l      命令可以查看各个命令的简单用法
+npm install underscore  --registry=http://registry.url  //下载时指定更改镜像源
+npm ls -g   //查看全局安装的依赖包
+npm info express   //查看详细信息
+npm outdated <pkgname>  //检查模块是否过时
+
+=======nodeJS中的包
+CommonJS的包规范的定义其实也十分简单，它由包结构和包描述文件两个部分组成，前者用于组织包中的各种文件，后者则用于描述包的相关信息，以供外部读取分析。
+包结构:  bin  lib  doc test   package.json(包结构文件)
+包描述文件:  package.json
+
+package.json    //最基本两项元数据:  项目名称name和项目版本version  
+version:  偶数位为稳定版本  奇数位为非稳定版本
+description    包简介
+keywords      关键词数组
+maintainers   包维护者列表
+contributors  贡献者列表
+bugs             一个可以反馈bug的网页地址或邮件地址
+licenses          当前包所使用的许可证列表
+repositories      托管源代码的位置列表
+dependencies    使用当前包所需要依赖的包列表。
+其他: 
+main             加载的入口文件
+author           包作者
+devDependencies      项目开发所需要的模块
+
+=====开发npm包
+(1) 编写模块
+(2) 初始化包描述文件
+(3) 注册包仓库账号
+(4) 上传包 npm publist .
+
+
+===================安装node环境:
+nvm 
+nvm -v 
+nvm ls  /  list
+nvm use 11.15.0
+nvm list available
+nvm install  12.4.0   32位需要传32
+nvm uninstall 12.4.0
+
+====yarn
+yarn config list
+yarn config set registry https://registry.npm.taobao.org
+yarn 或者 yarn install  安装所有依赖
+yarn add taco
+yarn remove taco  移除
+yarn add taco -D
+yarn global add taco
+yarn why taco  特有的
+yarn upgrade 用于更新包到基于规范范围的最新版本
+yarn run 用来执行在 package.json 中 scripts 属性下定义的脚本 与 npm 可以有 yarn start 和 yarn test 
+yarn info <packageName> 可以用来查看某个模块的最新版本信息
+yarn list   # 列出当前项目的依赖
+========pm2
+npm i -g pm2
+pm2 start app.js
+pm2 -h
+pm2 list
+pm2 stop id
+pm2 stop all
+pm2 restart id
+pm2 restart all

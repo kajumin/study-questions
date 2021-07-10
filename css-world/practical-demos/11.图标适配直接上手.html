@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.box1 {
+   		 	line-height: 20px;
+		}
+		.icon {
+		    display: inline-block; 
+		    width: 20px; 
+		    height: 20px; 
+		    /*为了让文字不要多行, 否则基线就不对了*/
+		    white-space: nowrap; 
+		    /*所有的字都叠在一起*/
+		    letter-spacing: -1em; 
+		    /*隐藏文字*/
+		    text-indent: -999em;
+		    /*隐藏文字*/
+		    color: transparent;
+		}
+		.icon:before {
+		    content:'\3000';
+		}
+		.icon-delete {
+		    background: url(../images/delete.jpg) no-repeat center;
+		}
+
+		.large {
+		    font-size: 20px;
+		}
+		.larger {
+		    font-size: 24px;
+		}
+
+		.box2 {
+			font-size: 20px;
+			line-height: 20px;
+		}
+		.box2 i {
+			display: inline-block;
+			width: 20px;
+			height: 20px;
+			background: url(../images/delete.jpg) no-repeat center;
+			background-color: #f1f1f1;
+			/*vertical-align: middle;*/
+		}
+		.box2 i:before {
+		    content:'\3000';
+		}
+
+		.test {
+			line-height: 20px;
+		}
+		.test i {
+			margin-right: 30px;
+			letter-spacing: 0;
+			text-indent: 5px;
+			color: #000;
+		}
+
+		.line-more {
+			line-height: 30px;
+		}
+		.icon-more {
+			width: 30px;
+			height: 30px;
+		}
+	</style>
+</head>
+<body>
+	<!-- 
+		1.利用inline-block基线原理的小图标对齐实例页面
+		  让icon里面的文字或者空格与外部文字的基线对齐, 而且只有一行
+		  文字变大没有影响 
+		  外部的line-height值 = 图标大小一致
+		  或者: 外部的line-height值 != 图标大小一致 
+		        同时: 图标大小 = 图标的line-height值 
+
+		2.icon-more test-more 图标变大 line-height值也变大
+	-->
+<div class="box1">
+
+    <h4>1. 空标签后面跟随文本</h4>
+    <p><i class="icon icon-delete"></i>删除</p>
+
+    <h4>2. 标签里面有“删除”文本</h4>
+    <p><i class="icon icon-delete">删除</i>随便什么文字</p>
+
+    <h4>3. 字号变大</h4>
+    <p class="large">
+        <i class="icon icon-delete"></i>删除
+    </p>
+    <p class="large">
+        <i class="icon icon-delete">删除</i>x随便什么文字
+    </p> 
+
+    <h4>4. 字号再大</h4>
+    <p class="larger">
+        <i class="icon icon-delete"></i>删除
+    </p>
+    <p class="larger">
+        <i class="icon icon-delete">删除</i>x随便什么文字
+    </p>
+</div>
+
+<div class="test"> 
+	<i class="icon icon2 icon-delete">删除</i>随便什么文字
+</div>
+
+<div class="test large"> 
+	<i class="icon icon2 icon-delete">删除</i>随便什么文字
+</div>
+
+<div class="test larger"> 
+	<i class="icon icon2 icon-delete">删除</i>随便什么文字
+</div>
+
+<!-- 
+图标变大时, line-height值要变大 
+图标大小 = line-height值
+-->
+<!-- 
+文字字体变大时, 其他不需要改变
+-->
+<br>
+<div class="test larger"> 
+	<i class="icon icon2 icon-delete">删除</i>随便什么文字
+</div>
+<div class="test line-more larger"> 
+	<i class="icon icon-more icon2 icon-delete">删除</i>随便什么文字
+</div>
+
+<!-- 
+line-block有内容 或者overflow不为visible时, 其基线就是最后一行内联元素的基线,
+否则就是margin低边缘
+
+ -->
+<!-- 
+inline-block需要内容时才能让其基线就是最后一行内联元素的基线,
+1.a设置line-height: 30px; span设置line-height: 20px; 即可
+2.li设置line-height: 30px; a设置line-height: 20px;  即可
+
+ -->
+
+
+</body>
+</html>

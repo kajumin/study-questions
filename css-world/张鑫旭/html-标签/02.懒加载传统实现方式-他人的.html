@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		body {
+			margin: 0;
+		}
+		.container {
+			width: 200px;
+			height: 200px;
+			margin: 0 auto;
+		}	
+		.container img {
+			width: 200px;
+			height: 200px;
+		}
+	</style>
+</head>
+<body>
+<div class="container">
+	<img data-src="../assets/images/zza/1.jpg">
+	<img data-src="../assets/images/zza/2.jpg">
+	<img data-src="../assets/images/zza/3.jpg">
+	<img data-src="../assets/images/zza/4.jpg">
+	<img data-src="../assets/images/zza/5.jpg">
+	<img data-src="../assets/images/zza/6.jpg">
+	<img data-src="../assets/images/zza/7.jpg">
+	<img data-src="../assets/images/zza/8.jpg">
+	<img data-src="../assets/images/zza/9.jpg">
+	<img data-src="../assets/images/zza/10.jpg">
+</div>
+
+<script type="text/javascript" src="../assets/js/underscore.js"></script>
+<script type="text/javascript" src="../assets/js/jquery-3.4.1.min.js"></script>
+<script type="text/javascript">
+	
+	// 注意: 需要引入jQuery和underscore
+	$(function() {
+	    // 获取window的引用:
+	    var $window = $(window);
+	    // 获取包含data-src属性的img，并以jQuery对象存入数组:
+	    var lazyImgs = _.map($('img[data-src]').get(), function (i) {
+	        return $(i);
+	    });
+	    // 定义事件函数:
+	    var onScroll = function() {        
+	        // 判断是否还有未加载的img:
+	        if (lazyImgs.length <= 0) return;
+        	// 获取页面滚动的高度:
+        	var wtop = $window.scrollTop();
+            // 获取可视区域高度:
+            var wheight = $window.height();
+            // 存放待删除的索引:
+            var loadedIndex = [];
+            // 循环处理数组的每个img元素:
+            _.each(lazyImgs, function ($i, index) {
+                // 判断是否在可视范围内:
+                // console.log($i.offset().top)
+                if ($i.offset().top - wtop - wheight < 150) {
+                    // 设置src属性:
+                    $i.attr('src', $i.attr('data-src'));
+                    // 添加到待删除数组:
+                    loadedIndex.unshift(index);
+                }
+            });
+            console.log('滚动高度:', wtop)
+            console.log('可视高度:', wheight)
+            console.log('删除的img索引:', loadedIndex)
+            console.log('img数据:', lazyImgs)
+            // 删除已处理的对象:
+            _.each(loadedIndex, function (index) {
+                lazyImgs.splice(index, 1);
+            });
+	        
+	    };
+    	// 绑定事件:
+    	$window.scroll(onScroll);
+    	// 手动触发一次:
+    	onScroll();
+    })
+</script>
+</body>
+</html>

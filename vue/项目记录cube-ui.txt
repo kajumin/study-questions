@@ -1,0 +1,83 @@
+          维护团队:   更新迭代:       测试:                  缺点:                     优点
+Mint   饿了么      一年没提交     测试没有覆盖      基本停止维护
+vux     个人          三个月           基本没有覆盖     个人项目没有适配vue-cli3
+Cube-ui  滴滴       持续更新       测试完备                                           后编译 create-api 滴滴线上业务
+ vant     有赞         持续更新       测试完备                                          有赞线上项目  支持ssr  ts  
+
+扩展性:  组件化设计思路直观重要
+
+use post-compile  yes
+import type //party    按需引入
+custom theme  //no  自定义样式
+use rem layout  //no
+use vm layout   //no
+next({
+	path: '/login',
+ 	query: { redirect: to.path }  //让登陆后知道本来的页面
+})
+
+vue add router
+vue add vuex
+npm i axios
+===============0源码解析
+工作机制
+响应式原理
+依赖收集和追踪
+编译compile
+编译模板分为三个阶段: 
+parse        使用正则解析template中的vue指令v-xxx变量等  形成语法树AST
+optimize   标记一些静态节点 用作后面的性能优化  在diff的时候直接略过
+generate   把第一个部分的AST转为渲染函数render function
+虚拟dom是js对象, 
+
+
+编译过程  3w  1h
+(1)什么是编译?为什么要编译? 
+vue模板写的语句html不能识别, 通过编译的过程可以进行依赖的收集,通过依赖收集, data中的数据和视图之间就产生了依赖关系或者绑定关系, 如果以后数据模型发生变化的时候, 通知依赖的地方,让它们进行视图更新
+
+(2)双向绑定的原理
+加事件监听 和 依赖关系
+
+=====
+进阶: 
+push实现数据响应式
+组件的实现
+===============1
+1. UI库选型思路   cube-ui   滴滴的
+2. 全家桶融会贯通 vue-router+vuex  
+3. 前端登录和权限控制    beforeEach全局守卫 meta.auth
+4. 深入理解令牌认证机制 token
+5. 前后端交互       axios   使用koa做服务器   mock直接使用vue.config.js中devServer中
+6. 解决跨域问题    jsonp  cors  nignx   node中间件   webpack代理
+===============2
+1.数据和状态管理实践    获取数据保存在vuex中  登录状态
+2.vuex模块化             模块化为user  good   cart 
+3.vue动画设计
+4.全局组件实现与原理
+5.全局回退管理
+
+
+令牌机制:
+bearer token规范 
+config.headers.authorization = 'bearer ' + token   // 规范的头 有空格  协议规范
+====https://jwt.io
+json  web  token   (jwt)  json规范  
+head.payload.hash
+head: type alr
+payload: json
+hash: 
+头: 包含加密算法  令牌类型等信息
+载荷: 包含用户信息 签发时间和过期时间等信息  
+签名: 根据头  载荷及秘钥  加密得到的哈希串   (Hmac Sha1 256)    (HS256)   32位
+加密算法  hash
+
+npm i koa   koa-router   jsonwebtoken    koa-jwt
+// koa最新版本需要高版本node
+jsonwebtoken  //生成令牌
+it is srecet        //生成数字签名的秘钥(自己编写, 不能被人知道)   用户的密码  
+
+4.动画  roue-forward-enter
+tansition 
+
+
+5.回退管理: 通过自动调动router中自定义函数设置状态为isBack, afterEach()中根据isBack状态处理不能逻辑, 添加还是删除history,  设置tansition动画name, 实现回退向左, 切换向右

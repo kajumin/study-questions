@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style>
+		.box {
+			width: 100px;
+			height: 100px;
+			margin-bottom: 30px;
+			background-color: red;
+		}
+		.box1 {
+			transform: matrix(1.2, 0, 0, 1.2, 0, 0);
+		}
+		.box2 {
+			transform: skew(30deg, 30deg);
+			transform: matrix(1, 0.57735, 0.57735, 1, 0, 0);
+		}
+		.box3 {
+			transform: matrix(1, 0, 0, 1, 20, 20);
+		}
+
+	</style>
+</head>
+<body>
+<!-- 
+a c e  x   ax + cy + e
+b d f  y   bx + dy + f
+0 0 1  1   0 + 0 + 1
+
+x坐标 = ax + cy + e
+y坐标 = bx + dy + f
+a b c d e f
+ad 缩放
+bc 旋转
+ef 位移 
+--> 
+<div class="box box1"></div>
+<div class="box box2"></div>
+<div class="box box3"></div>
+</body>
+</html>

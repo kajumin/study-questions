@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.box {
+			width: 100px;
+			height: 100px;
+		}
+		.par1 {
+			width: 500px;
+			height: auto;
+			margin-bottom: 20px;
+		}
+		.box1-1 {
+			position: relative;
+			top: 10px;
+			z-index: 1;
+			background-color: red;
+		}
+		.box1-2 {
+			background-color: green;
+		}
+
+
+		.box2-1 {
+			float: left;
+			background-color: green;
+		}
+		.box2-2 {
+			display: block;
+			display: inline-block;
+			margin-left: -20px;
+			background-color: red;
+		}
+		
+		
+	</style>
+</head>
+<body>
+	<!-- 
+		1.position 优先于块级或者内联普通元素  z-index负值则不
+		2.float元素在inline之下  float在block之上
+	 -->
+	 <div class="par1">
+	 	<div class="box box1-1">box1</div>
+		<div class="box box1-2">box2</div>
+	 </div>
+
+
+	 <div class="par1">
+		<div class="box box2-1">box2-1</div>
+		<div class="box box2-2">box2-2</div>
+	 </div>
+
+</body>
+</html>

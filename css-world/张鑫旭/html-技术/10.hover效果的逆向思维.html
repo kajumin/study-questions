@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.gr_forbg{padding:10px; background-color:#eee; text-align:right;}
+		.gr_mobile{height:38px; line-height:300px; background:url(../assets/images/mobile.png) no-repeat; overflow:hidden; position:absolute;}
+		.gr_iphone{width:91px; margin-left:-104px; clip:rect(3px 88px 36px 4px);}
+		.gr_android{width:101px; margin-left:-101px; clip:rect(3px 98px 36px 4px); background-position:0 -50px;}
+		.gr_mobile:hover{clip:rect(0 101px 38px 0); border:0;}
+		.gr_vline{display:inline-block; width:2px; height:38px; margin-right:114px; background:url(../assets/images/vline.jpg) center; vertical-align:middle;}
+
+		.box1 {
+			position: absolute;
+			width: 100px;
+			height: 100px;
+			background: url(../assets/images/lyt/1.jpg) no-repeat;
+			background-size: 100px;
+			overflow: hidden;
+			clip: rect(10px 90px 90px 10px);
+		}
+		.box1 img {
+			width: 100px;
+			height: 100px;
+		}
+		.box2 {
+			width: 100px;
+			height: 100px;
+			margin-top: 100px;
+			margin-left: 10px;
+			background-color: red;
+		}
+		.box2:hover {
+			box-shadow: 1px 1px 5px rgba(0,0,0,0.5);
+			transform: scale(1.1);
+		}
+	</style>
+</head>
+<body>
+<div class="gr_forbg">
+    &nbsp;<a href="#" class="gr_mobile gr_iphone" title="iPhone下载">iPhone</a>
+    <i class="gr_vline"></i>
+	<a href="#" class="gr_mobile gr_android"  title="Android下载">Android</a>
+</div>
+<!-- clip: rect实验
+auto: 不剪裁  作用是重置rect
+rect(top, right, bottom, left)
+
+ -->
+<div class="box1">
+	<!-- <img src="../assets/images/lyt/1.jpg"> -->
+</div>
+
+<!-- 逆向思维 先实现反的效果 -->
+<!-- hover 添加box-shadow scale: 1.1; -->
+<div class="box2">
+	中国
+</div>
+</body>
+</html>

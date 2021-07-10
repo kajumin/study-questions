@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+  <style type="text/css">
+    .header {
+       border-bottom: 1px solid #096;
+    }   
+    .navbar-default {
+      background-color: transparent;
+      border: none;
+      margin-bottom: 0;
+      min-height: 90px;
+    }
+    .navbar-default .navbar-brand {
+      padding-top: 25px;
+    }
+    .navbar-nav > li > a {
+      line-height: 60px;
+    }
+    .navbar-form {
+      margin-top: 28px;
+    }
+    .navbar-default .navbar-nav > .active > a, 
+    .navbar-default .navbar-nav > .active > a:hover, 
+    .navbar-default .navbar-nav > .active > a:focus {
+      color: #8330F0;
+      border-bottom: 2px solid;
+      margin-right: 10px;
+      background-color: transparent;
+    }
+    .navbar-default .navbar-nav > li > a:hover {
+      color: #8330F0;
+      border-bottom: 2px solid;
+    }
+  </style>
+</head>
+<body>
+<!-- 
+1.下拉菜单
+2.按钮组
+3.按钮式下拉菜单
+4.输入框组
+5.导航
+6.导航条
+7.分页
+8.提示信息(标签 徽章 巨幕 页头)
+9.缩略图
+10.警告框
+11.进度条
+12.媒体对象
+13.列表组
+14.面板
+15.洼地
+ -->
+<!-- 
+(1) 使用container包裹
+(2) navbar-default 去背景颜色去边框 margin-bottom 设置min-height高度
+(3) .navbar-default .navbar-brand 设置高度height
+(4) .navbar-nav > li > a 设置行高line-height 注意和padding的关系
+(5) .navbar-form设置margin-top
+(6) .navbar-default .navbar-nav > .active > a设置导航.active高亮显示
+    可以设置下边框
+    .navbar-default .navbar-nav > li > a:hover 设置hover下边框
+(7) .in控制是否显示导航  移动端优先则去掉 桌面端优先则加上
+-->
+<header class="header">
+  <div class="container">
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">
+            <img src="images/lk_logo.png" height="40">
+          </a>
+        </div>
+        <div class="collapse navbar-collapse in" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
+            <li><a href="#">Link</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="#">Action</a></li>
+                <li><a href="#">Another action</a></li>
+                <li><a href="#">Something else here</a></li>
+                <li role="separator" class="divider"></li>
+                <li><a href="#">Separated link</a></li>
+                <li role="separator" class="divider"></li>
+                <li><a href="#">One more separated link</a></li>
+              </ul>
+            </li>
+          </ul>
+          <form class="navbar-form navbar-left">
+            <div class="form-group">
+              <input type="text" class="form-control" placeholder="Search">
+            </div>
+            <button type="submit" class="btn btn-default">Submit</button>
+          </form>
+          <ul class="nav navbar-nav navbar-right hidden-sm">
+            <li><a href="#">Link</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="#">Action</a></li>
+                <li><a href="#">Another action</a></li>
+                <li><a href="#">Something else here</a></li>
+                <li role="separator" class="divider"></li>
+                <li><a href="#">Separated link</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fluid -->
+    </nav>
+  </div>
+</header>
+ 
+<div style="height: 1000px;">
+	<p>123465</p>
+</div>
+<script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
+<script type="text/javascript">
+  ;$(function(){
+    let toggleIn = function() {
+      let $windowW = $(window).width();
+      if($windowW < 768) {
+        $('.navbar-collapse').removeClass('in');
+      } else {
+        $('.navbar-collapse').addClass('in');
+      } 
+    }
+    $(window).on('resize', toggleIn);
+
+  });
+</script>
+</body>
+</html>

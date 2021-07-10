@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<script type="text/javascript">
+	//ES5 Version
+   function Person(firstName, lastName, age, address){
+      this.firstName = firstName;
+      this.lastName = lastName;
+      this.age = age;
+      this.address = address;
+   }
+   Person.self = function(){
+     return this;
+   }
+   Person.prototype.toString = function(){
+     return "[object Person]";
+   }
+   Person.prototype.getFullName = function (){
+     return this.firstName + " " + this.lastName;
+   }  
+
+   //ES6 Version
+   class Person2 {
+        constructor(firstName, lastName, age, address){
+            this.lastName = lastName;
+            // this.firstName = firstName;
+            // this.age = age;
+            this.address = address;
+        }
+        age = this.age
+        firstName = this.firstName
+        static self() {
+           return this;
+        }
+        toString(){
+           return "[object Person]";
+        }
+        getFullName(){
+           return `${this.firstName} ${this.lastName}`;
+        }
+   }
+   var p2 = new Person('bang', 'lyt', 20, 'gz')
+   console.log(p2)
+
+  //ES5 Version
+	function Employee(firstName, lastName, age, address, jobTitle, yearStarted) {
+	  Person.call(this, firstName, lastName, age, address);
+	  this.jobTitle = jobTitle;
+	  this.yearStarted = yearStarted;
+	}
+  Employee.prototype = Object.create(Person.prototype);
+  Employee.prototype.constructor = Employee;
+
+	Employee.prototype.describe = function () {
+	  return `I am ${this.getFullName()} and I have a position of ${this.jobTitle} and I started at ${this.yearStarted}`;
+	}
+
+	Employee.prototype.toString = function () {
+	  return "[object Employee]";
+	}
+
+	//ES6 Version
+	class Employee2 extends Person2 { //Inherits from "Person" class
+	  constructor(firstName, lastName, age, address, jobTitle, yearStarted) {
+	    super(firstName, lastName, age, address);
+	    this.jobTitle = jobTitle;
+	    this.yearStarted = yearStarted;
+	  }
+	  describe() {
+	    return `I am ${this.getFullName()} and I have a position of ${this.jobTitle} and I started at ${this.yearStarted}`;
+	  }
+	  toString() { // Overriding the "toString" method of "Person"
+	    return "[object Employee]";
+	  }
+	}
+
+  var e = new Employee('bang', 'lyt', 20, 'gz', 'qd', '2020')
+  console.log(e)
+  var e2 = new Employee2('bang', 'lyt', 20, 'gz', 'qd', '2020')
+  console.log(e2)
+</script>
+</body>
+</html>

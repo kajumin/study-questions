@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<script type="text/javascript">
+	// 类的所有方法都定义在类的prototype属性上面。
+	// (1)直接定义在class中的属性方法就相当于是定义在Cat.prototype上，所以也属于实例属性方法，
+	// cleanThebody会执行打印出'我会用唾液清洁身体'
+	// (2)类不会函数提升
+	// class Cat {
+ //    	constructor() {}
+ //    	toString () {}
+ //    	toValue () {}
+	// }
+	// // 等同于
+	// function Cat () {}
+	// Cat.prototype = {
+ //    	constructor() {}
+ //    	toString () {}
+ //    	toValue () {}
+	// }
+
+	// class Cat {
+	//   constructor () {
+	//     var heart = '❤️'
+	//     this.name = 'guaiguai'
+	//     this.jump = function () {}
+	//   }
+	//   color = 'white'                //实例属性 
+	//   cleanTheBody = function () {   //在实例对象中
+	//     console.log('我会用唾液清洁身体')
+	//   }
+	//   hideTheShit () { 
+	//     console.log('我在臭臭完之后会把它藏起来')
+	//   }
+	// }
+	// var guaiguai = new Cat()
+	// console.log(guaiguai)
+	// console.log(Object.keys(guaiguai)) //["color", "cleanTheBody", "name", "jump"]
+	// guaiguai.cleanTheBody() //实例方法
+	// guaiguai.hideTheShit() //原型上的方法
+
+	// 静态属性和方法声明
+	// class Cat {
+	//   static descript = '我这个类是用来生产出一只猫的'
+	//   static actingCute () {
+	//     console.log('一听到猫我就想到了它会卖萌')
+	//   }
+	// 	// static actingCute = function () {} // 这种写法也是设置静态的方法
+	// }
+	// let cat = new Cat();
+	// console.log(cat)
+
+	class Cat {
+	  constructor (name, color) {
+	    var heart = '❤️'
+	    var stomach = '胃'
+	    var heartbeat = function () {
+	      console.log(heart + '跳')
+	    }
+	    // heartbeat()
+	    this.name = name
+	    this.color = color
+	    this.jump = function () {
+	      // console.log(this)
+	      console.log('我跳起来了~来追我啊')
+	    }
+	  }
+	  // 实例方法
+	  cleanTheBody = function () {
+	    console.log('我会用唾液清洁身体')
+	  }
+	  static descript = '我这个类是用来生产出一只猫的'
+	  static actingCute () {
+	    console.log(this)
+	    console.log('一听到猫我就想到了它会卖萌')
+	  }
+	}
+	Cat.staticName = 'staticName'; //静态属性
+	Cat.prototype.sleep = function () {
+	  console.log('我会睡觉!')
+	}
+	var guaiguai = new Cat('guaiguai', 'white'); //❤️跳
+	console.log(guaiguai) //Cat{ name: 'guaiguai', color: 'white', jump: function(){}, cleanTheBody: function(){} }
+	guaiguai.jump()  //我跳起来了~来追我啊  实例方法
+	guaiguai.cleanTheBody()  //我会用唾液清洁身体  实例方法
+	guaiguai.sleep()  //原型上方法--我会用唾液清洁身体
+	console.log(guaiguai.descript) //undefined
+	// guaiguai.actingCute()   //静态方法 guaiguai.actingCute not a function
+   
+	console.log(Cat.descript)  //使用了static 是静态属性  我这个类是用来生产出一只猫的
+	Cat.actingCute()           //静态方法 class Cat{...} //'一听到猫我就想到了它会卖萌'
+	console.log(Cat.staticName) //staticName  //相当于静态属性
+
+	// *******************************
+
+</script>
+</body>
+</html>

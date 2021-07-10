@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<script>
+	// var xhr = new XMLHttpRequest()
+	// xhr.open('GET','http://localhost/ajax/time.php',false)
+	// console.log(xhr.readyState)
+	// xhr.send()
+	// // 已经等于4了   注册事件时机
+	// console.log(xhr.readyState)
+	// xhr.onreadystatechange = function(){
+		
+	// 	console.log(this.readyState)
+	// } 
+
+	var xhr = new XMLHttpRequest()
+	xhr.open('GET','http://localhost/ajax/time.php',true)
+	xhr.send()
+	// 已经等于4了   注册事件时机
+	console.log(xhr.readyState)
+	xhr.onreadystatechange = function(){
+		
+		console.log(this.readyState)
+	} 
+</script>
+</body>
+</html>

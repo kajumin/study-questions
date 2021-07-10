@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+	</body>
+	<script>
+		//=======4.取消默认行为的方法======
+		//==a> return false;  这个如果当函数有返回值的时候就不能再用了
+		//==b> 标准浏览器下的方法：e.preventDefault();
+		//===c //ie内核下：e.returnValue = false;
+		//===d> ie如果在取消图片的默认行为的时候需要搭配 obj.setCapture()一起使用  (让图片设置全局捕获 ，将鼠标的焦点放在图片上)
+		//图片的事件完成之后，要释放图片的全局捕获：obj.releaseCapture()
+		//使用的时候使用短路的写法
+		e.preventDefault && e.preventDefault();					
+		e.rentrnValue && (e.returnValue = false);
+		obj.setCapture && obj.setCapture();
+		obj.releaseCapture && obj.releaseCapture();
+		//详情的时候看下面后面的图片拖拽案例
+	</script>
+</html>

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		body {
+			margin: 0;
+		}
+		h1,h2,h3,h4,h5,h6 {
+			margin: 0;
+		}
+		ul,
+		ol {
+			margin: 0;
+			padding: 0;
+			list-style-type: none;
+		}
+		header {
+			height: 64px;
+			line-height: 60px;
+			padding-top: 15px;
+			padding-bottom: 15px;
+			box-sizing: border-box;
+			background-color: #eee;
+		}
+		.logo {
+			content: url(https://demo.cssworld.cn/common/css/images/logo.png);
+			margin: auto;
+			/*height: 64px;*/
+		}
+		.header2 a {
+			display: block;
+			height: 100%;
+			background: url(https://demo.cssworld.cn/common/css/images/logo.png) center center no-repeat;
+			text-indent: -999em;
+		}
+		.header3 a {
+			display: block;
+			width: 100%;
+			height: 34px;
+			background: url(https://demo.cssworld.cn/common/css/images/logo.png) center center no-repeat;
+		}
+		.header3 a h1 {
+			position: absolute;
+			clip: rect(0 0 0 0);
+		}
+		.container {
+			width: 1200px;
+			margin: 30px auto 0;
+		}
+		.container .left {
+			float: left;
+			width: 200px;
+		}
+		.container .right {
+			margin-left: 200px;
+		}
+		.nav {
+			margin: 30px 20px; 
+			line-height: 45px;
+			text-align: center;
+			background-color: #eee;
+		}
+		.nav li {
+			border-bottom: 3px solid #096;
+		}
+		.nav li:last-child {
+			border-bottom: none;
+		}
+		.carousel-content {
+			width: 340px;
+			height: 200px;
+			margin: 0 auto;
+			overflow: hidden;
+		}
+		.carousel-content .carousel-ul { 
+			width: 2000px;
+			animation: move 10s linear infinite;
+		}
+		.carousel-content .carousel-ul li {
+			display: inline-block;
+		}
+		.carousel-content .carousel-ul li  img {
+			width: 340px;
+			height: 200px;
+		}
+		@keyframes move {
+			0% {
+				transform: translate(0px);
+			}
+			100% {
+				transform: translate(-1400px);
+			}
+		}
+	</style>
+</head>
+<body>
+	<div class="page">
+		<header>
+			<h1 class="logo">css世界</h1>
+		</header>
+		<header class="header2">
+			<a href="#"><h1>css世界</h1></a>
+		</header>
+		<header class="header3">
+			<a href="#"><h1>css世界</h1></a>
+		</header>
+
+		<div class="container">
+			<div class="left">
+				<ul class="nav">
+					<li>导航1</li>
+					<li>导航2</li>
+					<li>导航3</li>
+					<li>导航4</li>
+				</ul>
+			</div>
+			<div class="right">
+				<div class="carousel-content">
+					<ul class="carousel-ul">
+						<li><img src="./images/zza/1.jpg"></li>
+						<li><img src="./images/zza/2.jpg"></li>
+						<li><img src="./images/zza/3.jpg"></li>
+						<li><img src="./images/zza/4.jpg"></li>
+						<li><img src="./images/zza/5.jpg"></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

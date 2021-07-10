@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.container {
+			width: 100px;
+			margin: 0 auto;
+		}
+		img	{
+			width: 100px;
+			height: 100px;
+		}
+	</style>
+</head>
+<body>
+	<!--
+	load属性值:  
+	(1)lazy
+	图片或框架懒加载，也就是元素资源快要被看到的时候加载。
+	(2)eager
+	图片或 框架无视一切进行加载。
+	(3)auto
+	默认值, 图片或框架基于浏览器自己的策略进行加载。
+
+
+	原生懒加载的5个行为特性：
+	1. Lazyloading加载数量与屏幕高度有关，高度越小加载数量越少，但并不是线性关系。
+	2. Lazy loading加载数量与网速有关，网速越慢，加载数量越多，但并不是线性关系。
+	3.滚动即会触发图片懒加载，不会说滚动一屏后再去加载。
+	4. 窗口resize尺寸变化也会触发图片懒加载，当屏幕高度从小变大的时候。
+	5. lazyloading加载也有可能会先加载后面的图片资源，例如页面加载时滚动高度很高的时候。
+
+	js有关的几个行为特征:
+	1.判断浏览器是否支持原生loading，最好使用'loading' in XXX判断。
+	2.获取loading属性值可以直接img.loading；
+	3.原生loading不可写，例如HTMLImageElement.prototype.loading会报错Illegalinvocation。
+	4.Polyfill就是场梦，只能等浏览器支持。
+	 -->
+	 <img src="../assets/images/loading.gif" class="img2">
+<div class="container">
+	<div>
+		<img loading="lazy" src="https://image.zhangxinxu.com/image/study/head/s180/1.jpeg" class="img1">
+		<img loading="lazy" src="https://image.zhangxinxu.com/image/study/head/s180/2.jpeg">
+		<img loading="lazy" src="https://image.zhangxinxu.com/image/study/head/s180/3.jpeg">
+		<img loading="lazy" src="https://image.zhangxinxu.com/image/study/head/s180/4.jpeg">
+		<img loading="lazy" src="https://image.zhangxinxu.com/image/study/head/s180/5.jpeg">
+		<img loading="lazy" src="https://image.zhangxinxu.com/image/study/head/s180/6.jpeg">
+		<img loading="lazy" src="https://image.zhangxinxu.com/image/study/head/s180/7.jpeg">
+		<img loading="lazy" src="https://image.zhangxinxu.com/image/study/head/s180/8.jpeg">
+		<img loading="lazy" src="https://image.zhangxinxu.com/image/study/head/s180/9.jpeg">
+		<img loading="lazy" src="https://image.zhangxinxu.com/image/study/head/s180/10.jpeg">
+		<img loading="lazy" src="https://image.zhangxinxu.com/image/study/head/s180/11.jpeg">
+		<img loading="lazy" src="https://image.zhangxinxu.com/image/study/head/s180/12.jpeg">
+		<img loading="lazy" src="https://image.zhangxinxu.com/image/study/head/s180/13.jpeg">
+		<img loading="lazy" src="https://image.zhangxinxu.com/image/study/head/s180/14.jpeg">
+		<img loading="lazy" src="https://image.zhangxinxu.com/image/study/head/s180/15.jpeg">
+		<img loading="lazy" src="https://image.zhangxinxu.com/image/study/head/s180/16.jpeg">
+		<img loading="lazy" src="https://image.zhangxinxu.com/image/study/head/s180/17.jpeg">
+		<img loading="lazy" src="https://image.zhangxinxu.com/image/study/head/s180/18.jpeg">
+		<img loading="lazy" src="https://image.zhangxinxu.com/image/study/head/s180/19.jpeg">
+		<img loading="lazy" src="https://image.zhangxinxu.com/image/study/head/s180/20.jpeg">
+		<img loading="lazy" src="https://image.zhangxinxu.com/image/study/head/s180/21.jpeg">
+		<img loading="lazy" src="https://image.zhangxinxu.com/image/study/head/s180/22.jpeg">
+		<img loading="lazy" src="https://image.zhangxinxu.com/image/study/head/s180/23.jpeg">
+		<img loading="lazy" src="https://image.zhangxinxu.com/image/study/head/s180/24.jpeg">
+		<img loading="lazy" src="https://image.zhangxinxu.com/image/study/head/s180/25.jpeg">
+		<img loading="lazy" src="https://image.zhangxinxu.com/image/study/head/s180/26.jpeg">
+		<img loading="lazy" src="https://image.zhangxinxu.com/image/study/head/s180/27.jpeg">
+		<img loading="lazy" src="https://image.zhangxinxu.com/image/study/head/s180/28.jpeg">
+		<img loading="lazy" src="https://image.zhangxinxu.com/image/study/head/s180/29.jpeg">
+		<img loading="lazy" src="https://image.zhangxinxu.com/image/study/head/s180/30.jpeg">
+	</div>
+</div>
+
+<script type="text/javascript">
+	// 判断是否支持原生loading
+	console.log('loading' in document.createElement('img'))
+	console.log('loading' in new Image())
+	console.log('loading' in HTMLImageElement.prototype)
+
+	//获取loading值  
+	console.log(document.querySelector('.img1').loading) //load
+	console.log(document.querySelector('.img2').loading) //
+
+	// loading自定义扩展并不会覆盖
+	// HTMLElement.prototype.loading = function () {};
+</script>
+</body>
+</html>

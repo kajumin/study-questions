@@ -1,0 +1,119 @@
+和风接口  https://www.heweather.com/
+bower  只能下载前端的js代码,下载boostrap会下载jquery
+broswerify 解决让require 可以运行在浏览器,分析require的关联,组装代码
+gulp  grunt  webpack
+==========webpack  简单使用
+1.webpack使用
+npm install webpack@3.12.0 -D
+
+==文件==package.json
+"scripts": {
+    "build":"webpack  ./main.js ./build.js"
+  }
+npm run build
+
+0: window
+1: main.js
+2. vue源码
+3--5:
+setimmediate
+6: App.js
+
+=========webpack.config.js     自动产出
+2.webpack.config.json
+==文件==package.json
+"scripts": {
+    "build":"webpack"   //直接使用webpack.config.js
+  }
+修改后 产生两个版本
+生成两种环境下: 开发和生成环境
+"dev":"webpack --config   ./webpack.dev.config.js",
+"prod":"webpack --config  ./webpack.prod.config.js"    没有监听watch:true
+
+==文件==webpack.config.js 
+module.exports = {
+// 入口
+entry:{
+   // 可以有多个入口，也可以有一个，如果有一个就默认从这一个入口开始分析
+   "main":'./main.js'
+},
+output:{
+     filename:'./build.js'
+},
+watch:true,//文件监视改动 自动产出build.js
+}
+===========CSS样式   需要css-loader style-loader
+npm  i css-loader style-loader -D
+import './main.css'  
+==文件==webpack.config.dev.js
+{
+  test: /\.css$/,
+  loader: 'style-loader!css-loader'
+}
+===========图片  需要 url-loader file-loader
+npm i url-loader file-loader -D
+==文件==webpack.config.dev.js
+{
+   test:/\.(jpg|png|jpeg|gif|svg)$/,
+   loader:'url-loader?limit = 3000'
+}
+=============less
+npm install less-loader less -D
+==文件==webpack.config.dev.js
+{
+  test:/\.less$/,
+  loader:'style-loader!css-loader!less-loader'
+}
+
+============插件html-webpack-plugin   插件执行顺序与元素的索引有关
+npm i html-webpack-plugin -D
+==文件==webpack.config.dev.js
+const HtmlWebpackPlugin  = require('html-webpack-plugin');
+plugins:[
+     // 插件的的执行顺序与元素由关
+      new HtmlWebpackPlugin({
+	template:'./src/index.html',//参照物
+    })
+]
+=============插件webpack-dev-server  自动刷新
+npm install webpack-dev-server@2.9.0 --save-dev
+==文件==package.json
+"dev": "webpack-dev-server --open --hot --inline --config ./webpack.dev.config.js"
+
+
+=============label转es5
+npm install babel-core babel-loader babel-preset-env babel-plugin-transform-runtime -D
+label-core
+laber-loader
+laber-preset-env   处理es5 es6 es7语法
+babel-plugin-transform-runtime   处理es6函数插件
+==文件==webpack.config.dev.js
+ {
+                // 处理es6,7,8
+                test: /\.js$/,
+                loader: 'babel-loader',
+                exclude:/node_modules/, //不用去转译node_modules中的es6语法
+                options: {
+                    presets: ['env'], //处理关键字
+                    plugins: ['transform-runtime'], //处理函数
+                }
+  }
+================vue-loader
+npm install vue-loader@14.4.1 vue-template-compiler@2.5.17 -D
+==文件==webpack.config.dev.js
+{
+          test: /\.vue$/,
+          loader: 'vue-loader'
+}
+===render函数
+vue  render函数
+render:c => c(App)
+
+1.用了vue-cli基本不用webpack
+2.v-for指令系统中的
+3.SSR
+4.虚拟DOM
+5.$emit和$son
+6.vue-router的导航守卫  动画效果  linkActiveClass
+7.restful接口
+8.mock.js一个测试接口

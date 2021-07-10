@@ -1,0 +1,585 @@
+polyfill 垫片库  实现浏览器并不支持的某些功能的兼容库
+行内样式  > 内嵌样式   外链样式
+1. 选择器
+   兄弟选择器  + 相邻兄弟选择器 不满足则无效   ~ 所有满足条件兄弟元素  >   IE7+
+   属性选择器  [class] [class=txt]  [class$=txt]  [class^=txt] [class*=txt]          IE7+
+   伪类first-child   first-of-type   nth-child  nth-of-type  区别first-child如果不是elem元素会无效  IE9+
+          :only-child :only-of-type
+          link visited hover active 
+          focus checked  disabled(enabled)  valid(invalid) in-range(out-of-range)  require(optional)
+          empty  root :selection   :not(:last-of-type)
+   伪元素selection first-letter first-line  ::after ::before      (:after:before  IE8+)
+   优先级:  0(行内)  1(id属性)  2(类 属性 伪类)  3(元素 伪元素)  
+
+2. transition   CSS属性，花费时间，效果曲线(默认ease)，延迟时间(默认0)   与display不友好   IE10+
+    property(必须)    duration(必须) timing-function(ease(缓慢)ease-in(加速)ease-out减速ease-in-out加速再减速) steps delay
+    常用属性: width height  color background-color opacity font-size letter-spacing  left right 
+                    transform 不需要驼峰命名
+
+3. animation   动画名称  花费时间  运动曲线(默认ease) 动画延迟(默认0)  循环次数(默认1) 动画方向(默认normal) 填充模式(forwards)  动画状态() 默认running)   IE10+
+    (1)name(必须)       @keyframes 设置的的名字   
+    (2)duration(必须)   一个周期花费时间
+    (3)timing-function  ease默认(结束慢)  
+    (4)delay    0默认
+    (5)iteration-count   1默认  infinite 数值
+    (6)direction     normal(0-100) reverse(100-0) alternate(0-100-0) alternate-reverse(100-0-100) 
+    (7)fill-mode    none默认 forwards backwards both
+    (8)play-state   running默认 pause
+
+    ***多值逗号间隔   animation-name: move fontSize;
+    api:  必须使用addEventListener添加事件  dom2级事件处理程序
+    animationstart      发生在动画开始时  delay之后
+    animationend       发生在动画结束时 
+    animationiternation  发生在一次动画结束时  iteration-count大于1
+    属性 bubbles(true)  cancelable(true) animationName  elapsedTime动画已执行时间 animationstart为0
+
+4. transform        形状转换  2D 3D  IE10+  
+    translate(x,y)    位移    百分比相对于自身(border-box) 不定宽高居中  y不存在则为0   matrix(1,0,0,1,x,y)
+    scale(x,y)          缩放    一个值或者两个值  matrix(x,0,0,y,0,0)
+    skew(x,y)          倾斜(xy轴的倾斜的角度)  正值为轴的负方向倾斜  同时存在可以先x再y  matrix(1,x,y,1,0,0)
+    rotate(angle)    旋转    正值顺时针  只有一个值                                                                                                                                                                                                                                                                                          
+    matrix(meitriks)(a,b,c,d,e,f)   ad控制缩放  bc控制倾斜  ef控制位移
+   
+    多个空格间隔   顺序从前向后依次执行, 顺序不同效果不同
+    transform-origin(x,y)(left, bottom)   形变原点(50%,50%)  px 百分比 关键字  位移translate与之无关  
+                                单值另一个值为center 
+    	 
+    3d:   x轴: 左负右正  y轴: 上负下正  z轴: 里负外正
+           近大远小
+    transform: translate3d(x,y,z)  移动  z轴看不出效果 
+    transform: scale3d(x,y,z)        缩放  z轴看不出效果
+    transform: rotate3d(x,y,z,angle)              旋转  x,y,z向量值   (1,1,0,30deg) 可以实现围绕轴的旋转 配合transform-origin
+                    rotateX() 正值 上向里   rotateY()  正值 右向里  rotateZ() 正值 顺时针
+    backface-visibility  元素在背面是否可见
+    perspective: 视距  视点到屏幕的距离  视距大 看到的东西变小 视距越大越不明显
+    transform-style: perserve-3d; flat;   子元素在3d空间中显示
+    perspective-origin: 100px 100px;  视距原点
+
+5. box-shadow(x,y, blur,spread, color,inset)  阴影    IE9+
+    盒子阴影: 阴影水平偏移值  阴影垂直偏移值 阴影模糊值半径 阴影外延值 阴影的颜色 内阴影
+    案例: 单侧阴影  临边阴影  对边阴影
+
+    text-shadow(文字阴影): 水平阴影  垂直阴影  blur模糊距离(可选)  阴影颜色(可选 与文字一样)     IE10
+
+6. border-image  边框图片  border-radius 圆角边框
+    border-image-source || border-image-slice [ / border-image-width? | / border-image-outset ]? || border-image-repeat;
+    例子:  url('img.img') 27 fill / 27 / 27px repeat;
+    border-image-source        图片         边框的资源路径
+    slice                                     图片边框四条切割线的位置  fill填充
+    width(默认border-width)   图片边框的宽度
+    outset                                  图像区域超出边框的量  当width大于border-width时,  默认向内
+    repeat(默认stretch)            repeat平铺(中间向两边 可能被切割)  round铺满(缩放正好显示)  space间隙
+
+    border  dashed虚线(3/1)  dotted点线(方点)   inline元素上下不影响布局和padding一样
+    关键字:  thin(1px) medium(默认3px)  thick(5px)  因为double至少为3px
+    案例:  三角形  梯形 圆角 三杠 十字
+    border-radius   IE9+   水平/垂直    百分比: 水平相对于宽度(border-box)  垂直相对于高度
+    重置使用0  none无效
+    案例: 圆(50% 50px)  半圆(50px 50px 00)  扇形(50px 000)  椭圆(100px/50px)   
+                                                                                                                            
+7.  background   size origin clip 多背景   背景渐变
+     repeat:    repeat  repeat-x  repeat-y no-repeat  space round 
+                   默认是padding-box  space和round(css3新增) 两端对齐平铺  space多余空间空白替代   round多余空间拉伸替代
+     position: px  关键字   百分比(相对剩余空间)
+                    一个两个三个四个值  css2.1只能相对于左上角
+     attachment:  scroll fixed  local (IE8+)   子元素可以滚动
+                   scroll     元素内容滚动时背景图像不动  可以一直看到背景
+                   fixed      原图像不会随文档滚动, 原图像的放置由可视区的大小确定
+                   local      背景图像跟随元素内容   会看不见
+
+      origin:  背景定位属性的参考原点  默认: padding-box   IE9+
+      clip: 背景图像的裁剪区域  默认border-box(配合dashed才能显示出来)    webkit浏览器支持text属性  IE9
+      size: 背景图片的尺寸   IE9+
+              px 百分比(相对于border-box)  cover contain
+
+      多背景: 逗号分隔   先声明的在顶层   兼容: 多背景属性写在单一背景属性的后面   
+
+      背景渐变:  linear-gradient      常配合size使用
+      (1) linear-gradient(point/angle ,color position [, color position])     都是逗号分隔
+           point: to left/right/top/bottom   默认to  bottom   
+                    angle : to top(0deg bottom)  right(90deg left)   bottom(180deg top) 默认值    left(270deg right)
+           案例: linear-gradient(45deg, yellow 25%,#efc 25%,#efc 50%,yellow 50%,yellow 75%, #efc 75%, #efc 100%); 进度条
+      (2) repeating-linear-gradient    5个值+size可以实现进度条
+      径向渐变:  radial-gradient  形状shape  > 大小size >  at position圆心 >  color-stop
+
+       默认: circle(宽高一样时)  farthest-corner  at center 
+      (3) 圆锥渐变  起始点是图形中心，然后以顺时针方向绕中心实现渐变效果。
+            conic-gradient(red, orange);
+8.  文字省略号  阴影
+     单行省略号:  文本换行不一定非要使用white-space(对于中文)；
+                          overflow属性值也不一定非要使用hidden(对于中英文)
+     多行省略号:  overflow:hidden;  
+                          display: -webkit-box;  -webkit-box-orient: vertical; -webkit-line-clamp: 4;
+9.  颜色hsla  色调 饱和度 亮度
+     六种: 关键字 十六进制 rgb  新增  rgba  hsl hsl 
+     关键字:  currentColor(IE9+)   border text-shadow box-shadow默认颜色IE7+
+     transparent(background-color: IE6+  border-color: IE7+  color: IE9+  )
+     十六进制: 使用00\33\66\99\cc\ff认为是Web安全色
+     rgb:    红色(R)、绿色(G)、蓝色(B)   其中0是完全无光状态，255是最亮状态 
+     rgba:  IE9+   兼容: gradient滤镜
+     hsl:     IE9+  色调(H)、饱和度(S)、亮度(L)   色调(0-360取模 0红色)  饱和度(0-100%)  亮度(0-100%)   a透明度
+10. 弹性布局  旧版本  混合版本  新版本  
+      旧版本:  display: box || inline-box  IE不支持   safari只支持旧版本   
+                   必须是block元素
+      混合版本: display: flexbox  || inline-flexbox  IE10支持   前缀-ms-
+      box-orient: horizontal  vertical inline-axis(内联轴方向)   block-axis(块级轴方向)
+      box-direction: normal  reverse(反向)
+
+      新版本: display: flex || inline-flex    IE10+   flex容器 子元素都是容器成员 称为项目 
+          子元素的float、clear和vertical-align属性将失效。
+          默认水平的主轴（main axis）和垂直的交叉轴（cross axis）
+          (1) flex-direction: 决定主轴的方向  row(默认) row-reverse column column-reverse
+          (2) flex-wrap: 是否换行
+               flex-flow: direction wrap;   默认row nowrap;
+          (3) justify-content 主轴上的对齐方式flex-start默认flex-end center space-between(间隔平分)space-around(左右平分)
+          (4) align-items: 交叉轴的对齐方式 flex-start flex-end center stretch(子元素没有高度) baseline
+          (5) align-content  多根轴线的对齐方式 flex-start flex-end center space-between space-around stretch
+          子元素 项目
+          (1) order 项目的排列顺序   数值越小，排列越靠前，默认为0, 1比0后  前为负数(-1)  后为正数(1)
+          (2) flex-grow  项目的放大比例  默认为0 存在剩余空间不放大
+          (3) flex-shrink 项目的缩小比例  默认为1 空间不足缩小
+          (4) flex-basis 分配剩余空间之前 占据的主轴空间 
+               flex: grow shrink basis  默认0 1 auto;     none(0 0 auto)
+          (5) align-self: 单个项目对齐方式 覆盖父元素的align-items属性 auto   其他与align-item相同
+11. 栅格布局
+12. 多列布局
+     column-width:  给元素指定最优的列宽度，实际列宽可能会更宽或更窄. 
+     column-count:  给元素指定允许的最大列数
+     column-gap: 相邻两列之间的空白间距  
+     column-rule:  列间距水平中心的线条  不占据实际的物理尺寸
+     columns:  column-width column-count;
+
+     column-span: none all  跨列
+     column-fill: none  balance   列填充属性  最后一列
+     break-inside: avoid;   控制内容截断
+13. 盒模型定义:  box-sizing: border-box;  content-box;
+14. 混合模式  mix-blend-mode  background-blend-mode
+      mix-blend-mode  默认情况下是会混合所有比起层叠顺序低的元素的, 可以使用isolation:isolate;进行隔离或者创建新的层叠上下文
+            可以给img  video设置mix-blend-mode:screen; 父元素设置一个背景图
+      background-blend-mode:  只会受当前元素的背景图像和背景颜色影响
+15. 媒体查询  min-width从小到大写
+    @media screen and (min-width: 960px)   max-width
+
+1.渐进增强(向上兼容): 针对低版本浏览器进行构建, 保证最基本的功能, 然后针对高级浏览器进行效果,交互改进和追加功能
+优雅降级(向下兼容): 针对高级浏览器进行构建, 一开始就构建完整的功能, 然后针对低版本浏览器进行兼容处理
+考虑用户群体  遵照产品的方法  听BOSS的  优雅降级  先高级再兼容低版本
+
+2.浏览器前缀: -webkit: chrome  safari android browser
+-moz   火狐
+-o-      opera
+-ms-    IE  Edge
+
+3.css验证工具  (1) https://www.cssstats.com/
+(2) http://jigsaw.w3.org/css-validator/#validate_by_upload
+
+4.css压缩工具 (1) http://tool.chinaz.com/Tools/CssFormat.aspx
+
+1.css规范
+选择器:  空格使用
+属性:   分号 ,之后加空格  单行 引号(文本) url不加引号 省略0  缩写(#fff) 媒体查询(附近)
+注释:   单行  多行
+声明顺序:  (1) 私有在前，标准在后
+                (2) content最先
+                (3) 布局类(overflow) 盒模型 文本(font line-height text-align word-wrap)  修饰(outline transition)
+避免使用:  !important   @import    不必要的嵌套(预编译语言)  hack
+
+命名规范:
+bem b模块 e元素 m修饰  
+(1)block-ele1-son-inner(层级长命名) 
+(2)block-inner(扁平化)
+nec(网易): 后代选择器(简写  .m-list .cnt)
+布局(grid)(.g-)；模块(module)(.m-)；元件(unit)(.u-)；功能(function)(.f-)；皮肤(skin)(.s-)；状态(.z-)
+后代选择器不需要完整表现结构树层级，尽量能短则短
+京东:
+　京东的命名规则采用表示层级嵌套关系的长命名。当子孙模块超过4级或以上的时候，考虑在祖先模块内具有识辨性的独立缩写作为新的子孙模块
+(1).list-item {} 最快(2).list .item {}最好  (3)list li {}
+中划线(层级)  下划线(状态)  首字母(因样式而新增结构 Inner Wrap)
+命名推荐: 
+文档    doc    头部    header(hd)  主体    body    尾部    footer(ft)    
+主栏    main  侧栏    side             容器    box/container
+
+css编码技巧: 
+(1)dry don't repeat yourself   减少代码重复(font em 颜色bgc半透明)   currentColor   继承  简写
+
+*float  position(absolute fixed)  可以变成块级元素  可以设置宽高
+CSS3：[ ]  可选项  || 或者   | 多选一    ?0个或1个    * 0个或多个     { } 范围
+选择器:-------------------------------------------------------------------------------------
+1.属性选择器  指定属性的值查找元素  
+(1) li[style]
+(2) input[type=text]          严格匹配
+(3) li[class*= "value"]         拥有value的值 
+(4) li[class^= value]        以value开头
+(5) li[class$= value]         以value结束
+2.伪类选择器
+(1) a:link  active hover  visited
+(2) E + li (一个, 指定元素)     + 获取当前元素的相邻的满足条件的元素   首个元素不用样式  不满足则无效
+(3) E ~ li  (多个, 指定元素)    ~ 所有满足条件的兄弟元素   
+(4) E:first-child    相对父元素的第一个li元素     第一个不满足则不会显示(为div时)   指定类型
+(5) E:last-child     
+(6) E:first-of-type  相对于父元素的第一个li元素    只会匹配到满足条件的那一个
+(7) E:last-of-type 
+(8) E:nth-child(n)     指定n位置  n从1开始     表达式 偶数even  奇数odd
+(9) E:nth-of-type(n/even/odd)   指定类型
+(10) E:nth-of-type(-n+5)        前五个元素   n子元素的数量   小于0的不会生效
+       E:nth-of-type(n+5)  第五个元素之后
+(11) E:nth-last-of-type(-n+5)  最后五个元素
+(12) E:empty   空值时  连空格也没有
+(13) E:target的使用 锚点的目标元素添加样式 当目标元素
+(14) e:not(p)    不是p元素
+(15) :active{ }  //点击着的时候触发
+(6) :hover::after  hover改变after伪元素样式
+3.伪元素选择器  
+(1)::before   默认是行内元素   content: "";  display:block;
+(2)::after
+(3)::first-letter  float:left；首字下沉    配合大字
+(4)::first-line     first-letter中样式不变
+(5)input::placeholder{ color:red;}
+(6)::selection   只能改变 color background-color 
+:root     选择文档的根元素
+
+======================过渡transition
+transition： CSS属性property，花费时间duration，运动曲线(默认ease)timing-function，延迟时间(默认0)delay
+transition过渡动画:  property   duration默认是0  timing-function(linear线性ease平滑ease-in慢到快ease-out快到慢(默认)ease-in-out 慢快慢)  delay默认是 0 
+-webkit (chrome) -moz(firefox)  -ms(ie)  -o(opener)    
+
+opcity  color   background-color  font-size  letter-spacing   width   height    transform  absolute  
+timing-function   steps(4)  分指定次数来完成   width 1s 1s steps(4);   文字一个个输出   overflow: hidden;
+.item:hover > .itemBox{ height: 110px; }   //手风琴
+多个可以用逗号隔开  all指所有 效率低下  不使用驼峰命名
+
+========================动画animation
+动画名称，一个周期花费时间 运动曲线(默认ease) 动画延迟(默认0)  播放次数(默认1)  是否反向播放动画(默认normal)，规定对象动画时间之外的状态,  是否暂停动画(默认running)
+name  duration timing-function delay  iteration-count  direction play-state
+动画：关键帧动画   补间动画：中间状态和过程自动补全，由系统计算
+animation: name duration timing-function delay iteration-count direction fill-mode play-state;
+animation:  动画名称 动画时间  运动曲线   延迟  播放次数  是否反方向;
+1.animation-name  动画名称
+2.animation-duration 动画耗时
+3.animation-timing-function  linear   steps(4) ease平滑   ease-in慢到快  ease-out快到慢(默认)   ease-in-out 慢快慢)
+4.animation-iteration-count: infinite;  无限循环播放    默认是1次  1234567
+5.animation-direction：  alternate /normal(默认)  动画应该轮流反向播放    
+6.animation-delay:  动画延迟时间   *为负数时好像已经开始了很久
+7.animation-fill-mode  forwards backwards both   规定对象动画时间之外的状态
+/*7.设置动画结束时的状态：默认情况下，动画执行完毕之后，会回到原始状态
+     forwards:     保留动画结束时的状态，在有动画延迟的情况下，并不会到动画的初始状态
+     backwards:  动画进入初始状态,  在有动画延迟的情况下， 不会保留动画结束时的状态，
+     both:  会保留动画的结束时状态，在有延迟的情况下也会立刻进入到动画的初始状态*/
+8.animation-play-state: paused;   鼠标经过暂停动画     默认running
+
+======== 创建动画
+@keyframes move { 0%{ } 100%{ } } 
+@keyframes move { from{} to {} }
+
+
+=================transform形状转换
+transform:  translateX/Y/Z/3d()    盒子居中对齐translate(50%,50%)    *相对于中心定位元素
+scale()             缩放    参数一：x 参数二：y
+rotateX/Y/Z()  旋转 deg度数  正为顺  负为逆   10turn圈作为单位
+skew()   倾斜   x水平和y垂直  两个值(先水平再垂直)   可以做平行四边形
+transform: translate3d(100px, 100px, 300px);    transform:scale3d(1,1,10);    rotate3d(x,y,z,angle);
+
+transform-origin  left right top bottom 变形中心  两个值决定一个位置
+tarnsform  多组  用空格隔开就好了  先移动再旋转
+transform:  translateZ()  值越小越远   需要加perspective
+
+perspective: 100px;  /*视距 距离  眼睛到屏幕的距离  视距越大效果越不明显  视距越小，透视效果越明显*/
+/*让子元素保留3d变换之后的效果*/  
+transform-style: preserve-3d;
+/*设置透视的观察角度*/
+transform-origin: 0px 0px;  25% 75%
+backface-visibility: hidden;  不是正面在前就隐藏
+案例: 
+立方体:
+
+=====================阴影 text-shadow box-shadow
+文字阴影：text-shadow    ps中  角度  颜色  距离   羽化模糊
+x  y(offfset)  模糊值blur  阴影颜色
+1.模糊值1px(全清)     越低越清晰 
+浮雕效果  是一层层加上去的
+可多个  逗号分隔
+======================box-shadow
+border-shadow  水平阴影的位置x y(offfset)   模糊距离blur   阴影的尺寸spread扩展(正值)和收缩(负值)(尺寸)   阴影颜色   阴影方向inset/outset
+可多个, 用逗号隔开      
+
+==================边框border图片：九宫格  内容 
+border-image-source   边框图片的路径  默认四个角点
+border-image-slice       27(没有单位)   设置四个方向上的裁切距离  fill(做内容的内部填充)  按上右下左的顺序切割背景图
+                                    切割为9份, fill将5进行填充content
+border-image-width     设置边框, 没有设置是把本来容器的width  27
+border-image-repeat    平铺方式 默认stretch  round进行缩放平铺    repeat直接重复   背景比盒子小时
+border-image-outset    规定边框图像区域超出边框的量
+border-image:  source slice / width/outset repeat   stretch
+案例自适应盒子背景: source(image)  slice(27 fill)  width(27)  repeat(round)
+
+=====================背景background-color
+color image  repeat attachment  position    size clip origin
+css3新增: size  clip  origin
+
+color       背景颜色
+image      背景图   可以使用多张
+repeact  重复背景图像  repeat-x  repeat-y  默认repeat 
+              round  背景图像自动缩放直到适应且填充满整个容器    size: contain | cover失效
+              space   背景图像以相同的间距平铺且填充满整个容器
+
+attachment(fixed/scroll/local)    local当前容器的背景会跟随内容一起滚动(会看不见)  scroll(永远看得见)  fixed(相对于窗体滚动)
+                                                 attachment背景图像是否固定或者随着页面的其余部分滚动
+position   背景图像的位置 (相对位置)  center 百分比(剩余的父宽度)
+
+size         背景图片的大小  默认auto  length(宽高值 百分比参照父容器)   contain(图片全部包含)  cover(容器全部覆盖 会溢出)
+origin      定位时参考的原点 默认padding-box border-box      content-box   设置背景坐标的原点
+clip         背景图像向外裁剪的区域   默认border-box设置的是裁切，控制的是背景显示   text配合color: transparent
+
+复合写法推荐: bg-color || bg-image || bg-position [ / bg-size]? || bg-repeat || bg-attachment || bg-origin || bg-clip
+
+案例: 
+1. padding  clip  origin  三者可以做图标区域变大  
+2. position(center)  size(cover) 可以做通栏
+======================背景渐变
+线性渐变：background: --------------------- 配合background-size使用-------
+(1) linear-gradient(point/angle ,color, position)     都是逗号分隔
+point(to left to right to top to bottom   linear-gradient(to right,red 0%,red 50%,blue 50%,blue 100%) 两块
+angle : to top(0deg)  right(90deg)   bottom(180deg) 默认值    left(270deg)
+
+径向渐变：形状shape  > 大小size >  at position >  color position
+(1) radial-gradient(red,blue)
+(2) radial-gradient(ellipse, red,blue);  ellipse默认适配  circle圆  形状    正方形则一样
+(3) radial-gradient(ellipse  closest-side, red,blue)  参照左上角
+(4) radial-gradient(ellipse  closest-side  at left top, red,blue)  参照左上角
+(5) radial-gradient(at left top, red,blue)  参照左上角
+(6) radial-gradient(red,red 50%,blue 50%,blue);
+形状shape: circle: 产生正方形的渐变色   ellipse: 适配当前的形状,如果是正方形的容器，两者效果一样. 如果宽高不一样，默认效果切换到ellipse
+大小size: closest-side：最近边； farthest-side：最远边； closest-corner：最近角； farthest-corner：最远角。默认是最远的角farthest-corner
+at position: 坐标，默认在正中心。可以赋值坐标（参照元素的左上角），也可以赋值关键字(left center right top bottom)
+color: red,blue
+
+圆圈渐变：conic-gradient   可以用百分比 从topright开始为0%
+
+重复渐变：
+(1) repeating-radial-gradient( style(circle|ellipse)  position(at left center), color position)
+(2) repeating-linear-gradient( angle | to right, color position)
+
+
+===========================文字
+word-break: keep-all;   break-all; normal;
+word-wrap: 
+========文字换行
+单行文字省略
+overflow:hidden;
+white-space: nowrap;
+text-overflow: ellipsis;
+============多行文字省略
+display: -webkit-box;
+-webkit-box-orient: vertical;
+-webkit-line-clamp: 4;
+overflow: hidden;
+text-overflow: ellipsis;
+========================颜色 rgba hsla
+rgba   alpha   红橙黄绿青蓝紫
+十六进制:
+hsla  hue 色调色相(环状0-360)   s饱和度(左右移动 0%-100%)    l亮度(上下移动默认50% 加大就是白 小则黑)   a透明度
+opcity:  会让文字也半透明  /*通过opacity设置透明度: 所有子元素也会透明,即便使用定位*/
+rgba (255,255,255,0.2) 不会让文字透明
+
+=========================filter滤镜  
+grayscale(100%)
+blur(3px)
+opacity=50
+
+========================flex弹性布局：父元素
+概念:  弹性盒状布局   容器控制内部元素布局定位   伸缩元素 自由填充(自适应)
+优势:  (1)不同方向排列元素   (2)控制元素排序的方向   (3)控制元素的对齐方式  (4)控制元素之间间距
+         (5)控制单个元素的放大和缩放  占比 对齐方式
+flex  container      flex容器
+flex  direction       布局方向
+flex   item            flex项目(元素)
+ 主轴 和 交叉轴
+(1) display:flex;
+(2) justify-content: 主轴方向上的排列方式 flex-start(左)默认  flex-end(右);  center(中)   
+                             space-between(平均分配剩余空间)   space-around(分配到元素两边 最左和最右 1 : 2)
+(3) flex-flow:          flex-wrap 和 flex-direction的综合  默认row nowrap    可以换位置
+     flex-direction    排列(主轴)方向  row(左右)  row-reverse(右左)  column(上下)  column-reverse(下上) 
+     flex-wrap:         子元素是否换行显示，默认不换行 nowrap不换行  wrap换行  wrap-reverse翻转
+    
+     主轴和侧轴相反
+(4) align-items:  侧轴方向上的排列方式   flex-start   flex-end    center
+     stretch(如果项目未设置高度或设为auto,将占满整个容器的高度)    baseline  基线(英文第三根线)  基线对齐方式
+
+(5) align-content    多轴线的对齐方式  设置轴线的对齐方式(轴线当做元素)  项目只有一根轴线，该属性不起作用。
+    center(居中)    flex-start(向上)  flex-end(向下)   space-between(元素之间等分)   space-round(元素两边等分)
+    stretch  默认   轴线占满整个交叉轴。当宽度没有设置是  轴线可以被拉伸
+
+子元素(项目)： 问题: 当子元素和大于父元素   会平均收缩
+1. order: 0(默认)  0是最大    越小越在前面  
+2. flex-grow:   1(数字);   父盒子宽度有余时      按比例放大[ *分配宽度]   默认值为0
+    flex-shrink: 1(数字);   父盒子宽度不够时      按收缩比例收缩   默认值1  不要缩放(0)
+3. flex-basis:    默认auto 基础尺寸;  设置元素固定或自动空间的占比    方法一定宽度
+    flex: grow shrink basis;   flex: 1 0 auto;
+
+4. align-self:  重写align-items父元素  flex-start  flex-end  stretch单个子元素在侧轴的对齐方式 auto默认(继承父级)
+                     可以单独改几个不一样的对齐方式 
+
+=======================盒子模型
+标准盒模型: content + padding + border  = 盒子宽度
+ie盒模型:     width =  盒子宽度 
+box-sizing :  border-box; content-box;  
+
+============================
+outline轮廓 ------------------------------------------------------
+outline-color:
+outline-style:
+outline-width:
+
+border-radius   左上 右上  右下 左下  --------------------------------------------------------------------
+1.水平方向 / 垂直方向   100px/50px   单个角不一样
+2.border-top-right-radius: 100px  50px   可以单值或者双值    border-bottom-left-radius
+3.border-radius: 100px 80px 60px 40px/20px 40px 60px 8px; 
+水平方向上左上、右上、右下、左下 / 垂直方向上左上、右上、右下、左下
+
+案例:无缝滚动 钟表
+web字体  &#xe642;  可以改成content:"\e642"------------------------------------------------------------
+
+多列布局：--------------------------------------------------------------------------------------------------
+	-webkit-column-count: 3;   //列数
+	-webkit-column-width:100px; //列宽  
+(1).如果人为设置宽度更大，则取更大的值，但是会填充整个屏幕，意味最终的宽度可能也会大于设置的宽度--填充满整个屏幕
+(2).如果人为设置宽度更小，使用默认计算的宽度
+	/*-webkit-columns: 3 500px;*/  //列数和列宽
+	-webkit-column-gap:50px;      //列间隔
+	-webkit-column-rule-width:10px;  //列间隔线长度
+	-webkit-column-rule-style:solid;    //样式
+	-webkit-column-rule-color:red;     //颜色 
+	column-rule: 3px dashed red;
+设置跨列  要么是1  要么是all
+	column-span: all; 整行
+
+
+
+grid布局：优势：1.轨道尺寸 2.定位项目 3.创建额外的轨道来保护内容 4.对齐内容
+(1) 术语  
+Grid Container  所有网格项的父元素 
+Grid Item  网格容器的子元素  
+Grid Line   网格线
+Grid Track 网格轨道 两个相邻的网格线
+Grid Cell    两个列网格线和两个行网格线组成的网格单元 
+Grid Area   网格区域   四个网格线包围的总空间
+fr  单位   *剩余的空间比例分配     优先级大于%
+gr 单位     网格数
+gap  items  grid-template content grid-auto  grid合并
+1.display: grid块级网格 | inline-grid行内网格 | subgrid(不兼容)  (column float clear vertical-align无效)  子元素不能改变成为网格项的事实
+2.grid-template-columns/rows 轨道  track-size line-name px em 百分数 fr
+   grid-template-colomns:[first]40px [line2 second] 50px auto 50px 40px;
+   grid-template-columns:[row-start]25% [row1-end] auto [row2-end]40px;   会自动增加auto
+3.grid-template-areas 网格区域  通过引用grid-area指定网格区域的名称  "device map map map value" 多个一起写 不用逗号和分号
+"name  .空网格单元 none" 
+"name  .空网格单元 none" 
+4.grid-template：grid-template-rows、grid-template-columns、grid-template-areas
+none 三个值都炜初始值  subgrid 网格区域为初始值
+css3函数：只能用在grid-template-columns/rows
+(1) repeat(repeat,values)    repeat(auto-fill以网格项来确定一行几个,auto-fit网格容器) 
+values(px,fr,max-content,min-content)
+(2) fill-content()    (px,%,fr)
+(3) minmax()     范围(px,%,fr,max-content,min-content)
+5.start/end   grid-columns-start/end
+grid-columns-start: span 2; 2; 0无效果;-1会到最后;-2;-3;-4;
+grid-columns-end: span 2;   (span name需要有指定名字的网格线才可以)
+简写：grId-columns: /   分隔开
+          grid-rows: / 
+6.grid-area(网格区域):row-start column-start row-end columns-end  (row-start/column-start/row-end/column-end)
+z-index:  可以控制重叠顺序
+7.justify-self:start end center stretch 网格项里面内容的对齐方式
+  align-self:
+
+
+媒体查询：--------------------------------------------------------------------------------
+@media screen and (midth/min-width/max-width)
+/* 超小屏幕（手机，小于 768px） */
+/* 没有任何媒体查询相关的代码，因为这在 Bootstrap 中是默认的（还记得 Bootstrap 是移动设备优先的吗？） */
+/* 小屏幕（平板，大于等于 768px） */
+@media (min-width: @screen-sm-min) { ... }
+/* 中等屏幕（桌面显示器，大于等于 992px） */
+@media (min-width: @screen-md-min) { ... }
+/* 大屏幕（大桌面显示器，大于等于 1200px） */
+@media (min-width: @screen-lg-min) { ... }
+
+ele.style.setProperty('--color','#cd000')  设置css变量的值
+getComputeredStyle(ele).getProperty("-color")
+
+mask 遮罩
+mask-repeat
+mask-position    中心点方法  center center
+mask-size
+
+img  的usemap属性="#star"
+map 的属性name="star"   下的area标签   属性  shape(circle/rect/poly)   coords点坐标  圆有三个坐标
+
+
+同样，要给这些元素添加如下属性就可以触发BFC。
+1.float属性不为none  left right
+2.position为absolute或fixed
+3.display为 inline-block, table-cell, table-caption, flex, inline-flex
+4.overflow不为visible
+
+BFC布局规则：
+1.在BFC中，盒子从顶端开始垂直地一个接一个地排列.
+2.盒子垂直方向的距离由margin决定。属于同一个BFC的两个相邻盒子的margin会发生重叠
+3.在BFC中，每一个盒子的左外边缘（margin-left）会触碰到容器的左边缘(border-left)（对于从右到左的格式来说，则触碰到右边缘）。
+4.BFC的区域不会与float box重叠。
+5.计算BFC的高度时，浮动元素的高度也参与计算
+6.它是一个独立的渲染区域，只有Block-level box参与， 它规定了内部的Block-level Box如何布局，并且与这个区域外部毫不相干
+
+embed 用来插入各种多媒体,格式可以是 Midi、Wav、AIFF、AU、MP3等等。url为音频或视频文件及其路径,可以是相对路径或绝对路径。
+
+ 
+浮动元素特性	1. 浮动可以让多个元素同一行显示 2. 浮动的元素是顶部对齐
+logo优化	text-indent: -20000px; 隐藏文字， 背景图片
+鼠标样式	cursor: pointer; 小手 cursor: move; 四角箭头 cursor: text; 插入光标 cursor: default; 小白
+
+1.定位重点	绝对定位不占位置 相对定位占有位置
+2.标签语义化dl   dl也是块级元素 dt 是 定义标题 dd 是定义描述，dd是围绕这dt来描述的，也就是说，dd算是dt 的解释说明详细分解。
+3.标题标签尽量少用h1，可以多用h2和h3等标签
+
+2.了解ie低版本浏览器 半透明
+filter: Alpha(opacity=50) ； // opacity值为0 到 100   filter: alpha(opacity=50)
+但是 此属性是盒子半透明，不是背景半透明哦，因为里面的内容也一起半透明了
+因此，低版本的 ie6.7浏览器，我们不需要透明了，直接采用优雅降级的做法。
+background: gary;
+background: rgba(0,0,0,.2);
+写上两句 背景， 低版本ie只执行gray， 其他浏览器执行 半透明下面这一句。
+
+====js操作css属性
+ele.setProperty('color','red')
+ele.removeProperty('color','red')
+
+============
+html内容:
+3. font-size
+   font-family: "Arial"  NSimSun新宋体  LiSu隶书  Microsoft YaHei SimHei黑体
+   font-weight: bolder;  lighter bold               /*字体粗细*/
+   font-style: italic; normal                                 /*加粗倾斜*/
+   font-variant: small-caps; normal                     /*大写字母*/
+   font: font-style  font-variant font-weight  font-size/line-height  font-family;  不能更改顺序
+
+6.text-indent 2em(两个汉字)  20%(相对父盒子宽度的比值)   px
+   text-align  left right center justify    块级元素
+   vertical-align  默认baseline top middle bottom    行内元素  50px   /*垂直方向*/     对块级无用
+                         text-bottom/top  对文字与图片同行有效
+   display: table  table-cell
+   line-height 1.3em（em常用） 15px  200%相对于字号     /*行间距*/
+   text-transform: capitalize uppercase; lowercase;   /*单词写法*/   js中toUpperCase  toLowerCase
+   text-decoration: underline overline line-through;none   /*下划线*/
+   white-space: normal正常显示   nowrap  强制在一行 除非遇到换行
+   
+    (1)text-overflow ellipsis 显示省略标记  溢出 clip 简单剪切  white-space:nowrap; overflow: hidden;
+
+9. word-spacing: 10px;                                   /*有空格就空，针对单词间距*/
+    letter-spacing: 1.5px  ;                               /*字母\文字间距*/
+    word-break: keep-all不允许打断单词  break-all允许打断单词
+案例:
+1. <a href="#bang">回到top</a>    <a name="bang">顶部<a>
+2. dialog标签  dg.showModal();    dg.close();
+3. description  keyword  title  viewport
+
+
+
+
+

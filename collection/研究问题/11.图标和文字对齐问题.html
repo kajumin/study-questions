@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		img {
+			width: 20px;
+			height: 20px;
+		}
+		.box1 img {
+			width: 20px;
+			height: 20px;
+			margin-bottom: 5px;
+			/*vertical-align: -6px;*/
+		}
+		.box2 {
+			line-height: 40px;
+		}
+		.box2 span {
+			display: inline-block;
+			width: 30px;
+			height: 30px;
+			line-height: 30px;
+			background: url('../assets/images/1.jpg');
+		}
+		.box3 {
+			font-size: 16px;
+			line-height: 30px;
+		}
+		.box3 span {
+			display: inline-block;
+			width: 30px;
+			height: 30px;
+			white-space: nowrap;
+    		letter-spacing: -1em;
+    		text-indent: -999em;
+			background: url('../assets/images/1.jpg');
+		}
+	</style>
+</head>
+<body>
+<!-- 
+1. 文字和img  margin-top无法实现对齐, 但是是有效的, 会让整体移动 使用vertical-align控制
+2. 使用外层line-height设置大值  inline-block设置与图标大小一样的line-height值
+3. 内外层line-height值一样, 只需设置成为和图标一样大小
+ -->
+<div class="box1">
+	文字对齐<img src="../assets/images/1.jpg">	
+</div>
+<div class="box2">
+	<a>文字对齐<span>1</span></a>		
+</div>
+<div class="box3">
+	文字对齐<span>1</span>
+</div>
+
+</body>
+</html>

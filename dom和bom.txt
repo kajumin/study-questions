@@ -1,0 +1,336 @@
+========================dom
+获取节点
+操作节点
+属性操作
+文本操作
+节点判断
+元素样式
+元素各种值 offsetLeft单独
+事件
+========================兼容性
+document.querySelector('.box1')   //IE8+   getElementById('box1')
+firstElementChild   //IE9+   包括children  lastElementChild
+addEventListener   //IE9+  attachEvent
+this //IE9+  指向绑定事件对象
+e都可以
+e.target    //IE9+ srcElement
+e.preventDefault  e.stopPropagation  //IE9+  returnValue = false  cancelBubble = true
+e.pageY    //IE9+  body.scrollTop + clientTop
+window.innerWidth //IE9+  documentElement.clientWidth
+ele.textContent //IE9+
+	
+=============================
+window.document  ==  document
+document.all  ==document.getElementsByTagName('*')
+onload事件: 在页面加载完成之后执行
+=======获取元素节点
+getElementById 
+getElementsByTagName //HTMLCollection  同样可以[...divs]
+getElementsByName      //NodeList
+querySelector 
+querySelectorAll     //NodeList
+
+parentNode()  父节点只有一个
+offsetParent    定位父元素
+childNodes   所有子节点  包括空白节点  注释节点
+firstChild 
+lastChild
+nextSibling
+previousSibling
+
+parentElement()   跟parentNode效果一样
+children      所有子元素
+firstElementChild   // IE9+
+lastElementChild
+nextElementSibling
+previousElementSibling
+
+getFirstElementChild     // 获取第一个元素兼容   while(node = nodes[i])     node.nodeType === 1 ele.childNodes
+getNextElementSibling  // 获取下一个元素兼容   while(el = el.nextSibling)  node.nodeType ===1
+额外:
+document.documentElement
+document.body
+document.head
+document.title 
+
+document.forms   //links images anchors scripts 
+document.forms['id']  //id  和name都可以
+
+========操作节点 ->  添加  替换  删除  复制
+document.createDocumentFragment()   再把其他dom添加进去就好了  在body.appendChild(frag)
+document.createElement       创建元素
+document.createTextNode     创建文本节点   btn.appendChild(text);
+document.createAttribute('class')     attribute.value = 'btn';    btn.setAttributeNode(attribute);
+document.body.appendChild(div)  插入节点
+document.body.insertBefore(新插入div, 已知box2)  
+document.body.replace(新插入div, 已知box2)
+cloneNode(true/flase)  复制节点  true包括子节点  false不包括子节点
+
+document.body.removeChild()   删除节点
+
+==========属性操作 -> 获取 添加 修改 删除
+getAttribute('class')   获取
+setAttribute('class', 'className')   添加 修改
+removeAttribute('class')  删除
+
+==========文本操作  添加 修改 删除
+var text = document.createTextNode('text')
+text.appendData('after')  添加
+text.insertData('before')  添加
+text.replaceData(7,1,'替换')  修改
+text.delete(7,1)     删除
+
+=========元素节点判断
+                  nodeName      nodeValue     nodeType
+document     #document       null                9
+元素节点        DIV                   null                1
+文本节点        #text                文本内容          3
+属性节点        属性名              属性值              2
+注释节点        #comment       注释内容           8
+
+html当做一个元素节点
+============元素样式内容  https://www.cnblogs.com/flyerya/p/11696063.html
+window.getComputedStyle(elmenet)['width']   .getPropertyValue  //IE9+
+element.currentStyle['width']    //IE兼容
+this   //指向绑定事件元素  //IE9+
+
+innerText     获取会将标签过滤, 空格和换行去掉  设置标签直接显示出来   // 兼容火狐 textContent
+innerHTML  获取原封不动    设置标签以html解析出来                 //outerHTML包含自身
+style  行内样式   offset  css样式    行内样式没有则为空字符串 
+style  可读可写   offset  只读
+style  带单位     offset  不带单位
+style  不带padding border   offset带
+==============
+style.width    getComputedStyle(ele)['width']
+clientWidth   content + padding    受滚动条影响    innerWidth()  元素内部尺寸
+offsetWidth  content + padding +border   不受滚动条影响   outerWidth(false|缺省)    outerWidth(true)  + margin
+clientTop          元素边框大小
+offsetTop         absolute-top值  + margin-top  || padding-top + 中间元素offsetHeight + margin-top
+offsetParent     定位父元素   没有则为body
+scrollTop          被卷去的高度，不带单位 //可读可写   ele.scrollTop = 100   对于文档异步执行才可以
+scrollHeight      自身实际的高度/宽度(滚动宽度)  +  父padding 不包括滚动条 
+window.pageYOffset    页面被滚动的距离
+window.scrollTo({left, top})    滚动到某个位置
+
+jquery:
+width()
+innerWidth()
+outerWidth()         //false或者缺省
+outerWidth(true)  //包含margin
+offset       相对于文档的偏移量   可读写   {top,left}    //pageY
+position    相对于定位父元素的偏移量   没有则文档   可读不可写  {top,left}  //等价于offsetLeft
+scrollTop()  scrollTop(100) 卷入的高度  可读可写    对于文档需要异步
+
+鼠标事件: clientY   pageY  offsetY  screenY
+clientY    相对于视口   鼠标在浏览器的可视区域的坐标
+pageY    相对于文档  兼容: e.clientY + document.documentElement.scrollTop || document.body.scrollTop(谷歌)
+
+offsetY   相对于元素自身   padding-box   点击border 为负值
+layerY     相对于元素自身   border-box  点击border为正值  有定位父元素时, 没有时则同pageY
+screenY  相对于屏幕  点击元素位置到屏幕顶部
+
+document.documentElement.clientHeight  ||   window.innerHeight   浏览器可视窗口高度  视觉视口
+(1)鼠标在盒子中的位置 = 鼠标的坐标pageX(兼容问题) - 盒子的坐标box.offsetLeft
+=====offset系列
+offsetWidth    //元素尺寸
+offsetLeft        //元素坐标 相对于定位父元素 没有则为html
+                       //absolute中left + margin-left  
+                       //普通情况 会加上内联元素  父border 父padding   + 中间元素
+offsetParent   //元素定位父元素 没有则为body
+=====client系列
+clientWidth  //元素内部尺寸   content+padding - 滚动条
+clientLeft      //元素border的大小
+=====scroll系列   onscroll事件
+scrollTop      //卷入的距离  可读可写  scrollTop = 100; 不带单位
+chrome 认为浏览器的滚动条是body的，可以通过body.scrollTop来获取 火狐等浏览器认为浏览器的滚动条是html的，
+scrollHeight  //整个内容的高度  即使overflow: hidden;     只有垂直滚动条的情况下
+scrollWidth   //content+padding - 滚动条 不包括滚动条  在垂直滚动条情况下
+
+============================事件
+绑定事件  移除事件
+属性
+阻止默认行为  阻止冒泡  是否可以阻止默认行为 是否可以阻止冒泡
+focusin  focusout  focus blur
+键盘事件
+滚轮事件
+坐标
+代理
+============绑定事件兼容性: IE9+
+ele.addEventListener() 方法为指定元素指定事件处理程序   //没有on   第三个参数:支持冒泡和捕获
+默认值是 false，将在冒泡阶段执行，如果该值设置为 true，则事件使用捕获阶段执行
+ele.removeEventListener()   删除事件监听器    //没有on   
+
+ele.attachEvent('onclick', function(){})     // ie兼容  有on   只支持冒泡    IE11不支持
+ele.detachEvent('onclick', function(){})    // ie兼容  有on  
+
+element["on" + eType] = handle;         //兼容
+
+=============常见事件
+onclick   ondblclick
+onfocus  onblur
+onmouseover   onmouseout     经过子元素会触发事件      支持冒泡
+onmouseenter  onmouseleave  经过子元素不会触发事件   不支持冒泡
+onmousewheel  e.wheelDelta(下120)   火狐:  onDomMouseScroll   e.detail(下3)  (火下正)
+onmousedown  onmousemove  onmouseup
+onscroll        //鼠标滚轮 空格键  PgUpPgDn 上下按键都可以触发
+on attachEvent都是冒泡型事件
+
+keyup         键盘弹起  文字已经输入   keydown > keypress > keyup
+keydown     键盘按下  文字没有输入 按住重复执行
+keypress      键盘按下  按住重复执行
+tabindex="1"   优先于0   0为默认顺序  按先后顺序
+==============常见事件对象属性
+e.type  //没有on
+e.keyCode   数字在48到57  //which一样
+altKey     //点击时是否按着alt键
+shiftKey  //
+ctrlKey
+e || window.event   // 事件对象  IE8以下
+
+target              触发事件的元素    兼容: srcElement    //IE9+
+currentTarget   绑定事件的元素    等同于this指向   //自身触发事件时     两者相同   子元素触发事件时  两者不同
+relatedTarget  用于在一个事件中查找另外一个元素  
+mouseout mouseover mouseenter  mouseleave focusin focus blur等事件中 
+
+bubbles       返回一个布尔值,  表明当前事件是否会向DOM树上层元素冒泡  只读
+cancelable   返回一个布尔值，表示事件是否可以取消默认行为  只读  
+ 
+defaultPrevented    返回一个布尔值, 表明当前事件是否阻止了默认行为 只读
+returnValue      默认为true, 没有阻止默认行为, 阻止默认行为后为false
+cancelBubbles  返回一个布尔值, 表明当前事件是否阻止了冒泡  只读
+
+e.preventDefault()        e.returnValue = false;      取消默认行为   chrome可以用  没看到
+e.stopPropagation()      e.cancelBubble = true;    阻止冒泡         ie8以下
+
+eventPhase  事件的阶段   1.捕获阶段   2目标阶段  3冒泡阶段
+直接点中元素时, true/false都是2
+冒泡事件时, true是1  false是3
+
+DOM事件流：同时支持两种事件模型：捕获型事件和冒泡型事件
+捕获阶段    目标阶段   冒泡阶段
+首先发生在document上，然后依次传递给body, 直至目标元素, 冒泡则相反
+先触发绑定的捕获型事件, 再触发冒泡型事件, 当元素是最精确的元素的时候， 它是不区分捕获和冒泡的. 谁先绑定谁先触发
+dom0级事件一种事件类型只能绑定一个事件处理函数  dom2级事件可以绑定多个同种类型事件
+dom0 和 attachEvent区别:  dom0级优先执行，然后再逆序执行attachEvent事件
+
+
+移除事件:
+addEventListener: false/true  同一事件同一类型(冒泡型 捕获型)只能一个
+如: 1. false 和 passive事件不能同时存在   //是否冒泡型事件一样   
+
+passive: true为被动事件侦听器
+// (1) chrome浏览器对于绑定在document body window上的touchstart touchmove wheel事件默认passive: true;
+// (1) passive:  touchstart，touchmove，wheel事件类型可以被优化, 其他不可以
+// (2) 对于在同一个DOM对象身上添加的同一类型事件的监听器，只要有一个不是 passive 的，那浏览器就无法优化
+
+removeEventListener(type, fun) 可以移除passive:false/true事件   removeEventListener(type, fun, true)  //两种
+on事件   移除onclick = null;
+
+getEventListeners(box1); //控制台打印输出   或者 Eevent Listener中查看
+====表单事件
+onfocus   onblur 
+onchange   oninput
+onsubmit    oninvalid
+onmouseover onmouseout      会冒泡 经过子元素会触发事件
+onmouseenter onmouseleave  不会冒泡
+document.forms['formname']          name为formname的表单
+document.forms['formname'].star    name为star的表单域
+this.value            this.value = '文本'
+this.disabled       this.disabled = false
+this.checked       this.checked = false
+this.selectedIndex   this.options[index].text   this.options[index].value
+this.options.length=0   //删除select中的所有options
+this.options.remove(3)  //删除select中的某一项option
+this.options.add(new Option('广州','广州'))  //添加select中选项
+
+
+==========================bom浏览器对象模型
+onload unload
+alert prompt  confirm console  open
+setTimeout()  setInterval()
+
+location
+history
+navigator
+screen
+==============================
+BOM就是浏览器对象模型, BOM提供很多对象，用于访问浏览器功能，这些功能与任何页面内容无关.
+bom的顶级对象是window, 其他都是它的子对象, 使用window对象属性可以省略window
+bom主要作用:  控制窗口、弹出窗口、框架、定时器. 
+利用location对象中的页面信息、使用navigator对象了解浏览器、screen对象以及history对象等
+
+全局变量也是window属性  top  name(字符串类型)  不能作为变量
+
+open()   //新窗口
+
+============alert  prompt  confirm
+alert     弹出提示
+prompt(提示内容, 默认值)     var value = prompt(提示内容, 默认值)  获取值
+confirm  var  bool = confirm(提示内容)  获取布尔值
+
+eval()             把字符串解析为JavaScript代码并执行
+isNaN()　      判断一个值是否是NaN 
+parseInt()       解析一个字符串并返回一个整数
+parseFloat()   解析一个字符串并返回一个浮点数
+number()       把对象的值转换为数字
+string()           把对象的值转换为字符串 
+
+onload  事件   页面加载完成之后    js css  图片都加载完
+unload  事件   对话框不能使用  window被冻结了
+script标签内    页面元素加载完就会执行
+
+setTimeout(function(){}, 2000)  超时调用  clearTimeout
+setInterval(function(){}, 3000)   间歇调用  clearInterval
+
+==================地址
+location对象                window.location  = document.location
+location.href=地址  
+location.assign(地址)      // 跟href一样   记录历史记录
+location.replace(地址)     // 不记录历史
+location.reload(true)      // 强制从服务器中获取页面  false直接从缓存中获取   ctrl + f5(强制刷新)
+
+location.protocol      //  协议http:  ||  https:
+location.host            //  返回服务器名称和端口号（如果有）
+location.hostname   //  返回不带端口号的服务器名称域名或者ip
+location.port            //  端口号
+location.pathname   //  返回url中目录和（或）文件名    注意: 不包含协议  query  hash
+location.search         //  query   ?name=bang  ?号及之后
+location.hash           //   hash哈希fragment   #home    #及之后
+
+URL: 统一资源定位符  组成   scheme://host:port/path?query#fragment
+scheme 通信协议  http  ftp maito
+host:       域名或ip地址
+port:       端口号
+path:       路径
+query:      查询
+fragment:  信息片段 锚点
+
+=======================history对象  浏览器记录
+history.forward()   前进一页
+history.back()        后退一页
+history.go()           去到指定页  负值为后退  正值为前进
+history.length       保存着历史记录的数量 (包括当前网页)   hash改变也会有历史记录中
+	
+=======================navigator对象 包含有关浏览器的信息。
+navigator.userAgent;       //返回由客户机发送服务器的 user-agent 头部的值
+navigator.plugins            // 插件数组    //IE兼容   ActiveXObject(name);
+navigator.appName;       //返回浏览器的名称
+navigator.platform;         //返回运行浏览器的操作系统平台
+navigator.cookieEnabled;
+
+navigator.appCodeName;  //返回浏览器的代码名。
+navigator.appVersion;       //返回浏览器的平台和版本信息
+navigator.cpuClass           //返回浏览器系统的 CPU 等级
+
+=========================screen屏幕
+window.screen.width        //设备独立像素   375  414
+window.screen.available   //屏幕可用像素   两者基本没有区别
+
+
+window.frames[framesName]
+window.innerWidth    //获取窗口的可视区域大小  不包含滚动条  1366   受控制台的影响
+window.outerWidth   //获取窗口的整体大小    包含滚动条  1366   不受控制条的影响    chrome下两则相同
+
+document.documentElement.clientWidth   //布局视口  本页面的宽度  受滚动条的影响  移动端980
+window.screen.width  // 设备独立像素   屏幕可用工作区宽度
+window.innerWidth    // 视觉视口  浏览器css像素  不包括滚动条  但chrome浏览器包括了滚动条

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<script type="text/javascript">
+	/*
+		控制同步流
+	*/
+	function fun1 () {
+		console.log(1)
+		return 1
+	}
+	function fun2 () {
+		console.log(2)
+		return 2
+	}
+	function fun3 () {
+		console.log(3)
+		return 3
+	}
+
+	Promise.resolve()
+	.then(fun1)
+	.then(fun2)
+	.then(fun3)
+	.then((res) => {
+		console.log(res)
+	})
+
+	function* run (value1) {
+		try {
+			console.log(value1)
+			var value2 = yield fun1(value1)
+			var value3 = yield fun2(value2)
+			var value4 = yield fun3(value3)
+		} catch(e) {
+			console.log(e)
+		}
+	}
+	var g = run(0)
+	// console.log(g.next())
+	// console.log(g.next(1))
+	// console.log(g.next(2))
+	// console.log(g.next(3))
+</script>
+</body>
+</html>

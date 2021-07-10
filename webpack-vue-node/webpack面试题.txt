@@ -1,0 +1,215 @@
+gulp是基于流的自动化构建工具, 除了可以管理和执行任务
+还支持监听任务, 读写文件. gulp最大的特点就是引入了流的概念, 
+同时提供一系列常用的插件去处理流, 流可以在插件之间传递.
+api: 
+(1) gulp.task()     注册任务
+(2) gulp.run()      执行任务
+(3) gulp.src()       读取文件
+(4) gulp.dest()     写文件
+(5) gulp.watch()  监听文件的变化
+处理文件pipe()
+
+gulp.task('default', ['scripts', 'styles'], function() {...});  // 默认任务，执行scripts和styles这两个任务
+gulp.task('styles', ['clean'], function() {...});      // scripts 和 styles 任务都调用了 clean 任务
+gulp.task('scripts', ['clean'], function() {...});    //  定义依赖   当Gulp开始工作，它会创建一个任务依赖树, 只执行一次clean任务
+gulp.task('clean', function() {...});                   //  Clean 任务清空了build目录
+首先执行clean任务，然后并行执行scripts和styles任务。
+当scripts任务中有监听时, 会出现错误, 把styles构建打包出来的文件删除了
+
+gulp.series      用于串行（顺序）执行   //gulp 4   两个函数可以嵌套使用
+gulp.parallel   用于并行执行
+gulp.task('default', gulp.series('clean', gulp.parallel('scripts', 'styles'), function() {...}));  //最终处理
+
+
+webpack在开启后会从entry开始, 递归解析entry依赖的所有module, 每找到一个module, 
+就会根据配置的loader去找对应的转换规则, 对module进行转换后, 再解析出当前module依赖的模块. 
+这些模块会以entry为单位进行分组, 一个entry及其所有依赖的module被分到一个组也就是一个chunk, 
+最后, webpack会将所有chunk转换为文件输出, 在整个流程中, webpack会在恰当的时机执行plugin里定义的插件
+
+====常用loader
+style-loader:   把css代码注入到js代码中, 通过dom操作去加载css
+css-loader:      加载css，支持模块化、压缩、文件导入等特性
+==========
+file-loader:   把文件输出到一个文件夹中, 处理图片和字体等
+url-loader:    与file-loader类似, 区别是用户可以设置一个阈(yu)值, 大于阈值交给file-loader处理, 
+                      小于时则返回文件的base64形式编码(处理图片和字体)
+=========
+sass-loader(7)(node-sass(4)):    加载并编译SCSS/SASS代码为CSS代码
+postcss-loader:  css处理工具, 扩展其支持的特性, 比如通过插件可以使用下一代css语法，
+                            可以配合autoprefixer 插件自动补齐 CSS3 前缀   postcss-next
+=========
+babel-loader:    把es6转为es5
+vue-loader:  加载并编译 Vue 组件
+eslint-loader:    通过ESLint检查js代码
+=====
+image-webpack-loader  可以帮助我们对图片进行压缩和优化
+postcss-sprites   合并图片为雪碧图
+========
+i18n-loader: 国际化
+
+=============插件
+html-webpack-plugin:    简化html文件创建
+web-webpack-plugin：  可方便地为单页应用输出 HTML，比 html-webpack-plugin 好用
+
+extract-text-webpack-plugin: css提取为独立文件，支持按需加载 (替代)
+mini-css-extract-plugin:  css提取为单独文件
+
+clean-webpack-plugin:   目录清理
+copy-webpack-plugin:   复制文件
+uglifyjs-webpack-plugin:  压缩js (webpack4之前)webpack.optimize.UglifyJsPlugin()
+
+webpack-bundle-analyzer  可视化分析webpack输出文件的体积(业务组件和第三方)
+
+webpack-merge：提取公共配置，减少重复配置代码
+================webpack配置详解
+entry:     入口, webpack构建的第一步将从entry开始, 可抽象成输入
+output:  出口, 配置进过webpack打包好的代码在哪里输出以及如何命名
+module:  模块, 在webpack里一切都是模块, 一个模块对应一个文件, 从entry开始, 递归找出所有依赖的模块, 
+                交给对应的加载器进行转换
+chunk:   代码块, 一个chunk由多个模块组合而成, 用于代码的合并和分割, 一个entry就有一个chunk
+loader:  模块转换器(加载器),  用于将模块的原内容按照需求转换成新的内容
+plugin:  扩展插件, 在webpack的构建流程中的特定时机会广播对应的事件,  插件可以监听这些发生的事件, 
+               在特定的时机做对应的事情
+
+resolve: 配置寻找模块的规则
+devServer: 配置devServer
+                
+webpack能做什么?
+打包：将多个js文件打包成一个文件 （1.减少Http请求 2.压缩页面的空格从而减轻服务器压力）
+转换：把扩展的语法转换成普通js , 目的就是让浏览器正常解析运行代码
+优化：复杂的开发流程 、进行模块化打包、去空格、压缩混淆、减少http请求等
+
+1.谈谈你对webpack的看法:
+webpack是一个模块打包工具，可以使用它管理项目中的模块依赖，并编译输出模块所需的静态文件。
+它可以很好地管理、打包开发中所用到的HTML,CSS,JavaScript和静态文件（图片,字体）等，
+让开发更高效。对于不同类型的模块依赖，webpack有对应的模块加载器，而且会分析模块间的依赖关系，
+最后合并生成优化的静态资源. 
+
+2.webpack的基本功能和工作原理？
+代码转换：TypeScript 编译成 JavaScript、SCSS 编译成 CSS es6转换为es5 等等
+文件优化：压缩 JavaScript、CSS、HTML 代码，压缩合并图片等
+代码分割：提取多个页面的公共代码、提取首屏不需要执行部分的代码让其异步加载
+模块合并：在采用模块化的项目有很多模块和文件，需要构建功能把模块分类合并成一个文件
+自动刷新：监听本地源代码的变化，自动构建，刷新浏览器
+
+5.什么是bundle, chunk, module?
+bundle    是webpack打包出来的文件，
+chunk      是webpack在进行模块的依赖分析的时候，代码分割出来的代码块。
+module   是开发中的单个模块
+
+6webpack规范:
+webpack默认遵循commonjs规范  module.exports
+使用webpack进行打包时有两种模式：
+开发模式：主要是用于测试, 代码调试等;
+生产模式：要考虑性能问题, 要压缩   如果没有插件 就不会压缩;
+默认情况下webpack的配置文件叫webpack.config.js，可以通过--config指定webpack的配置文件名
+
+2.那你再说一说Loader和Plugin的区别？
+Loader 本质就是一个函数，在该函数中对接收到的内容进行转换，返回转换后的结果。 
+            因为Webpack只认识js，所以Loader就成了翻译官，对其他类型的资源进行转译的预处理工作。
+Plugin 就是插件，基于事件流框架Tapable，插件可以扩展 Webpack 的功能，
+           在 Webpack 运行的生命周期中会广播出许多事件，Plugin 可以监听这些事件，在合适的时机通过 Webpack 提供的 API 改变输出结果。
+
+Loader 在 module.rules 中配置，作为模块的解析规则，类型为数组。数组的每一项都是一个 Object，
+内部包含了 test(类型文件)、loader(所使用的loader)、options (参数)等属性。
+plugin在plugins中单独配置, 类型为数组, 每一项是一个plugin实例, 参数通过构造函数传入
+
+3.Webpack构建流程简单说一下
+初始化参数: 从配置文件和shell语句中读取与合并参数, 得到最终的参数
+开始编译:  初始化compiler对象, 加载所有配置的插件, 然后开始编译
+确定入口:  根据配置中entry找出所有入口文件
+编译模块: 从入口文件出发, 对不同模块使用不同的loader(加载器)进行翻译, 再找出该模块依赖的模块, 递归本步骤
+知道所有入口文件依赖的文件都经过了本步骤的处理
+完成模块的编译:  经过上步骤得到了每个模块被翻译后的最终内容及它们之间的依赖关系
+输出资源: 根据入口和模块之间的依赖关系, 组装成一个个包含多个模块的chunk, 再把每个chunk转换成一个
+单独的文件加入到输出列表, 这一步是修改输出内容的最后机会
+输出完成: 再确定好输出内容后, 根据配置的输出路径和文件名, 把文件内容写入到文件系统中
+
+初始化：启动构建，读取与合并配置参数，加载Plugin，实例化Compiler
+编译：从 Entry 出发，针对每个 Module 串行调用对应的 Loader 去翻译文件的内容，再找到该 Module 依赖的 Module，递归地进行编译处理
+输出：将编译后的 Module 组合成 Chunk，将 Chunk 转换成文件，输出到文件系统中
+
+4.使用webpack开发时，你用过哪些可以提高效率的插件？
+webpack-merge：       提取公共配置，减少重复配置代码
+HotModuleReplacementPlugin：模块热替换
+webpack-bundle-analyzer  分析打包体积
+size-plugin：监控资源体积变化，尽早发现问题
+
+webpack-dashboard： 可以更友好的展示相关打包信息。
+speed-measure-webpack-plugin：简称 SMP，分析出 Webpack  打包过程中 Loader 和 Plugin 的耗时，有助于找                           到构建过程中的性能瓶颈。
+
+5.source map是什么？生产环境怎么用？
+   source map是将编译、打包、压缩后的代码映射回源代码的过程。
+   打包压缩后的代码不具备良好的可读性，想要调试源码就需要 soucre map。  
+   在不打开浏览器开发者工具时, 浏览器是不会加载的
+
+线上环境一般有三种处理方案：
+hidden-source-map：       借助第三方错误监控平台 Sentry 使用
+nosources-source-map：  只会显示具体行数以及查看源代码的错误栈。安全性比 sourcemap 高
+sourcemap：通过nginx设置将 .map 文件只对白名单开放(公司内网)
+
+6.模块打包原理知道吗？
+Webpack 实际上为每个模块创造了一个可以导出和导入的环境，
+本质上并没有修改代码的执行逻辑，代码执行顺序与模块加载顺序也完全一致。
+
+7.文件监听原理呢？
+在文件发生变化时, 自动重新构建出新的输出文件
+1.启动 webpack 命令时，带上 --watch 参数
+2.在配置 webpack.config.js 中设置 watch: true
+缺点：每次需要手动刷新浏览器
+原理：轮询判断文件的最后编辑时间是否变化，如果某个文件发生了变化，并不会立刻告诉监听者，
+          而是先缓存起来，等 aggregateTimeout (300ms)后再执行。
+
+8.说一下 Webpack 的热更新原理吧   WDS  -webpack-dev-server
+   这个机制可以做到不用刷新浏览器而将新变更的模块替换掉旧的模块。
+   核心就是客户端从服务端拉去更新后的文件, chunk需要更新的部分
+
+      实际上 WDS 与浏览器之间维护了一个 Websocket，当本地资源发生变化时，WDS 会向浏览器推送更新，
+并带上构建时的hash，让客户端与上一次资源进行对比。
+客户端对比出差异后会向 WDS 发起 Ajax 请求来获取更改内容(文件列表、hash)，
+这样客户端就可以再借助这些信息继续向 WDS 发起 jsonp 请求获取该chunk的增量更新。
+后续的部分(拿到增量更新之后如何处理？哪些状态该保留？哪些又需要更新？)由 HotModulePlugin 来完成，提供了相关 API 以供开发者针对自身场景进行处理
+
+9.如何对bundle体积进行监控和分析？
+使用 webpack-bundle-analyzer 生成 bundle 的模块组成图，显示所占体积。
+bundlesize 工具包可以进行自动化资源体积监控。
+
+10.文件指纹是什么？怎么用？
+    文件指纹是打包后输出的文件名的后缀。
+Hash：和整个项目的构建相关，只要项目文件有修改，整个项目构建出来的 hash 值就会更改
+Chunkhash：  和 Webpack打包的chunk有关, 不同的 entry 会生出不同的chunkhash
+Contenthash：根据文件内容来定义hash，文件内容不变，则contenthash 不变, 
+                         在css  js  图片生成的时候可以使用
+
+11.在实际工程中，配置文件上百行乃是常事，如何保证各个loader按照预想方式工作？
+     可以使用 enforce 强制执行 loader 的作用顺序，pre 代表在所有 loader 之前执行，post 是所有 loader 之后执行。
+
+12.如何优化 Webpack 的构建速度？
+(1)使用高版本的webpack和node.js      --高版本
+(2)多进程/多实例构建：HappyPack(不维护了)、thread-loader
+(3)压缩代码  通过 mini-css-extract-plugin 提取Chunk中的CSS代码到单独文件，通过 css-loader 的 minimize 选项开启 cssnano 压缩 CSS。   --压缩
+(4)图片压缩
+    使用基于 Node 库的 imagemin (很多定制选项、可以处理多种图片格式)
+    配置 image-webpack-loader
+(5)缩小打包作用域                  --压缩作用域
+  (1)exclude/include (确定 loader 规则范围)
+  (2)resolve.modules  指明第三方模块的绝对路径 (减少不必要的查找)
+  (3)resolve.mainFields 只采用 main 字段作为入口文件描述字段 (减少搜索步骤，需要考虑到所有运行时依赖的第三      方模块的入口文件描述字段)resolve.extensions 尽可能减少后缀尝试的可能性
+  (4)noParse 对完全不需要解析的库进行忽略 (不去解析但仍会打包到 bundle 中，注意被忽略掉的文件里不应该包含             import、require、define 等模块化语句)
+  (5)IgnorePlugin (完全排除模块)
+  (6)常用的路径取别名 使用alias  
+(6)提取页面公共资源  使用cdn
+(7)利用缓存 babel-loader
+
+12.babel原理
+解析:  将代码转换成ast抽象语法树
+转换:  访问ast的节点进行变换操作生成出新的ast
+生成:  以新的astW基础生成代码
+
+13. webpack打包文件太大怎么办?
+webpack 把我们所有的文件都打包成一个 JS 文件，这样即使你是小项目，打包后的文件也会非常大。
+可以从去除不必要的插件，提取第三方库，代码压缩，代码分割，设置缓存几个方面着手优化。
+
+14.防止盗图
+(1) 设置referer
+(2) 签名url

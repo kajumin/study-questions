@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<script type="text/javascript">
+	class Sup {
+		constructor(name) {
+
+			this.name = name;
+			var myName = 'sup';
+			this.printName = function () {
+				// console.log(this)
+				console.log(this.name)
+				console.log(name)
+			}
+		}
+		name = 'class'
+		static name = 'joycechu'
+		static fn = function () {
+			console.log('fn')
+		}
+		changeName = function (name) {
+			this.name = name
+		}
+		sayHello () {
+			console.log('hello')
+		}
+	}
+	var s = new Sup('SUP');
+	console.log(s)
+	s.printName();
+	s.sayHello();
+	s.changeName('bang');
+	s.printName();
+	console.log(Sup.name)
+	Sup.fn()
+
+
+	class Sub extends Sup {
+		constructor (name, score) {
+			super(name);
+			var score = 'constructor 80'
+			this.score = '80';
+			// this.name = name;
+			// this.printScore = () =>{
+			// 	//箭头函数和普通函数一样
+			// 	console.log(this.score)//等于 constructor内this.score ||  undefined
+			// 	console.log(score)//constructor 80
+			// }
+		}
+		printScore = () =>{
+			console.log(this.score)//等于 constructor内this.score ||  undefined
+			console.log(score)//这个的外层是window
+		}
+	}
+	var score = 'window score'
+	var sub = new Sub('SUB');
+	console.log(sub)
+	sub.printName();
+	sub.sayHello();
+	sub.changeName('sub name');
+	sub.printName();
+	sub.printScore()
+</script>
+</body>
+</html>

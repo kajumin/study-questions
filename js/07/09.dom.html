@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<script type="text/javascript">
+	/*
+	ParentNode.append()最后一个子节点之后插入一组Node对象或DOMString对象
+	(1)ParentNode.append()允许追加DOMString 对象，而 Node.appendChild() 只接受Node对象。
+	(2)ParentNode.append()没有返回值undefined，而 Node.appendChild() 返回追加的Node对象。
+	(3)ParentNode.append()可以追加多个节点和字符串，而 Node.appendChild() 只能追加一个节点。
+
+	*/
+	var box1 = document.querySelector('.box1')
+	var box2 = document.querySelector('.box2')
+	console.log(box1.append('text1', 'text2'))// undefined
+	console.log(box1.append('<p>p1</p>', '<p>p2</p>'))// undefined
+
+	var p = document.createElement('p')
+	// console.log(box2.appendChild('TEXT')) //只能追加node
+	// console.log(box2.appendChild('<p>p</p>')) //只能追加node
+	console.log(box2.appendChild(p, p)) //返回追加元素 只能追加一个
+	console.log(box2.appendChild(p)) //返回追加元素
+
+	// box1.remove() //移除元素 移除自身
+	// box1.remove()
+	console.log(box1.__proto__)
+	console.log(box1.contains(p)) //true
+	console.log(box1.classList.toggle('123')) //true 没有到有为true
+	console.log(box1.classList.remove('123')) //undefined
+	console.log(box1.classList.add('123')) //true
+	console.log(box1.classList.contains('123')) //true
+	console.log(box1.classList.item(0)) //box1
+	console.log(box1.classList.toggle('123')) //false
+</script>
+</body>
+</html>

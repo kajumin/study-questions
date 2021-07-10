@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.box1 {
+			background-color: red;
+			overflow: hidden;
+			font-size: 0;
+			line-height: 0;
+		}
+		.box1 > img {
+			float: left;
+			display: block;
+		}
+		.box2 {
+			width: 100px;
+			height: 100px;
+			background-color: red;
+		}
+	</style>
+</head>
+<body>
+<!-- 
+概念: 
+每个元素都有两个盒子: 
+(1)外在盒子负责元素是否可以一行显示
+(2)内在盒子负责宽高, 内容
+
+1.内联元素的 内联 特指 外在盒子, 和display为inline不是一个概念  
+inline-block  inline-table都是内联元素
+特征: 可以和文字在一行显示 float元素不是内联元素
+块级特征: 一个水平流上只能显示一个元素, 具有换行特性
+2.内联和模型
+(1)内容区域
+(2)内联盒子  匿名内联盒子
+(3)行框盒子  每一行就是一个行框盒子, 每一个横框盒子由一个一个内联盒子组成的
+(4)包含盒子  该盒子由一行一行的行框盒子组成
+
+3.幽灵空白节点 21px
+
+ -->
+ <!-- 
+	1.图片下间隙的问题解决  block font-size line-height vertical-align(top) float  
+	font-size足够小, 需要line-height的是相对值(font-size)
+	2.内联盒模型 内容区域 内联盒子 行框盒子 包含盒子
+	3.幽灵空白节点
+  -->
+  <div class="box1">
+ 	<img src="../../images/1.jpg"><span>x</span>
+ </div>
+  <div class="box2">
+  	<p>中国<span>人民</span>中国中国中国中国</p>
+  </div>
+ <div>
+ 	<span style="display: inline-block;"></span>
+ </div> 
+ <div>
+ 	<img>
+ </div>
+ <div>
+ 	<em style="display: inline-block;"></em>
+ </div>
+
+ 	
+</body>
+</html>

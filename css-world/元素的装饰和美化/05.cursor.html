@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.cursor1 {
+			width: 100px;
+			height: 100px;
+			background-color: red;
+			cursor: pointer;
+		}
+		button {
+			cursor: pointer;
+		}
+		input[type='button'] {
+			cursor: pointer;
+		}
+		/*input:disabled {
+			cursor: default;
+		}*/
+		input[disabled] {
+			cursor: default;
+		}
+	</style>
+</head>
+<body>
+	<!-- 
+	默认值: auto
+	default: 系统自带
+	none 
+	pointer
+	help
+	progress: body { cursor: progress}  
+	          js加载完再document.body.style.cursor = 'auto'
+	text
+	vertical-text 垂直时
+	crosshair  取色时
+	cell  单元格  ie8不适用
+	move  拖拽
+	copy  复制
+
+	1. 链接/ 按钮都是手型  disabled的按钮不要忘记设置为default
+	2. cursor:none; 视频播放时隐藏  mousemove再显示
+	   none 兼容性: ie9  可以使用自定义的透明光标实现
+	3. 自定义光标  用于兼容处理   ie需要.cur格式的光标文件
+	   其他可以使用.png格式图片
+	   cursor: url(transparent.cur)
+	   cursor: url(transparent.png)
+	 -->
+<div class="cursor1">中国</div>
+<button>按钮</button>
+<input type="button" name="" value="按钮">
+<script type="text/javascript">
+	var button = document.querySelector('input[type=button]')
+	console.log(button)
+	button.disabled = true
+</script>
+</body>
+</html>

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<form>
+		<input type="checkbox" name="subject[]">
+		<input type="checkbox" name="subject[]">
+		<input type="checkbox" name="subject[]">
+		<input type="checkbox" name="subject[]">
+	</form>
+	<div class="box1">
+		<p>p标签</p>
+	</div>
+<script type="text/javascript">
+	var cbs = document.querySelectorAll("input[type=checkbox]")
+	console.log(cbs)
+
+	// 从最不确定的元素(最外层容器)到目标元素，再由目标元素到最不确定的元素(最外层容器)
+
+
+	var arr = [1,2,3,4,5,6]
+	console.log(arr.reverse())
+
+	var arr2 = []
+	function getRandom (min, max) {
+		return Math.random() * (max - min + 1) + min
+	}
+	for(var i = 0;i < 10;i ++) {
+		arr2.push(getRandom(10, 100))
+	}
+	console.log(arr2.sort())
+
+	function testString (str) {
+		// return typeof str  === 'string'
+		// return str.constructor === String
+		return Object.prototype.toString.call(str) === '[object String]'
+	}
+	console.log(testString('abc'))
+
+	// 字符串方法
+	// indexOf() – 返回字符串中一个子串第一处出现的索引。如果没有匹配项，返回 -1 。 lastIndexOf()
+	// charAt() - 返回指定位置的字符。
+	// match() – 检查一个字符串是否匹配一个正则表达式。
+	// search() – 执行一个正则表达式匹配查找。如果查找成功，返回字符串中匹配的索引值。否则返回 -1 。
+	console.log('abc'.match(/\w{1}/)) //['a','b','c']
+	console.log('abc'.match(/\w{1}/g)) //['a','b','c']
+	console.log('abc'.search(/\w{1}/g)) //0索引
+	console.log(/\w{1}/.exec('abc')) //0索引
+
+
+	// 新建节点
+	var d = document.createDocumentFragment();
+	var p = document.createElement('p')
+	var text = document.createTextNode('p的段落段落') 
+	var attribute = document.createAttribute('class')
+	attribute.value = 'p1'
+	p.setAttributeNode(attribute)
+	p.appendChild(text)
+	d.appendChild(p)
+	// p.innerHTML = 'p段落'
+	document.body.appendChild(d)
+	console.log(d)
+
+
+	// 添加 移除 替换 插入
+	// d.appendChild(p)
+	var box1  = document.querySelector('.box1')
+	var p1  = document.querySelector('.box1 > p')
+	console.log(box1, p1)
+	// 移除
+	// div.removeChild(p1)
+	// 替换
+	// box1.replaceChild(p, p1)
+	// 插入
+	box1.insertBefore(p, p1)
+
+	function bindEvent(){
+    	var obj = document.querySelector(".box1");
+    	obj.onclick = function(){
+        	console.log('点击了')
+        	console.log(obj) // null
+    	}
+    	// obj = null;
+	}
+	bindEvent()
+
+	// 出现最多字符的
+	var str1 = 'absdagasgoiwetieeewt';
+	var json = {};
+	for(var i = 0; i < str1.length; i++) {
+		if (!json[str1.charAt(i)]) {
+			json[str1.charAt(i)] = 1
+		} else {
+			json[str1.charAt(i)] ++
+		}
+	}
+	var iMax = 0;
+	var iIndex = ''
+	for(var key in json) {
+		if (json[key] > iMax) {
+			iMax = json[key]
+			iIndex = key
+		}
+	}
+	console.log(iMax, iIndex)
+
+	// 第一个参数在前则返回负数  为了负数
+	function sort (a, b) {
+		// return a - b 
+		return b - a 
+	}
+	console.log(arr.sort(sort))
+
+	// 数组去重
+	var arr = [2,3,4,4,5,2,3,6],
+	   arr2 = [];
+	for(var i = 0;i< arr.length;i++){
+	    if(arr2.indexOf(arr[i]) < 0){
+	        arr2.push(arr[i]);
+	    }
+	}
+	console.log(arr2);
+	// 结果为：[2, 3, 4, 5, 6]
+	console.log([...new Set([2,3,4,5,5,4,7,8,5,2,6,7,8])])
+
+	// 二分排序
+	var arr3 = [3, 1, 4, 6, 5, 7, 2];
+	function quickSort(arr3) {
+	    if(arr3.length == 0) {
+	        return [];  // 返回空数组
+	    }
+	    var cIndex = Math.floor(arr3.length / 2);
+	    var c = arr3.splice(cIndex, 1);
+	    var l = [];
+	    var r = [];
+
+	    for (var i = 0; i < arr3.length; i++) {
+	        if(arr3[i] < c) {
+	            l.push(arr3[i]);
+	        } else {
+	            r.push(arr3[i]);
+	        }
+	    }
+	    return quickSort(l).concat(c, quickSort(r));
+	}
+	console.log(quickSort(arr3));
+	//[1, 2, 3, 4, 5, 6, 7]
+	
+</script>
+</body>
+</html>

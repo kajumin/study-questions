@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.box1 {
+			outline: 1px solid red;
+			line-height: 96px;
+		}
+		.box1 > span {
+			line-height: 20px;
+		}
+		.box2 {
+			outline: 1px solid red;
+			line-height: 20px;
+		}
+		.box2 > span {
+			line-height: 96px;
+		}
+		.box3-1 {
+			height: 300px;
+			line-height: 300px;
+			text-align: center;
+			outline: 1px solid red;
+		}
+		.box3-1 > .content {
+			display: inline-block;
+			vertical-align: middle;
+			line-height: 20px;
+		}
+		.box3-2 {
+			height: 300px;
+			line-height: 300px;
+			text-align: center;
+			outline: 1px solid red;
+		}
+		.box3-2 > img {
+			vertical-align: middle;
+		}
+	</style>
+</head>
+<body>
+<!-- 
+1.line-height最大值特征是因为幽灵节点
+  div(大小) > span(大小)
+  行框盒子的高度由高度最高的呢个内联盒子决定, 所以div元素的高度永远是最大的那个line-height决定
+2.多行居中
+  多行时, 重设line-height才不至于行间距过大, 创建独立的行框盒子
+ -->
+<div class="box1">
+	行框<span>内容...</span>
+</div>
+<div class="box2">
+	行框<span>内容...</span>
+</div>
+
+<div class="box3-1">
+	x<div class="content">
+		<p>123456</p>
+		<p>123456</p>
+		<p>123456</p>
+	</div>
+</div>
+<div class="box3-2">
+	<img src="../../images/1.jpg">
+</div>
+</body>
+</html>

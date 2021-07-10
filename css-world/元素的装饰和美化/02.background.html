@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<style type="text/css">
+		.box1-1 {
+			display: none;
+			width: 200px;
+			height: 200px;
+			background-image: url(../images/1.jpg);
+			background-size: 200px 200px;
+		}
+		.box1-3 {
+			visibility: hidden;
+			width: 200px;
+			height: 200px;
+			background-image: url(../images/forward2.jpg);
+			background-size: 200px 200px;
+		}
+		.box1-2 {
+			display: none;
+		}
+		.box1-2 .son {
+			width: 200px;
+			height: 200px;
+			background-image: url(../images/forward1.jpg);
+			background-size: 200px 200px;
+		}
+		.box1-4 {
+			width: 100px;
+			height: 100px;
+			background: url(../张鑫旭/images/sofa_sprite.png) no-repeat;
+			background-position: -10px -10px;	
+		}
+		.box1-4:hover {
+			background-position: -10px -130px;
+		}
+		.box2-1 {
+			width: 200px;
+			height: 200px;
+			background: url(../images/forward1.jpg) no-repeat;
+			background-color: #eee;
+			background-position: 50px 100px;	
+			background-position: -50% -50%;	
+			/*(200 - 300) * -50%  = -100 * -50% = 50px*/
+			/*(200 - 400) * -50%  = -200 * -50% = 100px*/
+		}
+		a {
+			color: #333;
+			text-decoration: none;
+			text-align: center;
+		}
+		a[href]:active, button:active {
+			background-image: linear-gradient(to top, rgba(0,0,0,0.5), rgba(0,0,0,0.05));
+		}
+		.box5 .btn:hover {
+			outline: 2px solid #096;
+		}
+		.box5 .btn {
+			display: inline-block;
+			width: 100px;
+			line-height: 30px;
+			background-color: blue;
+			color: #fff;
+		}
+	</style>
+</head>
+<body>
+<!-- 
+css3: 多背景 size背景尺寸 origin背景初始定位盒子(padding-box) clip背景剪切盒子(border-box)
+
+image position repeat attachment color 
+IE9: size clip origin
+
+1.background-image加载?
+  隐藏元素display: none; ie8-ie11 依然会发请求
+  firefox 不会发请求
+  chrome更智能: 父元素display:none; 则不会请求, 其他则会
+  (1) base64图片 小尺寸才使用  ie8
+  (2) hover图片变换效果  一定要在同一张图片上
+2.与众不同的background-position百分比计算方式
+  剩余计算法: positionX = (容器宽度 - 图片宽度) * parentX 
+  负值百分比: 对于图片比容器大的有用
+3. background-repeat与渲染性能
+   半透明背景图    rgba半透明背景色  ie8
+4. background-attachment: fixed; scroll local(css3) ie9
+5. background-color背景色永远最低
+   (1)一站通用的:active样式 background-image: linear-gradient()  渐变ie10  IE8 IE9使用png图片
+6.多背景hack
+  :after :before伪元素 配合z-index负值
+  (1)区分ie9和ie8   使用:root .ie9{}  hack并不是最好的
+      background: url(icon.png);  ie8支持png 
+      background: url(icon.svg), none;  ie8不支持多背景  ie9支持多背景 支持svg
+  (2) 区分ie9和ie10
+      background: url(icon.svg), linear-gradient(to top, transparent, transparent);  ie9不支持渐变 ie10支持
+7.渐变背景和rgba背景色的兼容处理
+ie私有的渐变过滤: startcolor(AARRGGBB) endcolor gradientType(0|1)
+Math.round(256 * opacity).toString(16) 标准透明度值转换成十六进制
+ie8可以使用
+filter: progid:DXImageTransform:Microsoft.gradient(startcolorstr=#ffff0000,endcolorstr=#7f0000ff,gradientType=0)
+
+-->
+<div class="box1-1"></div>
+<div class="box1-2">
+	<div class="son"></div>
+</div>
+<div class="box1-3"></div>
+<div class="box1-4"></div>
+<div class="box2-1"></div>
+
+<div class="box5">
+	<a class="btn" href="javascript:">按钮</a>
+</div>
+</body>
+</html>

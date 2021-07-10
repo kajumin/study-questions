@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="zh-cn">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <title></title>
+    <style type="text/css">
+    .row > div:nth-child(1) {
+      background-color: red;
+    }.row > div:nth-child(2) {
+      background-color: green;
+    }.row > div:nth-child(3) {
+      background-color: purple;
+    }.row > div:nth-child(4) {
+      background-color: pink;
+    }
+    </style>
+  </head>
+  <body>
+    <!-- 
+    警告框alert 增多了 alert
+    徽章badge
+    面包屑breadcrumb
+    按钮button 
+    按钮组button-group
+    卡片card
+    轮播图
+    (1) 上下页
+    (2) 包含姿态指示器
+    (3) 字幕
+    (4) 交替变化
+    (5) data-interval="10000"  延迟
+    (6) 控制$().carousel({interval})
+    模态框
+    (1) data-toggle 以什么形式触发  data-target 触发目标
+    -->
+    <!-- Button trigger modal -->
+    <button class="btn1">js触发模态框</button>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+      Launch demo modal
+    </button>
+    <div class="modal" tabindex="-1" role="dialog" id="exampleModal">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Modal title</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p>Modal body text goes here.</p>
+            <p>今天天气很好呀!</p>
+            <p><input type="text" name="username" class="username" placeholder="请输入用户名!"></p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary">Save changes</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="./js/jquery-3.3.1.slim.min.js"></script>
+    <script src="./js/popper.min.js"></script>
+    <script src="./js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+      $('.btn1').on('click',function() {
+          $('.modal').modal();
+          $('.modal').modal('hide');
+      })
+      $('#exampleModal').on('shown.bs.modal', function () {
+        $('.username').trigger('focus')
+    })
+    </script>
+  </body>
+</html>

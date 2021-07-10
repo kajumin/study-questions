@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title></title>
+  <style>
+    #test{height:200px;width:200px;background:lightblue;}
+  </style>
+</head>
+<body>
+<div id="test"></div>
+<script>
+	//　300ms问题是指在某个元素执行它的功能和执行touch事件之间有一个300毫秒的间隔。鼠标事件、焦点事件、浏览器默认行为等相较于touch事件，都存在着300ms的延迟
+
+	//造成这个问题，是因为触摸屏幕的行为被重载(overload)了。在手指触摸屏幕的瞬间，浏览器无法预知用户是在轻触(Tap)、双触(Double-Tap)、滑动(Swipe)、 按住不放(Hold)还是其他什么操作。唯一保险的做法就是等上一会儿看接下来会发生什么
+
+　　// 问题是在于双触(Double-Tap)。即便是浏览器检测出手指离开了屏幕，它仍然无法判断接下来做什么。因为浏览器无法知道手指是会再次回到屏幕，还是就此结束触发轻触事件以及事件级联。 为了确定这一点，浏览器不得不等待一小段时间。 浏览器开发者找到一个最佳时间间隔，就是300毫秒
+  	(function(){ 
+	    var 
+	      stateMap = {
+	        touchstart_index: 0,
+	        touchmove_index: 0,
+	        touchend_index: 0
+	      },
+	      elesMap = {
+	        touch_obj: document.getElementById('test')
+	      },
+	      showIndex, handleTouch;
+
+	    showIndex = function ( type ) {
+	      elesMap.touch_obj.innerHTML = type + ':' + (++stateMap[type + '_index']);
+	    };
+
+	    handleTouch = function (event) {
+	      showIndex(event.type);
+	    };
+
+	    elesMap.touch_obj.addEventListener('touchstart', function(event){handleTouch(event);
+	    });
+
+	    elesMap.touch_obj.addEventListener('touchmove', function(event){handleTouch(event);
+	    });
+	    elesMap.touch_obj.addEventListener('touchend', function(event){handleTouch(event);});
+	})(); 
+
+</script>
+</body>
+</html>

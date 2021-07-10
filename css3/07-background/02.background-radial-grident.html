@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.box {
+			width: 200px;
+			height: 200px;
+		}
+		.box1-1 {
+			width: 200px;
+			height: 200px;
+			/*宽高一样使用默认 circle farthest-corner center*/
+			background: radial-gradient(#096 0%, #096 50%, #efc 50%, #efc 100%);
+			background: radial-gradient(circle farthest-corner at center, #096 0%, #096 50%, #efc 50%, #efc 100%);
+		}
+		.box1-2 {
+			width: 200px;
+			height: 150px;
+			/*宽高不一样使用默认 ellipse farthest-corner center*/
+			background: radial-gradient(#096 0%, #096 50%, #efc 50%, #efc 100%);
+			background: radial-gradient(ellipse farthest-corner at center, #096 0%, #096 50%, #efc 50%, #efc 100%);
+		}
+		.box1-3 {
+			width: 300px;
+			height: 200px;
+			/*size closest-side farthest-side  closest-corner farthest-corner默认 || length*/
+			background: radial-gradient(farthest-corner, #096 0%, #096 50%, #efc 50%, #efc 100%);
+			background: radial-gradient(closest-side, #096 0%, #096 50%, #efc 50%, #efc 100%);
+			background: radial-gradient(50px 50px, #096 0%, #096 50%, #efc 50%, #efc 100%);
+			background: radial-gradient(100px 50px, #096 0%, #096 50%, #efc 50%, #efc 100%);
+		}
+		.box1-4 {
+			width: 300px;
+			height: 200px;
+			/*position: length || 关键字*/
+			background: radial-gradient(at left top, #096 0%, #096 50%, #efc 50%, #efc 100%);
+			background: radial-gradient(at 50px 50px, #096 0%, #096 50%, #efc 50%, #efc 100%);
+		}
+		
+		.box2-1 {
+			width: 300px;
+			height: 200px;
+			/*宽高不一样 默认使用 ellipse farthest-corner at center*/
+			background: repeating-radial-gradient(#096 0%,#096 10%,#efc 10%, #efc 20%);
+			background: repeating-radial-gradient(ellipse farthest-corner at center, #096 0%,#096 10%,#efc 10%, #efc 20%);
+		}
+		
+		.box2-2 {
+			width: 300px;
+			height: 200px;
+			background: repeating-radial-gradient(circle farthest-side, #096 0%,#096 10%,#efc 10%, #efc 20%);
+		}
+	</style>
+</head>
+<body>
+<!-- 
+	1. radial-gradient()
+	径向渐变：形状shape  > 大小size >  at position >  color
+	style: circle ellipse默认
+	size: closest-side farthest-side  closest-corner farthest-corner默认
+	position: center默认  at top right bottom left 可以组合使用
+	color: #ccc 0%
+	 (1) 第一个参数 circle(圆) | ellipse(椭圆)
+	 	 其他参数
+	 	 radial-gradient(circle, #096 0%, #096 50%, #efc 50%, #efc 100%);
+	 (2) repeating-radial-gradient(circle, ellipse)
+ -->
+ <div class="box box1-1"></div>
+ <div class="box box1-2"></div>
+ <div class="box box1-3"></div>
+ <div class="box box1-4"></div>
+ <div class="box box2-1"></div>
+ <div class="box box2-2"></div>
+</body>
+</html>

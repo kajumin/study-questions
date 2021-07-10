@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.father {
+			width: 300px;
+			border: 1px solid #ccc;
+			overflow: hidden;
+
+		}
+		.father img{
+			float: left;
+			/*左*/
+			border-right: 1px solid transparent;  
+			padding-right: 10px;
+			width: 60px;
+			height: 60px;
+		}
+		.father p {			
+			margin-top: 0px;
+			margin-bottom: 0px;
+			margin-left: 70px; 
+			/*右*/
+		}
+		.bottom {
+			margin-top: -10px;
+		}
+	</style>
+</head>
+<body>
+<!-- bfc: 块级格式上下文
+	 	元素内部的子元素不会影响外部的元素
+	触发条件:
+	1.html根元素
+	2.float不为none
+	3.position不为static  relative
+	4.overflow 为auto scroll hidden
+	5.display: inline-block table-cell table-caption
+	
+	作用: 清除浮动 和 margin合并  自适应布局
+	不推荐使用margin-left 因为要大于左侧的宽度+间隙  不好控制
+	border-right padding-right margin-right(*首选)
+	border-left  padding-left
+
+	BFC布局规则：
+	1.在BFC中，盒子从顶端开始垂直地一个接一个地排列.
+	2.盒子垂直方向的距离由margin决定。属于同一个BFC的两个相邻盒子的margin会发生重叠
+	3.在BFC中，每一个盒子的左外边缘（margin-left）会触碰到容器的左边缘(border-left)（对于从右到左的格式来说，则触碰到右边缘）。
+	4.BFC的区域不会与float box重叠。
+	5.计算BFC的高度时，浮动元素的高度也参与计算
+	6.它是一个独立的渲染区域，只有Block-level box参与， 它规定了内部的Block-level Box如何布局，并且与这个区域外部毫不相干
+
+ -->
+<!-- 
+bfc特性下的自适应布局重任担当
+1.overflow: hidden/auto;  适用于ie7及以上 
+2.display: inline-block; 适用于ie6和ie7
+3.display: table-cell; 适用于ie8及以上
+-->
+<!-- 
+流体特性和BFC特性下多栏自适应布局对比:
+(1)自适应内容由于封闭，更健壮，容错性强
+(2)无需关心浮动元素宽度，可以整站大规模应用
+-->
+<!-- ie7以上
+1.overflow: hidden;
+2.融合table-cell  和  inline-block
+.lbf-content {
+	display: table-cell; width: 9999px;
+	// 如果不用兼容ie7  下面样式忽略
+	*display: inline-block; *width: auto;
+}
+关于table-cell解决连续英文字符无法换行的问题
+.word-break {
+	display: table;
+	width: 100%;
+	table-layout:fixed;
+	word-break: break-all;
+}
+ -->
+<div class="father">
+ 	<img src="../../images/zza/1.jpg">
+ 	<p>我是一个帅哥我是一个帅哥我是一个帅哥我个帅哥我是一个帅哥</p>
+
+ </div>
+ <div class="bottom">我是一个帅哥我是一个帅哥我是一个帅哥我个帅哥我是一个帅哥</div>
+</body>
+</html>

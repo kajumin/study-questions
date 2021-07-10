@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<!-- 
+	1. yield* 遍历后面的表达式 数据类型报错(string array除外)
+	2. yield 和yield*区别
+	3. done:true时机 return -> true yield | yield*(最后一个) -> false
+	-->
+<script type="text/javascript">
+	function* generator2() {
+		// yield [1,2,3,4,5] //直接返回数据
+		// yield* 12 //报错
+		// yield* false //报错
+		// yield* undefined //报错
+		// yield* null
+		// yield* {}
+		yield* []  //被忽略了
+		yield* 'yield*' //第二个generator函数  返回y 字符串也会iterator接口
+		yield* [1,2,3,4,5] //第二个generator函数  返回1
+	}
+	var g2 = generator2()
+	console.log(g2.next().value) //[1,2,3,4,5] 或者 1
+
+	function* gen() {
+		const answer = yield 'do you love js'
+		if (answer == 'yes') {
+			return 'oh'
+		}
+		return 'js lova you back'
+	}
+	var g1 = gen()
+	console.log(g1.next().value)
+	console.log(g1.next('yes').value)
+
+	function*  gen2 () {
+		// 第一个yield的值, 等价于迭代器中第一个yield的值
+		yield* [1,2,3,4,5]//即使到了最后一个done也是false
+		yield 123 //即使最后一个done也是false
+		return 'end' //return 这次done为true
+	}
+	var g2 = gen2()
+	console.log(g2.next().value)
+	console.log(g2.next().value)
+	console.log(g2.next().value)
+	console.log(g2.next().value)
+	console.log(g2.next())
+	console.log(g2.next())
+
+	function*  gen3 () {
+		yield [1,2,3,4,5]
+	}
+	var g3 = gen3()
+	console.log(g3.next().value)
+	
+</script>
+</body>
+</html>

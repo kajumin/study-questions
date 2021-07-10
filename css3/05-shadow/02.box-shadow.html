@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.box {
+			width: 200px;
+			height: 200px;
+			margin: 30px auto 0;
+			background-color: #4e6ef2;
+		}
+		.box1 {
+			box-shadow: 4px 4px 5px rgba(0,0,0,0.5);
+		}
+		.box2 {
+			box-shadow: -4px -4px 5px rgba(0,0,0,0.5);
+		}
+		.box3 {
+			box-shadow: 4px 4px 5px rgba(0,0,0,0.5), -4px -4px 5px rgba(0,0,0,0.5);
+		}
+		.box4 {
+			background-color: #fff;
+			box-shadow: 2px 2px 10px rgba(0,0,0,0.5);
+		}
+		.box5 {
+			background-color: #fff;
+			box-shadow: -2px -2px 10px rgba(0,0,0,0.5);
+		}
+		.box6 {
+			background-color: #fff;
+			box-shadow: 2px 2px 10px rgba(0,0,0,0.5), -2px -2px 10px rgba(0,0,0,0.5);
+		}
+		/*扩展*/
+		.box7 {
+			background-color: #fff;
+			box-shadow: 2px 2px 10px 1px rgba(0,0,0,0.5), -2px -2px 10px 1px rgba(0,0,0,0.5);
+		}
+		/*inset outset*/
+		.box8 {
+			background-color: #fff;
+			box-shadow: 2px 2px 10px rgba(0,0,0,0.5) inset;
+		}
+		.box9 {
+			background-color: #fff;
+			box-shadow: 2px 2px 10px rgba(0,0,0,0.5) inset, 2px 2px 10px rgba(0,0,0,0.5);
+		}
+	</style>
+</head>
+<body>
+<div class="box box1">中国</div>
+<div class="box box2">中国</div>
+<div class="box box3">中国</div>
+
+<div class="box box4">中国</div>
+<div class="box box5">中国</div>
+<div class="box box6">中国</div>
+
+<p>扩展</p>
+<div class="box box7">中国</div>
+<div class="box box8">中国</div>
+<div class="box box9">中国</div>
+</body>
+</html>

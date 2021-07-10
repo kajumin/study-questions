@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		*{
+			margin: 0;
+		}
+		img {
+			display: inline-block;
+			width: 200px;
+			height: 200px;
+			text-indent: -400px;
+			overflow: hidden;
+		}
+		.box1 {
+			text-indent: 2em;
+			border: 1px solid red;
+		}
+		.box2 {
+			border: 1px solid red;
+			width: 200px;
+			/*无效*/
+			display: inline;
+			/*有效*/
+			display: inline-block;
+			display: inline-table;
+			display: block;
+			text-indent: 2em;
+		}
+		.box2 p {
+			/*子元素需要重置 inline-block block inline-table*/
+			text-indent: 0;
+			/*无需重置*/
+			/*display: inline;*/
+		}
+		.box3 {
+			text-indent: 2em;
+		}
+		.box4 {
+			text-indent: 2em;
+		}
+		.box5 {
+			text-indent: 2em;
+		}
+	</style>
+</head>
+<body>
+<!-- 支持百分比  负值 -->
+
+<!-- 
+
+1.text-indent仅仅对第一行内联盒子内容有效
+2.非替换元素以外的display计算值为inline的内联元素无效, 如果计算值为inline-block inline-table有效 如果父级块级容器设置了text-indent设置 子需要重置 
+3.input标签按钮的text-indent无效
+4.button标签按钮的text-indent有效  但是有兼容性
+5.input和textarea的text-indent  低版本ie有兼容问题
+-->
+
+<img>
+<!-- 1 -->
+<div class="box1">
+	中国国中国中国中国中国中
+	<p>中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国</p>
+	<p>中国中国中国中国中国</p>
+</div>
+
+<!-- 2 -->
+<div class="box2">中国中国中国中国中国
+	<p>中国中国</p>
+</div>
+
+<!-- 3 -->
+<input type="button" name="" class="box3" value="按钮">
+
+<!-- 4 -->
+<button class="box4">按钮</button>
+
+<!-- 5 -->
+<input class="box5" type="text" name="" value="bang">
+</body>
+</html>

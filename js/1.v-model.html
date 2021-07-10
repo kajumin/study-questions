@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <p>input和textarea:</p>
+        <p><input type="text" v-model="input">{{input}}</p>
+        <p><input type="text" @input="myInput" :value="input">{{input}}</p>
+        <p><textarea name="" id="" cols="30" rows="10" v-model="textarea"></textarea>{{textarea}}</p>
+        <p><textarea name="" id="" cols="30" rows="10" @input="myTextarea" :value="textarea"></textarea>{{textarea}}</p>
+        
+        <p>checkbox和radio:</p>
+        <p><input type="checkbox" v-model="checkbox">{{checkbox}}</p>
+        <p><input type="checkbox" @change="myCheckbox" :checked="checkbox">{{checkbox}}</p>
+
+        <p>select</p>
+        <select name="" id="" v-model="select">
+            <option value="广州">广州</option>
+            <option value="上海">上海</option>
+            <option value="北京">北京</option>
+        </select>
+        {{select}}
+        <select name="" id="" @change="mySelect" :value="select">
+            <option value="广州">广州</option>
+            <option value="上海">上海</option>
+            <option value="北京">北京</option>
+        </select>
+        {{select}}
+    </div>
+    <script src="js技术/vue.js"></script>
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data () {
+                return {
+                    input: 'bang',
+                    textarea: 'joycechu',
+                    checkbox: true,
+                    select: '北京'
+                }
+            },
+            methods: {
+                myInput(e) {
+                    this.input = e.target.value
+                },
+                myTextarea(e) {
+                    this.textarea = e.target.value
+                },
+                myCheckbox(e) {
+                    console.log('change');
+                    console.log(e.target.checked);
+                    this.checkbox = e.target.checked
+                },
+                mySelect(e) {
+                    console.log('select');
+                    console.log(e.target.value);
+                    this.select = e.target.value
+                }
+            }
+        })
+    </script>
+</body>
+</html>

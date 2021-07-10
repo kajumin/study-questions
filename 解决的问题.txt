@@ -1,0 +1,32 @@
+2021.3.18
+1.svg  矢量图 无限放大不失真或降低质量  xml文本文件
+2.a  _blank  noreferrer阻止传递  noopener
+3.append与appendChild  after before prepend
+4.piture 分辨率  媒体属性切换图像(media)  部分支持的图像格式
+5.打印索引
+6.html与xml区别 作用 标记 语法
+7.json与xml 三好一差
+8.如何删除一个cookie？ d.setTime(d.getTime() - 1);  先判断是否存在 设置为失效时间为过去 
+  document.cookie = name + "=" + value + ";expires="+ d.toUTCString();
+
+9.echarts 基本使用  vue-echarts   直接导入(vue插件)
+10.垃圾回收
+11.事件循环  进制(分配资源)  线程(调度)  浏览器线程(GUI JS 定时器触发 事件触发 http请求)
+12.执行上下文  创建执行上下文:  变量函数(参数)提升  this指向  作用域链
+
+2021.3.23
+(1)webapck4区别 
+(2)提取公共代码
+
+2021.3.24
+1.cookie和session的区别
+2.localStorage和sessionStorage的区别  webStorage
+3.宏任务和微任务 promise.then process.nextTick MutationObserver
+4.node事件轮询机制  timer  pending callbck prepare(准备工作)  poll(轮询阶段) check阶段 close callback
+5.less  scss基础
+
+2021.3.25
+1.CommonJS ADM CMD ES6 Modules
+
+
+

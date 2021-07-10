@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		h1 {
+			color: red !important;
+		}
+	</style>
+	<script type="text/javascript">
+		// console.log(document.querySelector('h1')) //null
+		// function h() {
+		// 	console.log(document.querySelector('h1')) //h1
+		// }
+		// setTimeout(h, 0)
+	</script>
+	<script type="text/javascript">
+		console.log('before css')
+		var startDate = new Date()
+	</script>
+	<link rel="stylesheet" type="text/css" href="./normalize.css">
+	<link rel="stylesheet" type="text/css" href="./bootstrap.css">
+</head>
+<body>
+	<!-- 结论:
+	1.css加载不会阻塞dom树解析
+	2.css加载会阻塞dom树渲染
+	3.css加载会阻塞后面js的执行
+	4.js会阻塞dom解析
+	 -->
+
+	<!-- 提高css加载速度
+	1.使用cdn
+	2.css压缩
+	3.合理使用缓存
+	4.减少http请求 合并或者直接内联样式
+	-->
+
+	<!-- 浏览器渲染流程
+	  字节数据 => 字符串 => token => node => dom
+	1.HTML解析文件, 生成DOM Tree(dom树), 解析css文件生成CSSOM css对象模型
+	2.将Dom Tree和CSSOM Tree结合, 生成Render Tree(渲染树)
+	  如果某个节点是 display: none的，那么就不会在渲染树中显示。
+	3.根据Render Tree渲染绘制, 将像素渲染到屏幕上
+	  布局（Layout）和绘制（Paint), 重绘（repaint）和重排（reflow/回流）
+	  1）重绘：根据元素的新属性重新绘制，使元素呈现新的外观
+	  2）重排：当渲染树中的一部分因为元素的规模尺寸，布局，隐藏等改变而需要重新构建
+	  3）重排必定会引发重绘，但重绘不一定会引发重排
+	-->
+
+	<!-- 从流程可以看出
+	1.DOM解析和css解析是两个并行的进程, 所以css不会阻塞dom解析
+	2.Render Tree是依赖于DOM Tree和CSSOM Tree, 所以css加载会阻塞DOM的渲染
+	3.js可能会操作之前的dom节点和css样式, css加载会阻塞后面js的执行
+	   js加载、解析与执行会阻塞DOM的构建，也就是说，在构建DOM时，HTML解析器若遇到了js，那么它会暂停构建DOM，将控制权移交给js引擎，等js引擎运行完毕，浏览器再从中断的地方恢复DOM构建。
+	   js文件不只是阻塞DOM的构建，它会导致CSSOM也阻塞DOM的构建。
+	-->
+
+	<!-- DOMContentLoaded执行时机
+	1.后面没有js代码了, 会先执行DOMContentLoaded, 不会等css等其他资源加载
+	2.后面有js代码了, 会等css加载后才执行, js在前面也会执行
+	3.DOMContentlLoaded在DOM树生成后触发事件
+
+	DOMContentLoaded和onload的区别: DOMContentLoaded在html解析完毕后执行，loload在页面完全加载完成后执行(包括样式和图片)
+	 -->
+
+	<!-- 
+	1. script没有defer和async
+　　立即加载，并执行脚本, 会停止(阻塞)dom树构建，
+
+	2. script带async
+　　立即异步加载，加载好后立即执行, 不会停止(阻塞)dom树构建，
+async-script 可能在 DOMContentLoaded 触发之前或之后执行, 一定在onload事件之前
+
+	3. script 带 defer
+　　立即异步加载。 加载好后，不会停止(阻塞)dom树构建，如果 dom 
+树还没构建好，则先等dom树解析好再执行, 如果dom树已经准备好，则立即执行。 执行会阻塞dom解析渲染
+在触发DOMContentLoaded事件前执行
+
+	4.async和defer区别
+	都是异步加载, 都不会阻塞dom解析. 
+	async加载完成立即执行; 不能保证顺序, 
+	defer加载后不立即执行, dom解析完成后执行; 按顺序执行
+
+	js执行都会阻塞dom解析
+	defer async加载都不会阻塞dom解析
+	-->
+	<!-- script link img css
+	1、 输入url发送请求
+	2、 加载html文件 
+	3、 加载完后解析html，并在解析的过程中构建DOM树解析遇到script、link、img标签时，浏览器会向服务器发送请求资源。script的加载或者执行都会阻塞html解析、其他下载线程以及渲染线程。
+	2. link加载完css后会解析为CSSOM(层叠样式表对象模型,一棵仅含有样式信息的树)。
+	css的加载和解析不会阻塞html的解析，但会阻塞渲染。
+	3. img的加载不会阻塞html的解析，但img加载后并不渲染，它需要等待RenderTree生成完后才和RenderTree一起渲染出来。未下载完的图片需等下载完后才渲染。
+	4、当css解析为CSSOM后，html解析为DOM后，两者将会结合在一起生成RenderTree(渲染树)。
+	5、Layout:计算出RenderTree每个节点的具体位置。
+	6、Painting：通过显卡，将Layout后的节点内容(含已下载图片)分别呈现到屏幕上。
+	-->
+
+<h1>红色</h1>
+<script type="text/javascript">
+		console.log('after css')
+		var endDate = new Date()
+		console.log('经过了' + (endDate -startDate) + 'ms')
+	</script>
+</body>
+</html>

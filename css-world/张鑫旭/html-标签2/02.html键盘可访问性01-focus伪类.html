@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		[type="submit"] {
+		    position: absolute;
+		    clip: rect(0 0 0 0);
+		}
+		.btn {
+		    display: inline-block;
+		    padding: 2px 12px;
+		    font-size: 14px;
+		    background-color: #cd0000;
+		    color: #fff;
+		    cursor: pointer;
+		}
+		#t:focus + label.btn {
+		    outline: 1px dotted Highlight;
+		    outline: 5px auto -webkit-focus-ring-color;
+		}
+
+		.btn2 {
+		    display: inline-block;
+		    padding: 2px 12px;
+		    background-color: #cd0000;
+		    color: #fff;
+		    font-size: 14px;
+		    cursor: pointer;
+		}
+		tr .btn2 {
+		    opacity: 0;
+		    filter: alpha(opacity=0);
+		}
+		tr:hover .btn2,
+		tr .btn2:focus {
+		    opacity: 1;
+		    filter: none;
+		}
+	</style>
+</head>
+<body>
+<!-- 
+键盘可访问性: 指的是用户只使用键盘访问网站的能力。
+键盘访问网站的常用操作包括：
+	Tab键索引控件元素
+	Enter键触发当前处于focus状态的点击行为
+	上下键上下滚动网页
+	Home键返回顶部
+	End键滚动到底部
+	Space空白键滚动一屏网页
+
+先Tab键按次序不断focus控件元素,包括链接，按钮，输入框等表单元素或者focus设置了tabindex的普通元素, 浏览器一般会通过虚框或者外发光的形式进行区分和提示
+-->
+
+<!-- 
+	1.submit按钮  :focus伪类和outline都是IE8浏览器开始支持的
+	2.CSS hover显示隐藏内容的键盘可访问性
+	  display visibility 无法focus
+	  opacity 可以被focus
+	3.CSS hover显示下拉内容的键盘可访问性
+	  hover显示下拉
+	  click显示下拉
+-->
+<!-- 
+列表HTML结构依赖，使用CSS定位，hover显示;   添加:focus控制
+列表HTML结构依赖，使用CSS定位，click显示;   无需额外处理
+列表HTML结构不依赖，使用JS定位，hover显示;  添加js focus事件处理, 处理如mouseenter
+列表HTML结构不依赖，使用JS定位，click显示; 无需额外处理
+ -->
+<form>
+	<input type="text" name="">
+	<p><input type="reset" name="" value="提交"></p>
+	<input id="t" type="submit">
+	<label class="btn" for="t">提交</label>
+</form>
+
+<table width="300">
+  <tr>
+    <td>栏目1</td>
+    <td>栏目2</td>
+    <td>
+      <a href="javascript:" class="btn2">删除</a>
+    </td>
+  </tr>
+  <tr>
+    <td>栏目1</td>
+    <td>栏目2</td>
+    <td>
+      <a href="javascript:" class="btn2">删除</a>
+    </td>
+  </tr>
+  <tr>
+    <td>栏目1</td>
+    <td>栏目2</td>
+    <td>
+      <a href="javascript:" class="btn2">删除</a>
+    </td>
+  </tr>
+</table>
+
+
+
+<script type="text/javascript" src="../js/focus-keyword.js"></script>
+</body>
+</html>

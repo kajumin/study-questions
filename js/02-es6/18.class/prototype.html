@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<script>
+	var createObjcet = function(o) {
+		function F() {}
+		F.prototype = o
+		return new F()
+	}
+	var o = new createObjcet({name: 'bang'})
+
+	console.log(o.__proto__)
+	console.log(o.__proto__.__proto__ === Object.prototype)
+
+
+	function createObj (o) {
+	    var clone = Object.create(o);
+	    clone.sayName = function () {
+	        console.log('hi');
+	    }
+	    return clone;
+	}
+	var obj = {
+		names : ['bang', 'joycechu', 'kajumin'],
+		sex: '男'
+	}
+	var son = createObj(obj)
+	console.log(son)
+
+	// 寄生组合继承
+	function A(name, age) {
+		this.name = name
+		this.age = age
+	}
+	A.prototype.printColor = function() {
+		return this.color
+	}
+	function B(color) {
+		this.color = color
+	}
+	function inheritPototype(sub, sup) {
+		var prototype = createObjcet(sup.prototype)
+		sub.prototype = prototype
+		sub.constructor  = sub
+	}
+	// inheritPototype(B, A)
+	Object.setPrototypeOf(B.prototype, A.prototype) 
+	B.prototype.getColor = function() {
+		return this.color
+	}
+	var b = new B('red')
+	console.log(b)
+	console.log(b.printColor())
+	console.log(b.getColor())
+	console.log(b.__proto__.__proto__ === A.prototype)
+	console.log(b.__proto__.__proto__.__proto__ === Object.prototype)
+</script>
+</body>
+</html>

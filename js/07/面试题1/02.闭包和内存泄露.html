@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<div id="box1">box1</div>
+	<button class="btn">清除内存</button>
+	<ul>
+		<li>1</li>
+		<li>2</li>
+		<li>3</li>
+	</ul>
+<!-- 
+	1.作用域:
+	全局作用域和函数作用域
+(1) 作用域是指当前正在执行的代码能够访问到变量的范围
+(2) 每个函数都有各自的作用域, 存储函数所有的局部变量
+	2.作用域链:
+(1) 把多个作用域串起来便形成了作用域链
+(2) 每个函数在初始化完成之后就拥有了各自的作用域链, 但此时的作用域并不包含
+  自己的作用域,只有当函数执行时, 才能创建自己的作用域,并加到作用域链的开头
+(3) 作用域链中不仅存储了函数本身的作用域,还存储了该函数能够访问的其他函数的作用域
+
+	3.闭包: 就是有权访问另一个函数作用域的变量的函数
+ -->
+ <!-- 
+	1.函数声明时的作用域链
+	  a[scope]内存块 [Scope Chain]内存块(作用域链索引) 指向全局作用域链=> [Object Global]
+	2.执行函数是的作用域链
+	execution context(执行上下文)
+	[scope]   =>  [Scope Chain]内存块(作用域链索引) =>  activation object(函数内部的变量)
+	                                                  指向全局作用域链=> [Object Global]
+  -->
+  <script type="text/javascript">
+  	var eles = document.querySelectorAll('li')
+  	// for(var i = 0; i < eles.length; i++) {
+  	// 	eles[i].onclick = function() {
+  	// 		console.log(i)
+  	// 	}
+  	// }
+
+  	for(var i = 0; i < eles.length; i++) {
+  		(function(i){
+			eles[i].onclick = function() {
+  				console.log(i)
+  			}
+  		})(i)
+  	}
+
+  	// 内存泄露经典案例
+  	function handler( ){
+  		var element = document.querySelector('#box1')
+  		// var id = element.id
+  		var id = new Array(10000).fill('xxx')
+  		console.log(id)
+  		// 事件还存在
+  		element.onclick = function() {
+  			// 形成了闭包
+  			console.log(id)
+  		}
+  		// element = null
+  		// 不会被销毁
+  		// element.remove();  //真正的销毁
+  	}
+  	setInterval(function() {
+      handler()
+  		// console.log(new Array(10000).fill('xxxxx'))
+  	}, 1000)
+  	
+  	
+
+  	// function Cars () {
+  	// 	this.name = 'bang';
+  	// 	this.color = new Array(10000).fill('xxxx')
+  	// }
+  	// Cars.prototype.sayColor = function () {
+  	// 	var outerColor = this.color
+  	// 	return function() {
+  	// 		return outerColor
+  	// 	}
+  	// }
+  	// setInterval(function() {
+  	// 	// 执行完会被释放, 但是由于闭包, 不会被释放
+  	// 	var instance = new Cars();
+  	// 	// // 形成闭包
+  	// 	var result = instance.sayColor()
+  	// 	console.log(result())
+  	// 	// result = null //销毁
+  	// 	instance = null //销毁
+  	// }, 1000)
+  
+  </script>
+</body>
+</html>

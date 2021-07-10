@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.father {
+			width: 200px;
+		    border: 1px solid #444;
+		    overflow: hidden;
+		}
+		.father > img {
+		    width: 60px; 
+		    height: 64px;
+		    float: left;
+		}
+		.animal {
+		    margin-left: 70px;
+		}
+		.clear {
+		    clear: both;
+		    margin-top: -100px;
+		}
+	
+		.father2 {
+			width: 200px;
+			height: 60px;
+		}
+		.father2::after {
+			content: '';
+			display: table;
+			clear: both;
+		}
+		.father2 img{
+			float: left;
+			/*border-right: 1px solid transparent; 左 
+			padding-right: 10px;*/
+			width: 60px;
+			height: 60px;
+		}
+		.father2 + div {
+			margin-top: -2px;
+		}
+	</style>
+</head>
+<body>
+	<!-- clear成事不足
+	1. clear前面是浮动元素  margin-top: -999px都没有用
+	2. 后面依然是文字环绕 -->
+<div class="father">
+    <img src="../../images/1.jpg">
+    <div class="animal">
+        小猫1，小猫2，
+        <div class="clear">小猫3，小猫4，小猫5，小猫6，小狗1，小狗2，小狗3，小狗4，小狗5，小狗6</div>
+    </div>
+</div>
+
+<div class="father2">
+ 	<img src="../../images/zza/1.jpg">
+ 	我是一个帅哥我是一个帅哥我是一哥我是一个帅哥
+ </div>
+ <div style="width: 200px;">你很帅你很帅你很帅你很帅你很帅你很帅你很帅你很帅你很帅帅你很帅你很帅你很帅你很帅你很帅</div>
+</body>
+</html>

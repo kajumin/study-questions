@@ -1,0 +1,219 @@
+安装书本的进行自己想法的改进
+(1)webpack@3 版本  webpack-dev-server@2版本
+(2)vue单文件使用配置  vue(2.6.12) vue-loader(14) vue-template-compiler vue-hot-reloader(--inline --hot)
+    css-loader  style-loader  extract-text-webpack-plugin
+(3)babel-loader@7 babel-core@6 babel-preset-env配置
+(4)url-loader file-loader图片等文件使用
+(5)webpack-merge html-webpack-plugin  打包文件  transfer-webpack-plugin复制public文件
+   new webpack.DefinePlugin({ 'process.env': {NODE_ENV: '"production"' }}),	
+   new webpack.optimize.UglifyJsPlugin({ })
+   new ExtractTextWebpackPlugin()
+   new HtmlWebpackPlugin()
+(6)vue-router vuex使用   babel-preset-stage-3
+=============初始化并安装webpack webpack-dev-server
+npm init -y
+npm i -D webpack@3  webpack@3必须使用webpack-dev-server@2
+npm i -D webpack-dev-server@2
+配置webpack.config.js文件  entry output(重要)  创建src/mian.js文件  public
+
+=============vue单文件使用  热更替 css-loader style-loader extract-text-webpack-plugin
+npm i vue 
+npm i -D vue-loader@14(15需要插件)  vue-template-compiler(2.6.12)
+                 vue-hot-reload-api(2) 热加载  --hot --inline
+npm i -D css-loader@0 必须要有这个才能运行
+npm i -D style-loader@0  use: ['style-loader', 'css-loader']  使用import '*.css'必须
+npm i -D extract-text-webpack-plugin(3)
+
+==================babel-loader babel-core babel-presets-env
+npm i -D babel-loader@7 babel-core@6 babel-preset-env(1)
+.babelrc  { "presets": "env", comments: false}
+
+
+==================url-loader file-loader 图片使用
+npm i -D url-loader@0  file-loader@0
+
+==================打包文件 webpack.prod.config.js  webpack-merge html-webpack-plugin
+npm i -D html-webpack-plugin@3   开发环境不好配置
+npm i -D webpack-merge(5.73)
+开发环境指定publicPath, 不需要指定path
+output的publicPath会在打包的html文件中引用资源路径添加前缀
+devServer中的publicPath表示在浏览器中用此路径可以访问到打包的资源
+devServer中的contentBase指定一个虚拟路径来让devServer服务器提供内容
+
+npm i -D transfer-webpack-plugin  复制public的目的
+=================插件使用: vue-router vuex
+npm i vue-router
+historyApiFallback:  true
+路由懒加载 component: (resolve) => require(['../views/index.vue'], resolve)
+                    component: () => import('../views/Login.vue')
+mode: history; 路由重定向 路由命名 嵌套路由 动态路由参数 命名视图 路由独享守卫 路由懒加载(异步组件)
+(1)修改标题  (2)全局loading (3)返回顶部  (4)权限控制
+
+npm i vuex
+npm i -D  babel-preset-stage-3   处理mapState等语法
+
+===================================vue-cli3-demo
+(1)处理svg图片问题 svg-sprite-loader
+(2)axios封装问题  axios
+(3)权限验证问题  store配合vue-router elment-ui  nprogress 白名单
+(4)vue插件的使用  common.js(常用的->vue实例添加方法)  index.js(不常用->哪里使用哪里导入) 
+     filters(全局导入过滤器)
+(5)mixins(如表单重置 关闭dialog)  减少项目冗余代码
+(6)cdn(网络分发技术: 减少文件打包的体积)  gzip加速(配合nginx)
+====================vue-cli开始
+vue-create   vue2.X babel router vuex eslint  scss
+===================svg图标使用
+npm i -D svg-sprite-loader@6.0.0
+使用class-name 添加一个类名  icon-class: 定义svg图片
+图标库(阿里): https://www.iconfont.cn/collections
+
+===================axios分装
+npm i axios
+(1)在工具文件(util)中创建一个request.js, 
+    写一些默认配置, 写一些请求数据处理(加token进行权限验证, 全局loading)(可结合vuex使用), 
+    响应处理(错误统一处理), 在api文件夹中分模块的创建文件(如: app.js/user.js), 导出调用接口的函数组成的对象
+(2)在需要使用的组件中导入对应的模块请求文件(如user.js)
+
+====================权限验证
+登陆验证:  输入表单用户信息, 然后对密码加密, 一般是请求登陆接口, 
+                 后台账号密码验证通过后, 会返回一个token, 可以保存在cookie或者localstorage中
+npm i js-cookie(2.2.1)  element-ui(2.15.1)  nprogress(0.2)
+(1)beforeEach全局路由守卫,获取token值(从cookie或localstorage) 
+     token没有值, 而且不是白名单页面的话, 跳转到登录页面
+(2)token有值, 去获取用户信息
+(3)token存储在cookie中, 可以获取用户信息, 可以获取到则next()默认导航路径
+     获取不到值, 提示(message)过期, 重新登录, 跳转到首页
+(4)其中使用js-cookie存储token, element-ui提示错误信息  nprogress导航进度条
+
+=====================vue插件使用
+(1)@/util/common.js  常用的方法使用插件(有install函数)的方式添加到vue实例原型对象上去 vue.prototype.$cloneDeep
+(2)@/util/filters 过滤器也是可以的   使用Vue.fileter()注册到全局
+(3)@/util/index.js  不常用的方法, 哪里使用哪里导入
+
+=======================cdn使用
+配置就可以了, 配合html输出模板
+myConfig.externals = externals
+return myConfig
+=======================gzip加速
+npm i -D compression-webpack-plugin@5  版本太高
+ 有个错误Cannot read property 'tapPromise' of undefined
+// 是否使用gzip
+const productionGzip = true
+// 需要gzip压缩的文件后缀
+const productionGzipExtensions = ['js', 'css']
+
+
+==========nginx支持
+gzip on;
+gzip_static on;
+gzip_min_length 1024;
+gzip_buffers 4 16k;
+gzip_comp_level 2;
+gzip_types text/plain application/javascript application/x-javascript text/css application/xml text/javascript application/x-httpd-php application/vnd.ms-fontobject font/ttf font/opentype font/x-woff image/svg+xml;
+gzip_vary off;
+gzip_disable "MSIE [1-6]\.";
+
+
+========================1  webpack.config.js
+const path = require('path')
+const extractTextWebpackPlugin = require('extract-text-webpack-plugin')
+
+module.exports = {
+    entry: {
+        main: './src/main.js'
+    },
+    output: {
+        // 静态资源加前缀
+        publicPath: '/dist/',
+        // 开发环境不需要设置, 因为设置了publicPath就会影响devServer中的publicPath了
+        // path: path.resolve(__dirname, './dist'),
+        filename: 'main.js'
+    },
+    devServer: {
+        hot: true,
+        inline: true,
+        // hostory路由
+        historyApiFallback: true,
+        // 设置了这个可以访问到main.js main.css
+        // 但是访问不了1.main.js, 因为这个按照output的publicPath的路径
+        // publicPath: '/dist/'
+    },
+    module: {
+        rules: [
+            {
+                test: /\.vue$/,
+                loader: 'vue-loader',
+                options: {
+                    loaders: {
+                        css: extractTextWebpackPlugin.extract({
+                            use: 'css-loader',
+                            fallback: 'style-loader'
+                        })
+                    }
+                }
+            },
+            {
+                test: /\.css$/,
+                use: extractTextWebpackPlugin.extract({
+                    use: 'css-loader',
+                    fallback: 'style-loader'
+                })
+            },
+            {
+                test: /\.js$/,
+                use: ['babel-loader'],
+                exclude: /node_modules/
+            },
+            {
+                test: /\.(jpg|git|png)$/,
+                use: ['url-loader?limit=4096']
+            }
+        ]
+    },
+    plugins: [
+        new extractTextWebpackPlugin('main.css'),
+    ]
+}
+
+==============wepack.prod.config.js
+const webpack = require('webpack');
+const path = require('path');
+const webpackBaseConfig = require('./webpack.config.js');
+
+const extractTextWebpackPlugin = require('extract-text-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const TransferWebpackPlugin = require('transfer-webpack-plugin');
+
+const merge = require('webpack-merge');
+
+webpackBaseConfig.plugins = [];
+
+module.exports = merge.merge(webpackBaseConfig, {
+	output: {
+		filename: '[name].[hash].js',
+		path: path.resolve(__dirname, 'dist')
+	},
+	plugins: [
+		new extractTextWebpackPlugin({
+			filename: '[name].[hash].css',
+			allChunks: true
+		}),
+		new webpack.optimize.UglifyJsPlugin({
+			compresss: {
+				warnings: false
+			}
+		}),
+		new HtmlWebpackPlugin({
+        	filename: 'index.html',
+        	template: './index_prod.html',
+        	title: 'vue 匹配'
+    	}),
+		new TransferWebpackPlugin([   
+            { from: 'images',
+				to: 'public/images' 
+			}
+        ], path.resolve(__dirname, "public")),
+	]
+})
+===================================
+

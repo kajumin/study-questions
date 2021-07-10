@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<!-- 
+	函数被调用时(运行时), 才会确定该函数内this的指向. 因为在函数中this与arguments是两个特殊的变量, 在函数被调用时才会取得它们, 而且搜索这两个变量时只会在活动对象范围里面去搜
+	1.函数直接调用 this指向全局对象  浏览器是window node是global 严格模式undefined
+	2.对象方法调用 this指向该对象
+	3.call apply bind this指向指定的对象
+	4.new this指向新建的对象
+	5.箭头函数中的this在函数定义的时候就已经确定, 它this指向的是它的外层作用域this的指向
+
+	name函数名
+	function fun(){} //fun
+	var f = function g(){}  //g
+	var f2 = function() {} //f2  es6才是  es5空字符串
+	var obj = {test} //test
+	var obj = {fun: function(){}} //fun
+	var obj = {fun: function fn(){}} //fn
+	var f3 = () => {} //f3
+	 -->
+	}
+	}
+
+<script type="text/javascript">
+	// var a =1
+	// function test1() {
+	// 	console.log(a)
+	// 	// console.log(b) //Uncaught ReferenceError b is not defined
+	// 	console.log(this.a)
+	// }
+	// function test2(fn) {
+	// 	var a = 10
+	// 	var b = 10
+	// 	fn()
+	// }
+	// test2(test1) //1 1
+	// var obj = {
+	// 	a: 10,
+	// 	test1
+	// }
+	// obj.test1() //1 10
+
+
+	// 1.形式1 test()
+	function fun1() {
+		// 'use strict'
+		console.log(this) //undefined 严格模式
+	}
+	fun1()
+	
+
+	// 2.形式2: xxx.test()
+	var obj = {
+		fun: function fn() {
+			console.log(typeof fun) //undefined
+			console.log(typeof fn) //function
+			console.log(this) //{fun: function(){}}
+			console.log('obj.fun()')
+		},
+		fun2: function() {
+			console.log('fun2')
+		}
+	}
+	obj.fun()
+	
+
+	var a = 1
+	function test() {
+		console.log(this.a)
+	}
+	var obj2 = {
+		a: 2,
+		test
+	}
+	setTimeout(obj2.test) //1 this丢失了
+	obj2.test() //2 this指向该对象
+
+	//函数名
+	function f() {}
+	var f2 = function g() {}
+	var f3 = function() {}
+	var f4 = () => {}
+	console.log(f.name) //f
+	console.log(f2.name) //g
+	console.log(f3.name) //f3
+	console.log(f4.name) //f4
+	console.log(obj2.test.name) //test 对象简洁语法同样
+	console.log(obj.fun.name) //fn 对象方法包含具名
+	console.log(obj.fun2.name) //fun2
+	var f5= Function('alert("hello")')
+	var f6 = f.bind({name: 'bang'})
+	console.log(f5.name) //anonymous
+	console.log(f6.name) //bound f
+
+	
+</script>
+</body>
+</html>

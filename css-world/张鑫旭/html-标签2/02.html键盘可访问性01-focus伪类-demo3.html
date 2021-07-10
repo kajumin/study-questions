@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.outline {
+		    outline: 1px dotted Highlight;
+		    outline: 5px auto -webkit-focus-ring-color;
+		}
+		.container3 {
+		    display: inline-block;
+		}
+		.container3 .list {
+		    width: 80px;
+		    position: absolute;
+		    /*visibility: hidden;*/
+		    display: none;
+		    border: 1px solid #ccc;
+		    background: #fff;
+		}
+		.container3 .list a {
+		    display: block;
+		    padding: 5px 10px;
+		    color: #333;
+		}
+		
+	</style>
+</head>
+<body>
+<div class="container3">
+	<a href="javascript:" class="trigger trigger3" data-target="list">更多操作▾</a>
+	<div class="list list3" id="list">
+	    <a href="javascript:">编辑</a>
+	    <a href="javascript:">删除</a>
+	</div>
+</div>
+<script type="text/javascript" src="../js/focus-keyword2.js"></script>
+<script type="text/javascript">
+	// js定位 hover显示  添加focus事件即可
+	var container3 = document.querySelector('.container3')
+	var trigger3 = document.querySelector('.trigger3')
+	var list3 = document.querySelector('.list3')
+	container3.onmouseenter = function () {
+		console.log('onmouseenter')
+		list3.style.display = 'block'
+		list3.classList.remove('outline')
+	}
+	container3.onmouseleave = function () {
+		console.log('onmouseleave')
+		list3.style.display = 'none'
+		list3.classList.remove('outline')
+	}
+	trigger3.onfocus = function () {
+		console.log('focus')
+		list3.style.display = 'block'
+	}
+	trigger3.onblur = function () {
+		console.log('blur')
+		list3.style.display = 'none'
+	}
+</script>
+</body>
+</html>

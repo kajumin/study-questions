@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title></title>
+</head>
+<body>
+  <script>
+    var n = 0
+    function a() {
+      var n = 0
+      function b() {
+        n++
+        console.log(n); //1 2
+      }
+      b()
+      return b
+    }
+    var c = a()
+    c()
+    console.log(n); //0
+
+    var a2 = 9
+    function fn2() {
+      a2 = 0
+      return function (b) {
+        return b + a2++
+      }
+    }
+    var f2 = fn2()
+    console.log(f2(5)); //5
+    console.log(fn2()(5)); //5
+    console.log(f2(5)); //6
+    console.log(a2); //2
+
+    function fn3(i) {
+      return function(n) {
+        // console.log(n + (i++));
+        console.log(n + (--i));
+      }
+    }
+    var f3 = fn3(10)
+    f3(20) //30 29
+    fn3(20)(40) //60 59
+    fn3(30)(50) //80 79
+    f3(30) //41 38
+
+    var num = 10
+    var obj = { num: 20 }
+    obj.fn = (function(num){
+      this.num = num * 3 //window.num = 60
+      num++  //num 21
+      return function(n) {
+        this.num += n //window.num = 65 obj.num = 30
+        num++ //22 23
+        console.log(num); //22 23
+      }
+    })(obj.num)
+    var fn4 = obj.fn
+    fn4(5) //22
+    obj.fn(10)
+    console.log(num); //65
+    console.log(obj.num); //30
+  </script>
+</body>
+</html>

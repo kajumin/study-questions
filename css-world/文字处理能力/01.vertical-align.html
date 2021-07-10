@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.p1-1 {
+			font-size: 16px;
+			line-height: 50%;
+			/*高度: 24px*/
+		}
+		.p1-2 {
+			font-size: 16px;
+			line-height: 150%;
+			/*高度: 24px*/
+		}
+		.p2-1 {
+			font-size: 16px;
+			line-height: 150%;
+			vertical-align: 6px;
+			/*高度: 24px*/
+			/*只有一行没效果*/
+		}
+		.p2-2 span {
+			font-size: 16px;
+			line-height: 32px;
+			vertical-align: 6px;
+			/*32 - 16 = 16 / 2 = 8-2 vertical-align:6px;以内不会影响高度*/
+			/*24 - 16 = 8 / 2 = 4-2 vertical-align:2px;以内不会影响高度*/
+			/*高度: 28px*/
+		}
+		.p3 {
+		    font-size: 14px;  /*19 - 14 = 2.5   16 + 2.5*/
+		    /*animation: fontSize 5s infinite alternate ease-in-out;*/
+		}
+		.p3 > img {
+		    width: 16px; 
+		    height: 16px;
+		    /*height: 1ex; 7.547px*/
+		    /* 下面的ex实现是为了方便大家对比效果 */
+		    /*vertical-align: .6ex; */
+		    /*vertical-align: 25%;*/
+		    vertical-align: 4.75px;
+		    position: relative;
+		    top: 8px;
+		}
+		@keyframes fontSize {
+		    to {
+		        font-size: 60px;
+		    }
+		}
+	</style>
+</head>
+<body>
+<!-- 
+1.line-height     计算百分比依赖于font-size
+2.vertical-align  计算百分比依赖于line-height 
+3.vertical-align百分比  更推荐使用与font-size有关系的ex单位
+-->
+
+
+<p class="p1-1">中国</p>
+<p class="p1-2">中国</p>
+<hr>
+
+<p class="p2-1">中国</p>
+<p class="p2-2">x中国<span>x中国</span></p>
+<p class="p3">文字x
+	<img src="../images/delete.jpg">
+</p>
+</body>
+</html>

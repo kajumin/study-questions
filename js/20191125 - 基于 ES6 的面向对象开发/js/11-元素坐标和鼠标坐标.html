@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #box {
+            position: absolute;
+            left: 100px;
+            top: 100px;
+            width: 100px;
+            height: 100px;
+            background: red;
+        }
+    </style>
+</head>
+<body>
+  <div id="box"></div> 
+  <script>
+      // 移动之后元素的坐标：鼠标移动的距离 + 元素原先的位置
+      box.onmousedown = function(e){
+        console.log(e.clientX);
+        console.log(e.clientY);
+      }
+
+  </script> 
+</body>
+</html>

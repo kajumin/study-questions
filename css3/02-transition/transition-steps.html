@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <style>
+        .box1 {
+			width: 16px;
+			height: 30px;
+			line-height: 30px;
+			color: red;
+			/*background-color: red;*/
+			transition-duration: 2s;
+			transition-timing-function: steps(6);
+			overflow: hidden;
+		}
+		.box1:hover {
+			width: 112px;
+			/*16 * 7 = 112*/
+		}
+		.box2 {
+            width: 100px;
+			height: 60px;
+		}
+        .box2 div {
+            color: #fff;
+			background-color: red;
+			line-height: 30px;
+            height: 30px;
+			transition: 1s;
+        }
+		.box2 div:hover {
+			height: 60px;
+		}
+		.box3 {
+            width: 200px;
+            height: 200px;
+			color: #fff;
+			background-color: red;
+			margin-top: 50px;
+			transition: 1s;
+			transform-origin: top left;
+			transform-origin: top right;
+			transform-origin: bottom right;
+			transform-origin: bottom left;
+		}
+		.box3:hover {
+			transform: rotate(30deg);
+		}
+    </style>
+</head>
+<body>
+    <!-- 
+        1.steps案例
+        2.height案例
+        3.transform-origin: 关键字;
+
+     -->
+    <div class="box1">中国人民共和国</div>
+    <div class="box2">
+        <div>中国人民共和国中国人民</div> 
+    </div>
+    <div class="box3">中国人民中国</div>
+</body>
+</html>

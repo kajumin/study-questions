@@ -1,0 +1,13 @@
+<!-- bar.html -->
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>我是危险网站</title>
+</head>
+<body>
+<script>
+  console.log(window.opener);
+    window.opener.document.getElementsByTagName('a')[0].innerText = '原页面被修改了';
+</script>
+</body>
+</html>

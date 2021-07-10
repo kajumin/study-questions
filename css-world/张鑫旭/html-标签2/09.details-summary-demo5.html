@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		/* 隐藏默认三角 */
+		::-webkit-details-marker {
+		    display: none;
+		}
+		::-moz-list-bullet {
+		    font-size: 0;
+		    float: left;
+		}
+		summary {
+		    user-select: none;
+		    outline: 0;
+		}
+		summary[focus] {
+		    outline: 5px auto -webkit-focus-ring-color;
+		}
+		summary::after {
+		    content: '';
+		    position: absolute;
+		    width: 12px; height: 12px;
+		    margin: 4px 0 0 .5ch;
+		    background: url(https://www.zhangxinxu.com/study/201801/arrow-on.svg) no-repeat;
+		    background-size: 100% 100%;
+		    transition: transform .2s;
+		}
+		[open] summary::after {
+		    transform: rotate(90deg);
+		}
+		/* 动画效果 */
+		details + dl {
+		    max-height: 0;
+		    transition: max-height .25s;
+		    margin: 0 0 1rem;
+		    overflow: hidden;
+		}
+		[open] + dl {
+		    max-height: 100px;
+		}
+	</style>
+</head>
+<body>
+<details open><summary>订单中心</summary></details>
+<dl>
+    <dd><a href>我的订单</a></dd>
+    <dd><a href>我的活动</a></dd>
+    <dd><a href>评价晒单</a></dd>
+    <dd><a href>购物助手</a></dd>
+</dl>
+<details open><summary>关注中心</summary></details>
+<dl>
+    <dd><a href>关注的商品</a></dd>
+    <dd><a href>关注的店铺</a></dd>
+    <dd><a href>关注的专辑</a></dd>
+    <dd><a href>收藏的内容</a></dd>
+</dl>
+<details open><summary>资产中心</summary></details>
+<dl>
+    <dd><a href>余额</a></dd>
+    <dd><a href>优惠券</a></dd>
+    <dd><a href>礼品卡</a></dd>
+</dl>
+<script type="text/javascript">
+	window.addEventListener('keydown', function () {    
+		console.log(1)
+	    window.isKeyEvent = true;
+	    setTimeout(function () {
+	        window.isKeyEvent = false;
+	    }, 100);    
+	});
+	// 
+	document.addEventListener('focusin', function (event) {
+		console.log(2)
+	    var target = event.target;
+	    if (target && target.tagName.toLowerCase() == 'summary' && window.isKeyEvent == true) {
+	    	console.log('focusin')
+	        target.setAttribute('focus', '');
+	    }
+	});
+	document.addEventListener('focusout', function (event) {
+		console.log(3)
+	    var eleFocusAll = document.querySelectorAll('summary[focus]');
+	    [].slice.call(eleFocusAll).forEach(function (summary) {
+	        summary.removeAttribute('focus');
+	    });
+	});
+</script>
+</body>
+</html>

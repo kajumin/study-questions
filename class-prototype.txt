@@ -1,0 +1,203 @@
+面向对象知识点: 
+构造函数  函数名大写  使用new命令调用
+构造函数原型对象   Fn.prototype   f.__proto__
+构造函数创建的实例   var f = new Fn()
+原型对象上的方法       f.sayHello()
+原型链继承示意图: 切断子类实例与子类构造函数的关系, 子类实例原型直接指向父类构造函数创建的实例
+封装: 把客观事物封装成抽象的类，隐藏属性和方法，仅对外公开接口
+私有属性和方法: 构造函数内使用var声明的
+公有属性和方法: 构造函数内this.xxx设置, 或者设置在原型对象上
+静态属性和方法: Fn.xxx设置的
+报错: Uncaught TypeError: p1.pickNose is not a function
+
+class:  没有变量提升
+1.必须有constructor, 没有会隐式创建一个空的
+2.在class中使用=来定义一个属性和方法，效果与this.xxx相同，会被定义到实例上
+3.在class中直接定义一个方法，会被添加到原型对象prototype上 
+4.在class中使用了static修饰符定义的属性和方法被认为是静态的
+5.class中 xxx = () =>{ this考虑问题, 把它当做是构造函数创建对象的情形去考虑这个问题 }
+6.constructor中定义的相同名称的属性和方法会覆盖在class里定义的。
+
+确定原型和实例的关系
+(1) instanceof   检测构造函数的prototype属性是否出现在某个实例对象的原型链上      
+   this  instanceof arguments.callee ||  (this != window) 判断是否当做构造函数使用(new)
+   instance instanceof Object   //true
+   instance instanceof Father   //true
+   instance instanceof Son       //true
+
+(2) isPrototypeOf()         测试一个对象是否存在于另一个对象的原型链上
+   Object.prototype.isPrototypeOf(instance))  //true
+   Father.prototype.isPrototypeOf(instance))  //true
+   Son.prototype.isPrototypeOf(instance)       //true
+
+======__proto__  prototype
+所有对象都有一个__proto__对象(隐式原型)    指向该对象的原型对象
+所有构造函数都有一个prototype属性(显示原型), 指向原型对象
+原型对象有一个constructor, 指向构造函数
+构造器:  a.constructor.name  //A  函数名
+{name:'bang'}.constructor.name  //Object
+[].constructor.name     //Array
+[].prototype   //undefined
+[].constructor.constructor  //与[].constructor.prototype.constructor不同
+
+===========对比
+p1.__proto__.__proto__.__proto__                  //Person.prototype =>  Object.prototype  => null
+// 内置对象跟自定义对象一样
+(new Date()).__proto__.__proto__.__proto__   //Date.prototype  => Object.prototype =>  null
+
+new Object({name: 'bang'}).__proto__.__proto__    //Object.prototype =>null
+{name:'bang'}.__proto__.__proto__                //Object.prototype =>null   跟上面一样  
+
+=========Function 与 Fn  关系  Fn和Date  RegExp Array Boolean Number相同
+Fn(构造函数).__proto__ === Function.prototype //true
+Fn.__proto__.__proto__ === Object.prototype //true
+
+===========记住值   特殊
+Object.__proto__ === Function.prototype; //true
+Object.prototype.__proto__ === null;          //true
+Date.__proto__ === Function.prototype //true  同理  Number String  Boolean  Array  RegExp
+JSON.__proto__ === Object.prototype //true  不同与上面这些  同理与Math
+
+Person.constructor == Function                 //true
+Person.__proto__.constructor == Function  //true
+F.a函数访问F对象自身, 还会找Function.prototype    F.__proto__ = Function.prototype  F是构造函数
+
+==========总结
+每个实例对象都有一个内部指针, 指向原型对象, 所以对象能够访问原型对象上的所有属性和方法.
+每个构造函数都有prototype属性，这个属性是一个指针，指向一个对象，该对象称为原型对象。
+prototype原型对象上默认有一个属性为constructor，该属性也是一个指针，指向其相关联的构造函数
+
+
+(三) 遍历实例对象属性的三种方法:
+for...in   能获取到实例对象自身和原型链上的可枚举属性(不含symbol)
+Object.keys()      只能获取自身可枚举属性(不含symbol)
+Object.getOwnPropertyNames()  只能获取自身属性(包括不可枚举)
+Object.getOwnPropertySymbols(obj)   自身所有属性symbol
+Reflect.ownKeys(obj)    自身所有属性 (包括不可枚举和symbol)
+
+1.给prototype赋值对象  constructor指向Object 修改constructor会让它变成可枚举
+Object.defineProperty(Person.prototype, "constructor", {
+	enumerable: false,
+	value: Person
+});
+Object.defineProperty(obj, 'name') 方法默认是不可枚举 不可修改 不可配置的
+
+2.prototype上的公有属性, 实例修改基本数据类型不会变, 引用数据类型会变
+3.新增的原型属性方法 , 旧的实例不能访问 , 新的实例可以访问
+===============与原型有关的属性方法
+obj.hasOwnProperty(key)    方法传入属性名来判断一个属性是不是实例自身的属性
+Object.assign(target, source)  将源对象中所有可枚举属性都赋值到目标对象
+Object.is()   比较两个值是否相等   与严格相等类似    NaN  和  -0 0有不同
+Object.getPrototypeof(obj)  获取当前对象的prototype对象
+Object.setPrototypeof(obj, prototype)  设置当前对象的prototype对象
+Object.keys(obj)   返回数组 自身所有可遍历的属性的键名   for(let key of obj.keys()) 遍历出来
+Object.values(obj)   返回数组  自身所有可遍历的属性的键值     for(let value of obj.values()) 遍历出来
+Object.entries(obj)  返回数组  自身所有可遍历的属性的键值对数组     for(let [key, value] of obj.entires()) 遍历出来
+Object.getOwnPropertyDescriptor(obj, key)  获取某个对象属性的描述对象
+Object.getOwnPropertyDescriptors(obj)  获取整个对象所有属性的描述对象  返回对象 属性名为该对象属性名  属性值为描述对象
+?.    传导运算符  a?.b()  只要有一个null或者undefined就返回undefined
+
+========构造函数创建实例对象
+缺点: 没有公有属性方法
+========原型模式
+优点: 有共享属性方法
+缺点: 原型上的引用数据类型一改则都改   基本数据类型不会  而是在实例上创建了 覆盖原型上的属性
+
+=======原型链继承  new Person()   constructor
+缺点: (1) 创建子类时, 不能向父类传递参数
+        (2) 父类实例对象引用类型属性被所有实例共享   父类上的原型引用类型属性也是
+              基本数据类型不会  而是在实例上创建了 覆盖原型上的属性
+
+=======借助构造函数call
+好处:  (1)  可以在Child中向 Parent 传参
+         (2)  避免了父类实例对象的引用类型属性被所有实例共享, 因为变成子类实例属性了
+缺点:  (1)  父类原型上的属性方法没有继承
+         (2)  属性方法都在构造函数中定义，每次创建实例都会创建一遍
+
+=======组合继承  new Person()   constructor(原型链继承)   call(借助构造函数)   
+好处:  融合原型链继承和构造函数的优点，是 JavaScript 中最常用的继承模式
+缺点:  (1) 父类被调用两次  一次实现原型链继承  一次借助构造函数继承
+         (2) 父类实例对象的属性方法多余一份, 在子类的原型对象上  
+记忆: 父类的实例属性子类实例属性全部接收, 父类的实例属性在子类的原型上还有一份,
+父类的原型对象属性在子类的原型上的原型上
+
+=====原型式继承  function F(){}   F.prototype = o;   return new F();
+缺点:  包含引用类型的属性值始终都会共享相应的值，这点跟原型链继承一样。
+         基本数据类型不会  而是在实例上创建了 覆盖原型上的属性
+
+=====寄生式继承  var clone = Object.create(o)  clone.xxx   return clone
+缺点：跟借用构造函数模式一样，每次创建对象都会创建一遍方法
+
+=======寄生组合式
+function F() {}
+F.prototype = o
+return new F()
+
+sub.prototype =  createObj(sup.prototype)
+sub.prototype.constructor = sub
+
+inheritPrototype(sub, sup)
+sup.call(this, name, age)
+
+利用sub.prototype =  Object.create(sup.prototype)  //轻松实现  但还是要使用借助函数
+总结: 原型式 和 借助构造函数 的结合
+通过parent.prototype去做原型式继承,  构造函数体内借助call
+
+
+(一) class的基本概念：
+定义在构造函数原型对象上的属性和方法虽然不能直接表现在实例对象上，但是实例对象却可以访问或者调用它们
+如果你的class没有定义constructor，也会隐式生成一个constructor方法
+// Uncaught TypeError: p1.fight is not a function
+(二) class中几种定义属性的区别：：
+在constructor中var一个变量，它只存在于constructor这个构造函数中
+
+在constructor中使用this定义的属性和方法会被定义到实例上
+
+在class中使用=来定义一个属性和方法，效果与第二点相同，会被定义到实例上 constructor 中的var变量class=无法访问到
+
+在class中直接定义一个方法，会被添加到原型对象prototype上  function  sayHello() {}  没有等有
+
+constructor中定义的相同名称的属性和方法会覆盖在class里定义的。
+
+(三) other:
+class本质虽然是个函数，但是并不会像函数一样提升至作用域最顶层  typeof className   //function
+如遇class中箭头函数等题目请参照构造函数来处理   
+使用class生成的实例对象，也会有沿着原型链查找的功能
+Object.assign(Father.prototype,{ fn(){} }   //追加方法
+继承 extends Father  super(name);
+
+面试题: 
+1.当你使用class的时候，它会默认调用constructor这个函数，来接收一些参数，并构造出一个新的实例对象(this)并将它返回。var name = "bang" 私有属性
+
+2.类中定义属性或方法的几种方式
+(1)在constructor中var一个变量，它只存在于constructor这个构造函数中   私有属性
+(2)在constructor中使用this定义的属性和方法会被定义到实例上      公有属性
+(3)在class中使用=来定义一个属性和方法，效果与第二点相同，会被定义到实例上   公有属性
+(4)在class中直接定义一个方法，会被添加到原型对象prototype上    公有属性
+ 1.age = this.age可以 同样是实例属性
+ 2.父类age = this.age, 子类继承为undefined
+
+
+3.在class定义静态属性和方法
+(1)Cat.xxx  
+(2)static name = "bang"   static  foo(){}
+
+4.class它的本质也是一个函数  typeof  className  //function
+   但不存在提升
+
+5.this指向
+  getType = function(){}  //外层是window
+  getType = function(){}  //this指向该实例对象
+  getType = ()=>{}          //this指向该实例对象   跟上面相同
+
+7.class中存在两个相同属性或者方法  
+  constructor中定义的相同名称的属性和方法会覆盖在class里定义的。
+
+8. constructor 和原型上
+    constructor覆盖住原型的
+
+9.constructor中
+ this.getType = () => {
+      console.log(this.type) //指向this.type   或者 type = ""
+      console.log(type)   //在contructor函数体中找
+    }

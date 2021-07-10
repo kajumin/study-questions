@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		body {
+			margin: 0;
+		}
+		.box1 {
+			background-color: #eee;
+			outline: 1px solid red;
+		}
+		.box2 {
+			font-family: simsun;
+			line-height: 1.32;
+			background-color: #eee;
+		}
+		.p1 {
+			background-color: #eee;
+		}
+		.p2 {
+			font-family: simsun;
+			background-color: #eee;
+		}
+		.box3 {
+			position: relative;
+			font-family: simsun;
+			font-size: 80px;
+			line-height: 125px;
+			background-color: #ddd;
+		}
+		.box3:after {
+			content: '';
+			position: absolute;
+			left: 20px;
+			top: 0;
+			width: 10px;
+			height: 22px;
+			background-color: red;
+		}
+		.box3 span {
+			background-color: green;
+		}
+		.box4 {
+			margin-top: 20px;
+			font-family: simsun;
+			font-size: 80px;
+			line-height: 125px;
+			background-color: #ddd;
+		}
+		.box4 span {
+			background-color: green;
+		}
+		.box4 img {
+			vertical-align: top; 
+		}
+	</style>
+</head>
+<body>
+	<!-- 
+	1.因为chrome的默认字体是微软雅黑, line-height默认值为1.32, 所以高度为21, 半行距为3.5
+	2.字体变为宋体后高度为18, 那是因为宋体的line-height值为1.141
+	3.半行距 上行距向下取整, 下行距向上取整
+	 -->
+<div class="box1">中国gxxxx</div>
+<div class="box2">中国gxxxx</div>
+<p class="p1">中国gxxxx</p>
+<p class="p2">中国gxxxx</p>
+
+<div class="box box3">
+ 		<span>sphinx</span><span>中国</span>
+</div>
+
+<div class="box4"><span>中国xx</span><img src="../../images/1.jpg" height="20"></div>
+</body>
+</html>

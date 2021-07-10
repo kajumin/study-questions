@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">	
+		.box3 {
+			/*多行省略号*/
+			position: relative; 
+			width: 100px;
+			height: 105px;
+			text-align: justify;
+			padding-right: 1em;
+			background-color: green;
+			overflow: hidden;	
+		}
+		.box3::after{
+			content: "..."; 
+			position: absolute; 
+			bottom: 0; 
+			right: 2px;
+			/*width: 20px;*/
+			/*background-color: green; */
+			
+		}
+		.box4 {
+			/*多行省略号*/
+			position: relative; 
+			width: 100px;
+			height: 105px;
+			text-align: justify;
+			padding-right: 1em;
+			background-color: green;
+			overflow: hidden;	
+		}
+		.box4::before{
+			content: "..."; 
+			position: absolute; 
+			bottom: 0; 
+			right: 0;	
+		}
+		.box4::after{
+			content: '';
+			position: absolute;
+			width: 1em;
+			height: 1em;
+			right: 0;
+			margin-top: 5px;
+			background-color: green;
+			
+		}
+		.box5{
+			width: 100px;
+			height: 100px;
+			background-color: red;
+			/*word-break: break-all;*/
+			/*word-break: keep-all;*/
+			word-break: break-word;
+			/*word-wrap: break-word;*/
+			margin-bottom: 100px;
+		}
+		.box6{
+			width: 100px;
+			height: 100px;
+			background-color: red;
+			word-break: break-all;
+			/*word-break: keep-all;*/
+			margin-bottom: 100px;
+		}
+
+		.box7{
+			width: 100px;
+			height: 100px;
+			background-color: red;
+			/*white-space: normal;*/
+			/*white-space: nowrap;*/
+			/*white-space: pre;*/
+			/*white-space: pre-wrap;*/
+			white-space: pre-line;
+			margin-bottom: 100px;
+		}
+		
+	</style>
+</head>
+<body>
+	<!-- 
+	white-space: nowrap;     超长显示
+	word-break : break-word;  在长单词或者地址内部换行（但是会另起一行）
+	word-wrap: break-word;   允许长单词或者url内换行（不另起一行）  是对word-break的补充
+	-->
+
+<!-- 多行省略号 使用after-->
+<div class="box3">中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国</div>
+
+<!-- 多行省略号 使用before-->
+<div class="box4">中国中国中国中国国中国中国中国中国中国中国中国中中国</div>
+
+<div class="box5">word-wrap: 哈哈哈  th isssssssssssss long worddddddddddddddddddddd</div>
+
+<div class="box6">word-break: 哈哈哈  this is long worddddddddddddddddd ddddddddd ffffffffff</div>
+
+<div class="box7">whitespace &nbsp;&nbsp;&nbsp;哈哈    哈 \n this is long worddd</br>dddddddddddddd ddddddddd ffffffffff</div>
+
+</body>
+</html>

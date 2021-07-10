@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		summary {
+			user-select: none;
+			outline: none;
+		}
+		::-webkit-details-marker {
+		    display: none;
+		}
+		::-moz-list-bullet {
+		    font-size: 0;
+		    float: left;
+		}
+		.more {
+		    display: none;
+		}
+		[open] .more {
+		    display: block;
+		}
+		[open] summary a {
+		    font-size: 0;
+		}
+		[open] summary a::before {
+		    content: '收起';
+		    font-size: 16px;
+		}
+	</style>
+</head>
+<body>
+<details>
+    <summary>
+        <p>据台媒报道，大陆歌手大壮的《我们不一样》近来攻占了台湾KTV排行榜冠军，在榜单上排名超过张惠妹、林俊杰的新歌名次。台湾网友评论称，太好听了，一听马上就停不下来。除了《我们不一样》外，这几首你一定听过的歌，也受到台湾歌迷的青睐。</p>
+        <div class="more">
+            <p>其他几首歌曲包括歌舞剧演员李玉刚的《刚好遇见你》以及王俊琪的《我多喜欢你你会知道》。</p>
+        </div>
+        <a>更多</a>
+    </summary> 
+</details>
+</body>
+</html>

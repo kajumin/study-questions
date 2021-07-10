@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.p {
+			font-size: 20px;
+			color: #06f;
+			border-bottom: 3px solid #ccc;
+		}
+		.box1 {
+			width: 300px;
+			height: 200px;
+			background-color: #adc;
+			background-image: url("../../images/shou.png");
+			background-repeat: no-repeat;
+		}
+		.box2 {
+			position: relative;
+			width: 300px;
+			height: 200px;
+			background-color: red;
+			background-image: url("./../../images/circle-r.png");
+			background-size: 55px;
+			background-repeat: round; /*  60 * 5  50 * 4 放大或收缩*/
+			background-repeat: space; /*  55 * 5  55 * 3 中间间隔*/
+			
+		}
+		.box2:after {
+			content: '';
+			position: absolute;
+			width: 55px;
+			height: 55px;
+			background-color: red;
+		}
+		.box3 {
+			position: relative;
+			width: 300px;
+			height: 200px;
+			overflow: auto;
+			background: url("../../images/border.jpg") no-repeat;
+			background-color: #eee;
+			background-size: 100px;	
+		}
+		.box3-1 {
+			/* 默认 一直看得见 */
+			background-attachment: scroll;
+		}
+		.box3-2 {
+			background-attachment: local;
+		}
+		.box3-3 {
+			background-attachment: fixed;
+		}
+		.box4 {
+			max-width: 600px;
+			height: 200px;
+			border: 1px solid red;
+			margin: 0 auto;
+			background-image: url("../../images/circle.png");
+			background-repeat: no-repeat;
+			background-size: 100px;
+		}
+		.box4-1 {
+			background-position: top;
+			background-position: center;
+			background-position: right;
+			background-position: -100px;
+			background-position: 100px;
+		}
+		.box4-2 {
+			background-position: right center;
+			background-position: center top;
+			background-position: left center;
+			background-position: center center;
+			background-position: 100px 100px;
+			background-position: 10% 10%;
+		}	
+		.box4-3 {
+			background-position: right 100px center; 
+			background-position: right 100px bottom; 
+			background-position: center top -10px; 
+			background-position: left top -10px; 
+		}	
+		.box4-4 {
+			background-position: left -10px top -10px; 
+			background-position: right -10px top -10px; 
+		}	
+		.box4-5 {
+			position: relative;
+			max-width: 500px;
+			height: 200px;
+			border: 1px solid red;
+			margin: 0 auto;
+			/*box-sizing: border-box;*/
+			background: #eee url("../../images/border.jpg");
+			background-repeat: no-repeat;
+			background-size: 100px;
+			background-position: 10% top; 
+		}
+		.box4-5:after {
+			content: '';
+			position: absolute;
+			width: 40px;
+			height: 100px;
+			background-color: rgba(0,0,0,0.5);
+		}
+		.box5 {
+			width: 300px;
+			height: 200px;
+			border: 20px dashed red;
+			padding: 15px;
+			background-color: #eee;
+			background-image: url("../../images/1.jpg");
+			background-size: 300px 200px;
+			background-repeat: no-repeat;
+			background-origin: padding-box; 
+			background-origin: border-box;
+			background-origin: content-box;
+			/*background-clip: content-box;*/
+			/* 背景显示 */
+		}	
+		.box6 {
+			width: 300px;
+			height: 200px;
+			border: 20px dashed red;
+			padding: 15px;
+			background-image: url("../../images/1.jpg");
+			background-size: 300px 200px;
+			background-clip: border-box;
+			background-clip: padding-box;
+			background-clip: content-box;
+			background-origin: border-box;
+		}
+		.box7 {
+			width: 300px;
+			height: 250px;
+			border: 20px dashed red;
+			padding: 15px;
+			background-image: url("../../images/1.jpg");
+			background-size: 100px;
+			background-size: 100%;
+			background-size: 100px 50px;
+			background-size: cover;
+			background-size: contain;
+			background-repeat: no-repeat;
+		}
+
+		.box8-1 {
+			width: 300px;
+			height: 200px;
+			border: 20px dashed red;
+			padding: 15px;
+			background: #eee url("../../images/1.jpg") ;
+			/*color image前后都一样*/
+			background: url("../../images/1.jpg") #eee;
+			background:  #eee url("../../images/1.jpg");
+		}
+		.box8-2 {
+			width: 300px;
+			height: 200px;
+			border: 20px dashed red;
+			padding: 15px;
+			/*color image position repeat*/
+			background: #eee url("../../images/1.jpg") 10px 10px no-repeat;
+		}
+		.box8-3 {
+			width: 300px;
+			height: 200px;
+			border: 20px dashed red;
+			padding: 15px;
+			/*color image position / size repeat*/
+			background: #eee url("../../images/1.jpg") right top / 100px 100px no-repeat;
+		}
+		.box8-4 {
+			width: 300px;
+			height: 200px;
+			border: 20px dashed red;
+			padding: 15px;
+			/*color image position / size repeat 只有一个值(clip)*/
+			background: #eee url("../../images/1.jpg") right top / 100px 100px no-repeat content-box;
+		}
+		.box8-5 {
+			width: 300px;
+			height: 200px;
+			border: 20px dashed red;
+			padding: 15px;
+			/*color image position / size repeat 两个值(origin clip)*/
+			background: #eee url("../../images/1.jpg") right top / 100px 100px no-repeat padding-box padding-box;
+		}
+		.box8-6 {
+			width: 300px;
+			height: 200px;
+			border: 20px dashed red;
+			padding: 15px;
+			/*color image size repeat*/
+			background: #eee url("../../images/1.jpg") left top / 100px 100px no-repeat content-box content-box;
+			background: #eee url("../../images/1.jpg") left top / 100px 100px no-repeat padding-box content-box;
+			background: #eee url("../../images/1.jpg") left top / 100px 100px no-repeat border-box content-box;
+			background: #eee url("../../images/1.jpg") left top / 100px 100px no-repeat border-box content-box;
+			background: #eee url("../../images/1.jpg") left top / 100px 100px no-repeat border-box padding-box;
+			background: #eee url("../../images/1.jpg") left top / 100px 100px no-repeat border-box border-box;
+		}
+	</style>
+</head>
+<body>
+	<!-- 
+		3. attachment: scroll local fixed
+
+
+	 -->
+<p class="p">color image repeat</p>
+<div class="box1"></div>
+
+<p class="p">repeat: space round no-repeat  repeat-x</p>
+<div class="box2"></div>
+
+<p class="p">attachment: local</p>
+<!-- 
+	attachment       
+	  local         背景图像跟随元素内容      滚走  会看不见
+	  scroll(默认)  元素内容滚动时背景图像不动 固定  永远看的见
+	  fixed         背景图像相对窗体固定, 即内容滚动时, 图片不动
+ -->
+<div class="box3 box3-1">
+ 	<div class="son" style="height: 300px;">
+ 		<p>123465</p>
+ 	</div>
+ </div>   
+
+ <div class="box3 box3-2">
+ 	<div class="son" style="height: 300px;">
+ 		<p>123456</p>
+ 	</div>
+ </div>  
+
+ <div class="box3 box3-3">
+ 	<div class="son" style="height: 300px;">
+ 		<p>123456</p>
+ 	</div>
+ </div>
+
+ <p class="p">position: 偏移量: px 百分比  关键字, 百分比相对于剩余</p>
+ <!-- 
+ 	position 偏移量: px  百分比 关键字
+ 	   一个值: 设置横坐标  纵坐标默认center
+ 	   两个值: 设置横坐标和纵坐标  关键字 | 偏移量
+ 	   三个值: 设置横坐标和纵坐标  left -10px center 关键字 + 偏移量
+ 	   四个值: 设置横坐标和纵坐标  left -10px top -10px  关键字 + 偏移量
+	   是相对于剩余的宽度 500-100 = 400;
+	   50% 0%是居中对齐 200px = 400 * 50%
+	   10% 0%  计算后是 40px = 400 * 10% 
+-->
+ <div class="box4 box4-1"></div>
+ <div class="box4 box4-2"></div>
+ <div class="box4 box4-3"></div>
+ <div class="box4 box4-4"></div>
+ <div class="box4 box4-5"></div>
+
+ <p class="p">origin: 默认padding-box 定位时参考的原点</p>
+<!-- 
+	origin:
+	   默认padding-box
+	   content-box
+	   border-box
+-->
+ <div class="box5"></div> 
+ <p class="p">clip: 背景图像向外裁剪的区域</p>
+<!-- 
+	clip:
+	   默认border-box 需要配合dashed虚线边框才能显示出来
+	   content-box
+	   padding-box
+-->
+ <div class="box6"></div> 
+
+ <p class="p">size: 背景图像大小</p>
+<!-- 
+	size:
+	    默认auto 即图像真实大小
+	    cover 将背景图像等比缩放到完全覆盖容器, 背景图像有可能超出容器。(即当较短的边等于容器的边时, 停止缩放)
+		contain 将背景图像等比缩放到宽度或高度与容器的宽度或高度相等, 背景图像始终被包含在容器内。(即当较长的边等于容器的边时, 停止缩放)
+
+	    设置一个值, 则用于定义图像的宽度 高度根据宽度进行等比例缩放;
+	    设置两个值, 则分别作用于图像的宽和高。
+-->
+ <div class="box7"></div>
+
+ <p class="p">复合写法推荐: bg-color || bg-image || bg-position [ / bg-size]? || bg-repeat || bg-attachment || bg-origin || bg-clip</p>
+ <div class="box8-1"></div>
+ <div class="box8-2"></div>
+ <div class="box8-3"></div>
+ <div class="box8-4"></div>
+ <div class="box8-5"></div>
+</body>
+</html>

@@ -1,0 +1,147 @@
+ctrl +f  在浏览器中查找
+cls    清空命令窗口
+api  实现操作的方式原理  mysql
+rimraf node_modules  删除node_modules文件很快
+环境配置:
+js为例: 
+脚本语言  运行在浏览器中  用来做客户端页面交互  
+运行环境  浏览器的内核 js 引擎
+语言能力取决于平台
+node.js是js的平台  js的运行环境
+chrome'v8     libuv   
+
+node版本  lts  长期支持    current   最新版本
+
+=========================npm================================
+在powershell中: pwd查找当前目录   别名也需要
+切换当前目录（change directory)：cd
+创建目录（make directory)：mkdir   可以建特殊字符开头的文件
+查看当前目录列表（directory)：dir   - 别名 ls（list）
+清空当前控制台：cls    - 别名：clear
+删除文件：del   - 别名：rm
+echo 'aaa'  >> 1.txt       node-v >> 1.txt  输出到文件
+cat 1.txt  查看文本文件
+
+==============================babel===========================
+npm install babel-cli  -g 
+.babelrc    run  control运行控制文件
+label  js/src  -d   js/lib   es6转换es5代码   可以直接创建文件夹
+browserify  js/build/main.js  -o  js/dist/mian.js       生成浏览器可以直接使用的
+npm  install jquery@1   1里面最新的
+
+=======================
+
+REPL环境  read eval p
+node 可以直接进入   node --use_strict  严格模式   像控制台操作
+.exit退出
+tab:  自动补全路径    node 01   等于  node .\01.js
+clear
+_ : 上一次执行的结果
+node -v 
+node -e 'console.log('123')'
+================node编写代码=========================================
+console.log()   可以用
+console.error()
+1.运行js代码   node  name.js
+node 1.js  第一个是文件   第三个之后是参数
+node /path/1.js
+全局对象global
+process.stdout.write
+process.stdin
+动画: 字符画  擦除重绘
+
+process.on('SINGINT',function(){ } )
+process.exit();
+process.stdin.on('readable',()=>{})
+process.stdin.on('data',(data)=>{})
+=======异步操作=====
+setTimeout(()=>{},0);  异步执行
+$.ajax()
+文件操作
+node所有的会发生阻塞的操作都是异步的
+
+
+=====调试代码==========
+debug
+npm install node-inspector -g
+npm install devtool -g
+
+
+day02: 
+默认错误优先的回调函数;
+进程包括线程
+cpu在不同线程之间转换,有个上下文转换,这个转换很耗时
+线程之间数据共享问题
+
+非阻塞I/O  所有阻塞的操作交给内部实现的线程   主线程主要就是不断的调度
+node平台将一个任务连同该任务的回调函数放到一个事件循环系统中
+事件循环高效的管理系统线程池同时高效执行每一个任务
+当任务执行完成后自动执行回调函数
+
+===========node系统模块模块
+let  fs = require('fs');     文件读取 写入  创建文件夹
+1.fs.readFile('文件路径/文件名称',[,'文件编码uft8'],callback(err,doc){ if(err = null ){ } });
+2.fs.writeFile('文件路径/文件名称','数据',callback(err){})
+3.读取全部子文件fs.readdir('./',(error,files)=>{
+  files.forEach((file)=>{
+    console.log(file);
+  });
+});
+path模块  路径拼接    linux   /只能正斜杠
+let path = require('path');  路径读取
+1. path.join('itcast','a','b','c.css');   返回拼接路径
+2.相对路径和绝对路径   更多使用绝对路径
+  相对路径是node命令的工作路径
+  绝对路径__dirname
+===========第三方模块  npm.js  第三方模块的存储和分发
+(1).js文件  api接口          (2)命令行工具形式存在,辅助开发
+1.formidable模块
+npm install formidable
+npm uninstall formidable
+2.nodemon模块    监控文件的保存工作   自动执行文件
+(1).npm install nodemon -g   全局安装
+(2).使用nodemon代替node命令  挂起命令行操作
+3.nrm模块   npm下载地址切换工具   地址在国外   国内下载比较慢
+npm install nrm -g
+nrm ls      查看国内的可用的下载地址
+nrm use  下载地址     切换下载地址
+===========模块化
+common.js
+module对象  导出成员
+module.id  模块的识别符,通常是带有绝对路径的模块文件名
+module.filename  模块定义的文件的绝对路径
+module.parent:   返回一个对象,表示调用该模块的模块
+module.loaded:false,  表示模块是否已经完成加载
+children:[],   返回一个数组 ,表示该模块要调用到的其他模块
+paths:[]
+
+module.exports 表示模块对外输出的值
+var module = { exports: exports }
+var exports = module.exports;   //让exports   和module.exports都可以用
+
+=====================
+定义一个模块  一个js文件就是一个模块
+var path = require('path');
+dirname = path('c:\\users\1.txt'); 
+=====================require加载机制
+require  可以载入js 和 json文件(读取配置)   js > json > node
+
+有路径的情况下require('./find');
+// var find = require('./find');      //当前路径下find.js被执行
+// var find2 = require('./find2');  //find2文件夹下的package.json文件所指最先被执行
+// var find3 = require('./find3');  //find3文件夹下的index.js被执行   不是find3.js
+// var find3 = require('./find4');  //find4.js不会执行  报错
+没有路径下 require('find')   在node_mudules文件夹中找没有一层层向外找  
+// var find = require('find');     // 当前node_modules下find文件夹下的package.json中main所指文件夹被执行了 || express的文件夹/index.js
+// var find = require('find');     // 上一级node_modules下find文件夹下的package.json中main所指文件夹被执行了 || express的文件夹/index.js
+/   加载模块   绝对路径 "c:/users/40410/node/index.js"
+=====================require模块缓存
+有缓存机制
+删除缓存机制:  Object.keys(require.cache).forEach( function(key){ delete require.cache[key]} )  
+
+
+
+
+
+
+

@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		ul {
+			list-style-type: none;
+		}
+		.lava_lamp {
+			position:relative; 
+			width:421px; 
+			height:29px; 
+			padding:15px; 
+			border:1px solid silver;
+		}
+		.lava_lamp li {
+			float:left;
+		}
+		.lava_lamp li a {
+			float:left; 
+			font-weight:bold; 
+			color:#333333; 
+			font-size:14px; 
+			top:8px; 
+			margin:auto 10px; 
+			text-decoration:none; 
+			position:relative; 
+			z-index:3;
+		}
+		.lava_lamp li a:hover {
+			text-decoration:none; 
+			color:#333;
+		}
+		.lava_lamp1 li.back {
+			height: 30px; 
+			border-bottom: 3px solid #34538b; 
+			background-color: #eee;
+			position: absolute; 
+			z-index: 2;
+		}
+		.lava_lamp2 li.back {
+			height: 30px; 
+			border: 1px solid #ddd;
+			background-color: #eee;
+			position: absolute; 
+			z-index: 2;
+		}
+		.lava_lamp3 {
+			background: url(../assets/images/lamp.jpg) no-repeat;
+			border-radius: 20px;
+		}
+		.lava_lamp3 li.back {
+			height: 30px; 
+			border-radius: 10px;
+			background-color: rgba(222,222,222,.5);
+			position: absolute; 
+			z-index: 2;
+		}
+
+		.v_menu_list li {
+			background-color: #aff;
+		}
+		.v_menu_list li:nth-child(odd) {
+			background-color: #eee;
+		}
+		
+	</style>
+</head>
+<body>
+<ul class="lava_lamp lava_lamp1">
+  <li class="current"><a href="#">圣诞节</a></li>
+  <li><a href="#">地震</a></li>
+  <li><a href="#">股市</a></li>
+  <li><a href="#">《十月围城》</a></li>
+  <li><a href="#">无线音乐咪咕汇</a></li>
+</ul>
+
+<ul class="lava_lamp lava_lamp2">
+  <li class="current"><a href="#">圣诞节</a></li>
+  <li><a href="#">地震</a></li>
+  <li><a href="#">股市</a></li>
+  <li><a href="#">《十月围城》</a></li>
+  <li><a href="#">无线音乐咪咕汇</a></li>
+</ul>
+<ul class="lava_lamp lava_lamp3">
+  <li class="current"><a href="#">圣诞节</a></li>
+  <li><a href="#">地震</a></li>
+  <li><a href="#">股市</a></li>
+  <li><a href="#">《十月围城》</a></li>
+  <li><a href="#">无线音乐咪咕汇</a></li>
+</ul>
+
+
+<div class="zxx_v_menu">
+    <div class="click_area" id="menuClick">
+        <a class="v_menu" href="javascript:" hidefocus="true"><span class="rel">垂直导航</span></a>
+        <span class="point_out"><span class="point_in">▼</span></span>
+    </div>
+    <ul class="v_menu_list" id="vMenuList">
+        <li><a href="javascript:">圣诞节</a></li>
+        <li><a href="javascript:">冬至</a></li>
+        <li><a href="javascript:">地震</a></li>
+        <li><a href="javascript:">股市</a></li>
+        <li><a href="javascript:">十月围城</a></li>
+        <li><a href="javascript:">三枪拍案惊奇</a></li>
+        <li><a href="javascript:">蜗居</a></li>
+        <li><a href="javascript:">阿凡达</a></li>
+    </ul>
+</div>
+
+<ul id="news">
+    <li>·<a href="javascript:">二套房贷首付或提至50% 政府拟打压楼市</a></li>
+    <li>·<a href="javascript:">陈云林抵台参加会谈 向绿营抗议者挥手</a></li>
+    <li>·<a href="javascript:">全国猪肉出场价连涨6周 农产品涨价幅度大</a></li>
+    <li>·<a href="javascript:">社会蓝皮书：明年底人均GDP将接近4000美元</a></li>
+    <li>·<a href="javascript:">媒体称中央拟明年推行官员任用提名新制度</a></li>
+    <li>·<a href="javascript:">中法167亿建核电公司 合资造大飞机发动机</a></li>
+</ul>
+
+<ul id="album">
+    <li><a href="javascript:"><img height="191" src="../assets/images/zza/1.jpg" /></a></li>
+    <li><a href="javascript:"><img height="191" src="../assets/images/zza/2.jpg" /></a></li>
+    <li><a href="javascript:"><img height="191" src="../assets/images/zza/3.jpg" /></a></li> 
+</ul>
+
+<div class="fade">
+    <p>1</p><p>2</p><p>3</p><p>4</p><p>5</p><p>6</p><p>7</p><p>8</p><p>9</p>
+</div>
+<div class="fade">
+    <p>a</p><p>b</p><p>c</p><p>d</p><p>e</p><p>f</p><p>g</p><p>h</p><p>i</p>
+</div>
+<div class="box1">中国</div>
+<script type="text/javascript" src="../assets/js/jquery-1.2.6.js"></script>
+<script type="text/javascript" src="../assets/js/jquery-easing.min.js"></script>
+<script type="text/javascript" src="../assets/js/jquery.lavalamp.min.js"></script>
+<script type="text/javascript" src="../assets/js/jquery-innerfade.js"></script>
+<script>
+	console.log($('.box1').offset().top)
+	console.dir(document.querySelector('.box1').offsetTop)
+	$(".lava_lamp1").lavaLamp({
+	    fx: "backout",     //缓动类型
+	    speed: 700,        //缓动时间
+	    click: function(event, menuItem) {
+	        return false;  //单击触发事件
+	    }
+	});
+	$(".lava_lamp2").lavaLamp({
+	    fx: "backout",     //缓动类型
+	    speed: 700,        //缓动时间
+	    click: function(event, menuItem) {
+	        return false;  //单击触发事件
+	    }
+	});	
+	$(".lava_lamp3").lavaLamp({
+	    fx: "backout",     //缓动类型
+	    speed: 700,        //缓动时间
+	    click: function(event, menuItem) {
+	        return false;  //单击触发事件
+	    }
+	});
+	/*jQuery首先做的事情就是在<ul>列表中又添加了一个class为back的li标签，在CSS中，li.back被设置为为绝对定位(position:absolute;z-index:2)，层级小于导航中<a>标签(position:relative;z-index:3)的层级，所有，这里含有背景图片（或背景色或边框）的li.back标签会在文字的下方（<a>标签下方）显示。
+
+	jQuery做的另外一件事情就是控制li.back这个标签层的宽度以及left的位置了，也就是动画效果了。这需要结合easing缓动插件了，如果仅是单纯的移动，easing插件是不需要的，animate函数即可实现。*/
+
+	$(function(){
+	  
+	    $("#menuClick").click(function(){
+	        $("#vMenuList").slideToggle();    
+	        return false;
+	    });
+
+	    // 导航子项hover效果
+	    $(".v_menu_list > li > a").hover(function(){
+	        $(this).animate({
+	            paddingLeft: 20                
+	        },100);                                      
+	    }, function(){
+	        $(this).animate({
+	            paddingLeft: 0                
+	        },50);    
+	    });
+	});
+
+	$(function(){
+	    $("#news").innerfade({
+	        animationtype: "slide",
+	        speed: 750,
+	        timeout: 2000,
+	        type: "random",
+	        containerheight: "1em" 
+	    });
+	    $("#album").innerfade({
+	        speed: "slow",
+	        timeout: 2000,
+	        type: "sequence",
+	        containerheight: "191px" 
+	    });
+	    $(".fade").innerfade({
+	        speed: "slow",
+	        timeout: 1000,
+	        type: "sequence",
+	        containerheight: "1.2em" 
+	    });        
+	});
+</script>
+</body>
+</html>

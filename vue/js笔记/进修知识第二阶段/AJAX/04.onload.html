@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>online</title>
+</head>
+<body>
+<script>
+	
+	var xhr = new XMLHttpRequest()
+	xhr.open('GET','http://localhost/ajax/time.php')
+	xhr.send(null)
+	// xhr.onreadystatechange = function() {
+	// 	console.log(this.readyState)
+	// } 
+	// onload  是 html5中提供 XMLHttpRequest  version 2.0定义的   注意兼容问题
+	xhr.onload =function() {
+		
+		console.log(this.readyState) //4
+		console.log(this.responseText) //
+	}
+</script>
+</body>
+</html>

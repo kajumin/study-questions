@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.box1 {
+			position: relative;
+		}
+		.box1 img {
+			display: block;
+		}
+		.box1 h2::first-letter {
+    		color: #cd0000;
+		}
+		.box1 h2 {
+			position: absolute;
+			top: 150px;
+			left: 0;
+			color: #ccc;
+			mix-blend-mode: screen;
+			mix-blend-mode: multiply;
+			mix-blend-mode: lighten;
+			mix-blend-mode: darken;
+			mix-blend-mode: color;
+		}
+	</style>
+</head>
+<body>
+	<!--
+	 mix-blend-mode: 默认情况下是会混合所有比起层叠顺序低的元素的,
+	    可以试试使用CSS3 isolation:isolate 进行隔离
+	-->
+
+<div class="box1">
+	<h2>请选择下面各个mix-blend-mode属性值：</h2>
+	<img src="../../css-world/images/mix-blend-mode.jpg">
+</div>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<script type="text/javascript">
+	const getJSON = function(url) {
+		  
+		 return new Promise(function(resolve, reject){
+		    
+		    const xhr = new XMLHttpRequest();
+		    xhr.open("GET", url);
+		    xhr.onreadystatechange = handler;
+		    xhr.responseType = "json";
+		    xhr.setRequestHeader("Accept", "application/json");
+		    xhr.send();
+		    const handler = function() {
+		      if (this.readyState !== 4) {
+		        return;
+		      }
+		      if (this.status === 200) {
+		        resolve(this.response);
+		      } else {
+		        reject(new Error(this.statusText));
+		      }
+		    };
+
+		});
+
+	};
+
+	getJSON("/posts.json").then(function(json) {
+	  console.log('Contents: ' + json);
+	}, function(error) {
+	  console.error('出错了', error);
+	});
+</script>
+</body>
+</html>

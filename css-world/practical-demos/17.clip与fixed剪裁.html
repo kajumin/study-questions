@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.box1 {
+			width: 1000px;
+			margin: 0 auto;
+		}
+		.fixed {
+			position: fixed;
+			clip: rect(20px 40px 80px 20px);
+			right: 40px;
+			bottom: 100px;
+		}
+		.fixed img {
+			display: block;
+			width: 40px;
+			height: 40px;
+			margin: 10px;
+		}
+	</style>
+</head>
+<body>
+	<!-- 
+	1.fix固定定位的剪裁
+	2.最佳可访问性隐藏
+
+	 -->
+	<div class="box1" style="height: 5000px;background-color: #eee;"></div>
+    <div class="fixed">
+        <span class="follow">
+            <img src="../images/circle.jpg">
+            <img src="../images/top.jpg">
+        </span>
+    </div>
+</body>
+</html>

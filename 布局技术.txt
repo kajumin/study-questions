@@ -1,0 +1,74 @@
+两栏布局: 
+(1)浮动定宽 + margin-left: 200px;
+(2)浮动定宽 + overflow: hidden;
+(3)flex布局  flex: 1;
+(4)display: table;元素包裹，左右元素设置为display: table-cell;
+(5)left浮动定宽 right: display: table-cell;
+
+================
+三栏布局:
+(1)浮动定宽 + margin: 0 200px;
+(2)浮动定宽 + overflow:hidden;
+(3)display: flex; flex: 1; 
+(4)双飞翼 中左右(浮动)  margin: 0 200px;
+(5)圣杯  中左右(浮动)  padding: 0 200px;  position: relative;
+
+4列: 
+浮动  + width: 25%;
+
+=========================
+内联元素: text-align: center;
+块级元素: margin: auto;
+
+定宽高垂直水平居中:
+(1)absolute top  left margin-left margin-top   IE6+
+(2)absolute + top | left: calc(50% - 50px)   IE9+
+(3)absolute(top, bottom, left, right) + margin: auto;  IE8+
+
+不定宽高垂直水平居中:
+1.absolute + transform
+2.1 父: text-align:center; 
+     子: inline-block; vertical-align: middle; 
+     辅助元素(伪元素): height = 父高度; inline-block; vertical-align: middle;
+	
+2.2 父: line-height: height高度; text-align: center; 
+     子: inline-block; vertical-align:middle; 重置行高line-height: 20px; 
+	
+3.父: table; text-align: center; 
+   子: table-cell; vertical: middle;
+	
+4.父: table-cell; text-align: center; vertical-align: middle; 
+   子: inline-block 可以不用
+	
+5.flex  IE10+
+  父: diplay:flex; justify-content:center; align-items:center;
+
+6.父: grid IE10+
+   子: align-self: center; justify-self: center;
+
+==============等高布局
+(1)margin负值  padding正值/border正值    兼容性好
+(2)左border-left   右: overflow    不能用overflow清除浮动
+    左边比较高时, 子元素撑高父元素
+    右边比较高时, 左边因为因为浮动元素也计算高度而变高
+        左边用border-left颜色
+        右边用父元素背景色
+(3)table-cell    天生等高 
+    左右都是table-cell   右边width: 9999px;设置很大 
+
+==================水平居中
+1.块级元素 margin: 0 auto;
+   absolute left right margin auto
+   float 父元素text-align: center;  多包裹一层元素 display: inline-block;
+
+2.内联元素 text-align: center;  包括块级中文字
+	
+3.内联块级元素 text-align: center;
+	
+4.按钮 text-align: center;
+
+5.display: inline-block;元素  text-align: center;
+
+
+
+

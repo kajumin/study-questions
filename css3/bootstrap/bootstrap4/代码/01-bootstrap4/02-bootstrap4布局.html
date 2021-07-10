@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!--样式-->
+    <link rel="stylesheet" href="lib/css/bootstrap.css">
+    <title></title>
+    <style>
+        /*超小屏幕*/
+        @media (max-width: 575px) {
+            .container-self{
+                background-color: red;
+                width: 100%;
+            }
+        }
+
+        /*小屏幕*/
+        @media (min-width: 576px) and (max-width: 767px){
+            .container-self{
+                background-color: green;
+                width: 540px;
+            }
+        }
+
+        /*中等屏幕*/
+        @media (min-width: 768px) and (max-width: 991px){
+            .container-self{
+                background-color: blue;
+                width: 720px;
+            }
+        }
+
+        /*大屏幕*/
+        @media (min-width: 992px) and (max-width: 1199px){
+            .container-self{
+                background-color: purple;
+                width: 960px;
+            }
+        }
+
+        /*超大屏幕*/
+        @media (min-width: 1200px){
+            .container-self{
+                background-color: goldenrod;
+                width: 1140px;
+            }
+        }
+    </style>
+</head>
+<body>
+   <div class="container" style="background-color: red; height: 100px">流式容器</div>
+   <div class="container-fluid" style="background-color: red; height: 100px;margin-top: 100px;margin-bottom: 100px;">固定宽度的容器</div>
+
+   <div class="container-self" style="height: 100px; margin: 0 auto;">自定义容器</div>
+<script src="lib/js/jquery-3.3.1.js"></script>
+<script src="lib/js/popper.js"></script>
+<script src="lib/js/bootstrap.js"></script>
+</body>
+</html>

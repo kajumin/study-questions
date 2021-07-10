@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		ul,body{
+			margin: 0;
+			padding: 0;
+			list-style-type: none;
+		}
+		a {
+			color: #333;
+			text-decoration: none;
+		}
+		.nav {
+			width: 500px;
+			margin: 0 auto;
+		}
+		.nav > li {
+			position: relative;
+			float: left;
+			padding: 0 20px;
+			border-right: 1px solid red;
+			line-height: 40px;
+			background-color: #f1f1f1;
+		}
+		.nav > li > a {
+			display: block;
+		}
+		.sub-nav {
+			position: absolute;
+			width:100%;
+			left: 0;
+			transform: scaleY(0);
+			transform-origin: top center;
+			transition: transform 0.5s;
+			padding-right: 25px;
+			background-color: #f1f1f1;
+		}
+		.nav > li:hover  ul{
+			transform: scaleY(1);
+		}
+		.nav > li:hover  +li{
+			background-color: red;
+		}
+		
+
+	</style>
+</head>
+<body>
+<ul class="nav">
+	<li>
+		<a href="">前端</a>
+		<ul class="sub-nav">
+			<li>html</li>
+			<li>css</li>
+			<li>js</li>
+		</ul>
+	</li>
+	<li><a href="">java</a>
+		<ul class="sub-nav">
+			<li>html</li>
+			<li>css</li>
+			<li>js</li>
+		</ul>
+	</li>
+	<li><a href="">php</a>
+		<ul class="sub-nav">
+			<li>html</li>
+			<li>css</li>
+			<li>js</li>
+		</ul>
+	</li>
+	<li><a href="">python</a>
+		<ul class="sub-nav">
+			<li>html</li>
+			<li>css</li>
+			<li>js</li>
+		</ul>
+	</li>
+	<li><a href="">网络工程</a>
+		<ul class="sub-nav">
+			<li>html</li>
+			<li>css</li>
+			<li>js</li>
+		</ul>
+	</li>
+
+</ul>
+</body>
+</html>

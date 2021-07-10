@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.box1 {
+		  width: 150px;
+		  background-color: #cd0000;
+		  color: #fff;
+		  font-size: 14px;
+		  white-space: nowrap;
+		}
+		.box2 {
+			width: 150px;
+		}
+		/*兼容ie*/
+		wbr:after { 
+			content: '\00200B'; 
+		}
+	</style>
+</head>
+<body>
+<!-- 
+如果是非连续英文字符，<wbr>需要与white-space:nowrap;配合使用才有意义。
+	
+
+<wbr>不能与word-break: break-all同时使用，也会变得没有意义。
+	表示有机会就断开换行
+-->
+<!-- 针对连续英文单词
+1.连续英文单词默认是不换行的 
+2.word-break 和 word-wrap 都没有好的效果
+-->
+<p>默认效果</p>
+<div style="width:150px; background:#cd0000;">
+  CanvasRenderingContext2D.globalCompositeOperation
+</div>
+<p>word-break: break-all;</p>
+<div style="width:150px; background:#cd0000;word-break: break-all;">
+  CanvasRenderingContext2D.globalCompositeOperation
+</div>
+<p>word-wrap: break-word;</p>
+<div style="width:150px; background:#cd0000;word-wrap: break-word;">
+  CanvasRenderingContext2D.globalCompositeOperation
+</div>
+<p>wbr</p>
+<div style="width:150px; background:#cd0000;">
+  Canvas<wbr>Rendering<wbr>Context2D<wbr>.global<wbr>Composite<wbr>Operation
+</div>
+<div style="width:150px; background:#cd0000;">
+  i <wbr>love<wbr> you<wbr> so<wbr> mach<wbr> i <wbr>love<wbr> you<wbr> so<wbr> mach<wbr> Operation
+</div>
+<div style="width:150px; background:#cd0000;">
+  中丰富哦 <wbr>中丰富哦<wbr> 中丰富哦<wbr> 中丰富哦<wbr> 中丰富哦<wbr> 中丰富哦<wbr> 中丰富哦<wbr>
+</div>
+
+<div id="box1" class="box1"></div>
+
+<script type="text/javascript">
+
+	String.prototype.urlWbr = function () {
+	  return this.replace(/http(?:s)?:\/\/(.*)\//gi, function (matchs, $1) {
+	    return matchs.replace($1, $1.replace(/(\/|\.)/g, '<wbr>$1'));
+	  });
+	};
+
+	document.querySelector('.box1').innerHTML = '本文地址是https://www.zhangxinxu.com/wordpress/2018/09/html-wbr-word-break/'.urlWbr();
+</script>
+</body>
+</html>

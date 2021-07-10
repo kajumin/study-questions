@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		input[type=radio] {
+			position: absolute;
+			clip: rect(0 0 0 0);
+		}
+		label {
+			display: inline-block;
+			padding: 0 8px;
+			line-height: 30px;
+			border: 1px solid transparent;
+			border-radius: 16px;
+			background-color: #f1f1f1;
+			color: #333;
+		}
+		input:checked + label {
+			color: #cd0000;
+			border-color: currentColor;
+			background-color: rgba(200, 0, 0, 0.2);
+		}
+	</style>
+</head>
+<body>
+<div class="box1">
+	<input type="radio" name="colors" value="1" id="color1">
+	<label for="color1">天空之境</label>
+	<input type="radio" name="colors" value="2" id="color2">
+	<label for="color2">亮黑色</label>
+	<input type="radio" name="colors" value="3" id="color3">
+	<label for="color3">珠光贝母</label>
+</div>
+</body>
+</html>

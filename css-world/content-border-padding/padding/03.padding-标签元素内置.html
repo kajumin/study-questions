@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		ul,
+		ol {
+			/*margin: 0;*/
+			padding-left: 22px;
+			font-size: 14px;
+		}
+		.box1 > button {
+			line-height: 20px;
+			padding: 10px;
+			border: none;
+		}
+		.box2 {
+			background-color: red;
+		}
+		.box2 > button {
+			position: relative;
+			padding: 0;
+			border: none;
+			clip: rect(0,0,0,0);
+		}
+		.box2 > label {
+			display: inline-block;
+			line-height: 20px;
+			padding: 10px;
+			margin-left: -3px;
+			background-color: #ccc;
+			cursor: pointer;
+		}
+	</style>
+</head>
+<body>
+	<!-- 
+	1.ul/ol  padding-left: 40px; 
+	  经验: font-size: 12px~14px 设置: padding-left: 22px;
+	  更好则使用content计数器
+	2. ul/ol padding-left: 40px; margin: 0 16px;
+	   input(1px 2px) textarea(2px) 都有内置padding
+	   input-button(1px 6px)  button(1px 6px)
+	   select => option(0 2px)
+	3.button难以控制, 使用a标签代替
+	  button有交互功能的话使用input + label模拟
+	 -->
+<ul>
+	<li>123</li>
+	<li>456</li>
+</ul>
+<ol>
+	<li>123</li>
+	<li>456</li>
+</ol>
+
+<form>
+	<input type="text" name="">
+	<textarea></textarea>
+	<select>
+		<option>选择</option>
+	</select>
+	<input type="button" name="" value="按钮">
+	<button>按钮</button>
+	<input type="radio" name="">
+	<input type="checkbox" name="">
+</form>
+<div class="box1">
+	<button>按钮</button>
+</div>
+<form>
+	<div class="box2">
+		<button id="btn"></button>
+		<label for="btn">按钮</label>
+	</div>
+</form>
+
+</body>
+</html>

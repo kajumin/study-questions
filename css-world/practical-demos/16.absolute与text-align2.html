@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.container {
+			width: 1000px;
+			margin: 0 auto;
+		}
+		.fixed {
+			position: fixed;
+			right: 40px;
+			bottom: 100px;
+		}
+		.fixed img {
+			display: block;
+			width: 40px;
+			height: 40px;
+			margin: 10px;
+		}
+	</style>
+</head>
+<body>
+	<!-- absolute与text-align相互作用  幽灵空白节点 -->
+	<!-- 
+		1.水平居中对齐 必须是内联元素
+		2.返回顶部或者反馈 
+	-->
+	<div class="container" style="height: 5000px;background-color: #eee;"></div>
+    <div class="fixed">
+        <span class="follow">
+            <img src="../images/circle.jpg">
+            <img src="../images/top.jpg">
+        </span>
+    </div>
+
+
+</body>
+</html>

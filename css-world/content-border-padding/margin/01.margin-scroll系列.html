@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		body {
+			margin: 0;
+		}
+		.box1 {
+			height: 100px;
+			padding: 16px;
+			border: 12px solid pink;
+			overflow: hidden;
+		}
+		.box1 .son1 {
+			width: 300px;
+			height: 300px;
+			padding: 15px;
+			border: 11px solid #096;
+		}
+
+		.box2 {
+			height: 100px;
+			padding: 16px;
+			border: 12px solid pink;
+			overflow: scroll;
+		}
+		.box2 .son2 {
+			width: 300px;
+			height: 300px;
+			padding: 15px;
+			border: 11px solid #096;
+		}
+	</style>
+</head>
+<body>
+<!-- 
+1.元素尺寸 offsetWidth => outerWidth  => content+padding+border
+  元素内部尺寸 clientWidth => innerWidth => content+padding - 滚动条宽度
+  元素外部尺寸 没有原生 => outerWidth(true)   => content+padding+border+margin
+ -->
+<div class="box1">
+	<div class="son1"></div>
+</div>
+
+<div class="box2">
+	<div class="son2"></div>
+</div>
+
+ <div style="height: 1000px;background-color: red;"></div>
+
+<script type="text/javascript">
+	// client系列: clientWidth clientLeft
+ 	var box1  = document.querySelector('.box1')
+
+ 	console.log(box1.scrollTop) //0
+ 	console.log(box1.scrollWidth) //1308
+ 	console.log(box1.scrollHeight) //384
+
+ 	var box2  = document.querySelector('.box2')
+
+ 	console.log(box2.scrollTop) //0
+ 	console.log(box2.scrollWidth) //1308
+ 	console.log(box2.scrollHeight) //384
+</script>
+</body>
+</html>

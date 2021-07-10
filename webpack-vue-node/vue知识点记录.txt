@@ -1,0 +1,56 @@
+1.style class都有对象和数组的表达方式
+2.赋值  数组length arr[0] 不会触发视图和钩子函数   Vue.set    vm.$set=this.$set    splice(0,1,'orange')可以
+   // this.obj.e = 1;//不能响应式
+   this.$set(this.obj,'e',1); //让e支持响应式   或者 vm.$set  或者 Vue.$set
+   数组方法: push  pop shift unshift splice sort reverse   可以触发视图更新
+3.监听父生命周期钩子函数绑定监听事件  this.$emit触发事件   @hook:created = ""
+4.v-model
+selectValue: '', //select  value为主
+love: '',  //radio  value为主
+food: [],  //checkbox  value为主
+text: '',  //textarea  
+修饰符: number  trim lazy(change事件才触发 失去焦点回车)
+@submit.prevent="onSubmit"   //阻止默认事件
+
+5.父子通信  子不要直接修改父传递过来的数据   应用类型可以改 基本类型会报错
+(1)this.$refs 可以获取子组件元素  数据 事件
+
+6.postFontSize += $event   $event指向第一个参数  arguments[0]也可以获取到  触发事件传递的参数
+
+7.<component  v-bind:is="currentTabComponent" class="tab"></component>  动态组件
+
+8.props  
+type  required default validator
+=====type
+Number类型  必须要使用数据绑定
+//自定义检验
+ validator: function (value) {
+// 这个值必须匹配下列字符串中的一个
+ return ['success', 'warning', 'danger'].indexOf(value) !== -1
+}
+
+
+9.extend   transition待学
+
+10.修饰符
+====event事件修饰符
+self点击到该元素才触发
+prevent   阻止默认事件  
+stop   阻止冒泡
+once  只能触发一次
+
+====keyup键盘修饰符
+// .enter
+// .tab
+// .delete (捕获“删除”和“退格”键)
+// .esc
+// .space
+// .up
+// .down
+// .left
+// .right
+
+=====鼠标修饰符
+.left
+.middle
+.right

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<!-- 
+// 函数调用会在内存形成一个调用记录, 又称调用帧, 保存调用位置和内部变量等信息, 如果在函数A的内部调用函数B, 那么A的调用帧上会形成一个B的调用帧, 等到B运行结束, 将结果返回到A, B的调用帧才会结束, 如果函数B的内部调用C, 那就还有一个C的调用帧
+
+// 尾调用由于是函数的最后一步, 所以不需要保留外层函数的调用帧, 直接用内层函数的调用帧取代外部函数的调用帧
+
+// 函数调用自身称为递归, 如果尾调用自身就称为尾递归 
+-->
+<script type="text/javascript">
+	function factorial(n) {
+		if(n === 1) return 1;
+		return n * factorial(n - 1); 
+	}
+	console.log(factorial(5))
+
+
+	function factorial2(n, total) {
+		if(n === 1) return total;
+		return factorial2(n - 1, n * total); 
+	}
+	console.log(factorial2(10, 1))
+
+	// 传递两个参数 难看 所以要改写
+	// 方法一 提供一个正常函数
+	function tailFactorial(n, total) {
+		if(n === 1) return total;
+		return tailFactorial(n - 1, n * total);
+	}
+	function factorial3 (n) {
+		return tailFactorial(n, 1)
+	}
+	console.log(factorial3(5))
+
+	// 方法二 使用柯里化函数
+	function currying (fn, n) {
+		return function (m) {
+			return fn.call(this, m, n)
+		}
+	}
+	function tailFactorial2(n, total) {
+		if(n === 1) return total;
+		return tailFactorial2(n - 1, n * total);
+	}
+	var factorial4 = currying(tailFactorial2, 1)
+	console.log(factorial4(5))
+
+	// 方法三 使用默认参数
+	function factorial5(n, total = 1) {
+		if(n === 1) return total;
+		return factorial2(n - 1, n * total); 
+	}
+	console.log(factorial5(5))
+
+
+	// 在正常模式下函数内有两个变量, 可以跟踪函数的调用栈
+	// func.arguments 返回调用时函数的参数
+	// func.caller 返回调用当前函数的那个函数
+
+	function fun1 () {
+		// "use strict"
+		// 报错
+		// Uncaught TypeError: 'caller', 'callee', and 'arguments' properties may not be accessed on strict mode functions or the arguments objects for calls to them
+		function inner () {
+			console.log(inner.caller)
+			console.log(inner.arguments)
+		}
+		inner()	
+	}
+	fun1()
+
+	
+	// 蹦床函数
+	function sum(x, y) {
+		if(y > 0) {
+			return sum(x + 1, y - 1);
+		} else {
+			return x;
+		}
+	}
+	// console.log(sum(100))
+	function trampoline (f) {
+		while (f && f instanceof Function) {
+			f = f();
+		}
+		return f;
+	}
+	// 然后要做的是原来的递归改写为每一步返回另一个函数
+	function sum2(x, y) {
+		if(y > 0) {
+			return sum2.bind(null, x + 1, y - 1);
+		} else {
+			return x;
+		}
+	}
+	console.log(trampoline(sum2(1, 1000000)))
+
+	// 尾递归优化
+	function tco(f) {
+		var value;
+		var active = false;
+		var accumulated = [];
+
+		return function accumulator () {
+			accumulated.push(arguments)
+			if(!active) {
+				active = true;
+				while(accumulated.length) {
+					value = f.apply(this, accumulated.shift());
+				}
+				active = false
+				return value
+			}
+		}
+	}
+
+	var sum3 = tco(function(x, y) {
+		if(y > 0) {
+			return sum3(x + 1, y - 1);
+		} else {
+			return x;
+		}
+	})
+	console.log(sum3(1, 1000000)) 
+</script>
+</body>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<!-- 
+		typeof -> object
+		toString()  -> [object RegExp]
+		
+		修饰符: i不区别大小写 sdotall模式, .代表任意字符) g全局方法
+
+		字符集: 
+		\d \D 数字  非数字
+		\w \W 字母 数字 _ 非字母 数字 _
+		\s \S 空格 非空格
+		\b \B 单词边界 非单词边界
+
+		量词: 
+		{m} 正好次数
+		{m,} m及以上
+		{m,n} m-n次
+		+ 1次以上
+		* 任意次数
+		? 0次或者1次
+
+		| 或
+		[] 字符集 或
+		[^] 排除
+		^ 开头
+		$ 结尾
+		\ 转义 \t制表 \n换行 \r回车
+		. 任意非空格字符 s修饰符可以代表任意字符
+
+	-->
+<script type="text/javascript">
+	var reg = new RegExp('abc', 'i')
+	var reg2 = new RegExp(/abc/i)
+	var reg3 = /abc/i
+	console.log(reg.test('aBc'))
+	console.log(reg2.test('aBc'))
+	console.log(reg3.test('aBc'))
+
+	console.log(typeof reg) //object
+	console.log(typeof reg2) //object
+	console.log(typeof reg3) //object
+	console.log(Object.prototype.toString.call(reg)) //[object RegExp]
+	console.log(Object.prototype.toString.call(reg2)) //[object RegExp]
+	console.log(Object.prototype.toString.call(reg3)) //[object RegExp]
+
+	console.log(/[\u4e00-\u9fa5]/.test('中')) ///true 中文
+
+	console.log('转译字符\\:')
+	console.log(/\&/.test('&'))
+
+	console.log('.代表任意字符:')
+	console.log(/./.test('\r')) //回车符
+	console.log(/./.test('\n')) //换行符
+
+	console.log(/./s.test('\r')) //true
+	console.log(/./s.test('\n')) //true
+
+	console.log(/hello\b/.test('hello world')) //true
+	console.log(/hello\B/.test('hello world')) //false
+
+	console.log(' a bc '.replace(/^\s+|\s+$/g, '').length)
+
+	// 正则方法: test exec 用于字符串匹配，返回数组  没有全局方法g
+	console.log(/(ab)(ad)/.exec('abadabc'))
+
+	// 字符串使用正则: search split 没有全局 match replace
+
+	console.log('abcd'.search(/cd/)) //2
+	console.log('abcd'.search(/e/)) //-1
+
+	console.log('abcd'.split(/b/))
+
+	console.log('abcdef'.match(/(ab)(c)(d)e(f)/))
+	console.log(/(ab)(c)(d)e(f)/.exec('abcdef'))
+
+	console.log('xyyxyy'.match(/y+/g)) //['yy','yy']
+</script>
+</body>
+</html>

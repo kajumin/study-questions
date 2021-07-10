@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.box {
+			border: 1px solid red;
+			margin-top: 20px;
+		}
+		.box > img{
+			width: 100px;
+			height: 50px;
+		}
+		.box2 > img{
+			display: block;
+		}
+		.box3 {
+			line-height: 0;
+		}
+		.box4 {
+			font-size: 0;
+			line-height: 20px;
+		}
+		.box5 > img{
+			vertical-align: top;
+		}
+		.box6 {
+			overflow: hidden;
+		}
+		.box6 > img {
+			float: left;
+		}
+		
+	</style>
+</head>
+<body>
+	<!-- 
+	1.display: block;
+	2.line-height: 0;
+	3.font-size: 0;
+	4.vertical-align: top;
+	5.float: left;
+	 -->
+<div class="box box1">
+	<img src="../../images/1.jpg">
+</div>
+<p>(1)display: block;</p>
+<div class="box box2">
+	x<img src="../../images/1.jpg">
+</div>
+<p>(2)line-height: 0;</p>
+<div class="box box3">
+	x<img src="../../images/1.jpg">
+</div>
+<p>(3)font-size: 0;</p>
+<div class="box box4">
+	x<img src="../../images/1.jpg">
+</div>
+<p>(4)vertical-align: top;</p>
+<div class="box box5">
+	x<img src="../../images/1.jpg">
+</div>
+<p>(5)float:left;</p>
+<div class="box box6">
+	<img src="../../images/1.jpg">
+</div>
+</body>
+</html>

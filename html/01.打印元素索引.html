@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title></title>
+  </head>
+  <body>
+    <!-- 
+    打印元素索引:
+    (1)给元素增加一个属性保存索引
+    (2)闭包
+    (3)let
+   -->
+    <a href="#1">a1</a>
+    <a href="#1">a2</a>
+    <a href="#1">a3</a>
+    <a href="#1">a4</a>
+    <a href="#1">a5</a>
+
+    <script>
+      var a = document.querySelectorAll("a")
+      for (var i = 0, len = a.length; i < len; i++) {
+        a[i].onclick = (function (i) {
+          return function () {
+            console.log(i)
+          }
+        })(i)
+      }
+
+      // for(let i = 0, len = a.length; i < len; i++) {
+      //     a[i].onclick = function() {
+      //       console.log(i);
+      //     }
+      // }
+
+      // for(let i = 0, len = a.length; i < len; i++) {
+      //     a[i].index = i
+      //     a[i].onclick = function() {
+      //       console.log(this.index);
+      //     }
+      // }
+    </script>
+  </body>
+</html>

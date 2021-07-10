@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		body {
+			/*margin: 0;*/
+		}
+		.box {
+			width: 100px;
+			height: 100px;
+			margin-bottom: 20px;
+			background-color: red;
+			overflow: hidden;
+		}
+		.box1 {
+			visibility: hidden;
+		}	
+		.box1 > div:first-child {
+			visibility: visible;
+		}
+		.box2 {
+			counter-reset: wangxiaoer 0;
+		}
+		.box2 > div:before {
+			counter-increment: wangxiaoer;
+			content: counter(wangxiaoer);
+		}
+		.box2 > div:nth-child(2) {
+			visibility: hidden;
+		}	
+		.box3-1 > p {
+			display: none;
+			opacity: 0;
+			transition: opacity 1s;
+		}
+		.box3-1:hover > p {
+			display: block;
+			opacity: 1;
+		}
+		.box3-2 > p {
+			visibility: hidden;
+			opacity: 0;
+			transition: opacity 1s;
+		}
+		.box3-2:hover > p {
+			visibility: visible;
+			opacity: 1;
+		}
+		.list {
+			position: absolute;
+			visibility: hidden;
+			padding: 2px 10px;
+			background-color: #eee;
+		}
+		.list a {
+			display: block;
+		}
+		td:hover .list {
+			visibility: visible;
+			transition: visibility 0s .3s;
+		}
+		.box4 {
+			position: relative;
+		}
+		.box4 .son {
+			position: absolute;
+			width: 100px;
+			height: 100px;
+			top: 7px;
+			left: 7px;
+			padding: 15px;
+			border: 11px solid #eee;
+			background-color: red;
+		}
+	
+	</style>
+</head>
+<body>
+	<!-- 
+	1.继承性
+	3.visibility与transition  配合opacity使用
+	  hover延迟执行 避免不经意触碰导致覆盖目标元素
+	 -->
+<div class="box box1">
+	<div>中国1</div>
+	<div>中国2</div>
+</div>
+<div class="box box2">
+	<div>中国1</div>
+	<div>中国2</div>
+	<div>中国3</div>
+</div>
+<div class="box box3-1">
+	<p>中国</p>
+</div>
+
+<div class="box box3-2">
+	<p>中国</p>
+</div>
+
+<div class="box3-3">
+	<table>
+		<tr>
+			<td>栏目1</td>
+			<td>栏目2</td>
+			<td>
+				<a href="#">操作</a>
+				<div class="list">
+					<a href="#">编辑</a>
+					<a href="#">删除</a>
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td>栏目1</td>
+			<td>栏目2</td>
+			<td>
+				<a href="#">操作</a>
+				<div class="list">
+					<a href="#">编辑</a>
+					<a href="#">删除</a>
+				</div>
+			</td>
+		</tr>
+	</table>
+</div>
+
+<div class="box4">
+	<div class="son"></div>
+</div>
+
+<div class="box5" style="width: 100px;height: 100px;margin-top: 200px;overflow:auto;background-color: red;">
+	<div class="son" style="height: 400px;background-color: #eee;">
+		中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国
+	</div>
+</div>
+<div style="height: 1000px;background-color: red;"></div>
+<script type="text/javascript">
+
+	var box31 = document.querySelector('.box3-1 > p')
+	console.log('clientWidth', box31.clientWidth)
+	console.log('clientHeight', box31.clientHeight)
+	console.log('clientLeft', box31.clientLeft)
+	console.log('clientTop', box31.clientTop)
+	console.log(box31.getBoundingClientRect())
+
+	var box32 = document.querySelector('.box3-2 > p')
+	console.log('clientWidth', box32.clientWidth)
+	console.log('clientHeight', box32.clientHeight)
+	console.log('clientLeft', box32.clientLeft)
+	console.log('clientTop', box32.clientTop)
+	console.log(box32.getBoundingClientRect())
+
+	// getBoundingClientRect()返回元素的大小及其相对于视口的位置。
+	var box4 = document.querySelector('.box4 > .son')
+	console.log(box4.getBoundingClientRect())
+	console.log(box4.getClientRects()) //是一个集合
+	// width = 100 + 15 * 2 + 11 * 2
+	// height = 100 + 15 * 2 + 11 * 2
+	// left  = 7 距离视觉窗口左边的距离
+	// right  = 152 = 7 + 152 距离视觉窗口左边的距离
+	// top  = 165 =  距离视觉窗口上边的距离
+	// bottom  = 317 = 165 + 152 距离视觉窗口上边的距离
+
+	var box5 = document.querySelector('.box5')
+	box5.scrollTo({
+		top: 100
+	})
+	window.scrollTo({ 
+   	 	top: 100, 
+   	 	left: 0,
+    	behavior: "smooth" //instant
+	});
+</script>
+</body>
+</html>

@@ -1,0 +1,221 @@
+   1.盒模型?
+    标准盒子模型：宽度 = 内容的宽度（content）+ border + padding + margin
+    低版本IE盒子模型：宽度 = 内容宽度（content+border+padding）+ margin   
+
+    2.box-sizing属性？
+       用来控制元素的盒子模型的解析模式, 默认为content-box
+    context-box：W3C的标准盒子模型，设置元素的 height/width 属性指的是content部分的高/宽
+    border-box：IE传统盒子模型。设置元素的height/width属性指的是border + padding + content部分的高/宽
+
+    3.css选择器? 哪些属性可以继承, 哪些属性不可以继承?
+        id 类 标签 兄弟 相邻兄弟 后代 相邻后代 通配符 属性 伪类 伪元素
+         优先级: !import > 内联样式 > id > class > 标签 > 继承 
+    可继承的属性：font-size, font-family, color
+    不可继承的样式：border, padding, margin, width, height 
+       
+    4.选择器优先级? 
+    标签选择符： 1
+    class选择符： 10
+    id选择符：100
+    内联样式：1000
+
+    1.!important声明的样式优先级最高，如果冲突再进行计算
+    2.如果优先级相同，则选择最后出现的样式
+    3.继承得到的样式的优先级最低
+
+    5.css3新增伪类选择器?
+    first-child  选择其父元素的首个元素
+    last-child
+    nth-child
+    nth-of-type
+    :enabled :disabled
+    :checked
+
+    6.居中div 浮动元素 绝对定位元素
+    div: margin: 0 auto;
+    浮动元素: 外包裹一层元素inline-block text-align: center;(存在下间隙问题) 
+             或者使用absolute
+    绝对定位元素: left right bottom top:0; margin: auto;
+
+    7.display有哪些值?
+      block
+      list-item 项目列表
+      table 表格
+      inline 内联元素
+      inline-block 内联块级元素
+      inline-table
+
+    8.position的值?
+      static: 按照正常文档流进行排列
+      relative: 相对定位, 保留原来位置
+      absolute: 绝对定位, 不保留原来位置, 脱离文档流, 最近不为static的父级元素
+      fixed: 固定定位, html根元素(可视窗口)
+
+    9.css3新增?
+      tansition
+      animation
+      transform 2d 3d
+      阴影 文字阴影
+      边框背景 边框圆角
+      背景size clip origin
+      文字阴影 单行省略号 多行省略号
+      颜色 rgba hsla
+      flex
+      grid
+      多列布局
+      媒体查询
+      混合模式 mix-blend-mode background-blend-mode
+       opacity
+
+    10.flex布局? IE10+  移动端适用
+    该布局模型的目的是提供一种更加高效的方式来对容器中的条目
+       进行布局、对齐和分配空间
+
+    11.三角形
+
+    12.品字实现?
+     (1)上面那个margin: 0 auto;居中
+     下面两个display: inline-block;或者float不换行
+     (2)整屏的也差不多
+
+    13.ie的hack?
+    _ ie6
+    * + ie67
+    \9 ie11以下 区分ie89
+    \0 ie8-ie11 区分ie11
+
+    1.不同浏览器的标签默认值不同
+    2.IE6双边距bug 浮动元素 左右有margin 出现双倍 display: inline
+    3.iehack
+    4.较小的高度值(一般小于10px) ie67 超出自己设置高度 overflow:hidden;
+    5.Chrome 中文界面下默认会将小于 12px 的文本强制按照 12px 显示
+    6.解决方法是改变CSS属性的排列顺序:L-V-H-A 
+
+    14.初始化css
+
+    15.absolute的containing block计算方式跟正常流有什么不同？
+      计算和百分比 padding-box
+      正常流是content-box
+
+    17.display:none与visibility：hidden的区别？
+       (1)占据位置
+       (2)重绘与回流
+       (3)与transition
+       (4)计数器counter 忽略 任然有效
+       (5)尺寸和位置信息获取
+       (6)继承性 子元素可以显示出来
+    
+    18. float absolute overflow一起使用
+
+    19.
+    BFC是页面上的一个隔离的独立容器, 
+    容器里面的子元素不会影响到外面的元素.
+
+    (1)清除浮动
+    (2)自适应布局
+    (3)解决margin合并
+
+    20.为什么会出现浮动和什么时候需要清除浮动？清除浮动的方式？
+    (1)height
+    (2)空元素
+    (3)clear: both;伪元素
+    (4)bfc
+
+    22.margin重叠问题
+
+    22.浮动元素display: block;
+
+    23.媒体查询
+       通过媒体查询可以为不同大小和尺寸的媒体定义不同的css，适应相应的设备的显示。
+
+    24.使用CSS预处理器吗？less stylus scss
+
+    25.CSS优化、提高性能的方法有哪些？
+       避免使用后代
+       避免使用!important
+       避免链式选择器
+       避免不必要的命名空间
+
+       最好使用语义的名字
+       精简规则  三个左右
+
+    26.浏览器是怎样解析CSS选择器的？
+       css树
+       从右到左
+
+    27.使用偶数字体
+      Windows 自带的点阵宋体（中易宋体）
+      从 Vista 开始只提供 12、14、16 px 这三个大小的点阵
+
+    28.margin 和 padding的使用场景
+
+    29.元素竖向的百分比设定是相对于容器的高度吗？
+      当按百分比设定一个元素的宽度时，它是相对于父容器的宽度计算的(高度也是)
+
+    30.全屏滚动的原理是什么？用到了CSS的哪些属性？
+    剩下的可以通过transform进行y轴定位，也可以通过margin-top实现
+
+    31.什么是响应式设计？响应式设计的基本原理是什么？如何兼容低版本的IE？
+
+    32.视差滚动效果？
+    1.CSS3实现 兼容性不好
+    2.jquery实现 难度比较高
+    3.插件实现方式 parallax-scrolling
+
+    33.::before 和 :after中双冒号和单冒号有什么区别？解释一下这2个伪元素的作用
+      以一个子元素的存在
+
+    34.line-height行高理解? 单行文本居中 多行文本居中
+
+    35 怎么让Chrome支持小于12px 的文字？
+      p{font-size:10px;-webkit-transform:scale(0.8);} //0.8是缩放比例
+
+    38.如果需要手动写动画，你认为最小时间间隔是多久，为什么？
+        多数显示器默认频率是60Hz，
+        即1秒刷新60次，所以理论上最小间隔为1/60＊1000ms ＝ 16.7ms。
+    
+    39.li与li之间有看不见的空白间隔是什么原因引起的？有什么解决办法？
+    40.display:inline-block 什么时候会显示间隙？
+       两个元素之间有空格时
+       (1)清除空格
+       (2)font-size: 0;
+
+    41.有一个高度自适应的div，里面有两个div，
+    一个高度100px，希望另一个填满剩下的高度
+        外层div使用position：relative；padding-top/bottom: 100px;
+        高度要求自适应的div使用position: absolute; 
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 100px;
+
+    42 png、jpg、gif 这些图片格式解释一下，分别什么时候用。有没有了解过webp?
+    png是便携式网络图片（Portable Network Graphics）
+    是一种无损数据压缩位图文件格式.优点是：压缩比高，色彩好。 
+    大多数地方都可以用。
+
+    jpg是一种针对相片使用的一种失真压缩方法，是一种破坏性的压缩，
+    在色调及颜色平滑变化做的不错。在www上，被用来储存和传输照片的格式。
+
+    gif是一种位图文件格式，以8位色重现真色彩的图像。可以实现动画效果.
+
+    webp格式是谷歌在2010年推出的图片格式，压缩率只有jpg的2/3，大小比png小了45%。
+              缺点是压缩的时间更久了，兼容性不好，目前谷歌和opera支持。
+
+    43.style标签写在body后与body前有什么区别？
+        页面加载自上而下 当然是先加载样式。
+        写在body标签后由于浏览器以逐行方式对HTML文档进行解析，
+        当解析到写在尾部的样式表（外联或写在style标签）会导致浏览器停止之前的渲染，
+        等待加载且解析样式表完成之后重新渲染，
+
+    44.CSS属性overflow属性定义溢出元素内容区的内容会如何处理?
+    参数是scroll时候，必会出现滚动条。
+    参数是auto时候，子元素内容大于父元素时出现滚动条。
+    参数是visible时候，溢出的内容出现在父元素之外。默认值
+    参数是hidden时候，溢出隐藏。
+
+    45.45 阐述一下CSS Sprites
+        将一个页面涉及到的所有图片都包含到一张大图中去，
+        然后利用CSS的background-image/repeat/position的组合进行背景定位。
+        (1)利用CSS Sprites能很好地减少网页的http请求，从而大大的提高页面的性能；
+        (2)CSS Sprites能减少图片的字节。

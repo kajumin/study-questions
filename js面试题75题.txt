@@ -1,0 +1,373 @@
+===========vue如何模板解析?
+模板就是一段字符串，非结构化的数据，没法分析。因此，
+
+第一步, 是将非结构化的模板字符串，转变成结构化的 JS 对象，抽象语法树，即AST。其实就是一个 JS 对象，这样就结构化了。
+第二步，将 AST 转换成一个 render 函数，步骤是先转换为一段函数体的字符串，然后再用new Function(...)生成函数。
+第三部，渲染时执行 render 函数，返回虚拟 DOM 对象，然后执行虚拟 DOM 的patch方法，渲染成真正的 html 
+
+
+===========hybrid 和 h5 有何区别？
+hybrid  是通过file协议加载的本地文件，h5 是通过http协议加载的网络文件，前者速度快。
+hybrid  是通过为不同版本打包进行更新，而 h5 没有版本的概念，每次都获取服务端的最新版。
+hybrid  更加依赖于客户端的能力，因此会更多的和客户端通讯，而 h5 基本用不到和客户端通讯。
+===========vue和react区别
+相同点: 
+(1) 组件化和虚拟dom
+(2) 都支持props进行父子间数据通信
+(3) 都支持数据驱动视图  不直接操作真实DOM 更新状态数据界面就自动更新
+(4) 都执行服务端渲染   react next.js   vue  Nuxt.js
+(5) 都支持native的方案  react native  vue有weex
+
+不同点:
+(1)双向数据绑定  react都是单向数据流
+(2) 组件的写法  react  jsx  all in js   vue  template  script style
+(3) state对象setState更新数据    this.直接使用
+(4) 虚拟dom  vue不需要重新渲染整个组件树  react会全部组件重新渲染       
+(5) react 严格针对mvc  vue是mvvm模式
+
+==============vue组件间通信方式
+1.props  父向子
+2.$emit $on  父 @eventName =  "event"   子this.$emit('eventName',data)
+3.订阅与发布  pubsub.js   任意组件关系
+订阅  PubSub.subscrible('msg',(msg,data)=>{})
+发布消息 PubSub.publish('msg',data)
+4.集中式状态管理  vuex 
+5.slot 通信的标签
+
+==============vuex管理状态的机制
+state  getters  mutations  actions    modules
+
+
+=====================Promise 是什么?
+Promise 是异步编程的一种解决方案：从语法上讲，promise是一个对象，从它可以获取异步操作的消息；从本意上讲，它是承诺，承诺它过一段时间会给你一个结果。promise有三种状态：pending(等待态)，fulfiled(成功态)，rejected(失败态)；状态一旦改变，就不会再变。创造promise实例后，它会立即执行。
+.then()  //成功执行函数
+.catch() //失败执行函数
+
+
+
+==================MVC
+M: model 数据模型  V : view 视图层   C: control  控制
+model:    层用于封装和应用程序的业务逻辑相关的数据以及对数据的处理方法
+view:       主要负责数据的展示
+constrol:  用于控制应用程序的流程，处理用户的行为和数据上的改变。 应用程序中用户交互的部分
+
+===================MVVM
+M:  model  数据层
+V:   使用模板语法来声明式的将数据渲染进DOM
+M:  核心就是数据绑定
+
+
+===为什么ES模块比CommonJS更好?  静态分析   循环引用和动态绑定
+ES模块是官方标准，也是JavaScript语言明确的发展方向，而CommonJS模块是一种特殊的传统格式，在ES模块被提出之前做为暂时的解决方案。 ES模块允许进行静态分析，从而实现像 tree-shaking 的优化，并提供诸如循环引用和动态绑定等高级功能。
+
+
+1.undefined 和 null 有什么区别？
+基本数据类型  虚值!!  ==(true)  ===(false)
+undefined是未指定特定值的变量的默认值  使用场景
+null是不代表任何值的值   使用场景
+对象   toPrimitive首先在对象中使用valueOf方法，然后使用toString方法来获取该对象的原始值。
+
+2.&&
+在其操作数中找到第一个虚值表达式并返回它，如果没有找到任何虚值表达式，则返回最后一个真值表达式。它采用短路来防止不必要的工作。
+conMobile && conMobile.release()  存在这个函数  存在这执行
+
+3. || 
+|| es6 之前 默认值
+var  name = name ||  'bang'
+
+4.+是将字符串转换为数字的最快方法，因为如果值已经是数字，它不会执行任何操作。
+
+5.DOM 代表文档对象模型，是HTML和XML文档的接口(API)。当浏览器第一次读取(解析)HTML文档时，它会创建一个大对象，一个基于HTML文档的非常大的对象，这就是DOM。它是一个从 HTML 文档中建模的树状结构。DOM 用于交互和修改DOM结构或特定元素或节点。
+
+5.当事件发生在DOM元素上时，该事件并不完全发生在那个元素上。捕获阶段(window) => 目标阶段 => 冒泡阶段(window)
+
+9.e.preventDefault() 方法可防止元素的默认行为。如果在表单元素中使用，它将阻止其提交。如果在锚元素中使用，它将阻止其导航  兼容: e.returnValue = false
+e.stopPropagation()  方法用于阻止捕获和冒泡阶段中当前事件的进一步传播。
+
+10.如何知道是否在元素中使用了e.preventDefault() e.stopProgation()方法？
+e.defaultprevented
+e.cancelBubble
+
+11.为什么此代码 `obj.someprop.x` 会引发错误?  obj.someprop -> undefined
+
+12.什么是 event.target ？
+e.target      触发事件的元素。
+e.currentTarget  绑定事件的元素
+
+14. == 和 === 有什么区别？  宽松相等  严格相等(数据类型不等则不等)
+对象都是比较内存地址
+
+16.!! 运算符能做什么？
+将右侧的值强制转换为布尔值，这也是将值转换为布尔值的一种简单方法。
+
+17.如何在一行中计算多个表达式的值？ x = (x++ , x = addFive(x), x *= 2, x -= 5, x += 10);
+
+18.什么是提升?
+提升是用来描述变量和函数移动到其(全局或函数)作用域顶部的术语。
+执行上下文(编译(提升) => 执行(赋值))
+
+19.什么是作用域？
+有效访问变量或函数的区域, 全局作用域、函数作用域和块作用域(ES6)。
+内部作用域可以访问外部和全局变量, 变量的查找过程也称为作用域链
+
+20. 什么是闭包？
+闭包就是一个函数在声明时能够记住当前作用域、父函数作用域、及父函数作用域上的变量和参数的引用，直至通过作用域链上全局作用域
+
+21. JavaScript 中的虚值是什么？
+ '' 0  null undefined NaN false
+检测虚值: !!
+
+23. 'use strict' 是干嘛用的？es5特性  变量 this 函数 对象
+1.变量必须声明后再使用
+2.禁止this指向全局对象
+3.函数的参数不能有同名属性，否则报错
+4.arguments不会自动反映函数参数的变化
+5.不能使用fn.caller和fn.arguments获取函数调用的堆栈
+6.不能对只读属性赋值，否则报错
+7.不能删除不可删除的属性，否则报错
+好处:
+1.消除Javascript语法的一些不合理、不严谨之处，减少一些怪异行为;
+2.消除代码运行的一些不安全之处，保证代码运行的安全；
+3.提高编译器效率，增加运行速度；
+4.为未来新版本的Javascript做好铺垫
+
+24.JavaScript 中 `this` 值是什么？this指向
+1.作为对象方法调用
+2.作为普通函数调用 严格模式undefined  箭头函数
+3.构造函数调用     指向返回的对象
+4.call apply bind  指定对象
+
+25.对象的 prototype(原型) 是什么？
+原型链
+
+26. 什么是 IIFE，它的用途是什么？
+(function(){} ());
+(function () {})();
+立即执行函数并利用闭包解决循环问题
+
+27.call  apply bind 用途 区别
+bind: 这个新函数的 this 被指定为 bind() 的第一个参数，而其余参数将作为新函数的参数，供调用时使用
+用途: Math.max.apply(null, [1,2,3])
+区别: call参数列表  apply数组
+
+
+20. 什么是函数式编程? JavaScript 的哪些特性使其成为函数式语言的候选语言？
+JavaScript支持闭包和高阶函数是函数式编程语言的特点。
+
+21.高阶函数只是将函数作为参数或返回值的函数
+作为函数参数传递: 回调函数
+作为函数返回值:  闭包
+
+34. map  filter reduce源码实现
+
+37.arguments对象是函数中传递的参数值的集合。它是一个类似数组的对象，因为它有一个length属性，我们可以使用数组索引表示法arguments[1]来访问单个值，但它没有数组中的内置方法
+const four = (...args) => args;   reset语法
+有iterator接口  for of  [..args]  Array.from
+
+38.创建一个没有prototype的对象
+const o2 = Object.create(null);
+console.log(o2.toString()); 报错
+
+39.为什么在调用这个函数时，代码中的`b`会变成一个全局变量?
+function myFunc() {
+  let a = b = 0;  //相当于let a= (b=0)   从右向左执行  表达式b=0没有声明b 所有变成全局
+}
+
+40. ECMAScript 是什么？
+ECMAScript 是编写脚本语言的标准
+
+41.es6  ECMAScript2015新特性?
+let const
+字符串
+正则
+数值
+函数
+数组
+对象
+symbol
+set map weakSet weakMap
+promise
+generator
+代理proxy
+async
+模块化module
+
+42. `var`,`let`和`const`的区别是什么？
+1.不存在变量提升
+2.暂时性死区
+3.不可以重复声明
+
+43. 什么是箭头函数？super new.target 
+this
+arguments 
+不能当做构造函数   new命令
+不能当做generator函数   yield命令
+
+44.什么是类?
+类(class)是在 JS 中编写构造函数的新方法。它是使用构造函数的语法糖，在底层中使用仍然是原型和基于原型的继承。
+typeof //function
+toString //"[object Object]"
+s.toString === Object.prototype.toString; // true
+
+45.什么是模板字符串？
+换行  变量
+
+46.对象解构赋值?
+{模式: 变量} = obj
+默认值
+
+47.es6模块化? 
+CommonJS-Node.js
+AMD（异步模块定义）-浏览器
+es模块化
+
+48.set map
+set:
+size add has delete  clear
+遍历: forEach keys values entires
+
+map: 
+size set has(键名) delete  clear  get(键名) 
+遍历: forEach keys values entires
+
+49.什么是回调函数？
+回调函数是一段可执行的代码段，它作为一个参数传递给其他的代码，其作用是在需要的时候方便调用这段（回调函数）代码。
+使用: reduce、filter和map  事件回调
+
+50.Promise对象是什么? 
+Promise 是异步编程的一种解决方案：从语法上讲，promise是一个对象，从它可以获取异步操作的消息；从本意上讲，它是承诺，承诺它过一段时间会给你一个结果。promise有三种状态：pending(等待态)，fulfiled(成功态)，rejected(失败态)；状态一旦改变，就不会再变。创造promise实例后，它会立即执行
+
+34. 什么是 `async/await` 及其如何工作？
+async/await是 JS 中编写异步或非阻塞代码的新方法。它建立在Promises之上，让异步代码的可读性和简洁度都更高。
+使用 async关键声明函数会隐式返回一个Promise。
+async function callApi() {   //使用try  catch获取错误信息
+  try {
+    const resp = await fetch("url/to/api/endpoint");  // 这行会等待右侧表达式执行完成
+    const data = await resp.json();
+    //do something with "data"
+  } catch (e) {
+    //do something with "err"
+  }
+}
+
+52.展开运算符和剩余运算符
+展开运算符   应用在数组展开
+剩余运算符 rest参数   应用在函数参数
+
+53. 什么是默认参数？
+用于函数参数 ||  解构赋值中
+
+54. 什么是包装对象（wrapper object）？
+基本类型的值被临时转换或强制转换为对象, 在完成访问属性或调用方法之后，新创建的对象将立即被丢弃。
+
+55. 隐式和显式转换有什么区别？
+隐式是自动的  比如1+ '6'   true + false
+
+56. 什么是NaN？以及如何检查值是否为NaN？
+非数字, 将值转换为数字时 || 非数字值进行运算时   
+window.isNaN   Number.isNaN的区别    是否会转为数值
+
+57.判断值是否为数组?
+(1)Array.isArray(arr)
+(2)Object.prototype.toString.call(arr)
+(3)arr instanceof Array   对象的prototype属性是否出现在另一个对象的原型链上
+(4)a.constructor  === Array
+(5)Array.isPrototypeOf([])
+(6)[].__proto__ === Array.prototype
+
+58. 如何在不使用`%`模运算符的情况下检查一个数字是否是偶数？
+&按位运算:  将其视为二进制值，然后执行与运算
+101   数字5
+001   数字1  
+001   跟数字1进行与运算   结果为0则为偶数  为1则为奇数
+
+59. 如何检查对象中是否存在某个属性？
+(1)obj['prop']   返回undefined则不存在
+(2)prop in obj   指定的属性在指定的对象或其原型链中    "toString"(需要括号) in {}; // 返回true
+(3)obj.hasOwnProperty(prop)
+
+60.ajax是什么?
+即异步的 JavaScript 和 XML, 是一种用于创建快速动态网页的技术, 传统的网页（不使用 AJAX. 如果需要更新内容, 必需重载整个网页面. 使用AJAX则不需要加载更新整个网页, 实现部分内容更新
+
+61.创建对象的方法?
+(1)对象字面量
+(2)使用构造函数
+(3)Object.create()
+
+62.Object.seal 和 Object.freeze 方法之间有什么区别?
+Object.freeze() 方法可以冻结一个对象。一个被冻结的对象再也不能被修改；冻结了一个对象则不能向这个对象添加新的属性，不能删除已有属性，不能修改该对象已有属性的可枚举性、可配置性、可写性，以及不能修改已有属性的值。此外，冻结一个对象后该对象的原型也不能被修改.
+
+Object.seal()方法封闭一个对象，阻止添加新属性并将所有现有属性标记为不可配置。当前属性的值只要可写就可以改变
+freeze 不可以修改属性值  seal可以修改属性值
+freeze 都不可以添加 删除属性
+
+
+63.`in` 运算符和 `Object.hasOwnProperty` 方法有什么区别?
+hasOwnProperty()  对象自身属性中是否具有指定的属性，因此这个方法会忽略掉那些从原型链上继承到的属性
+in   对象属性是否存在于指定的对象或其原型链中
+
+64. 有哪些方法可以处理 JS 中的异步代码？
+(1)回调函数
+(2)Promise
+(3)generator
+(4)async/await
+(5)其他一些库  async.sj  ||  q ||  co
+
+65. 函数表达式和函数声明之间有什么区别？
+函数声明整体函数体提升
+函数表达式变量提升,  往往是函数表达式覆盖函数声明
+
+66. 调用函数，可以使用哪些方法？
+(1)作为函数调用    指向window  严格模式undefined
+(2)作为对象方法调用   指向该对象
+(3)作为构造函数调用   指向返回的新对象
+(4)使用call和apply方法调用  指向指定的对象
+事件处理函数中   this指向触发事件的元素  this总是等于  e.currentTarget  不一定等于e.target
+setTimeout  setInterval   默认指向window
+
+67. 什么是缓存及它有什么作用?  闭包
+缓存是建立一个函数的过程，这个函数能够记住之前计算的结果或值。使用缓存函数是为了避免在最后一次使用相同参数的计算中已经执行的函数的计算。这节省了时间，但也有不利的一面，即我们将消耗更多的内存来保存以前的结果. 
+
+68.手动实现缓存方法?
+
+
+69. 为什么typeof null 返回 object？如何检查一个值是否为 null？
+typeof null         //null
+value === null  //判断null类型
+
+70.new关键字有什么作用?
+(1)创建空对象 {}
+(2)将this指向该对象
+(3)将该对象的__proto__指向构造函数的prototype
+(4)没有return对象, 则返回该对象
+
+71.不能使用箭头函数情况?
+(1)想要提升变量(箭头函数是匿名的)
+(2)想要使用arguments
+(3)当做构造函数
+(4)当做generator函数
+(5)对象的属性值
+
+72. Object.freeze() 和 const 的区别是什么?
+const 声明一个只读的变量，一旦声明，常量的值就不可改变
+Object.freeze适用于值，更具体地说，适用于对象值，它使对象不可变，即不能更改其属性
+
+73. 如何在 JS 中“深冻结”对象？
+如果咱们想要确保对象被深冻结，就必须创建一个递归函数来冻结对象类型的每个属性：
+
+74. `Iterator`是什么，有什么作用？
+遍历器（Iterator）就是这样一种机制。它是一种接口，为各种不同的数据结构提供统一的访问机制。任何数据结构只要部署Iterator接口，就可以完成遍历操作（即依次处理该数据结构的所有成员）。
+Iterator 的作用有三个：
+(1)为各种数据结构，提供一个统一的、简便的访问接口；
+(2)使得数据结构的成员能够按某种次序排列；
+(3)ES6 创造了一种新的遍历命令for…of循环，Iterator 接口主要供for…of消费。
+[Symbol.iterator]()
+
+75. `Generator` 函数是什么，有什么作用？
+执行Generator函数会返回一个遍历器对象，每一次Generator函数里面的yield都相当一次遍历器对象的next()方法，并且可以通过next(value)方法传入自定义的value,来改变Generator函数的行为
+
+Generator函数可以通过配合Thunk 函数更轻松更优雅的实现异步编程和控制流管理。
+return 的值也会返回  此时done为true
+返回的value值是yield后面的表达式  而next(参数)传递的是yield表达式的返回值
+
+实现[Symbol.iterator]()  实现next方法  || return方法

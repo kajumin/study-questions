@@ -1,0 +1,246 @@
+use: 可以是字符串 || 数组 数组项可以是字符串 或 对象
+
+webpack-cli  初始化项目(需要插件)   迁移项目
+
+html-webpack-plugin@4  或者web-webpack-plugin   html-webpack-plugin
+extract-text-webpack-plugin           mini-css-extract-plugin
+uglifyjs-webpack-plugin                   webpack.optimize.UglifyJsPlugin
+splitChunks                                        webpack.optimize.CommonsChunkPlugin
+
+webpack.optimize.commonsChunkPlugin({
+   name: ''  || names:  ['runtime', 'vendor']  chunk名称 实例多少次
+   filename: '' chunk输出的文件名
+   minChunks: 2,  数字  Infinity(不管多少次)
+   chunks:  ['app', 'user']  提取范围
+   children:  true  子模块中提取   用于动态加载时
+   deepChildren: true, 所有子模块
+   async: true  ||  'async-common' 异步公共代码
+})
+
+// 在单入口中, 使用下面的方法:
+require.include 动态加载模块  提前引入到父模块中 
+require.ensure  动态加载模块  webpack不需要配置
+import('./pagea.js').then(res => {})  System.import() => import()  -> promise
+// 在多入口中, 使用下面方法
+require.include  动态加载模块  提前引入到父模块中   async:  'async-common'  可以做到不在父模块中
+require.ensure   动态加载模块   webpack不需要配置
+import('./pagea.js').then(res => {})  System.import() => import()  -> promise
+
+提取公共代码好处:  (1)减少冗余  (2)提高加载速度
+多页应用:  公共代码(app, user) + 第三方模块(vendor) + webpack生成代码
+
+代码分割和懒加载:  分离页面代码  业务公共代码  第三方依赖
+单页引用:  动态加载模块  +  第三方依赖    额外动态加载的模块公共代码可以加载到父模块中include
+多页应用:  动态加载中的公共代码 + 公共代码(app, user) + 第三方模块(vendor) + webpack生成代码
+
+===============css-loader style-loader extract-text-webpack-plugin
+import base from './base'
+base.use()  
+base.unuse()  //可以使用也可以不使用   setInterval(, 500)
+loader: 'style-loader',
+options: { transform:  './css-transform.js' }  js文件module.exports定义一个函数去改变结果  在浏览器中执行
+loader: 'css-loader',
+options: { module: true, localIdentName: '[page]-[hash:base64:5]' }  //类名编码  base.box
+
+==================tree shaking  去除无用的代码
+写代码  没有用的代码  js文件 css文件 
+lodash-es  插件没用
+babel-plugin-lodash  
+
+===========file-loader@1  url-loader@1  imge-webpack-loader  postcss-sprites
+file-loader: 
+options: {
+	publicPath: '',  //前缀
+                 output: 'dist/',  //文件输出
+                 useRelativePath: true //相对路径
+}
+url-loader: 比file-loader多了一个功能而已
+options: {
+	limit:  8000
+{
+image-webpack-loader:  压缩图片  容易出错
+{
+            loader: 'image-webpack-loader',
+            options: {
+              pngquant: {
+                quality: [0.65, 0.90],
+                speed: 4
+              },
+            }
+}
+
+postcss-sprites:  雪碧图生成
+require('postcss-sprites')({
+      spritePath: './dist/assets/images/sprites/',
+      retina: true,
+})
+
+
+================第三方库
+(1)cdn 内容分发
+(2)new  webpack.providePlugin( { $: 'jquery' } )  npm i jquery
+     resolve: { alias: { jquery$: path.resolve(__dirname, 'src/libs/jquery/jquery.min.js') } }
+     new  webpack.providePlugin( { $: 'jquery' } )   没有下载jquery时
+(3)imports-loader   npm i  -D imports-loader@0 
+     {
+	test: path.resolve(__dirname, 'src/app.js'),
+                 use: [ {loader: 'imports-loader', options: { $: 'jquery' }} ] //可能下载可能alias
+}
+(3)window对象
+
+==============html-webpack-plugin@3
+{
+  template: 模板
+  filename: 文件名
+  minify: {}  //html-minify插件实现的
+  chunks:  多个页面
+  inject:  false, //不插入
+}
+
+html中的图片处理: 
+(1)src="${require('')}"
+(2)使用html-loader
+{
+test: /\.html$/,
+   use: [
+      {
+           loader: 'html-loader',
+                    options: {
+                      attrs: ['img:src']
+                    }
+       }
+    ]
+ },
+
+优化:  将webpack生成文件runtime输出到html中
+npm i -D html-webpack-inline-chunk-plugin(1)
+new HtmlWebpackInlineChunkPlugin({
+      inlineChunks: ['manifest']
+})
+
+================webpack-dev-server  (1)接口代理 (2)模块热更替 (3)history API接口
+npm i -D webpack-dev-server@2  安装
+-w -hot -open --progress(进度)
+inline:  true, 默认  false访问地址会有变化   浏览器页面有webpack打包状态条出现
+contentBase: 路径  指定路径  静态资源
+port 端口
+historyApiFallback:  true, || { rewrite: [ { from: '/pages/a'正则, to: '/pagea/a.html' } ]}  history API 
+https:  证书
+接口代理 proxy  target   changeOrigin  headers请求头  logLevel  pathRewrite
+hot  模块热更替 
+         new webpack.HotModuleReplacementPlugin()   new NameModulePlugin()  --hot则不用 
+         好处: 保持应用状态数据   节省调试时间  样式调整更快
+         框架: 有loader, 所以不用额外写代码
+路径重定向  rewrite: 
+openpage 指定初始页面
+lazy:  访问到内容才打包   多页面应用时很有用
+overlay:  true, 浏览器显示编译错误
+pathRewrite: { '^/api': '' }  //必须有这个才可以
+
+=================source-map
+source-map:  css-loader.options.sourcemap
+(1)source-map    有source-map  白名单
+(2)hidden-sourece-map    只有行信息  
+(3)nosource-source-map  没有source-map
+开发时: eval  cheap-module-source-map(推荐)  source-map
+生产时: source-map
+
+===================开发环境  生产环境  --env  production
+npm  i -D webpack-merge  clean-webpack-plugin
+
+====================打包优化
+打包结果分析:  1.webpack --profile --json > stats.json
+官网分析网址:  2.http://webpack.github.io/analyse/
+npm i  -D webpack-bundle-analyzer(4)
+(1)分开vendor和app  第三方库和页面代码
+    DLLPlugin(提前打包): 第三放模块 生成map  DLLReferencePlugin(生成打包时): 第三方模块
+(2)UglifyJsPlugin  支持并行压缩  parallel: true,  操作系统减1  cache: true, 缓存
+(3)HapplyPack  loader并行   HapplyPack.ThreadPool
+(4)babel-loader   cacheDirectory  include exclude
+(5)其他  减少resolve  去除sourceMap  cache-loader(loader缓存)   升级node webpack
+
+============DLLPlugin DLLReferencePlugin
+import { Button, Select } from 'element-ui'
+Vue.component(Button.name, Button)
+Vue.component(Select.name, Select)
+library: '[name]' //全局变量
+plugins: [
+    new webpack.DllPlugin({ path: path.join(__dir)})  
+]
+=============UglifyJsPlugin
+parallel: true,  操作系统减1  cache: true, 缓存
+=============使用happypack  小项目很增长时间
+npm i -D happypack
+使用: loader: 'happypack/loader?id=vue'
+new happypack({ id: 'vue', loaders: [{loader: 'vue-loader' }] })
+===================长缓存问题
+(1)独立打包vendor  使用chunkshash
+(2)manifest  (webpack生成文件runtime)
+(3)使用webpack.NamedChunksPlugin()   webpack.NamedModulesPlugin()
+(4)动态模块  给定模块名称 import(/* webpackChunkName:  'home' */)
+
+两个重要的插件: 保证vendor的chunkhash不会因为引入(动态)模块而发生顺序的变化导致chunkhash变化
+new webpack.NamedChunksPlugin(),   //chunk改变导致的hash变化
+new webpack.NamedModulesPlugin(), //模块顺序改变导致的hash变化
+====================多页面
+多入口entry
+多页面html
+每个页面不同的chunk
+每个页面不同的参数
+解决方案: 
+(1)多配置(3.1.0配置数组parallel-webpack插件(并行处理))  配置独立, 灵活    parallel-webpack --config
+     缺点: 不能多页面之间共享代码 (多个页面缓存不能公用)
+(2)单配置  优点: 共享entry之间的公用代码
+     缺点:  打包速度慢   输出的内容比较复杂
+单配置: 导出一个对象{}
+多配置: 导出一个数组[{}]  包含多个配置对象
+
+==================vue-cli和webpack
+vue-cli脚手架
+项目模板: simple webpack webpack-simple 
+配置文件: 
+npm i -g @vue/cli
+npm i -g @vue/cli-service-global
+npm i -g @vue/cli-init
+开始搭建项目:
+vue init <template name> <project name>
+vue init <git repo> <project name>
+static:  不需要webpack处理的
+test: 测试相关
+.babelrc  .eslintrc.js  .eslintignore  .postcssrc.js  .gitignore
+
+修改配置:
+自动打开浏览器 ||  端口  config/index.js  autoOpenBrowser: true,  port: 8888
+
+=================webpack面试
+概念: 
+(1)webpack和grunt 和 gulp有什么不同
+    模块打包工具, 可以递归的打包项目中的所有模块依赖, 最终生成几个打包后的文件
+(2)什么事bundle, 什么事chunk, 什么是module
+    bundle是由webpack打包出来的文件
+    chunk是指webpack在进行模块的依赖分析的时候, 代码分割出来的代码块
+    module是开发中的单个模块   require  import进来的就是模块
+配置: 
+(3)loader 翻译官 加载器 plugin  插件
+     loader告诉webpack如何转化处理某一类型的文件, 并且引入到打包出的文件中
+     plugin是用来定义webpack打包过程的方式, 一个插件是含有一个apply方法的一个对象, 
+                通过该方法参与到webpack打包的各个流程
+开发环境:
+(4)webpack-dev-server 与http服务器如: nginx有什么区别
+    webpack-dev-server使用内存来存储webpack开发环境下的打包文件, 并且可以使用模块热更替,
+    它相比传统的http服务器对开发更加简单高效
+(5)模块热更新
+     模块热更新是webpack的一个功能, 是高级版的自动刷新浏览器
+
+优化: 
+(6)长缓存
+     浏览器在用户访问页面的时候, 为了加快加载速度, 会对用户访问的静态资源进行存储, 但是每一次
+代码升级或是更新, 都需要浏览器去下载新的代码, 最方便和最简单的更新方式就是引入新的文件名称
+      在webpack指定output的文件名chunkhash, 通过NamedModulesPlugin HashedModuleIdsPlugin
+ 保证打包文件名不变
+(7)tree-shaking   对js css的去除哪些引入了但没有使用到的死代码
+
+webpack未来? 零配置  更小 更快
+现代前端的正确开发姿势  前端优化的思想
+
+

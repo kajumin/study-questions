@@ -1,0 +1,77 @@
+(1)1px 问题
+其实这个原因很简单，因为css中的1px并不等于移动设备的1px，这些由于不同的手机有不同的像素密度。在window对象中有一个devicePixelRatio属性，他可以反应css中的像素与设备的像素比。
+devicePixelRatio = 物理像素 / 独立像素 = dpr
+1、0.5px边框   有些浏览器支持设置0.5px;  就是1px;
+2、使用border-image实现
+3、使用background-image实现
+4、多背景渐变实现
+5、使用box-shadow模拟边框
+6、伪类 + transform 实现  可以配合媒体查询细化  -webkit-device-pixel-ratio
+7、viewport + rem 实现
+
+
+(2)响应式布局
+(7)软键盘弹出将页面顶起来、收起未回落问题
+(8)iPhone X 底部栏适配问题
+(9)保存页面为图片和二维码问题和解决方案
+(10)微信公众号 H5 分享问题
+(11)H5 调用 SDK 相关问题及解决方案
+(12)H5 调试相关方案与策略
+
+(3)iOS 滑动不流畅  默认值为auto;  手指到哪就停在哪
+1.在滚动容器上增加滚动 touch 方法
+将-webkit-overflow-scrolling 值设置为 touch
+.wrapper {
+    -webkit-overflow-scrolling: touch;
+}
+设置滚动条隐藏： .container ::-webkit-scrollbar {display: none;}
+可能会导致使用position:fixed; 固定定位的元素，随着页面一起滚动
+2.设置 overflow
+设置外部 overflow 为 hidden,设置内容元素 overflow 为 auto。内部元素超出 body 即产生滚动，超出的部分 body 隐藏。
+
+body {
+    overflow-y: hidden;
+}
+.wrapper {
+    overflow-y: auto;
+}
+
+
+(4)iOS 上拉边界下拉出现白色空白
+1. 监听事件禁止滑动
+document.body.addEventListener('touchmove', function(e) {
+    if(e._isScroller) return;
+    // 阻止默认事件
+    e.preventDefault();
+}, {
+    passive: false
+});
+
+
+(5)页面件放大或缩小不确定性行为   禁止放大 和缩小
+<meta name=viewport
+  content="width=device-width, initial-scale=1.0, minimum-scale=1.0 maximum-scale=1.0, user-scalable=no">
+
+(6)click 点击穿透与延迟
+1.为什么会产生 click 延时？
+iOS 中的 safari，为了实现双击缩放操作，在单击 300ms 之后，如果未进行第二次点击，则执行 click 单击操作。也就是说来判断用户行为是否为双击产生的。但是，在 App 中，无论是否需要双击缩放这种行为，click 单击都会产生 300ms 延迟。
+解决方案一：使用 touchstart 替换 click 穿透问题也可以解决
+解决方案二：使用 fastclick 库
+2.为什么会产生 click 点击穿透？
+双层元素叠加时，在上层元素上绑定 touch 事件，下层元素绑定 click 事件。由于 click 发生在 touch 之后，点击上层元素，元素消失，下层元素会触发 click 事件，由此产生了点击穿透的效果。
+
+
+(7)软键盘将页面顶起来、收起未回落问题
+1.表现: Android 手机中，点击 input 框时，键盘弹出，将页面顶起来，导致页面样式错乱。
+移开焦点时，键盘收起，键盘区域空白，未回落。
+产生原因: 我们在app 布局中会有个固定的底部。安卓一些版本中，输入弹窗出来，会将解压 absolute 和 fixed 定位的元素。导致可视区域变小，布局错乱。
+方案一:   软键盘将页面顶起来的解决方案，主要是通过监听页面高度变化，强制恢复成弹出前的高度。
+2.键盘不能回落问题出现在 iOS 12+ 和 wechat 6.7.4+ 中，而在微信 H5 开发中是比较常见的 Bug。
+兼容原理，1.判断版本类型 2.更改滚动的可视区域
+
+
+页面生成为图片和二维码问题
+表现:  在工作中有需要将页面生成图片或者二维码的需求。可能我们第一想到的，交给后端来生成更简单。但是这样我们需要把页面代码全部传给后端，网络性能消耗太大。
+解决方案
+1.生成二维码
+2.使用 QRCode 生成二维码

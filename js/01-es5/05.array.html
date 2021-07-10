@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+</head>
+<body>
+    <!-- 
+        数组: push pop unshift shift
+        push unshift 添加一个或多个值 返回长度
+        pop shift 返回删除数组项
+
+        concat()  拼接一个或者多个数组 返回新数组
+        slice()  截取数组项 返回新数组
+        splice() 添加 修改 删除
+        join() 拼接组成为一个字符串
+        toString()  转为字符串
+
+        forEach() map filter every some 
+        indexOf lastIndexOf reduce rightReduce
+
+        es6:
+        Array.from() Array.of()
+        copyWithin(target, start, end)
+        find findIndex
+        fill(val, start, end)
+        includes()  是否包含
+
+        Object.keys() Object.values()  Object.entries()
+     -->
+    <script>
+        var arr = [1, 2, 3]
+        console.log(arr.push(4)); //返回长度 4
+        console.log(arr.pop()); //4
+
+        console.log(arr.unshift(4)); //4
+        console.log(arr.shift()); //4
+
+        console.log(arr.concat([4, 5], [6])); //返回新数组
+        console.log(arr.concat([[4]])); //返回新数组
+
+        console.log(arr.slice(0, 2));
+        console.log(arr.splice(1, 0, 'a')); //返回删除项组成的数组 改变原数组
+        console.log(arr.splice(2, 1, 'a')); //返回删除项组成的数组 改变原数组
+        console.log(arr.splice(3, 1)); //返回删除项组成的数组 改变原数组
+
+        console.log(arr);
+
+        console.log(arr.join('-'));
+        console.log(arr.toString());
+        console.log(arr.indexOf('a')); //1 返回索引
+        console.log(['a', 'b', 'c', 'a', 'b', 'c'].lastIndexOf('c')); //5 返回索引
+        console.log(['a', 'b', 'c', 'a', 'b', 'c'].lastIndexOf('c', 5)); //5 返回索引
+        console.log(['a', 'b', 'c', 'a', 'b', 'c'].lastIndexOf('c', 4)); //2 返回索引
+        console.log(['a', 'b', 'c', 'a', 'b', 'c'].lastIndexOf('c', 1)); //-1 返回索引
+        // 5 -> 返回5  4-2 -> 返回2 1-0 -> 返回-1
+        // 遍历操作
+        try {
+            arr.forEach((val, index) => {
+                console.log(val, index);
+                if(index === 1) {
+                    throw new Error('跳出forEach')
+                }
+            })
+        } catch(e) {
+            console.log(e);
+        }
+
+        for(var val of Object.keys(arr)) {
+            console.log(val);
+        }
+        for(var val of Object.values(arr)) {
+            console.log(val);
+        }
+        for(var [val, index] of Object.entries(arr)) {
+            console.log(val, index);
+        }
+
+    </script>
+</body>
+</html>

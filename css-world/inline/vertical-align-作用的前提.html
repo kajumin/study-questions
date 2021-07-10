@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.box1 img {
+			height: 96px;
+			vertical-align: middle;
+		}
+		.box1-1 {
+			height: 128px;
+			outline: 1px solid red;
+		}
+		.box1-2 {
+			height: 128px;
+			line-height: 128px;
+			outline: 1px solid red;
+		}
+		
+		.box2 {
+			display: table-cell;
+			vertical-align: middle;
+			text-align: center;
+			width: 300px;
+			height: 256px;
+			outline: 1px solid red;
+		}
+		.box2 img {
+			height: 128px;
+		}
+	</style>
+</head>
+<body>
+<!-- 
+vertical作用的前提是内联元素和table-cell元素
+浮动 绝对定位都没用
+
+因为行高不够, 所以vertical-align无效
+ -->
+ <p>幽灵空白节点高度不够</p>
+<div class="box1 box1-1">
+	x中国<img src="../../images/1.jpg">
+</div>
+<p>设置行高等于高度, 幽灵空白节点高度提升</p>
+<div class="box1 box1-2">
+	x中国<img src="../../images/1.jpg">
+</div>
+
+<div class="box2">
+	x中国<img src="../../images/1.jpg">
+</div>
+
+<div></div>
+<div class="box2">
+	<div>
+		<p>123456</p>
+		<p>123456</p>
+		<p>123456</p>
+	</div>
+</div>
+</body>
+</html>

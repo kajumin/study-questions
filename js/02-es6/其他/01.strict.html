@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<script type="text/javascript">
+	// - 消除Javascript语法的一些不合理、不严谨之处，减少一些怪异行为;
+	// - 消除代码运行的一些不安全之处，保证代码运行的安全；
+	// - 提高编译器效率，增加运行速度；
+	// - 为未来新版本的Javascript做好铺垫
+
+	"use strict" //(1)整个脚本
+	function strict(){
+　　　　"use strict";
+		//(2)对单个函数 
+　　} 
+	(function(){
+		"use strict"; //(3)脚本文件变通
+		console.log(this)
+		var a  = 10;
+		console.log(window.a) //undefined  立即执行函数不在全局作用域
+	})()
+
+	// a = 1 //(1)必须声明
+	function fn () {
+		"use strict"
+		console.log(this) //undefined(2)函数体内this不指向window
+		// console.log(fn.caller)//报错 (3)禁止使用调用栈
+		// console.log(fn.arguments)//报错 (3)禁止使用调用栈
+	}
+	fn()
+	// delete x // (4)禁止删除变量
+	// arguments++; // 语法错误
+
+	// 对一个对象的只读属性进行赋值
+　　var o = {};
+　　Object.defineProperty(o, "v", { value: 1, writable: false });
+	//o.v = 2; // 报错
+	console.log(o)
+	var o2 = {
+　　　　get v() { return 1; }
+
+　　};
+    // o2.v = 2; // 报错
+    var o = {
+　　　　p: 1,
+　　　　p: 2
+　　}; // 语法错误
+// 	function f(a, a, b) {  // 参数重名语法错误
+
+// 　　　　return ;
+
+// 　　}
+
+	// obj = { name: 'bang', name: 'joycechu' }//必须使用var声明
+	var obj = { name: 'bang', name: 'joycechu' }
+	console.log(obj)
+
+	// 禁止使用with语句
+	// 创设eval作用域   只能在eval作用域下使用变量
+
+	function fn2 (a, b) {
+		"use strict"
+		console.log(arguments++)
+		console.log(arguments[0])
+		console.log(arguments[1])
+
+	}
+	fn2(1, 2)
+
+
+</script>	
+</body>
+</html>

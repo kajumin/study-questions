@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		html {
+			overflow-y: scroll; 
+			/*for ie8*/
+		}
+		:root {
+			overflow-y: auto;
+			overflow-x: hidden;
+		}
+		:root body {
+			position: absolute;
+		}
+		body {
+			margin: 0;
+			width: 100vw;
+			overflow: hidden;
+		}
+		.box1 {
+			overflow: hidden;
+			/*height: 1000px;*/
+			padding-right: 15px;
+			background-color: #eee;
+		}
+	</style>
+</head>
+<body>
+<div class="box1">
+	<p>文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字</p>
+</div>
+<script type="text/javascript">
+	setTimeout(()=>{
+		document.querySelector('.box1').style.height = 1000 + 'px'
+	}, 2000)
+</script>
+</body>
+</html>

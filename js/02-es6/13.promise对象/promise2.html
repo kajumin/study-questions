@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+ 
+	<!-- event loop它的执行顺序：
+	1.一开始整个脚本作为一个宏任务执行
+	2.执行过程中同步代码直接执行，宏任务进入宏任务队列，微任务进入微任务队列
+	3.当前宏任务执行完出队，检查微任务列表，有则依次执行，直到全部执行完
+	    4.执行浏览器UI线程的渲染工作
+	    5.检查是否有Web Worker任务，有则执行 
+	6.执行完本轮的宏任务，回到2，依此循环，直到宏任务和微任务队列都为空 -->
+	<!-- 微任务 promise.then .catch process.nextTick  mutationObserver  -->
+<!--
+	1. 没有resolve() reject() promise状态为pending  Promise{<pending>}
+	2. 将promise的状态改为了resolved并且将值保存下, 遇到.then再把它添加进微任务队列
+	3. 没有resolve()  .then不会执行
+	4. .then的返回值是新的promise对象Promise{<pending>}
+	5. .then微任务优先于setTimeout宏任务执行
+	6.  Promise.then是微任务，它会被加入到本轮中的微任务列表，而定时器timer3是宏任务，它会被加入到下一轮的宏任务中。
+	7. promise 内部状态一经改变，并且有了一个值，那么后续每次(多次)调用 .then 或者 .catch 都会直接拿到该值
+-->
+<!--
+	1. Promise的状态一经改变就不能再改变。(见3.1)
+	2. .then和.catch都会返回一个新的Promise。(上面的👆1.4证明了)
+	3. catch不管被连接到哪里, 都能捕获上层的错误。(见3.2)
+	4. 在Promise中，返回任意一个非 promise 的值都会被包裹成 promise 对象，例如return 2会被包装为return Promise.resolve(2)。
+	5. Promise 的 .then 或者 .catch 可以被调用多次, 当如果Promise内部的状态一经改变，并且有了一个值，那么后续每次调用.then或者.catch的时候都会直接拿到该值。(见3.5)
+	6. .then 或者 .catch 中 return 一个 error 对象并不会抛出错误，所以不会被后续的 .catch 捕获。(见3.6)
+	7. .then 或 .catch 返回的值不能是 promise 本身，否则会造成死循环。(见3.7)
+	8. .then 或者 .catch 的参数期望是函数, 传入非函数则会发生值穿透。(见3.8)
+	9. .then方法是能接收两个参数的，第一个是处理成功的函数，第二个是处理失败的函数，再某些时候你可以认为catch是.then第二个参数的简便写法。(见3.9)
+	10. .finally方法也是返回一个Promise，他在Promise结束的时候，无论结果为resolved还是rejected，都会执行里面的回调函数
+	11. 
+	(1) .finally()方法不管Promise对象最后的状态如何都会执行
+	(2) .finally()方法的回调函数不接受任何的参数，也就是说你在.finally()函数中是没法知道Promise最终的状态是resolved还是rejected的
+	(3) 它最终返回的默认会是一个原来的Promise对象值，不过如果抛出的是一个异常则返回异常的Promise对象。
+	12.
+	(1) Promise.all()的作用是接收一组异步任务，然后并行执行异步任务，并且在所有异步操作执行完后才执行回调。
+	(2) .race()的作用也是接收一组异步任务，然后并行执行异步任务，只保留取第一个执行完成的异步操作的结果，其他的方法仍在执行，不过执行结果会被抛弃。
+	(3) Promise.all().then()结果中数组的顺序和Promise.all()接收到的数组顺序一致。
+ -->
+<div class="box" style="width: 100px;height:100px;background-color: red;"></div>
+<script type="text/javascript">
+	// const promise1 = new Promise((resolve, reject) => {
+	//   console.log('promise1')
+	//   resolve('resolve1')
+	// })
+	// const promise2 = promise1.then(res => {
+	//   console.log(res)
+	// })
+	// console.log('1', promise1);
+	// console.log('2', promise2);
+
+	// const fn = () =>
+	//   new Promise((resolve, reject) => {
+	//     console.log(1);
+	//     resolve("success");
+	//   });
+
+	// console.log("start");
+	// fn().then(res => {
+	//   console.log(res);
+	// });
+	//start 1 success
+
+
+	// const promise = new Promise((resolve, reject) => {
+	//   console.log(1);
+	//   setTimeout(() => {
+	//     console.log("timerStart");
+	//     resolve("success");
+	//     console.log("timerEnd");
+	//   }, 0);
+	//   console.log(2);
+	// });
+	// promise.then((res) => {
+	//   console.log(res);
+	// });
+	// console.log(4);
+	// 1 2 4 timerStart timerEnd success
+
+	// setTimeout(() => {
+	//   console.log('4');
+	//   setTimeout(() => {
+	//     console.log('3')
+	//   }, 0)
+	// }, 0)
+	// setTimeout(() => {
+	//   console.log('2')
+	// }, 0)
+	// console.log('1')
+	// // 1 4 2 3
+
+	// setTimeout(() => {
+	//   console.log('5');
+	//   Promise.resolve().then(() => {
+	//     console.log('6')
+	//   })
+	// }, 0)
+	// setTimeout(() => {
+	//   console.log('7')
+	// }, 0)
+	// console.log('8')
+	// 8 5 6 7
+
+	// Promise.resolve().then(() => {
+	//   console.log('1');
+	//   const timer2 = setTimeout(() => {
+	//     console.log('2')
+	//   }, 0)
+	// });
+	// const timer1 = setTimeout(() => {
+	//   console.log('3')
+	//   Promise.resolve().then(() => {
+	//     console.log('4')
+	//   })
+	// }, 0)
+	// console.log('5');
+	// 5 1 3 4 2
+
+	// const promise1 = new Promise((resolve, reject) => {
+	// 	setTimeout(() => {
+	// 	    resolve('success')
+	// 	}, 1000)
+	// })
+	// const promise2 = promise1.then(() => {
+	//   throw new Error('error!!!')
+	// })
+	// console.log('promise1', promise1) //pending
+	// console.log('promise2', promise2) //pending
+	// setTimeout(() => {
+	//   	console.log('promise1', promise1) //resolve
+	//   	console.log('promise2', promise2) //error
+	// }, 2000) 
+
+
+	// const promise1 = new Promise((resolve, reject) => {
+	//   setTimeout(() => {
+	//     resolve("1");
+	//     console.log("2");
+	//   }, 1000);
+	//   console.log("3");
+	// });
+	// const promise2 = promise1.then(() => {
+	//   throw new Error("4");
+	// });
+	// console.log("5", promise1);
+	// console.log("6", promise2);
+	// setTimeout(() => {
+	//   console.log("7");
+	//   console.log("8", promise1);
+	//   console.log("9", promise2);
+	// }, 2000);
+	// 3 5 6 2 4 7 8 9  
+
+	// Promise.resolve('1')
+	//   .then(res => {
+	//     console.log(res)
+	//   })
+	//   .finally(() => {
+	//     console.log('2')
+	//   })
+	// Promise.resolve('3')
+	//   .finally(() => {
+	//     console.log('4')
+	//   	return '5'
+	//   })
+	//   .then(res => {
+	//     console.log(res)
+	//   })
+	//   .then((res) => {
+	//   	console.log(res)
+	//   })
+	// 1 4 2 3  undefined
+
+	// Promise.resolve('1')
+	//   .finally(() => {
+	//     console.log('2')
+	//     throw new Error('3')
+	//   })
+	//   .then(res => {
+	//     console.log(res)
+	//   })
+	//   .catch(err => {
+	//     console.log(err)
+	//   })
+	// // 2 3
+
+	// function promise1 () {
+	//   let p = new Promise((resolve) => {
+	//     console.log('1');
+	//     resolve('2')
+	//   })
+	//   return p;
+	// }
+	// function promise2 () {
+	//   return new Promise((resolve, reject) => {
+	//     reject('3')
+	//   })
+	// }
+	// promise1()
+	//   .then(res =>console.log(res))
+	//   .catch(err =>console.log(err))
+	//   .finally(() =>console.log('4'))
+
+	// promise2()
+	//   .then(res =>console.log(res))
+	//   .catch(err =>console.log(err))
+	//   .finally(() =>console.log('5'))
+	//1 2 3 4 5
+
+	// function promise1 () {
+	//   let p = new Promise((resolve) => {
+	//     console.log('1');
+	//     resolve('2')
+	//   })
+	//   return p;
+	// }
+	// function promise2 () {
+	//   return new Promise((resolve, reject) => {
+	//     reject('3')
+	//   })
+	// }
+	// promise1()
+	//   .then(res =>console.log(res))
+	//   .catch(err =>console.log(err))
+	//   .then(() =>console.log('4'))
+
+	// promise2()
+	//   .then(res =>console.log(res))
+	//   .catch(err =>console.log(err))
+	//   .then(() =>console.log('5'))
+	// //1 2 3  4 5 
+
+	// function runAsync (x) {
+	// 	const p = new Promise(resolve => {
+	// 		setTimeout(() => {
+	// 			resolve(x, console.log(x))
+	// 		}, 1000)
+	// 	})
+	// 	return p
+		
+	// }
+	// Promise.all([runAsync(1), runAsync(2), runAsync(3)])
+	//   .then(res => console.log(res))
+	// 1,2,3 [1,2,3]
+
+	// function runAsync (x) {
+	//   const p = new Promise(resolve => setTimeout(() => resolve(x, console.log(x)), 1000))
+	//   return p
+	// }
+	// function runReject (x) {
+	//   const p = new Promise((res, rej) => setTimeout(() => rej(`Error: ${x}`, console.log(x)), 1000 * x))
+	//   return p
+	// }
+	// Promise.all([runAsync(1), runReject(4), runAsync(3), runReject(2)])
+	//   .then(res =>console.log(res))
+	//   .catch(err =>console.log(err))
+	// 1 3 2 Error: 2   4
+
+
+	// function runAsync (x) {
+	//   const p = new Promise(r => setTimeout(() => r(x, console.log(x)), 1000))
+	//   return p
+	// }
+	// Promise.race([runAsync(1), runAsync(2), runAsync(3)])
+	//   .then(res =>console.log('result: ', res))
+	//   .catch(err =>console.log(err))
+	// 1 result: 1  2 3 
+
+	// function runAsync(x) {
+	//   const p = new Promise(r =>
+	//     setTimeout(() => r(x, console.log(x)), 1000)
+	//   );
+	//   return p;
+	// }
+	// function runReject(x) {
+	//   const p = new Promise((res, rej) =>
+	//     setTimeout(() => rej(`Error: ${x}`, console.log(x)), 1000 * x)
+	//   );
+	//   return p;
+	// }
+	// Promise.race([runReject(0), runAsync(1), runAsync(2), runAsync(3)])
+	//   .then(res =>console.log("result: ", res))
+	//   .catch(err =>console.log(err));
+	// 0 (Error: 0) 1 2 3
+
+	// async function async1() {
+	//   console.log("1");
+	//   await async2();
+	//   console.log("2");
+	// }
+	// async function async2() {
+	//   console.log("3");
+	// }
+	// async1();
+	// console.log('4')
+	//4 1 3 2
+	// 然后跳出async1  跳出async1函数后(让出线程), 执行同步代码start,
+
+	// async function async1() {
+	//   console.log("5");
+	//   new Promise(resolve => {
+	//     console.log('6')
+	//   })
+	//   console.log("7");
+	// }
+	// async1();
+	// console.log("8")
+	// 8 5 6 7
+
+	// async function async1() {
+	//   console.log("1");
+	//   await async2();
+	//   console.log("2");
+	// }
+	// async function async2() {
+	//   setTimeout(() => {
+	//     console.log('3')
+	//   }, 0)
+	//   console.log("4");
+	// }
+	// async1();
+	// console.log("5")
+	// 1 4 5 2 3
+
+	// async function async1() {
+	//   console.log("1");
+	//   await async2();
+	//   console.log("2");
+	//   setTimeout(() => {
+	//     console.log('3')
+	//   }, 0)
+	// }
+	// async function async2() {
+	//   setTimeout(() => {
+	//     console.log('4')
+	//   }, 0)
+	//   console.log("5");
+	// }
+	// async1();
+	// setTimeout(() => {
+	//   console.log('6')
+	// }, 0)
+	// console.log("7")
+	// 1 5 7 2 4 6 3
+
+	// async function async1 () {
+	//   console.log('1');
+	//   await new Promise(resolve => {
+	//     console.log('2')
+	//   })
+	//   console.log('3');
+	//   return '4'
+	// }
+	// console.log('5')
+	// async1().then(res =>console.log(res))
+	// console.log('6')
+	// 5 1 2 6 
+	// 3 4 没有输出  一直pending状态 不能执行后面的
+
+	// async function async1 () {
+	//   console.log('1');
+	//   await new Promise(resolve => {
+	//     console.log('2')
+	//     resolve('3')
+	//   }).then(res =>console.log(res))
+	//   console.log('4');
+	//   return '5'
+	// }
+	// console.log('6')
+	// async1().then(res =>console.log(res))
+	// console.log('7')
+	// 6 1 2 7 3 4 5 
+
+	// async function async1 () {
+	//   console.log('1');
+	//   await new Promise(resolve => {
+	//     console.log('2')
+	//     resolve('3')
+	//   })
+	//   console.log('4');
+	//   return '5'
+	// }
+	// console.log('6')
+	// async1().then(res => {
+	//   console.log(res)
+	// })
+	// new Promise(resolve => {
+	//   console.log('7')
+	//   setTimeout(() => {
+	//     console.log('8')
+	//   })
+	// })
+	// 6 1 2 7 4 5 8
+
+	// async function async1() {
+	//   console.log("1");
+	//   await async2();
+	//   console.log("2");
+	// }
+	// async function async2() {
+	//   console.log("3");
+	// }
+	// console.log("4");
+	// setTimeout(function() {
+	//   console.log("5");
+	// }, 0);
+	// async1();
+	// new Promise(function(resolve) {
+	//   console.log("6");
+	//   resolve();
+	// }).then(function() {
+	//   console.log("7");
+	// });
+	// console.log('8')
+	// 4 1 3 6 8 2 7 5
+	// async默认返回promise函数
+
+	// async function testSometing() {
+	//   console.log("1");
+	//   return "2";
+	// }
+	// async function testAsync() {
+	//   console.log("3");
+	//   return Promise.resolve("4");
+	// }
+	// async function test() {
+	//   console.log("5");
+	//   const v1 = await testSometing();
+	//   console.log(v1);
+	//   const v2 = await testAsync();
+	//   console.log(v2);
+	//   console.log(v1, v2);
+	// }
+	// test();
+	// var promise = new Promise(resolve => {
+	//   console.log("6");
+	//   resolve("7");
+	// });
+	// promise.then(val =>console.log(val));
+	// console.log("8");
+	// 5 1 6 8 2 3 7 4 (24)
+
+	// async function async1 () {
+	//   await async2();
+	//   console.log('1');
+	//   return '2'
+	// }
+	// async function async2 () {
+	//   return new Promise((resolve, reject) => {
+	//     console.log('3')
+	//     reject('4')
+	//     // throw new Error('4') //一样
+	//   })
+	// }
+	// async1().then(res =>console.log(res))
+	// 3 
+	// 如果在async函数中抛出了错误，则终止错误结果，不会继续向下执行。
+
+	// async function async1 () {
+	//   try {
+	//     await Promise.reject('1').catch(err => console.log(err))
+	//   } catch(e) {
+	//     // console.log(e)
+	//   }
+	//   console.log('2');
+	//   return Promise.resolve('3')
+	// }
+	// async1().then(res =>console.log(res))
+	// console.log('4')
+	// 4 1 2 3
+	// 因为await 所以2没有先执行 
+
+	// const first = () => (new Promise((resolve, reject) => {
+	//     console.log(3);
+	//     let p = new Promise((resolve, reject) => {
+	//         console.log(7);
+	//         setTimeout(() => {
+	//             console.log(5);
+	//             resolve(6);
+	//           	console.log(p)
+	//         }, 0)
+	//         resolve(1);
+	//     });
+	//     resolve(2);
+	//     p.then((arg) => {
+	//         console.log(arg);
+	//     });
+
+	// }));
+	// first().then((arg) => {
+	//     console.log(arg);
+	// });
+	// console.log(4);
+	// 3 7 4 1 2 5 Promise {<resolve>: 1}
+
+	// const async1 = async () => {
+	//   console.log('1');
+	//   setTimeout(() => {
+	//     console.log('2')
+	//   }, 2000)
+	//   await new Promise(resolve => {
+	//     console.log('3')
+	//   })
+	//   console.log('4')
+	//   return '5'
+	// }
+	// console.log('6');
+	// async1().then(res =>console.log(res));
+	// console.log('7');
+	// Promise.resolve(1)
+	//   .then(2)
+	//   .then(Promise.resolve(3))
+	//   .catch(4)
+	//   .then(res =>console.log(res))
+	// setTimeout(() => {
+	//   console.log('8')
+	// }, 1000)
+	// 6 1 3 7 1 8 2
+	// 第二个1是因为穿透 45 没有输出是因为promise没有转变状态
+
+	// const p1 = new Promise((resolve) => {
+	//   setTimeout(() => {
+	//     resolve('1');
+	//     console.log('2')
+	//   }, 0)
+	//   resolve('3');
+	//   resolve('4');
+	// }).then(res => {
+	//   console.log(res)
+	//   setTimeout(() => {
+	//     console.log(p1)
+	//   }, 1000)
+	// }).finally(res => {
+	//   console.log(res)
+	// })
+	// 3 undefined 2 Promise {<pending>} 
+
+	// const arr = [1, 2, 3]
+	// arr.reduce((p, x) => {
+	//   return p.then(() => {
+	//     return new Promise(resolve => {
+	//       setTimeout(() => resolve(console.log(x)), 1000)
+	//     })
+	//   })
+	// }, Promise.resolve())
+	// p.then.then.then
+	// 1 2 3
+
+
+
+	// var box = document.querySelector('.box')
+	// new Promise((resolve, reject) => {
+	// 	resolve()
+	// }).then(res => {
+	// 	console.log(box.style.width)
+	// 	box.style.width = 300 + 'px'
+	// }).then(() => {
+	// 	console.log(box.style.width)
+	// })
+	// // setTimeout(()=>{
+	// // 	console.log(box.style.width)
+	// // }, 100)
+	// box.style.width = 200 + 'px'
+
+
+</script>
+</body>
+</html>

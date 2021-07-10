@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<!-- 
+1.整体结构
+2.构造函数的实现
+3..then.catch()的实现
+4.Promise.resolve() promise.reject()实现
+5.Promise.all/race()实现
+6.自定义语法 Promise.resolveDelay() Promise.rejectDelay()
+7.function 和 class版本
+ -->
+
+<script type="text/javascript" src="lib/Promise_class.js"></script>
+<!-- <script type="text/javascript" src="lib/Promise.js"></script> -->
+<script type="text/javascript">
+	console.dir(Promise)
+	// var p = new Promise((resolve, reject) => {
+	// 	console.log("promise 状态改变之前")
+	// 	setTimeout(() => {
+	// 		// resolve(1)
+	// 		reject("失败1")
+	// 		console.log("promise 状态改变之后")
+	// 	}, 1000)
+	// })
+	// p.then(value => {
+	// 	console.log("onResolved1", value)
+	// }, reason => {
+	// 	console.log("onRejected1", reason)
+	// })
+	// p.then(value => {
+	// 	console.log("onResolved2", value)
+	// }, reason => {
+	// 	console.log("onRejected2", reason)
+	// })
+	// promises start promise end onResolved1 onResolved2
+
+
+	// 测试 .then指定回调函数的的执行结果不同情况
+	// var p2 = new Promise((resolve, reject) => {
+	// 	console.log("promise 状态改变之前")
+	// 	setTimeout(() => {
+	// 		resolve(1)
+	// 		// reject("失败1")
+	// 		console.log("promise 状态改变之后")
+	// 	}, 1000)
+	// })
+	// p2.then(value => {
+	// 	console.log("onResolved1", value)
+	// 	// throw new Error('错误了 2')
+	// 	return 2
+	// 	// return new Promise((resolve, reject) => {
+	// 	// 	resolve("resolve 2")
+	// 	// })
+	// 	// return new Promise((resolve, reject) => {
+	// 	// 	reject("reject 2")
+	// 	// })
+	// }, reason => {
+	// 	console.log("onRejected1", reason)
+	// })
+	// .then(value => {
+	// 	console.log("onResolved2", value)
+	// 	throw 3
+	// }, reason => {
+	// 	console.log("onRejected2", reason)
+	// })
+	// .catch(error => {
+	// 	console.log("catch", error)
+	// 	// 中断promise链
+	// 	return new Promise()
+	// })
+	// .then(value => {
+	// 	console.log("onResolved3", value)
+	// 	throw 3
+	// }, reason => {
+	// 	console.log("onRejected3", reason)
+	// })
+</script>
+<script type="text/javascript">
+	// Promise.resolve  Promise.reject
+	// 1.如果是一般值 promise成功, value就是这个值
+	// 2.如果是成功的promise p2成功, value是promise的value
+	// 3.如果是失败的promise p3失败, reason是promise的reason
+	// var p1 = Promise.resolve(1)
+	// var p2 = Promise.resolve(Promise.resolve(2))
+	// var p3 = Promise.resolve(Promise.reject(3))
+	// p1.then(res => console.log("p1", res))
+	// p2.then(res => console.log("p2", res))
+	// p3.catch(res => console.log("p3", res))
+	// console.log(Object.prototype.toString.call(p1))
+
+	// // Promise.reject(reason)  必然是失败的结果  
+	// var p4 = Promise.reject(4)
+	// var p5 = Promise.reject(Promise.resolve(5))
+	// // 当传入的失败promise被catch处理之后返回undefined
+	// var p6 = Promise.reject(Promise.reject(6).catch(error => console.log(error)))
+	// p4.catch(res => console.log("p4", res))
+	// p5.catch(res => console.log("p5", res))
+	// p6.catch(res => console.log("p6", res))
+</script>
+<script type="text/javascript">
+	// all race
+	var p1 = Promise.resolve(1)
+	var p2 = new Promise(resolve => {
+		setTimeout(() => {
+			resolve(2)
+		}, 1000)
+	})
+	var p3 = Promise.reject(3)
+
+	Promise.all([p1, 7, p2]).then(res => {
+		console.log(res) //[1,2]
+	})
+	
+
+	Promise.all([p1, p3]).then(res => {
+		console.log(res) //[1,2]
+	})
+	.catch(error => {
+		console.log(error) // 3
+	})
+
+	Promise.race([p1, 7, p2]).then(res => {
+		console.log(res) //1
+	})
+	Promise.race([p1,p3]).then(res => {
+		console.log(res) //1
+	})
+
+	Promise.resolveDelay(2, 1000)
+	.then(res => console.log(res))
+
+	Promise.rejectDelay(11, 1000)
+	.then(res => console.log(res))
+	.catch(error => console.log(error))
+</script>
+</body>
+</html>

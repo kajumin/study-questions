@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1.0">
+	<style type="text/css">
+		.box {
+			width: 100px;
+			height: 100px;
+			margin-bottom: 20px;
+			background-color: red;
+		}
+		.box .son {
+			position: relative;
+			z-index: -1;
+			width: 50px;
+			height: 50px;
+			background-color: #096;
+		}
+		.box1 {
+			transform: translate(10px);
+		}
+
+		.box2 {
+			opacity: 0.8;
+		}
+
+		.box3 {
+			filter: opacity(80%);
+		}
+
+		.box4 {
+			display: flex;
+		}
+		.box4 > .son1 {
+			width: 100px;
+			height: 100px;
+			z-index: 1;
+			background-color: #096;
+		}
+		.box4 > .son1 .son1-son {
+			position: relative;
+			z-index: -1;
+			width: 50px;
+			height: 50px;
+			background-color: #ff0;
+		}
+
+		.box5 {
+			width: 300px;
+			height: 300px;
+			background: url(../images/xiaolu.jpg) no-repeat;
+		}
+		.box5 .son1 {
+			mix-blend-mode: screen;
+			height: 300px;
+			background: linear-gradient(to left, #ff0, #f0f);
+		}
+		.box5 .son1-son {
+			position: absolute;
+			z-index: -1;
+			width: 50px;
+			height: 50px;
+			background-color: red;
+		}
+		.box6 {
+			isolation: isolate;
+		}
+		.box7 {
+			will-change: transform;
+		}
+		.box8 {
+			over-flow: auto;     /* winphone8和android4+ */
+            -webkit-overflow-scrolling: touch;    /* ios5+ */
+		}
+	</style>
+</head>
+<body>
+	<!-- 
+		验证理论： 子元素z-index负值不能在父元素背景之后
+		1.transform
+		2.opacity
+		3.filter
+		4.flex  + 子元素z-index不为auto, 子元素产生层叠上下文 
+		5.mix-blend-mode
+		6.isolation: isolate;
+		7.will-change: 上面除了flex的其他值时
+		auto scroll-position contents 
+		多个值使用逗号分隔
+		8.-webkit-overflow-scrolling设为touch
+	 -->
+<div class="box box1">
+	<div class="son"></div>
+	
+</div>
+<div class="box box2">
+	<div class="son"></div>
+</div>
+<div class="box box3">
+	<div class="son"></div>
+</div>
+
+<div class="box box4">
+	<div class="son"></div>
+	<div class="son1">
+		<div class="son1-son"></div>
+	</div>
+</div>
+
+<div class="box5">
+	<div class="son1">
+		<div class="son1-son"></div>
+	</div>
+</div>
+
+<br>
+<div class="box box6">
+	<div class="son"></div>
+</div>
+
+<div class="box box7">
+	<div class="son"></div>
+</div>
+
+<div class="box box8">
+	<div class="son"></div>
+</div>
+
+<div style="height: 5000px;"></div>
+</body>
+</html>

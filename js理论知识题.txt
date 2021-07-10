@@ -1,0 +1,405 @@
+1.变量提升
+2.let const
+3.执行上下文
+4.浏览器事件循环机制 node事件循环机制Event loop
+5.参数传递是按值传递, 跟赋值一样
+6.数据类型: 基本数据类型 和 引用数据类型  区别
+
+===========变量提升
+js会将所有的声明提升到当前作用域的头部
+(1)声明式函数优先提升 function  var 声明变量会提升 函数表达式(undefined) | 箭头函数 let  const  class都不会提升
+(2)声明式函数提升  往往后面会被函数表达式和声明变量替换  后两者谁最后归谁 
+
+函数表达式(undefined) 箭头函数  let const import class
+let const class声明的变量不挂载window上
+=============let const
+只有使用var声明的变量 | 函数声明才会被提升，相反，函数表达式或箭头函数，let和const声明的变量，这些都不会被提升。
+块级作用域   外部不能访问到  if(let i = 0) 一样不能访问
+循环体 let 可以
+es5规定不能在块级作用域下声明函数  只能在顶层和函数作用域中
+(1) 不存在变量提升  
+(2) 暂存死区   function(){ m = 10;let m = 20} 
+(3) 不能重复声明   var  let  const之间都不可以
+
+const:  常量, 引用数据类型-内存地址不变
+(1) 不能修改基本数据类型  
+(2) 引用类型只能对属性 | 索引赋值 添加  删除   不能对整个对象 | 数组赋值
+
+left global  window  使用typeof判断环境的顶层对象
+==============执行上下文
+运行环境: 全局环境和函数环境
+当代码运行时，会产生一个对应的执行环境，在这个环境中，
+所有的变量会被提升到当前作用域的头部，值为unfeined, 代码从上往下开始执行，就叫做执行上下文。
+创建(变量提升 this 作用域链)  -> 执行(赋值 调用函数)  -> 销毁(执行完出栈) 
+
+====================
+进程是 CPU 资源分配的最小单位；线程是 CPU 调度的最小单位
+一个进程包含一个或多个线程
+
+所有js代码都在一个主线程上运行, 如果大量i/o请求, 都是同步执行的话会导致页面卡, 
+事件驱动是为了解决单通道阻塞问题, 通过事件队列的方式让主通道让路 
+
+浏览器是多线程的: 
+1.GUI渲染线程   负责页面的渲染 与js引擎线程互斥
+2.js引擎线程    负责执行js代码
+3.事件触发线程  负责将准备好的事件交给任务队列, 等待js引擎线程执行。
+4.定时器触发线程  负责执行异步定时器一类的函数的线程, 计时完成后, 事件触发线程加入任务队列中
+5.异步请求http线程 负责执行异步请求一类的函数的线程, 当监听到状态码变更，
+    如果有回调函数，事件触发线程会将回调函数加入到任务队列的队尾, 等待执行
+
+
+事件循环中的异步队列有两种: 宏任务队列和微任务队列,  宏任务队列有多个, 微任务队列只有一个
+宏任务:  setTimeout、setInterval、 setImmediate  I/O 操作  UI 渲染 script(整体)
+微任务: new Promise().then(回调), process.nextTick,  MutationObserver(h5新增)
+执行栈:  可以认为是一个存储函数调用的栈结构，遵循先进后出的原则
+================js执行流程
+js执行代码, 同步代码一行一行执行, 遇到异步代码当遇到异步任务时, 
+提交给对应的异步线程处理(ajax, setTimeout dom事件) -> 当异步任务完成, 推入任务队列中. 
+当主线程执行完, 查询任务队列, 取出一个任务, 推入主线程处理, 重复该动作 => 该动作称为事件循环
+
+宏任务(大任务)和微任务(小任务)
+微任务性能高于宏任务
+微任务: promise.then  process.nextTick MutationObserver queueMicrotask 
+优先级: 微任务 > 宏任务  同级在前面定义的先执行
+宏任务一个一个执行, 微任务一队一队执行, 
+当某个宏任务执行完后,会查看是否有微任务队列。如果有就会先执行微任务队列,
+如果没有，会读取宏任务队列中排在最前的任务.
+=========node与浏览器事件循环机制区别
+浏览器端，微任务在事件循环的宏任务执行完之后执行
+Node 端，微任务在事件循环的各个阶段之间执行
+
+===================参数传递
+所有的函数参数都是(按值传递), 跟赋值是一样的
+===================基本数据类型和引用类型的区别
+1.在内存中的位置不同
+基本类型: 占用空间固定, 保存在栈中
+引用类型: 占用空间不固定, 保存在堆中
+
+栈: 自动分配内存空间, 它由系统自动释放
+堆: 动态分配内存空间, 大小不确定也不会自动释放
+基本类型赋值后, 两个变量不会相互影响
+引用类型赋值后, 两个变量会相互影响
+=======================垃圾回收机制
+(1)标记清除  定期的 从根开始找到所有可以引用的对象 和 不可以获取的对象
+(2)引用计数  记录对象引用的次数   当引用次数为零的时候  视为可以被清除
+
+===================作用域  作用域链
+    全局作用域和函数作用域   es6块级作用域
+(1) 作用域是指当前正在执行的代码能够访问到变量的范围
+(2) 每个函数都有各自的作用域, 存储函数所有的局部变量
+
+作用域链: 
+(1) 把多个作用域串起来便形成了作用域链
+(2) 每个函数在初始化完成之后就拥有了各自的作用域链, 但此时的作用域并不包含
+     自己的作用域,只有当函数执行时, 才能创建自己的作用域,并加到作用域链的开头
+
+(3) 作用域链中不仅存储了函数本身的作用域, 还存储了该函数能够访问的其他函数的作用域
+==================闭包: 
+闭包:  就是有权访问另一个函数作用域的变量的函数
+**返回内部函数的引用
+内存泄露, 一直没有释放, 而且不断增加新的内存
+定时器 + 添加事件 引用了比较大的数据
+==================继承
+1.什么是继承?
+  继承就是子类继承父类的特征和行为, 
+  使得子类的实例对象拥有父类的实例对象的属性方法
+
+2.继承的优缺点:  避免重复代码  无需创建父类对象  可扩展性
+  优点: 
+  1.避免代码重复和逻辑臃肿
+  2.创建子类的对象时, 无须创建父类的对象
+  3.提高了系统的可扩展性 (开辟原则, 扩展功能, 父类不修改)
+
+  缺点: 子类和父类之间紧密耦合, 子类依赖于父类的的实现, 子类缺乏独立性
+===================原型链
+因为实例和构造函数之间没有直接联系, 通过.__proto__关联到Person.prototype原型对象, 
+再通过属性constructor指向构造函数
+
+当访问对象属性时, 首先在对象自身查找, 没有就会去对象的原型对象中找, 以此类推, 
+直到原型链顶端是null, 还没有则返回undefined, 把多个原型对象串起来便形成了作用域链
+
+====================XML与JSON的区别？三好一差
+1) 数据体积方面。JSON相对于XML来讲，数据的体积小，传递的速度更快些。
+2) 数据交互方面。JSON与JavaScript的交互更加方便，更容易解析处理，更好的数据交互。
+3) 传输速度方面。JSON的速度要远远快于XML。
+4) 数据描述方面。JSON对数据的描述性比XML较差。
+====================HTML与XML的区别？作用   标记  语法要求
+（1）XML用来传输和存储数据，HTML用来显示数据；
+（2）XML使用的标签不用预先定义, HTML需要
+XML标签必须成对出现  必须闭合
+XML严格区分大小写
+XML属性值必须有引号
+XML中空格不会被删减
+
+===========================输入url地址  统一资源定位符
+1.用户访问一个网站的大致过程是什么?
+  (1) 域名解析  浏览器缓存  操作系统缓存 路由器缓存 本地host文件缓存 dns服务器(域名服务器中)
+  (2) 三次握手
+  (3) http请求
+  (4) 返回响应
+  (5) 浏览器解析html生成dom树 图片 js css等链接会再次请求
+        css生成cssom树
+  (6) dom树和cssom树 生成渲染树, 
+  (7) 根据渲染树计算布局, 计算每个节点的几何信息, 将各个节点颜色绘制到屏幕上
+============================AJAX
+2.ajax是什么? Asynchronous Javascript And XML 异步js和xml(数据格式的定义), 
+   用于异步请求数据, 在不刷新网页的情况下更新页面数据,提高用户体验. 
+  传统使用form表单会刷新页面
+new XMLHttpRequest()
+open(type,url)  建立一个与服务器特定端口的连接, 与服务器建立三次握手, 握手完成后可以发送请求
+xhr.setRequestHeader('Content-Type','application/x-form-urlencoded;charset=uft-8');  设置请求头
+send(data)  发送请求数据
+onreadystatechange = function() { xhr.readyState  status  responseText }  状态改变时触发
+xhr.readyState === 4  && xhr.status === 200
+
+readyState 五个状态:
+     0: new之后  初始化, xhr对象还没有完成初始化 
+     1: open之后 载入, 开始发送请求 进行三次握手 完成后可以发送请求数据
+     2. send之后 载入完成, 请求发送完成 
+     3. 解析     开始读取服务器的响应
+     4. 完成     读取服务器响应结束 
+
+3.ajax同步和异步的区别
+  同步: 发送一个请求, 等待返回, 然后再发送下一个请求
+  异步: 发送一个请求, 不等待返回, 随时可以再发送下一个请求
+
+4.如何解决跨域问题?
+  浏览器的同源策略  协议 域名 端口号
+  (1) cors  跨域资源共享
+  (2) jsonp 只能发送get请求 利用script标签请求数据不受同源策略影响
+  (3) node.js请求代理  webpack配置请求代理
+  (4) nginx反向代理
+  (5) iframe
+  (6) h5的postMessage新特性
+
+5.ajax的优缺点?
+  优点: 
+  1. 在不刷新页面的情况下维持与服务器通信
+  2. 异步的方式与服务器通信, 不打断用户的操作
+  3. ajax使得界面和应用的分离, 数据和呈现分离
+  缺点: 
+  1. 干掉了back与history功能, 无法返回前一个页面的页面状态
+  2. ajax带来安全威胁, 暴露更多的数据和服务器逻辑
+  3. 对搜索引擎支持较弱
+
+traditional: false  processData: false  contentType: false   xhrFeilds: { withcredentials: true}
+
+=============map |  filter  |  reduce | forEach
+
+
+=============事件兼容   
+addEventListener  attachEvent('onclick')  需要on
+window.getComputedStyle(dom).width;     dom.currentStyle.width;    
+document.documentElement.scrollTop  || window.pageYOffset  || document.body.scrollTop()  
+    因为ie下滚动高度为0时,  window.pageYOffset为undefined  之后使用就会报错
+preventDefault  returnValue  = true
+stopPropation   cancelBubble  =true
+e | window.event
+e.target    e.srcElement
+document.documentElement.clientWidth   ||   window.innerWidth
+onmousewheel    火狐中 DOMMouseScroll
+pageY = e.clientY + document.documentElement.scrollTop || window.pageYOffset  || document.body.scrollTop
+页面鞠永 DTD，或者说指定了 DOCTYPE 时
+=============this指向
+通常情况下，this指向是调用该函数的对象
+(1)非严格模式下, window全局环境下声明的函数  IIFE立即执行函数 
+   对象内部中的箭头函数  this都指向window
+   严格默认下undefined
+(2) 对象内部函数方法, this指向该对象
+(3) apply call  期望第一个参数是一个对象，该对象是函数内部this的值。
+(4) 箭头函数不能忽略call apply的作用
+(5) 在事件中, this指向目标对象(当前事件处理的元素)
+
+==============new执行了什么
+(1)创建一个新对象
+(2)this指向这个新对象  __proto__指向构造函数原型对象prototype
+(3)执行代码, 通常是给this赋值
+(4)返回this对象
+===============箭头函数
+(1)箭头函数表达式的语法比函数表达式更简洁，并且没有自己的this，arguments, 原型，
+(2)箭头函数的this指向在定义的时候继承自外层第一个普通函数的this。
+(3)箭头函数外层没有普通函数，严格模式和非严格模式下它的this都会指向window(全局对象)
+(4)不能直接修改箭头函数的this指向  this apply
+(5)箭头函数没有自己的this值。它捕获词法作用域函数的this值
+(5)如果我们只有一个表达式或值需要返回，箭头函数就会有一个隐式的返回。
+=====================类型转化
+加法运算会触发三种类型转换：将值转换为原始值，转换为数字，转换为字符串。
+* /  - 会转化为数字
+
+================普通函数
+foo.length           形参数的个数
+foo.constructor   构造函数 function  Function() {}
+foo.prototype      空对象   function foo(){}
+================深浅拷贝
+(1)其实深拷贝和浅拷贝的主要区别就是其在内存中的存储类型不同。
+   堆和栈都是内存中划分出来用来存储的区域。
+
+   栈（stack）为自动分配的内存空间，它由系统自动释放； 如:  存放函数的参数  局部变量等
+   而堆（heap）则是动态分配的内存，大小不定也不会自动释放。程序结束时可能由操作系统释放
+基本数据类型存放在栈中存放在栈内存中的简单数据段，数据大小确定，内存空间大小可以分配，是直接按值存放的，可以直接访问。
+(2)基本数据类型值不可变  比较就是值的比较
+(3)引用类型存放在堆中
+   引用类型（object）是存放在堆内存中的，变量实际上是一个存放在栈内存的指针，这个指针指向堆内存中的地址
+   引用类型值可变    引用类型的比较是引用的比较
+(4)赋值  基本数据类型赋值是创建新变量    引用类型是传址   栈中指针指向堆中原数据
+
+深拷贝：将 B 对象拷贝到 A 对象中，包括 B 里面的子对象，    
+             JSON.parse(JSON.stringify())  不适合数组 |  手写  |  函数库lodash
+              stringify   序列化   parse反序列化
+    结果:  (1) 时间对象变成字符串''
+              (2) RegExp Error对象变成空对象{}
+              (3) function  undefined会丢失
+              (4) NaN Infinity 和-Infinity会变成null
+              (5) 构造函数生成的会丢掉constructor
+              (6) 存在循环引用也是不行的
+浅拷贝：将 B 对象拷贝到 A 对象中，但不包括 B 里面的子对象
+             Object.assign()   Array.prototype.concat()   Array.prototype.slice()  [...arr]   { ...obj }
+(1)对象: assign() [əˈsaɪn]   扩展运算符
+(2)数组: concat()   slice()   扩展运算符
+
+===============继承
+构造函数  (不能共享方法)
+原型模式  (能共享方法, 但是原型对象上的引用类型一改则全改)
+原型继承  (不能传参, 公有属性应用类型一改则全改)
+构造函数继承   (父类原型属性方法不能继承, 每次创建实例都要调用父构造函数) (解决父类公有属性一改则全改问题)
+组合继承   (父类属性方法多余,父类调用两次)
+寄生组合继承  ()  (解决父类属性方法多余问题)
+mytriangle instanceof myTriangle                    是否实例化   多层同样可以
+Shape.prototype.isPrototypeOf(mytriangle)      是否是原型   多层同样可以
+triangle.hasOwnProperty('width')                     是否包含属性   在原型上的不算
+for var key in person                                        会获取原型上的属性方法
+Object.getOwnPropertyNames(person)    Object.keys(person)  都不会获取原型上是属性方法
+
+只继承原型  
+TwoDShape.prototype = Shape.prototype;
+Triangle.prototype = TwoDShape.prototype;
+导致父类原型中的name被覆盖   shape.name  //triangle
+解决办法:  通过一个构造函数过渡
+var F = function(){}
+F.prototype = Shape.prototype;
+TwoDShape.prototype = new F();
+TwoDShape.prototype.constructor = TwoDShape;
+解决了  shape.name  //shape
+
+//只继承原型的基础上   子对象又能访问原型属性
+TwoDShape.uber = Shape.prototype;
+Triangle.uber = TwoDShape.prototype;
+
+
+拷贝父类属性
+function extend1(Child,Parent) {
+	var c = Child.prototype;
+	var p = Parent.prototype;
+	for(let i in p) {
+		c[i] = p[i];
+	}
+}
+
+拷贝过来的属性   
+(1)引用类型修改还有会互相影响  
+B.prototype.arr.push('d');
+console.log(B.prototype.arr == A.prototype.arr)//true
+(2) 重写不会影响
+B.prototype.arr = ['e','f','e'];
+console.log(B.prototype.arr == A.prototype.arr)//false
+==========js异步解决方案
+deferred    jquery和  zepto中
+Promise   
+generator
+async  await
+===================jquery建议
+1.尽量减少对dom的访问和操作
+2.尽量避免给dom元素绑定多个相同类型的事件处理函数,   
+    可以将多个相同事件处理函数合并到一个处理函数,
+    通过数据状态处理分支
+3.尽量避免使用toggle事件
+
+==========适配方案
+1rem =  5px  = 100 / 640 * 320   设计稿中 xxx px直接除于750就能得到对应的rem
+当前rem基准值 = 预设的基准值(100)  /  设计稿宽度(750)  * 当前设备的宽度(375)  = 50px
+==========作用域 和 词法作用域
+作用域就是一套规则，用于确定在何处以及如何查找变量（标识符）的规则
+作用域分为: 包括 函数作用域  全局作用域   es6中块级作用域
+作用域链就是变量查找的过程, 当前作用域没有就到外部作用域中找, 直至全局作用域
+
+词法作用域: 是作用域的一种工作模型
+词法作用域是在写代码的时候就决定好的和函数是怎么调用的没有关系
+, 词法作用域是静态的作用域，通过它能够预测代码在执行过程中如何查找标识符.
+
+eg:
+所谓的词法作用域就是在你写代码时将变量和块作用域写在哪里来决定，也就是词法作用域是静态的作用域，在你书写代码时就确定了。通过它能够预测代码在执行过程中如何查找标识符
+==========闭包
+闭包就是能够读取其他函数内部变量的函数。 
+闭包指的是一个函数可以访问另一个函数作用域中变量。
+在js中, 根据词法作用域的规则, 内部函数总是可以访问其外部函数中声明的变量, 当通过调用一个外部函数返回一个内部函数后, 即使该外部函数已经执行结束了, 但内部函数引用外部函数的变量依然保存在内存中. 
+
+当函数可以记住并访问所在的词法作用域时，就产生了闭包，即使函数是在当前词法作用域之外执行。
+只要使用回调函数，就在使用闭包。 ajax事件   setTimeout
+
+表现形式: 使函数外部能够访问到函数内部定义的变量
+
+循环问题: IIFE我们可以让i在每次迭代的时候，都产生一个私有的作用域
+如: 节流   防抖  迭代器  
+优点: 延长外部函数局部变量的生命周期  私有变量
+缺点: 内存消耗大 内存泄露     改变父构造函数的内部变量(注意)
+合理使用  用完销毁    a = null
+
+=============防抖  节流
+防抖: 顾名思义, 防止抖动, 以免把一次事件误认为多次,  敲键盘就是一个每天都会接触到的防抖操作.
+防止抖动, 单位时间内事件触发会被重置, 避免事件被误伤触发多次.
+
+1.登录, 发短信等按钮避免用户点击太快, 以致于发送了多次请求, 需要防抖
+2.调整浏览器窗口大小, resize次数太过于频繁, 造成计算过多, 此时需要一次到位, 就用到了防抖
+3.文本编辑实时保存, 当无任何更改操作一秒后进行保存
+
+节流: 顾名思义, 控制水的流量, 控制事件发生的频率, 如控制为1s发生一次, 甚至一分钟发生一次, 与服务端及网关控制的限流类似.
+
+1.scroll事件  每隔一秒计算一次位置信息等
+2.浏览器播放事件, 每隔一秒计算一次进度条信息等
+3.input框实时搜索并发送请求展示下拉列表, 每隔一秒发送一次请求
+控制流量, 单位时间内事件只能触发一次, 与服务端的限流类似.
+
+===================跨域处理
+1.jsonp 
+var _script = document.createElement('script');
+_script.type = "text/javascript";
+_script.src = "http://localhost:8888/jsonp?callback=testjsonp";
+    document.head.appendChild(_script);
+
+2.cors 跨域资源共享   express框架  
+Access-Control-Allow-Origin: '*'   //Methods  Headers  Credentials 
+res.setHeader('Access-Control-Allow-Origin', '*')
+res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE')
+res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type')
+res.setHeader('Access-Control-Allow-Credentials', true);
+
+3.nginx代理
+
+4.webpack.config.js中   proxy: { '/api':{ changeOrigin: true, target: 'http://localhost/'}}
+proxy: {
+      '/API': {    // 定义代理的名称
+        changeOrigin: true,  // 是否启动代理
+        target: 'http://xijipan.dev.grdoc.org', // 代理的域名
+　　   pathRewrite: {'^/API','/'}  
+          // 如果你的真实的api路径中没有/API这一个路径，把这句加上，
+          // 如果本来就有/API这一路径的话，这句一定要去掉，要不然会导致域名找不到的
+      }
+    }
+
+==========内存管理
+1.什么时候触发垃圾回收？
+   垃圾回收器周期性运行，如果分配的内存非常多，那么回收工作也会很艰巨，
+   确定垃圾回收时间间隔就变成了一个值得思考的问题。
+IE6的垃圾回收是根据内存分配量运行的，当环境中的变量，对象，字符串达到一定数量时触发垃圾回收。垃圾回收器一直处于工作状态，严重影响浏览器性能。
+IE7中，垃圾回收器会根据内存分配量与程序占用内存的比例进行动态调整，开始回收工作。
+
+2、合理的GC方案：(1)、遍历所有可访问的对象; (2)、回收已不可访问的对象。
+3、GC缺陷：(1)、停止响应其他操作；
+4、GC优化策略：(1)、分代回收（Generation GC）;(2)、增量GC
+
+===========内存泄露
+(1)当页面中元素被移除或替换时，若元素绑定的事件仍没被移除，
+     在IE中不会作出恰当处理，此时要先手工移除事件，不然会存在内存泄露。
+(2) 由于是函数内定义事件监听, 形成闭包 主动设置为null
+(3) 闭包
+

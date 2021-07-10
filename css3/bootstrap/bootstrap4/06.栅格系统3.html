@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="zh-cn">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <title></title>
+    <style type="text/css">
+    .row > div:nth-child(1) {
+      background-color: red;
+    }.row > div:nth-child(2) {
+      background-color: green;
+    }.row > div:nth-child(3) {
+      background-color: purple;
+    }.row > div:nth-child(4) {
+      background-color: pink;
+    }
+    </style>
+  </head>
+  <body>
+    <!-- 
+    列排序: order-*(1-12) order-first  使用技术order
+    列偏移: md-offset-*(1-12)  使用技术(margin-left)
+
+     -->
+   	<div class="container">
+   		<div class="row">
+       <div class="col-sm-3">第一部分</div>
+       <div class="col-sm-3 order-first">第二部分</div>
+       <div class="col-sm-3 order-2">第三部分</div>
+       <div class="col-sm-3 order-1">第四部分</div>
+      </div>
+    </div>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4">.col-md-4</div>
+        <div class="col-md-4 offset-md-4">.col-md-4 .offset-md-4</div>
+      </div>
+      <div class="row">
+        <div class="col-md-3 offset-md-3">.col-md-3 .offset-md-3</div>
+        <div class="col-md-3 offset-md-3">.col-md-3 .offset-md-3</div>
+      </div>
+      <div class="row">
+        <div class="col-md-6 offset-md-3">.col-md-6 .offset-md-3</div>
+      </div>
+    </div>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="./js/jquery-3.3.1.slim.min.js"></script>
+    <script src="./js/popper.min.js"></script>
+    <script src="./js/bootstrap.min.js"></script>
+  </body>
+</html>

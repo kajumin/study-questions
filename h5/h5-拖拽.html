@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		body {
+			margin: 0;
+		}
+		.box1 {
+			position: absolute;
+			top: 20px;
+			left: 20px;
+			width: 100px;
+			height: 100px;
+			background-color: red;
+		}
+	</style>
+</head>
+<body>
+<div class="box1" draggable="true"></div>
+<script type="text/javascript">
+	// e.target   引起触发事件的元素
+	// e.currentTarget   事件绑定的元素
+	// 对象this始终等于currentTarget的值。
+	var box1 = document.querySelector('.box1')
+	var x,
+		y;
+	box1.ondragstart = function(e) {
+
+		x = e.pageX - this.offsetLeft
+		y = e.pageY - this.offsetTop
+		console.log(x)
+		console.log(y)
+	}
+	box1.ondragend = function(e) {
+		console.log(this)
+		console.log(e.pageX)
+		this.style.left = e.pageX - x + 'px';
+		this.style.top = e.pageY - y + 'px';
+	}
+</script>
+</body>
+</html>

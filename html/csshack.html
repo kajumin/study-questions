@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.box {
+			width: 100px;
+			height: 100px;
+			background-color: red;
+			transform: skew(30deg,30deg);
+			text-overflow: ellipsis;
+			overflow-wrap: break-word;
+			transform-style:
+		}
+	</style>
+</head>
+<body>
+	<div class="box"></div>
+	<div class="check">
+		<input type="checkbox" name="username" id="check">
+		<label for="check">中国</label>
+	</div>
+	<p style="text-decoration: overline; font-style: italic;">中国人民共和国</p>
+css hack  难维护  难理解 易失效 特性检测 针对性加class
+__::section {}
+width:200px;
+width:180px\9;
+(1) 图片间隙
+	在div中插入图片，图片会将div下方撑大3px。hack1：将<div>与<img>写在同一行。
+	hack2：给<img>添加display：block；
+dt li 中的图片间隙。hack：给<img>添加display：block；
+(2) 默认高度，IE6以下版本中，部分块元素，拥有默认高度（低于18px）
+hack1：给元素添加：font-size：0；
+hack2：声明：overflow：hidden；
+表单行高不一致
+hack1：给表单添加声明：float：left;height： 0;border： 0;
+鼠标指针
+hack：若统一某一元素鼠标指针为手型：cursor：pointer；
+当li内的a转化块元素时，给a设置float，IE里面会出现阶梯状
+hack1：给a加display：inline-block；
+hack2：给li加float：left；
+
+
+checkbox
+tabs
+tree
+
+css权重\
+!important最高
+不进位的  11个class没有id高  
+元素属性  优先级高style比id高
+后写生效
+
+
+雪碧图   position   减少http请求数量   减少图片大小
+自定义字体  宣传/品牌/banner等固定文案  字体图标
+
+base64的使用 用于减少请求 css中   小图片  体积增大4/3
+伪元素和伪类
+    伪类表状态
+    伪元素是真的有元素
+
+文字折行
+text-overflow: ellipsis;
+overflow-wrap(word-wrap):  break-word
+word-break  针对多节文字   中文也是单词  keep-all  break-all
+white-space  空白处是否换行  nowrap
+
+装饰性的属性
+font-weight: bolder(父级)  bold  lighter   100-900
+font-style: italic;
+text-decoration: underline overline line-through
+text-transform: uppercase capitalize lowercase;
+
+盒子模型  width padding border  margin
+flex
+标准盒模型 盒子的总宽高 = css定义的宽高(width) + padding + border + margin
+
+float的特点  
+脱离文档流。 不脱离文本流
+向左/向右浮动直到遇到父元素或者别的浮动元素。
+浮动会导致父元素高度坍塌。
+影响:
+形成块  bfc
+靠上靠左
+对兄弟   上贴非float  旁边贴float元素  不影响块级元素的位置  影响块级元素的文本
+对父级   高度塌陷
+
+
+inline-block  处理间隙  1.font-size:0;  2.标签之间没有空格
+
+
+rem  不会特别精确
+
+动画  background-position
+clip-path : circle(50px at 100px 100px);  支持动画
+polygan(50% 0,100% 50%,50% 100%,0% 50%);
+svg裁剪
+
+translate  scale  skew(倾斜)  rotate(旋转)  不能交换顺序
+transform-origin
+
+transform: translateZ: 100px;  
+perspective: 500px; 越小越清楚
+transform-style: preserve-3d;
+
+面试题
+box-shadow 无限投影
+::before
+::after
+box-shadow  可定制性高
+outline
+box-sizing:border-box
+border-radius: 50%;
+ios图标的圆角  clip-path
+半圆 扇形 
+background-position:
+background-repeat:
+background-size:  cover contain;
+transform: transform-style(flat(2D) preserve-3d)  transform-origin  
+
+transition: property duration timing-function delay;
+多个逗号分开  
+transition-property
+transition-duration
+transition-timing-function
+transition-delay
+ease-in(慢快) ease-out(快慢)  ease-in-out(慢快慢) linear
+
+animation: name duration timing-function delay iteration-count direction play-state fill-mode;
+@keyframes关键帧动画  不用改变状态就可以出发
+animation-name:
+animation-duration:
+animation-delay:
+animation-timing-function: linear ease-in ease-out
+animation-iteration-count: infinite 2;
+animaiotn-direction: reverse(反过来) / alternate(来回) normal;
+animation-play-state: paused;
+animation-fill-mode: forwards; backwards;
+</body>
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.box {
+			width: 100px;
+			height: 100px;
+			background-color: red;
+		}
+		.box1 {
+			animation-name: move, fontSize;
+			animation-duration: 1s, 1s;
+			animation-delay: 1s;
+		}
+		.box2 {
+			animation-name: move;
+			animation-iteration-count: 2;
+			animation-duration: 1s;
+			animation-delay: -1s;
+		}
+		@keyframes move {
+			50% {
+				transform: translate(100px);
+			}
+			100% {
+				transform: translate(0);
+			}
+		}
+		@keyframes move2 {
+			100% {
+				transform: translate(100px);
+			}
+		}
+		@keyframes fontSize {
+			50% {
+				font-size: 20px;
+			}
+		}
+	</style>
+</head>
+<body>
+	<!--
+	 -->
+<div class="box box1">中国</div>
+<div class="box box2">中国</div>
+<button class="btn">按钮</button>
+<script type="text/javascript">
+	var box1 = document.querySelector('.box1')
+	var box2 = document.querySelector('.box2')
+	box1.addEventListener('animationstart',function(e){
+        this.innerHTML = '动画开始';
+        this.style.background = 'lightgreen';
+        console.log('animationstart触发')
+        console.log(e.bubbles) //true
+        console.log(e.cancelable) //true
+        console.log(e.animationName) //move
+        console.log(e.elapsedTime) //0
+    },false);
+    box1.addEventListener('animationend',function(e){
+	    this.style.background="lightgreen";
+	    this.innerHTML = '动画结束';
+	    console.log(e.elapsedTime) //1
+	    console.log('animationend触发')
+	},false);
+	box2.addEventListener('animationstart',function(e){
+        console.log(e.elapsedTime) //1
+    },false);
+    box2.addEventListener('animationend',function(e){
+        console.log(e.elapsedTime) //3
+    },false);
+	var i = 0;
+	box2.addEventListener('animationiteration',function(){
+	    i++;
+	    this.innerHTML = i;
+	    console.log('animationiteration触发')
+	},false);
+
+
+	setTimeout(() => {
+		box2.style.animationName = 'fontSize'
+	}, 5000)
+	var btn = document.querySelector('.btn')
+	btn.onclick = function(e) {
+		history.go()
+	}
+</script>
+</body>
+</html>

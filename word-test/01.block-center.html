@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title></title>
+    <style>
+      .box1 {
+        width: 200px;
+        height: 200px;
+        background-color: red;
+      }
+      .ib-center {
+        text-align: center;
+      }
+      .ib-center-l:after,
+      .ib-center:after {
+        content: "";
+        display: inline-block;
+        height: 100%;
+        vertical-align: middle;
+      }
+      .ib-center-l > .ib-center-box,
+      .ib-center > .ib-center-box {
+        display: inline-block;
+        vertical-align: middle;
+      }
+      .box2 {
+        width: 200px;
+        height: 200px;
+        background-color: red;
+      }
+      .box2 img,
+      .box2 .block-r {
+        float: left;
+        vertical-align: middle;
+      }
+      .box2 .block-r {
+        height: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="box1 ib-center-l">
+      <div class="ib-center-box">
+        <p>123465798</p>
+        <p>123465798</p>
+      </div>
+    </div>
+    <div class="box2">
+      <img src="./assets/images/login-bg.png" alt="" width="50px" />
+      <div class="block-r ib-center">
+        <div class="ib-center-box">
+          <p>123465798</p>
+          <p>123465798</p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

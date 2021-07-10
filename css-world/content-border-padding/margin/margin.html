@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style>
+	</style>
+</head>
+<body>
+<!-- margin 激进的margin属性
+1.元素尺寸 offsetWidth => outerWidth  => content+padding+border
+  元素内部尺寸 clientWidth => innerWidth => content+padding
+  元素外部尺寸 没有原生 => outerWidth   => content+padding+border+margin
+  
+2.margin与元素的内部尺寸
+	margin也可以改变元素的可视尺寸, 但是和padding是相反的, 对于padding, 元素设定了width或者保持包裹性的时候, padding才会改变元素的尺寸, 对于margin相反, 元素设定了width或者保持包裹性的时候, margin对尺寸没有影响, 
+  只有元素是充分利用可用空间状态的时候(width:auto;), margin才可以改变元素的可视尺寸
+  absolute同样可以
+
+    (1)box1没有改变可视宽度, 因为宽度设置死了
+ 	      两端对齐  不需要清除第三栏的margin-right
+    (2)三种两栏布局 左(定)右(适)  右(适)左(定) 右(适)左(定):方法二(margin-right: -20px)
+
+3. margin与外部尺寸 
+  (1)滚动容器底部留白不推荐使用padding-bottom  兼容问题  firefox ie会忽略
+    可以使用margin实现底部空白
+  (2)等高布局 < margin 负值  padding 正值 (height:100% table-cell border)
+  margin负值: 子元素定位到容器之外, 锚点定位
+  border:  兼容性好, 最多三栏, 不支持百分比宽度, 至少有一栏定宽
+  table-cell:  ie8以上  不考虑兼容推荐
+
+4.百分比值(和padding一样都是相对于宽度) 
+  (1)margin 50%; 2:1长方体
+  (2)margin合并  块级元素的的上外边距和下外边距有时会合并为单边距
+  1.兄弟之间 2.父子(第一个|最后一个) 3.空块级元素
+ 
+  正正得正  正负相加 负负最负值
+  阻止合并: margin-top合并
+	父元素设置为块级格式化上下文元素
+	父元素设置border-top值
+	父元素设置padding-top值
+	父元素和第一个子元素之间添加内联元素进行分割
+  阻止margin-bottom: 多一个height min-height max-height
+
+5.margin: auto; 为闲置的尺寸而生
+  填充规则: 块级元素才有作用
+  (1)如果一侧定值, 一侧auto,则auto为剩余空间大小
+  (2)如果两侧均是auto, 则平分剩余空间
+  absolute格式化宽度和高度(margin: auto;IE8及以上)
+
+  margin无效情况:
+  (1)display:inline的非替换元素垂直方向的margin无效, 替换元素可以有效并且没有合并的问题
+  (2)tr td 和display: tabel-cell和table-row无效
+  (3)margin合并的时候,更改margin值不一定有效,  需要大于合并值
+  (4)绝对定位的非定位方向的margin值无效,  left:30%; margin-right: 30px;
+  (5)定高容器的子元素margin-bottom和宽度定死的子元素margin-right的定位无效
+  (6)鞭长莫及导致的margin无效  两栏布局中  margin-left小于左侧内容宽度 
+  (7)内联特性导致margin无效 大到一定值时  vertical-align
+ -->
+</body>
+</html>

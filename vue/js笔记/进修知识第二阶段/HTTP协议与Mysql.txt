@@ -1,0 +1,197 @@
+﻿http 协议(超文本传输协议)：协议就是规范，是用来约束双方。
+约束的是客户端浏览器与服务器进行通讯的一个标准。
+客户端与服务器通讯是基于请求和响应的。
+客户端发送一个请求给服务器，服务器给客户端一个响应. http 协议
+客户端与服务器进行交互，交互的目的就是传递数据。
+http 协议 就是约束客户端与服务器之间进行传递的数据格式.
+http 协议的数据格式分为两块去进行分析
+客户端发送到服务器的请求，称为请求的数据格式.
+
+我们可以把请求的数据格式分为四部分
+1:  请求首行
+2：请求头
+3：请求空行
+4：请求体
+
+get 请求的数据格式.
+1: 请求首行: GET /day_02/code/01_fileupload.html?username=zhangsan&age=11 HTTP/1.1
+GET 请求的提交方式
+/day_02/code/01_fileupload.html  根据地址去找服务器上面的资源.
+HTTP/1.1 定义的协议的版本.
+
+主机地址:   127.0.0.1
+Host	127.0.0.1
+Upgrade-Insecure-Requests	1
+//告诉服务器客户端浏览器的版本，以及操作系统的版本.
+User-Agent	Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.87 Safari/537.36
+//接收，告诉服务器，我客户端接收的数据格式.
+Accept	text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8
+//告诉服务器，我的请求来自于那个页面.
+Referer	http://127.0.0.1/day_02/code/
+//接收的服务器的压缩类型
+Accept-Encoding	gzip, deflate, br
+//接收的语言。
+Accept-Language	zh-CN,zh;q=0.9,ko;q=0.8,zh-HK;q=0.7
+//版本匹配
+If-None-Match	"2a000000005186-273-56efe0a46c0d8"
+//修改
+If-Modified-Since	Tue, 19 Jun 2018 12:44:16 GMT
+
+POST 请求的数据格式：
+请求首行
+POST /day_02/code/api/02_post.php HTTP/1.1
+//请求头 请求头的名称 以及请求头的值。
+Host	127.0.0.1
+Content-Length	15
+Cache-Control	max-age=0
+Origin	http://127.0.0.1
+Upgrade-Insecure-Requests	1
+//POST 提交有一个默认的请求头 Content-Type  application/x-www-form-urlencoded
+Content-Type	application/x-www-form-urlencoded
+User-Agent	Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.87 Safari/537.36
+Accept	text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8
+Referer	http://127.0.0.1/day_02/code/01_fileupload.html
+Accept-Encoding	gzip, deflate, br
+Accept-Language	zh-CN,zh;q=0.9,ko;q=0.8,zh-HK;q=0.7
+请求空行
+
+请求体
+lifephoto	WWWWW
+
+get 方式提交跟post 方式提交的具体的区别:
+    1:  get   发送的数据都在地址栏当中，不安全 ，请求的参数在地址栏当中
+    2：get   发送的数据对数据大小有限制。 请求的参数在地址栏当中
+    3：get   没有请求体，请求的参数在地址栏当中
+    4：post  发送的数据在请求体当中，相对安全
+    5：post 对请求的数据的大小没有限制，文件上传就必须使用post
+    6：post 有一个特殊的请求头  Content-Type: application/x-www-form-urlencoded
+    7:  get 的请求头相对较少，性能稍微要高一些.
+
+服务器响应到客户端的内容，称为响应的数据格式.
+    响应的数据格式是服务器发送到客户端的。
+    1.响应首行
+    2.响应头
+    3.响应空行
+    4.响应体
+响应首行
+HTTP/1.1  200   OK
+服务器的事件
+Date	Tue, 19 Jun 2018 13:45:04 GMT
+Server	Apache/2.2.21 (Win32) PHP/5.3.10
+//文件的最后修改文件
+Last-Modified	Tue, 19 Jun 2018 13:30:43 GMT
+//文件的版本.
+ETag	"3600000000518d-253-56efeb066168b"
+//字节
+Accept-Ranges	bytes
+//告诉客户端浏览器，响应体的长度.
+Content-Length	595
+//告诉客户端浏览器，响应的数据格式.  text/html
+Content-Type	text/html
+
+//响应体.
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+        <!--
+                   文件上传客户端的处理
+                1:文件上传必须表单提交
+                2：必须是post 方式提交
+                3：表单属性  encType="multipart/form-data"
+                4：input type="file"
+        -->
+        <form action="./api/02_post.php" method="post">
+             照片:<input type="text" name="lifephoto"> <br> <br>
+                <input type="submit" value="上传">
+        </form>
+</body>
+</html>
+
+//介绍里面一些常用的.
+      请求头:  告诉服务器，客户端浏览器的版本，以及操作系统的版本.
+      User-Agent      Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.87 Safari/537.36
+
+      案例：getallheaders();获得请求头   strstr()  php方法
+            当客户端访问服务器，服务器获取到客户端浏览器的版本，告诉客户端浏览器，您当前使用的浏览器的版本.
+            如果是chrome   您当前使用的google 浏览器
+            如果使用的firefox ，您当前使用的火狐 浏览器
+            如果使用的IE，您当前使用的浏览器版本较低，请<a href="">升级</a>
+
+      响应头, 服务器给客户端
+      案例二：header(Refresh=10,href="www.baidu.com");
+      告诉客户端浏览器，几秒钟之后去跳转某个具体的页面 。
+      http 协议的内容梳理
+
+       响应的状态码
+               1:200  代表ok 响应成功
+               2:404  请求的资源没有找到，请求路径写错出现这个问题
+               3:500  服务器内部错误
+               4:304  请求的文件没有改变
+               5:302  请求重定向。   跳转
+               6.403  没有权限访问
+        客户端请求服务器的详细解析图。应该需要去掌握的
+
+
+============================================================
+数据库  3306
+mysql  -u  root -p 输入的面膜
+show databases  查看当前mysql 下面有多少个库
+use     database   进入到某个数据库下面去
+show  tables        查看当前库下面有多少张表
+建库，建表.
+
+        数据库
+               1：数据库的概念
+               2：与传统观点存储方式的区别
+               3：mysql 的安装 （wamp 就可以）
+               4：mysql 的存储方式
+                    1：建立库
+                    2：建立表
+                    3：往表当中添加数据
+               5：启动一个客户端连接数据库
+                    mysql -uroop -p1234
+               6:基本的命令
+                    mysql  -uroot -p 输入的面膜
+                    show databases 查看当前mysql 下面有多少个库
+                    use database 进入到某个数据库下面去
+                    show tables 查看当前库下面有多少张表
+
+
+约束：
+primary key      
+
+主键约束，用于唯一标识对应的记录
+
+foreign key    
+
+   外键约束
+
+
+not null            
+
+ 非空约束
+
+
+unique           
+
+   唯一性约束
+
+
+default
+
+              默认值约束，用于设置字段的默认值
+
+
+
+ 
+
+
+
+
+
+
+

@@ -1,0 +1,197 @@
+webpack是一个流行的前端项目构建工具, webpack提供了友好的模块化支持, 以及代码压缩混淆, 处理js兼容问题, 
+性能优化等强大的功能,  提高开发效率和项目的可维护性.
+mode: "development"  //不压缩  开发环境   | production
+
+import * as app from './app.js'
+app.default   可以拿到默认导出
+========================第一步安装webpack
+npm i -D webpack @3
+(1) webpack ./main.js ./build.js
+(2) 配置webpack.config.js  entry:  output
+watch: true, 监听文件变化 自动编译出build.js
+
+========================第二步css less
+npm i -D css-loader@0 style-loader@0
+npm i -D less@3 less-loader@4
+/遇到后缀为.css的文件，webpack先用css-loader加载器去解析这个文件, 最后计算完的css，
+将会使用style-loader生成一个内容为最终解析完的css代码的style标签，放到head标签里。
+npm i -D file-loader@1 url-loader@1
+
+=========================第三步导出html-webpack-plugin
+npm i -D html-webpack-plugin@3
+new HtmlWebpackPlugin({
+	template:'./06_html/src/index.html', //定义模板
+})
+=========================第四步使用webpack-dev-server
+npm i -D webpack-dev-server@2
+{
+hot: true, //热更替  版本不对则不行
+inline: true //代理客户端, 实时预览
+open: true, //第一次构建完成打开浏览器预览
+}
+=========================第五步使用babel编译es6代码
+npm i -D babel-core@6 babel-loader@7 babel-plugin-transform-runtime@6 babel-preset-env@1
+{
+               test: /\.js$/,
+               loader: 'babel-loader',
+               exclude: /node_modules/,
+               options: {
+                    presets: ['env'], //处理关键字
+                    plugins: ['transform-runtime'], //处理函数
+                }
+}
+
+========================第五步vue单文件应用
+npm i vue(2.6.12) vue-loader@14 vue-template-compiler(2.6.12)
+
+module.exports = 'hello world';   导出
+require('./moduleB');   //导入
+
+define(function() { return new Date().getTime();});
+define(function(require) { const moduleB = require('moduleB')})
+require(['moduleA','moduleB']);
+
+===esModule   语言层规范        label   编译成common.js模块化规范
+export default  new Date().getTime();
+import timestamp from './moduleB';
+
+1.语言上层的运行环境中实现的模块化，模块化规范由环境自己定义
+2.相互之间不能共用模块，不能在node.js运行amd模块  不能直接在浏览器运行commonjs模块
+esModule可以解决上面问题
+
+打包  
+common.js运行到个个浏览器   磨平差异
+打包原理：把模块放进函数里function(require,module,exports) { } 
+
+
+=============第二次学习webpack  1 2 3 4
+npm/bower  包管理工具
+解决模块打包 grunt gulp  browserify  webpack
+common.js规范而来的
+0:  对window模块的处理
+1: 对main.js模块的处理  抛出vue实例对象
+2: 导出vue实例对象   vue.esm.js
+3: setimmediate  vue对dom异步攻心
+6: app.js解析有关  实例的调用
+
+====配置webpack执行哪个webpack.config
+"dev":"webpack --config  ./webpack.dev.config.js",
+"prod":"webpack --config  ./webpack.prod.config.js"
+"build": "webpack  ./src/main.js  ./dist/bundle.js"
+
+==========================解析css
+css-loader@1 style-loader@0
+
+{
+test:/\.css$/,
+loader:'style-loader!css-loader'
+}
+==========================解析图片
+url-loader@1  file-loader@1   解析路径  解析图片
+
+test:/\.(jpg|png|jpeg|gif|svg)$/,
+loader:'url-loader?limit = 3000'
+{
+	loader: 'url-loader',
+	options: {
+		limit: 8192
+	}
+}
+============================less解析
+vue组件中指定style lang = "less"  即可
+npm install less-loader@4.12 -D
+{
+	test:/\.less$/,
+	loader: 'style-loader!css-loader!less-loader'
+}
+==============================scss解析
+npm  i -D node-sass  sass-loader    sass-loader需要7.x版本
+{
+      	test: /\.scss$/,
+      	use: ['style-loader','css-loader','sass-loader']
+},
+============================postcss  autoprefixer
+npm i -D postcss-loader
+use: ['style-loader','css-loader','postcss-loader']
+还依赖于postcss.config.js配置
+const autoprefixer = require('autoprefixer');
+module.eports = {
+	plugins:[autoprefixer]
+};
+还依赖于.browserslistrc
+last 10 versions
+========================自动生成html
+npm i -D  htm-webpack-plugin@2.30.1
+output:{
+   path: path.resolve(__dirname, 'dist'),//相对转绝对
+   filename: 'build.js'   /原本就有的
+},
+new HtmlWebpackPlugin({
+	template:'./src/index.html',//参照物
+})
+
+======webpack-dev-server@2.9.0    新版本需要webpack-cli   自动打包编译
+ // "dev": "webpack --config ./webpack.dev.config.js",  替换成下面
+"dev": "webpack-dev-server --open --hot --inline  --config   ./webpack.dev.config.js", 
+自动打开  --open
+主机地址  --host  127.0.0.1
+端口号:     --port  8080
+会启动一个实时http服务器
+打包生成的输出文件  默认放在项目跟目录中,而且是虚拟的,看不见的
+
+=============es6高级语法处理
+npm i -D install  babel-core  babel-loader  babel-preset-env   babel-pligin-transform-runtime
+babel-preset-env   最新版本
+,
+            {
+                // 处理es6,7,8
+                test: /\.js$/,
+                loader: 'babel-loader',
+                exclude: /node_modules/,  //忽略node_modules
+                options: {
+                    presets: ['env'],    //处理关键字
+                    plugins: ['transform-runtime'], //处理函数
+                }
+            }
+==========es中解析class
+npm i -D babel-loader @babel/core  @babel/runtime 
+npm i -D @babel/preset-env  @babel/plugin-transform-runtime(并不需要这个)   @babel/plugin-proposal-class-properties 
+====babel.config.js
+module.exports = {
+	presets: ['@babel/preset-env'],
+ 	plugins: ['@babel/plugin-transform-runtime', '@babel/plugin-proposal-class-properties']
+}
+========单文件组件引入
+传统组件的问题和解决方案  
+(1)全局组件必须保证名称不重复
+(2)字符串缺乏高亮显示 
+.vue文件
+<template>
+</template>
+<script></script>
+<style scoped>
+</style>
+
+npm i vue -S
+组件包含 结构template  样式style  脚本script
+npm i -D vue-loader@14.1.1  加载vue文件
+npm i -D vue-template-compiler@2.5.17   加载组件模板
+	
+el:'#app',
+render:h => h(App)
+
+// 2.0新增 使用虚拟DOM提升性能的,因为它是基于js计算
+// 通过creatElement(h)创建节点
+// creatElement(h)是render的核心方法
+// vue编译template里面
+// 不使用以下	
+// components:{
+// 	App
+// },
+// template:`<App />`
+
+
+webpack -p   //-p打包相关参数
+==========loader调用过程
+是否js模块(是高级语法(是loader解析  否直接打包)  否配置对应的loader(是loader处理  否报错))   
+

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.flow {
+			position: absolute;
+		}
+	</style>
+</head>
+<body>
+	<!-- 无依赖绝对定位
+	位置就是原来没有使用absolute时的位置
+	 -->
+	<div class="box1">
+		<h3>标题<span class="flow">span</span></h3>
+	</div>
+	<div class="box2">
+		<h3>标题<div class="flow">div</span></h3>
+	</div>
+
+	<div class="box3">
+		<h3>标题</h3><span class="flow">span</span>
+	</div>
+	<div class="box4">
+		<h3>标题</h3><div class="flow">div</span>
+	</div>
+
+</body>
+</html>

@@ -1,0 +1,49 @@
+HTML5新增常用新标签：
+
+header： 定义文档的页眉
+nav： 定义导航链接的部分
+footer： 定义文档或节的页脚
+article： 规定独立的自包含内容
+section： 定义文档中的节
+aside： 定义其所处内容之外的内容
+audio：音频
+video：视频
+
+HTML5新增常用新属性：
+
+placeholder   占位符提供可描述输入字段预期值的提示信息
+autofocus     规定当页面加载时 input 元素应该自动获得焦点
+multiple      选择文件多文件上传
+autocomplete  规定表单是否应该启用自动完成功能
+required      必填项
+accesskey     规定激活（ 点）元素的快捷键
+
+新增常用type属性值：
+
+email        输入邮箱格式
+tel	     输入手机号码格式
+url	     输入url格式
+number	     输入数字格式
+search	     搜索框
+range        自由拖动滑块
+time	     时间
+date	     年 /月/日
+datetime     日期
+month        年/月
+week         年/周
+
+如何处理HTML5新标签的浏览器兼容问题？
+
+1 . document.createElement（）方法即可让浏览器识别新标签，浏览器支持新标签后，还可以为新标签添加CSS样式。
+
+2 . 使用Google的html5shiv包
+  在<head>中调用以下代码：
+ <!--[if lt IE 9]>  
+    <script> src="http://html5shim.googlecode.com/svn/trunk/html5.js"</script>  
+ <![endif]--> 	
+
+3 . 使用 kill IE6
+在</body>之前调用以下代码：
+<!--if lte IE 6]>  
+    <script src="http://letskillie6.googlecode.com/svn/trunk/letskillie6.zh_CN.pack.js"></script>   
+<![endif]-->  

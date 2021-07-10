@@ -1,0 +1,101 @@
+组件: 划分块  component(全局)  /components(局部) 
+声子  挂子  用子
+1.声明组件     局部组件var App={ template:``}   全局组件Vue.conponent('vbtn',{ })
+2.挂载组件     component: { App,Aside }   全局组件不需要挂载  使用时用短横线写法
+2.使用组件 <vbtn></vbtn>  全局组件和局部组件使用方法相同
+
+(1) 父子组件通信   父 - 子    bind绑定  props接收  直接使用  子组件不能修改父组件数据  可以接收下来
+// 1.在父组件中  先绑定  :自定义的属性名(posts) = posts(数组)     也可以是常量 type='success'
+// 2.子要声明 props:['父的自定义的属性名']  来接收      props:['posts']   字典
+// 3.收到了就是自己 你可以任意使用  1.template   2. js中this.post2   3.接收 item =this.posts
+
+(2) 子 - 父    事件  触发父事件(可以传参)  父事件使用
+1. 当点击事件发生时  向父组件传递消息
+2.事件中子组件触发父组件自定义事件   this.$emit('change',第二个参数(数据))   change是父组件传递的事件名
+3.父自定义事件触发执行绑定函数, 可以改变数据
+
+全局组件  声明 -- 使用   组件上调用事件需要使用原生的事件  --  
+全局组件上绑定@click.native = 'add'
+触发所使用组件的method方法
+========父子传递信息  向下数据流  父组件的异步数据传输不到子组件
+1.通过computed进行父属性改变并显示  涉及this都会监视起来   watch是单个监视  computed群监视
+   父传子: 子不能进行(接收\修改再显示)
+子改父:
+1.父传子: 可以通过事件进行修改  父定义事件  然后传递给子  子调用方法
+2.父传子: eventbus.js   父定义函数Bus.$on(function(data){})   子Bus.$emit(function('data'){})
+3.父: v-bind:imgs.sync="imgs"  子: this.$emit('update: imgs',[]);
+
+=====================filter  / filters   过滤器
+1. 声明: 
+    局部过滤器   filters: { 过滤器名字: function(value,arg=''){ 内部 return }  }
+   全局过滤器    Vue.filter('filtername',function(value,arg1){ } )
+2.全局和局部一样使用 {{ msg | filterName }}  {{msg | filterName('hehe')}}   
+hehe对应的是全局filter的arg  没有参数不用()
+====================== watch监听器
+watch  侦听属性监听器单个属性  基本类型简单监视  复杂数据类型深度监视
+// 监听复杂数据类型  object array 深度监视  
+	stus:{
+		deep:true,//深度监视
+		handler:function(newV,oldV) {
+			console.log(newV);
+			console.log(oldV);
+			console.log(newV[0].name);
+			console.log(oldV[0].name);
+		}
+	}
+=================computed计算属性
+案例逻辑: 
+1.绑定点击事件  触发后通过索引修改当前播放的歌曲  this.currentIndex = index
+2.当索引和index相等时样式改变  currentIndex == index
+3.监视audio的src的计算值    this.musicData[this.currentIndex].songSrc    当currentIndex改变时机会重新计算
+
+
+
+==========生命周期
+生命周期的钩子函数   函数
+	beforeCreate
+	created            渲染模板  可以获取到data的值   可以发起ajax请求
+	beforeMount   挂载到dom之前   到mounted中  虚拟dom替代dom
+	mounted         可以使用组件中的dom
+                activated
+	beforeUpdate  可以获取原始dom  
+	updated          可以获取最新的DOM
+	deactivated
+	beforeDestroy  释放
+	destroyed
+
+
+========绑定ref属性  $refs获取属性  mounted才能获取
+// 如果是给标签绑定ref属性，使用this.$refs.xxx获取的是原生js的DOM对象
+// ref 属性值 不能重名
+// 如果是给组件绑定的ref属性 那么this.$refs.xxx获取的是组件对象
+
+=========添加事件的特殊情况
+input输入框一显示出来就获取焦点
+// $nextTick 是在DOM更新循环结束之后执行延迟回调，在修改数据之后使用$nextTick可以在回调中获取到更新后的DOM
+        	this.$nextTick(function() {
+        	 	// 更新之后的DOM
+                                //  console.log(this.$refs.input.value)
+        	 	 this.$refs.input.focus();
+        	 })
+
+
+
+===========自定义指令  bind  inserted update componentUpdated unbind
+// 注册一个全局自定义指令 `v-focus`
+Vue.directive('focus', {
+  // 当被绑定的元素插入到 DOM 中时……
+  inserted: function (el) {
+    // 聚焦元素
+    el.focus()
+  }
+})
+==============局部
+directives: {
+  focus: {
+    // 指令的定义
+    inserted: function (el) {
+      el.focus()
+    }
+  }
+}

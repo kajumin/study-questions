@@ -1,0 +1,30 @@
+position: absolute;
+top left相对于padding-box
+百分比也是相对于padding-box
+格式化宽度也是相对于padding-box
+伪元素也是一样的
+=====================margin-top
+浮动:   margin-top负值有效
+
+inline-block:  margin-top负值无效 正值有效
+
+inline   margin无效
+
+img: margin有效  负值受幽灵空白节点vertical-align: baseline;的影响, 内联元素不能到计算容器外部的
+        vertical-align则不受限制
+
+===============文字与图标对齐总结
+1.使用vertical-align: middle;可以使背景(inline-block) 文字越大的时候, 对齐效果更不好
+2.使用父元素line-height等于图标高度  
+    2.2不等时, 可以使用图标设置line-height值等于图标高度
+3.vertical-align使用ex作为单位(.6ex)
+  relative相对定位, top值需要计算(自身高度的一半)
+  好处是: font-size值变化时不需要再改变
+
+
+================a  target
+ html > a-parent > a
+_blank	在新窗口中打开被链接文档
+_self	在被点击时的同一框架中打开被链接文档(默认) 
+_parent	在父框架中打开被链接文档。
+_top	在窗口主体中打开被链接文档。

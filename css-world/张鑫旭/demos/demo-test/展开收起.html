@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		::-webkit-details-marker {
+		    display: none;
+		}
+		::-moz-list-bullet {
+		    font-size: 0;
+		    float: left;
+		}
+		summary {
+			user-select: none;
+			outline: none;
+		}
+		summary .detail-content {
+			display: none;
+		}
+		.detail-sketch {
+			display: inline;
+		}
+		a {
+			position: relative;
+			line-height: 16px;
+			text-decoration: none;
+			color: #333;
+		}
+		a:after {
+			content: '';
+			position: absolute;
+			top: 7px;
+			right: -15px;
+			border-width: 10px 6px;
+			border-style: solid;
+			border-color: red transparent transparent transparent;
+		}
+		[open] summary a {
+			font-size: 0;
+		}
+		[open] summary a:before {
+			content: '收起';
+			font-size: 16px;
+		}
+		[open] summary a:after {
+			content: '';
+			position: absolute;
+			top: -22px;
+			right: -15px;
+			border-width: 10px 6px;
+			border-style: solid;
+			border-color: transparent transparent red  transparent;
+		}
+		[open] summary .detail-sketch {
+			display: none;
+		}
+		[open] summary .detail-content {
+			display: inline;
+		}
+		.box1 {
+			width: 50px;
+			max-height: 0px;
+			overflow: hidden;
+ 		 	transition: max-height .25s;
+		}
+		input:focus + .box1 {
+			color: red;
+			max-height: 100px;
+		}
+		.box2 {
+			opacity: 0;
+			transition: opacity 2s;
+		}
+		input:focus ~ .box2 {
+			opacity: 1;
+		}
+		.box3 {
+			visibility: hidden;
+			transition: 2s;
+			opacity: 0;
+		}
+		input:focus ~ .box3 {
+			visibility: visible;
+			opacity: 1;
+		}
+		.box4 {
+			display: inline-block;
+			transform: scale(0);
+			transform-origin: top center;
+			transition: 2s;
+		}
+		input:focus ~ .box4 {
+			transform: scale(1);
+		}
+	</style>
+</head>
+<body>
+<details>
+	<summary>
+		<div class="detail-sketch">《神探狄仁杰》由《使团惊魂》,《蓝衫记》和《滴血雄鹰》三个各自独立又息息相关的故事组成。《使团惊魂》讲述武周年间，突厥战争结束，举国上下迎接突厥议和使团的到来。然而就在使团逗留期间，京城接连突发了几件举国震惊的大案。严峻的内忧外患令武则....</div>
+		<div class="detail-content">《神探狄仁杰》由《使团惊魂》,《蓝衫记》和《滴血雄鹰》三个各自独立又息息相关的故事组成。《使团惊魂》讲述武周年间，突厥战争结束，举国上下迎接突厥议和使团的到来。然而就在使团逗留期间，京城接连突发了几件举国震惊的大案。严峻的内忧外患令武则天（吕中饰）忧思如焚，急调狄仁杰（梁冠华饰）进京火速破案。《蓝衫记》中狄仁杰与护卫李元芳（张子健饰）正在乡间暗查民情，然而一起一天内连发两起命案的案件引起了他们的注意。《滴血雄鹰》则由一幅用鲜血图画的滴血雄鹰引出。
+本部历史侦探悬疑系列电视剧《神探狄仁杰》，已有四部推出，部部故事悬念迭出，情节扣人心弦，《神探狄仁杰5》也即将在2014与观众见面。《神探狄仁杰》系列电视剧不仅融合扑朔迷离的悬疑剧情与恐怖的视觉元素为一身，更加入了李元芳与狄如燕的爱情,狄仁杰与曾泰的师生之情,以及武则天与狄仁杰的君臣际遇等情感戏码，使得本系列电视剧在惊险刺激的段段案件中增添了不少温情色彩。
+		</div>
+		<a>展开</a>
+	</summary>
+</details>
+
+<input type="text" name="" class="input">
+<div class="box1">中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国</div>
+<div class="box2">中国</div>
+<div class="box3">中国</div>
+<div class="box4">中国</div>
+</body>
+</html>

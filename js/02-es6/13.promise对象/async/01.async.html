@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<!-- 
+async函数就是generator函数的语法糖
+
+对generator的改进:
+1.内置执行器 不需要co模块
+2.更好的语义 async表示函数内有异步操作 await表示紧跟着的表达式需要等待
+3.更广的适用性  co约定, yield后面只能是Thunk函数或者promise对象, await后面可以是任意值
+4.返回值是promise
+
+
+1.返回的promise对象
+return语句返回的值, 会成为then回调函数的参数, 状态为成功状态
+return 一个promise对象 
+async函数内部抛出的错误会导致返回的promise状态为失败, 抛出的错误信息被catch回调函数接收到
+
+返回的promise对象状态变化, 必须等到所有await后面的promise对象执行完才会发生改变, 除非遇到return语句或者抛出错误
+
+2. await命令
+await后面不是一个promise对象, 会立即resolve转为一个promise对象
+await后面的promise状态为rejected, 则reject的参数会被catch回调函数接收到
+
+解决方法:
+(1)await放入try catch中
+(2)后面的promise添加catch回调函数处理错误
+
+注意点:
+1. 错误处理try catch
+2. 多个await命令后面的异步操作不是继发关系, 最好让它们同时触发
+   (1)Promise.all方法
+   (2)先调用, 生成promise对象再await
+3.await命令只能在async函数中使用, 普通函数报错
+多个异步继发关系使用: for of
+多个异步并发关系使用: map方法先发请求返回promise对象, 再用promise.all || for of result.push(await p)
+
+应用: 
+按顺序完成异步操作:
+(1)继发关系 for of
+(2)并发关系 map 配合for of 
+-->
+<script>
+	var timeout = function(ms) {
+		return new Promise((resolve) => {
+			setTimeout(resolve, ms);
+		})	
+	}
+
+	async function asyncPrint(value, ms) {
+		await timeout(ms)
+		console.log(value)
+	}
+	asyncPrint('hello world', 2000)
+
+	// 1.
+	async function f() {
+		// return 1
+		throw new Error('async函数内部出错了')
+	}
+	f().then(res => {
+		console.log(res)
+	}).catch(res => {
+		console.log(res)
+	})
+
+	// 2.
+	async function f2() {
+		// return await 1
+		// await Promise.reject('出错了')
+		// 方法一: 
+		// try {
+		// 	await Promise.reject('出错了') // 宏任务到catch中
+		// } catch(err) {
+		// 	console.log(err)
+		// }
+		// 方法二: 
+		await Promise.reject('出错了')
+		.catch(err => {
+			console.log(err)
+		})
+		return await 1
+	}
+	f2().then(res => {
+		console.log(res)
+	})
+</script>
+</body>
+</html>

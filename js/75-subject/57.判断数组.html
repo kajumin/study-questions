@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<script type="text/javascript">
+	// 基本数据类型: typeof  但是null不可以
+	console.log('typeof: ')
+	console.log(typeof 2)
+ 	console.log(typeof '2')
+ 	console.log(typeof false)
+ 	console.log(typeof undefined)
+ 	console.log(typeof Symbol())
+ 	console.log(typeof null)
+
+	// 复杂数据类型: typeof  可以判断function  instanceof isPrototypeOf()
+	console.log('instanceof: ')
+	// isPrototypeOf 一个对象是否出现在另一个对象的原型链上
+	console.log(Function.prototype.isPrototypeOf(function(){}))
+
+	// instanceof 一个对象的prototype属性是否出现在另一个对象的原型链上
+	console.log({} instanceof Object)
+ 	console.log([] instanceof Object)
+ 	console.log(function(){} instanceof Function)
+
+	// 判断数组  六种
+	console.log('判断array(六中): ')
+	console.log(Array.isArray([]))
+	console.log(Object.prototype.toString.call([]) === '[object Array]')
+	console.log([] instanceof Array)
+	console.log([].constructor === Array)
+	console.log(Array.prototype.isPrototypeOf([]))
+	console.log([].__proto__ === Array.prototype)
+
+	
+</script>
+</body>
+</html>

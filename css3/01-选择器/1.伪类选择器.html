@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.ul1 li:first-child {
+			background-color: red;
+			/*第一个不为li元素则无效*/
+		}
+		.ul1 li:first-of-type {
+			background-color: yellow;
+		}
+		.ul2 li:nth-child(3) {
+			background-color: red;
+			/*第3个不为li元素则无效*/
+		}
+		.ul2 li:nth-of-type(3) {
+			background-color: yellow;
+		}
+		.ul3 li:nth-child(odd) {
+			background-color: red;
+			/*不是li则无效, 但不是li的元素也计算在内*/
+		}
+		.ul3 li:nth-of-type(even) {
+			background-color: yellow;
+			/*不是li不计算在内*/
+		}
+		
+
+
+	</style>
+</head>
+<body>
+<p>first-child  first-of-type</p>
+<ul class="ul1">
+	<p>强行插入</p>
+	<li>1</li>
+	<li>2</li>
+	<li>3</li>
+	<li>4</li>
+	<li>5</li>
+</ul>
+<p>nth-child  nth-of-type</p>
+<ul class="ul2">
+	<li>1</li>
+	<li>2</li>
+	<p>强行插入</p>
+	<li>3</li>
+	<li>4</li>
+	<li>5</li>
+</ul>
+<p>nth-child(even)  nth-of-type(odd)</p>
+<ul class="ul3">
+	<li>1</li>
+	<li>2</li>
+	<p>强行插入</p>
+	<li>3</li>
+	<li>4</li>
+	<li>5</li>
+</ul>
+
+</body>
+</html>

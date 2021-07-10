@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<div class="par" style="visibility: hidden;">
+	<p>par</p>
+	<div class="son" style="visibility: visible;"><p>son</p></div>
+</div>
+<div class="par" style="display: none;">
+	<p>par</p>
+	<div class="son" style="display: block;"><p>son</p></div>
+</div>
+<div class="box" style="width: 100px;height: 100px;background-color: red;">
+	<div class="box-son" style="width: 50px;height: 50px;background-color: #096;"></div>
+</div>
+<script type="text/javascript">
+	var box = document.querySelector('.box')
+	var boxSon = document.querySelector('.box-son')
+	box.addEventListener('mouseenter', (e)=>{
+		// console.log(e)
+		console.log(e.target)
+	})
+	boxSon.addEventListener('mouseenter', (e)=>{
+		console.log(e.target)
+	})
+	box.addEventListener('mouseleave', (e)=>{
+		// console.log(e)
+		console.log(e.target)
+	})
+	boxSon.addEventListener('mouseleave', (e)=>{
+		console.log(e.target)
+	})
+	// box.addEventListener('mouseover', (e)=>{
+	// 	// console.log(e)
+	// 	console.log(e.target)
+	// })
+	// boxSon.addEventListener('mouseover', (e)=>{
+	// 	console.log(e.target)
+	// })
+	// box.addEventListener('mouseout', (e)=>{
+	// 	// console.log(e)
+	// 	console.log(e.target)
+	// })
+	// boxSon.addEventListener('mouseout', (e)=>{
+	// 	console.log(e.target)
+	// })
+</script>
+</body>
+</html>

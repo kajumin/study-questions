@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		span {
+			display: inline-block;
+			padding: 4px 12px;
+			border-radius: 6px;
+			background-color: hsla(120, 20%, 80%);
+			color: #333;
+			cursor: pointer;
+		}
+		a {
+			display: inline-block;
+			padding: 4px 12px;
+			border-radius: 6px;
+			background-color: hsla(120, 20%, 80%);
+			color: #333;
+			text-decoration: none;
+			cursor: pointer;
+		}
+		span:hover {
+			background-color: hsla(120, 20%, 70%);
+		}
+		a:hover {
+			background-color: hsla(120, 20%, 70%);
+		}
+		[type=submit] {
+			position: absolute;
+			clip: rect(0 0 0 0);
+		}
+		.btn {
+			display: inline-block;
+			padding: 2px 12px;
+			background-color: #cd0000;
+			color: #fff;
+			font-size: 14px;
+			cursor: pointer;
+		}
+		[type=submit]:focus + label.btn {
+			outline: 1px dotted Highlight;
+			outline: 5px auto -webkit-focus-ring-color;
+		}
+	</style>
+</head>
+<body>
+<!-- input-number 
+1.输入数值的有效与否与step以及min属性相关，至于max, 是卖切糕的，不搭噶。
+	
+2.输入值是否有效的计算公式是：
+是否：(输入数值 - min值) ÷ step值 === 整数 
+min="1"  step="2.1" 
+有效值: 1 和 3.1
+-->
+
+<!-- 属性书写顺序 
+1.class
+2.id
+3.data-*
+4.其他
+-->
+<!-- 
+form表单中button默认有提交行为, type="button"可以失去提交行为
+ -->
+
+
+<!-- 
+	键盘可访问性 辅助设备 
+span 模拟按钮: (1)role="button", (2)tabindex="0", 
+(3)附加键盘事件: 如keydown, 然后当回车或空格键的时候，触发click事件; a标签则不需要
+
+(4)绑定事件
+
+a 模拟按钮: (1)role="button" (2)绑定事件阻止默认行为
+
+-->
+ <form>
+ 	 <input type="number" name="score" step="2.1" min="1">
+ 	 <button type="button">按钮</button>
+ </form> 
+ <form>
+ 	 <input type="text" name="username" id="username">
+ 	 <input type="submit" id="submit">
+ 	 <label for="submit" class="btn">提交</label>
+ </form>
+
+<div style="margin-top: 50px;">
+<span class="btn1 button">按钮1</span>
+
+<!-- tabindex="0" role="button"-->
+<span class="btn2 button" role="button" tabindex="0">按钮2</span>
+
+<!-- tabindex="0" role="button"-->
+<span class="btn3 button" role="button" tabindex="0" data-key="true">按钮3</span>
+
+<a href="javascript:;" class="btn4 button" role="button">按钮4</a>	
+</div>	
+
+<script type="text/javascript">
+	var btn1 = document.querySelector('.btn1')
+	var btn2 = document.querySelector('.btn2')
+	var btn3 = document.querySelector('.btn3')
+	var btn4 = document.querySelector('.btn4')
+	btn1.onclick = function() {
+		console.log('btn1 click')
+	}
+	btn2.onclick = function() {
+		console.log('btn2 click')
+	}
+	var buttons = document.querySelectorAll('.button[data-key]');
+	// console.log(buttons);
+	[].forEach.call(buttons, function(value, index) {
+		console.log(value)
+		var f = value.dataset['key']
+		console.log(f)
+		if(f) {
+			value.onkeydown = function(e) {
+				console.log('keydown', e.keyCode)
+				var keyCode = e.keyCode
+				if(keyCode === 32 || keyCode === 13) {
+					value.click()
+				}
+				
+			}
+		}
+	})
+	btn3.onclick = function() {
+		console.log('btn3 click')
+	}
+	btn4.onclick = function() {
+		console.log('btn4 click')
+	}
+</script>
+</body>
+</html>

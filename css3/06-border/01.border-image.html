@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+	<title></title>
+	<style>
+	.box {
+		width: 300px;
+		height: 300px;
+	    border: 15px solid transparent;
+	    background-color: #eee;
+	    margin-bottom: 30px; 
+	    border-image-source: url("../../images/border.jpg");
+	}
+	.box1 {	    
+	    border-image-slice: 30;
+	    /*没有width 默认边框宽度*/
+	    border-image-slice: 30 fill;
+	}
+	.box2 {
+	    border-image-slice: 30;
+	    /*width设置大了会向内*/
+	    border-image-width: 30px;
+	}
+	.box3 {
+	    border-image-slice: 30;
+	    /*width设置大了会向内*/
+	    border-image-width: 30px;
+	    /*把width大了方向向外拉*/
+	    border-image-outset: 15px;
+	}
+	.box4 {
+	    border-image-slice: 30 fill;
+	    /*width设置大了会向内*/
+	    border-image-width: 30px;
+	    /*把width大了方向向外拉*/
+	    border-image-outset: 15px;
+	    border-image-repeat: stretch;
+	    border-image-repeat: round;
+	    border-image-repeat: repeat;
+	}
+	</style>
+</head>
+<body>
+	<!-- 
+	(1)border-image-source	图片的路径
+	(2)border-image-slice	图片边框向内偏移  20 fill(填充)
+	(3)border-image-width	图片边框的宽度
+	(4)border-image-outset	边框图像区域超出边框的量
+	(5)border-image-repeat	图像边框是否应平铺(repeat)、铺满(round)或拉伸(stretch默认)
+		
+	border-image: source slice / width / outset repeat;
+	兼容性：Internet Explorer 11, Firefox, Opera 15, Chrome 以及 Safari 6 支持 border-image 属性 
+	 -->
+	 <!-- 
+	1.width设置得比较大, outset可以控制方向(只能正外)
+	2.
+	  -->
+	<p>默认border-width</p>
+    <div class="box box1"></div>
+    <p>默认border-image-width大了会向内</p>
+    <div class="box box2"></div>
+    <p>border-image-width大了会向内, border-image-outset向外拉</p>
+    <div class="box box3"></div>
+    <div class="box box4"></div>
+</body>
+</html>

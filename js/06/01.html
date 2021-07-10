@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<p class="box"></p>
+	<p></p>
+	<p></p>
+<script type="text/javascript" src="./zepto.js"></script>
+<!-- <script type="text/javascript" src="./zepto-1.2.0.js"></script> -->
+<script type="text/javascript">
+	console.log(typeof $('p'));   //object
+	console.log($('p'));
+	console.log([1,2,3].__proto__);
+	console.log({}.__proto__);
+	console.log($([1,2,3,null,undefined]));
+	console.log(typeof $([1,2,3,null,undefined]));  //object
+	console.log($({name:'bang',age:20}));  //selector: ''
+	console.log($($('.box')))
+	console.log($(document.querySelector('.box')))
+	console.log($.zepto)
+	console.log($.fn)
+
+
+	// window.a 跟a性能差不多
+	// var a = 1;
+	// function fn() {
+		
+	// 	function fn2(){
+	// 		console.time('zepto');
+	// 		for(var i = 0;i < 1000;i ++) {
+	// 			console.log(window.a)
+	// 		}
+	// 		console.timeEnd('zepto')
+	// 	}
+	// 	fn2();
+	// }
+	// fn();
+	
+</script>
+</body>
+</html>

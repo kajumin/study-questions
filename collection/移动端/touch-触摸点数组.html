@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.box1 {
+			width: 200px;
+			height: 200px;
+			background-color: red;
+		}
+		.box2 {
+			height: 100px;
+			background-color: green;
+		}
+	</style>
+</head>
+<body>
+<div class="box1">
+	<div class="box2"></div>
+</div>
+<input type="text" name="" class="username"> 
+<script type="text/javascript">
+	/*事件对象: 每个触摸事件的event对象都提供了在鼠标事件中常见的属性，包括事件类型、事件目标对象、事件冒泡、事件流、默认行为等
+    
+    1.currentTarget属性返回事件正在执行的监听函数所绑定的节点
+　　2.target属性返回事件的实际目标节点
+　　3.srcElement属性与target属性功能一致
+    4.eventPhase属性返回一个整数值，表示事件目前所处的事件流阶段。
+     	0表示事件没有发生，1表示捕获阶段，2表示目标阶段，3表示冒泡阶段
+    5、bubbles属性返回一个布尔值，表示当前事件是否会冒泡。该属性为只读属性
+    6、cancelable属性返回一个布尔值，表示事件是否可以取消。该属性为只读属性
+       e.preventDefault();
+
+	1、touches：当前触摸屏幕的触摸点数组（至少有一个触摸在事件目标元素上）
+	2、changedTouches：导致触摸事件被触发的触摸点数组
+	3、targetTouches：事件目标元素上的触摸点数组
+	如果用户最后一个手指离开屏幕触发touchend事件，这最后一个触摸点信息不会出现在targetTouches和touches数组中
+*/
+	var box1 = document.querySelector('.box1'); 
+	var box2 = document.querySelector('.box2'); 
+	var username = document.querySelector('.username'); 
+	//on事件是冒泡型事件
+	
+    box1.addEventListener('click', function(e){
+
+      	console.log(e.eventPhase) //1
+      	console.log(e.bubbles) //是否会冒泡
+      	console.log(e.cancelable) //是否可以取消默认行
+      	e.preventDefault();
+    	// e.stopPropagation();
+    }, true) 
+    box1.onclick = function(e) {
+		console.log(e.eventPhase) //3
+	}
+
+    username.addEventListener('focus', function(e){
+
+      	console.log(e.bubbles) //是否会冒泡
+      	console.log(e.cancelable) //是否可以取消默认行
+      	// e.preventDefault();
+    	// e.stopPropagation();
+    }) 
+
+    var box1 = document.querySelector('.box1'); 
+    box1.addEventListener('touchstart', function(e){
+      	console.log(e.touches)
+      	console.log(e.changedTouches)
+      	console.log(e.targetTouches)
+    }) 
+    box1.addEventListener('touchend', function(e){
+      	console.log(e.touches)
+      	console.log(e.changedTouches) //只有这个数值有最后一个手指离开的触摸点
+      	console.log(e.targetTouches)
+    })
+    // 
+    /*
+    	clientX:触摸目标在视口中的x坐标
+		clientY:触摸目标在视口中的y坐标
+		identifier:标识触摸的唯一ID
+		pageX:触摸目标在页面中的x坐标（包含滚动）
+		pageY:触摸目标在页面中的y坐标（包含滚动）
+		screenX:触摸目标在屏幕中的x坐标
+		screenY:触摸目标在屏幕中的y坐标
+		target:触摸的DOM节点目标
+	*/
+
+</script>
+</body>
+</html>

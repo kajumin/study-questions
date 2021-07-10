@@ -1,0 +1,61 @@
+1.开发打包有不同配置
+2.eslint 验证
+3.代码风格统一
+4.commit 规范验证
+5.接口mock
+6.热更新
+7.异步组件
+
+mock要有哪些功能: 
+mock功能和前端代码解耦
+一个接口支持多种mock情况
+无需依赖另外的后端服务和第三方库
+能在network看到mock接口的请求且能区分
+mock数据、接口配置和页面在同一个目录下
+mock配置改变无需重启前端dev
+生产打包可以把mock数据注入到打包的js中走前端mock
+对于后端已有的接口也能快速把Response数据转化为mock数据
+
+==========mock.js
+在做开发时，当后端的接口还未完成，前端为了不影响工作效率，手动模拟后端接口，
+随机生成数据, 可模拟对数据的增删改查
+1.用法简单
+2.前后端分离，
+3.可随机生成大量的数据
+4.数据类型丰富  并且可扩展数据类型
+5.在已有接口文档的情况下，我们可以直接按照接口文档来开发，
+将相应的字段写好，在接口完成 之后，只需要改变url地址即可
+
+属性名|生成规则: 属性值
+
+字符串:
+min-max:  string;  重复次数在min和max之间
+count: string; 重复次数
+
+数字:
++1: number;   初始值number自动+1
+min-max: number;   min和max之间的数
+min-max.dmin-dmax: number;  整数min和max之间, 小数保留dmin-dmax位
+
+对象:
+count: object;  随机取rount属性  组成对象
+min-max:  object; 随机选取 min 到 max 个属性 组成对象
+
+数组:
+1: array;  随机取出值返回  返回不是数组
++1: array; 按顺序取出值 
+min-max: array;  重复次数min-max, 返回数组
+count: array;  重复次数count
+
+函数:
+: function; 函数返回值   字符串
+
+正则: 
+:regexp;   可以匹配该正则的字符串
+
+
+基本使用:
+index.html
+引入axios mockjs库
+axios.get('www.test.com/index').then(res => { console.log(res) })
+Mock.mock('www.test.com/index', 'get'(请求方法), { 'data|1': [ {title: '首页' } ]}) 

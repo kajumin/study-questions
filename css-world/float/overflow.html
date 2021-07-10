@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.box1 {
+		    width: 200px; 
+		    height: 80px;
+		    margin: auto;
+		    padding: 10px;
+		    border: 10px solid;
+		    /*overflow: hidden;*/
+		    overflow: auto; /*滚动底部有10px间距*/
+		}
+		.box2 {
+			width: 400px;
+			overflow: scroll;
+		}
+	</style>
+</head>
+<body>
+<!-- overflow剪裁界线: border-box 
+1.兼容问题padding-bottom   开发时避免设置padding-bottom-->
+
+<!-- overflow-x  overflow-y
+除非两者都是visible  不然visible就变成auto -->
+<!-- 应用 (1)省略号  (2)选项切换-->
+<div class="box1">
+    <img src="../../images/1.jpg" width="256" height="192">
+</div>
+
+
+<div class="box2">
+	<div class="in"></div>
+</div>
+<!-- 
+	让页面滚动条不发生晃动的小技巧
+	html {
+		overflow-y: scroll; for ie8
+	}
+	:root {
+		overflow-y:auto;
+		overflow-x: hidden;
+	}
+	:root body {
+		position: absolute;
+	}
+	body {
+		width: 100vw;
+		overflow: hidden;
+	}
+
+ -->
+<script type="text/javascript"> 
+	console.log(400 - document.querySelector('.in').clientWidth)  //win7  都是17px
+</script>
+</body>
+</html>

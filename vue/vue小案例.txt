@@ -1,0 +1,183 @@
+==================
+1.音乐小案例  --computed计算属性:src="getCurrentSongSrc"  currentSrc
+2.切换组件小案例  :is="currentTabComponent"  可以绑定组件或者组件名称
+3.tab切换    :class="currentIndex==index?'current':''"  显示和隐藏内容
+4.购物车案例  
+======================最新全栈视频教程  (组件  vue-router vuex 
+vue create  component-demo  
+cd compnent-demo   npm run serve
+======================组件-开课吧购物车 -- comment-demo
+1. app.vue  子组件Cart.vue   数据来源父组件  传递给子组件
+
+2.添加课程  获取内容  检测内容  新增到数组
+
+3.添加到购物车 增加数量  
+  需要判断是否存在  存在则增加数量即可
+ 
+4.增减数量   删除  都是调用父组件中方法添加@emit   在Cart.vue组件中
+
+5.计算属性:  选择数量    总数量   总价格  在Cart.vue组件中
+
+===============自定义组件form
+安装依赖:
+(1)vue add elment-ui   
+添加的依赖有 element-ui(2)  vue-cli-plugin-element-ui(1)
+(2)npm i -D sass-loader@7  node-sass@4  //报错则多次安装  可以直接使用(重新启动项目)
+(3)npm i pubsub-js(1)
+1.测试elment-ui中表单效果
+2.自己开发  k-form  k-input-item    k-input 
+============k-input-item获取到k-input中的value值
+(1)this.$parent.$emit  this.$on   //自己派发事件 自己触发事件
+(2)利用插件pubsub.js插件
+PubSub.subscribe('validate', (name, value) => { })   //派发事件 value才是传递出来的值  name是名称
+PubSub.publish('validate', value) //触发事件
+============provide 子组件都可以使用inject  
+provide () {
+	return {
+		model: this.model,
+		rules: this.rules
+	}
+},
+inject: ['model','rules'],   //使用this.model this.rules可以使用祖辈组件数据
+//在组件中使用v-model   在嵌套时的作用
+
+对async-validator的使用,  element-ui自带
+
+sass: {
+      	//引入全局变量 
+        additionalData: `@import "~@/assets/scss/_variable.scss";`    //可能是data  ||   prependData
+}
+
+===========对vue发表评论
+1.mian.js
+2.app.vue    子组件: add.vue    list.vue    item.vue
+   传递数据和事件给list.vue(commentList deleteComent) => item.vue (index comment  deleteComment) 
+   传递事件(addComment)给add.vue
+3.样式  bootstrap.css
+
+============todos案例
+1.main.js
+2.app.vue    子组件TodoHeader.vue  TodoList.vue  Todo.Footer.vue
+      传递事件@addItem="addItem"给TodoHeader.vue
+      传递数据(todoList)给TodoList.vue  
+      传递数据事件(todoList deleteCompleteTodos selectAllTodos)给TodoFooter
+      
+通过订阅 发布给TodoList.vue删除数据  传递参数index
+通过深度监视数据自动保存到localStorage
+mouseleave  mouseenter   显示隐藏删除按钮
+============发布订阅
+PubSub.publish('search', searchName)
+PubSub.subscribe('search', (msg, searchName) => { }
+
+
+====================联系人案例
+ContactList, Popup, ContactEdit  使用vant  ui库
+1.获取数据并显示
+2.新增联系人 
+3.修改联系人
+4.删除联系人
+
+
+==================dialog弹框  $attrs    $listeners
+系统中的大部分弹框右下角都是确定和取消两个按钮。如果使用element-ui提供的Dialog，那么每一个弹框都要手动加按钮，不但代码量增多，而且后面如果按钮UI，需求发生变化，改动量也比较大.
+$attrs: 当组件在调用时传入的属性没有在props里面定义时，传入的属性将被绑定到$attrs属性内（class与style除外，他们会挂载到组件最外层元素上）。并可通过v-bind="$attrs"传入到内部组件中
+$listeners: 当组件被调用时，外部监听的这个组件的所有事件都可以通过$listeners获取到。并可通过v-on="$listeners"传入到内部组件中
+
+
+
+===================动态组件，让页面渲染更灵活
+用户权限
+
+==================消息框
+希望可以自定义样式:   使用JSX  也可以使用插槽/html等方式解决
+ /**
+    *将 h 作为 createElement 的别名是 Vue 生态系统中的一个通用惯例，实际上也是 JSX 所要求的。从 Vue 的 Babel 插件的 3.4.0   *版本开始，我们会在以 ES2015 语法声明的含有 JSX 的任何方法和 getter 中 (不是函数或箭头函数中) 自动注入 
+    *const h = this.$createElement，这样你就可以去掉 (h) 参数了。对于更早版本的插件，如果 h 在当前作用域中不可用，应用会抛错。
+  */
+===================事件监听
+在Vue中，一个混入对象可以包含任意组件选项，但是对于不同的组件选项，会有不同的合并策略。
+1.对于data,在混入时会进行递归合并，如果两个属性发生冲突，则以组件自身为主，如上例中的chart属性
+1.生命周期钩子函数
+对于生命周期钩子函数，混入时会将同名钩子函数加入到一个数组中，然后在调用时依次执行。混入对象里面的钩子函数会优先于组件的钩子函数执行。如果一个组件混入了多个对象，对于混入对象里面的同名钩子函数，将按照数组顺序依次执行，
+3.其他选项 对于值为对象的选项，如methods,components,filter,directives,props等等，将被合并为同一个对象。两个对象键名冲突时，取组件对象的键值对。
+
+==================== require.context   全局组件注册
+const context = require.context('./components/form/', false, /\.vue$/)
+context.keys().forEach(key => {
+	const component = context(key).default
+	console.log(key)
+	console.log(component)
+	Vue.component(component.name, component)
+})
+
+===================留言列表功能
+1.引包 创建实例 编写模板  v-Input  v-textarea
+2.完成发布功能  $emit触发父组件事件添加数据
+3.完成点击回复   内容框内容添加  
+4.删除已回复信息
+
+
+===================数字输入组件
+1.数字正则  整数 小数 和 0
+2.keyup.down  keyup.up
+3.方法一: 
+        在子组件用变量接收接收数据, watch接收的数据改变$emit通知父组件改变, watch父组件传递过来的value, 修改对应的值
+   方法二: 
+        在子组件props接收数据, 当数据改变的时候通过$emit通知父组件改变
+
+/(^-?[1-9][0-9]*$)/.test(12) //整数 12
+/(^-?[0-9]+\.{1}\d+$)/.test(0.120)    //小数 12.3
+/(^-?0{1}$)/.test(0)        //0
+
+===================tabs标签组件
+1.引包 创建实例  编写父级模板(写简单一点)
+2.创建tabs pane子组件 编写子组件模板 pane组件触发tabs组件方法
+3.tabs组件方法获取pane组件上的数据  写到tabs头部中  更新pane显示哪一个
+4.点击tab更新pane显示
+
+===================可排序的表格组件
+1.引包 创建实例  编写父级模板
+2.编写vTable组件  通过父传递过来的数据生成currentData(_index)  currentColumns(_sortType,_index)
+3.render函数  生成table(tbody,thead)  tbody(trs(tds))  thead(tr(ths))
+4.处理点击排序事件  index  找到key(age||birthday)  重置样式  设置样式  改变数据排序
+
+===================购物车小球组件
+特点(1)调用方法生成小球并执行动画  (2) 动画执行完自动销毁
+1.编写组件 动画通过js编写
+2.编写工具函数创建vue实例  编译组件 上树  添加组件删除方法  返回组件
+3.调用组件start方法   触发动画执行  执行完调用组件删除方法
+===================导航组件
+特点: 通过路由收集,  自动判断是否能回退
+
+==================自定义指令
+
+
+==================time.js
+
+
+==================出生日期
+
+
+==================pull
+
+===================知乎日报项目
+使用了vue-router  axios  eslint
+1.左侧是菜单栏 点击"主题日报"菜单(展开和收起) 
+   点击某个子类后  中间栏切换为该类目的文章列表   
+   点击文章列表中的某一项时, 右侧渲染出该文章的正文和评论
+2.自己编写服务代理  接口代理和图片代理  使用axios发请求
+3.数据获取 整理  可视化  
+   其中对发布时间显示为  刚刚  几分钟  几小时前  几天前  具体日期  使用指令的方式
+
+====================vue配置
+npm i -D compression-webpack-plugin  moment  babel-plugin-transform-remove-console  husky
+npm i -D lint-staged @commitlint/cli @commitlint/config-conventional
+
+1.gzip压缩      响应头中: Content-Encoding: gzip
+2.moment locale   200 300kb
+3.console.log
+4.eslint  stylelint
+5.husky
+
+
+

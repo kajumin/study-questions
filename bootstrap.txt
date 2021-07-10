@@ -1,0 +1,403 @@
+========bootstrap4
+bootstrap: 最受欢迎的响应式(偏展示性的网站), 移动设备优先的门户应用前端框架  ui前端框架(twps 3.4.1  4.3稳定);
+       提供高质量的html css  js代码, 包括官方的cdn和启动器服务
+       语义化做得好  rol="alert"  type="button"
+浏览器和设备: 所有主流操作系统上的稳定版本  edg>12  IE>10
+移动端: android ios 都支持   
+IE10 - 11  (bootstrap4)  部分属性需要私有前缀: animation transition text-shadow transform3d
+IE8-11 (bootstrap3)
+
+bootstrap3(3.3.7  jq1.12.4)
+bootstrap4(4.3.1  jq3.3.1 poper1.14.7)
+
+jquery.slim.min.js
+poper.js
+bootstrap.min.js
+
+盒尺寸(模型): border-box
+初始化与css重置:  为了解决跨浏览器的渲染差异, BootStrap使用了 初始化与CSS重置 对常用CSS组件进行了重新初始化，以更正浏览器和设备之间的各种厂商私有定义的缺陷。
+
+html body 字体 标题和段落  列表 表格 表单 替他文本内联元素 代码(code var pre kdb samp)
+图片  表格 图文框
+
+容器: container(max-width)   container-fluid(width: 100%;)
+1200 992  768   bootstrap3
+1170 970  750
+特殊: 
+ xl   lg  md  sm xs
+1200(超大) 992(大)  768(中)  576(小)  小于  bootstrap4
+1140         960        720       540       100%
+
+===============栅格系统: 
+特殊: flex布局  max-width    bootstrap3(float width)
+   .row { display: flex; flex-wrap: wrap; }
+   .col-*-* { flex: 0 0 50%;  max-width: 50}(col-xl-6为例)
+(1)xl(1200) lg(992) md(768) sm(576) xs(更小) 
+(2)col  或 col-*   支持flex-grow: 1; flex-basis: 0; max-width: 100%;   等分 或者剩余空间
+(3)类名: align-items-*-center/end/start  或者  align-items-center/end/start
+            justify-content-*-center/start /end   justify-content-center/start/end
+(4)no-gutters 间距消除: row加类no-gutters margin会没有 col会没有padding
+(5)列排序: order-*(1-12) order-first   使用技术order
+    列偏移: md-offset-*(1-12)   使用技术margin: 百分比;
+(6)嵌套: row > col > ro
+
+================常见组件
+alert  配合关闭警告框插件
+badge 用于后台
+breadcrumb  面包屑  后台  文章章节
+button 按钮 button  btn-*  active  aria-pressed="true" aria-disabled="true"  .disable(disable)
+button-group  按钮组
+card 卡片
+
+=================常用插件
+data-toggle 以什么形式触发  data-target 触发目标
+
+(1)模态框modal
+   modal > modal-dialog > modal-content > modal-title/body/footer
+   (1)data-toggle="modal" data-target="#exampleModal" 触发
+   (2)data-dismiss="modal" 关闭
+   (3)js触发 $('.modal').modal() 显示  $('.modal').modal('hide')
+   (4)事件 shown.bs.modal 显示之后可以input-focus
+(2)轮播图carousel
+   (1) 上下页(控制器)
+   (2) 圆点(状态指示器)
+   (3) 字幕
+   (4) 交替变化 非滑动
+   (5) 单个carousel-item间隔  data-interval="10000"  延迟
+   (6) $().carousel({interval}) 配置
+(3)导航栏navbar
+   (1)navbar-toggler  三杠
+(4)提示冒泡tooltip
+   (1)需要初始化  $(function () { $('[data-toggle="tooltip"]').tooltip(); })
+=====================内容 rem为单位
+(1)html没有处理
+(2)body {
+	font-size: 1rem;
+	font-size: 1rem;
+	font-weight: 400;
+	line-height: 1.5;
+	color: #212529;
+	text-align: left;
+ 	background-color: #fff;
+	}
+(3) small class="muted"  small不带color
+(4) display-*(1-12)   lead
+===================其他一些类
+margin(外边距):  .my-2(mt-2 mb-2)  .mx-2(ml-2 和 mr-2)    .m-auto    .m-2
+width(宽度):  .w-50
+=================图片:
+img-fluid   img-thumbnail  
+rounded 圆角 rounded-circle 圆
+
+=================其他类
+float-left  float-right  float-none   clearfix
+mx-auto  mt/n/l/r-*(0-5)  mx/y-*(0-5)  //margin负值mx/y-n1(0-5)   1(0.25rem) 2(0.5rem) 3(1rem) 4(1.5rem) 5(3rem)
+p-auto  pt/l/b/r-*(0-5)   px/y-*(0-5)
+d-block   d-inline   d-inline-block  d-table d-table-cell  d-flex d-flex-inline  d-none 
+text-center/left/right   text-nowrap    text-truncate(省略号)
+invisible visible
+text-muted  text-white-50/text-block-50
+font-weight-light/lighter/normal/bold/bolder
+shadow/shadow-sm/lg/none
+w-25/50/75/100/auto
+h-25/50/75/100/auto
+
+flex-row/column/row-reverse/column-reverse   主轴的方向
+flex-wrap/nowrap   是否换行
+justify-centent-center/start/end/between/around   主轴对齐方式
+align-items-center/start/end/baseline/stretch   侧轴(交叉轴)对齐方式
+align-content-center/start/end/between/around/stretch   多条轴线对齐方式
+align-self-center/start/end/auto/baseline/stretch   单个项目对齐方式
+order-*    order-*-*   order-first    项目的排列顺序
+offset-*   offset-*-*   偏移
+=========================项目实战 -- 撩科学院
+1.头部  栅格系统  button navbar
+2.轮播图  carousel(大小图片的处理js)
+3.热门课程  栅格系统
+4.产品中心  nav-tabs(导航)  js处理小屏导航超出(滚动条)
+===========================技巧记录
+(1)navbar   b3 在移动端不需要添加in  同时注意不要添加overflow: hidden;导致下拉菜单显示不出来
+(2)carousel-inner  $('.carousel').carousel('next/prevd:d:')
+=================
+Bootstrap  引导程序   ---前端框架  map文件
+jquery  respond  html5shiv  第三方依赖
+
+=========================栅格系统
+(container)margin-left/right: auto;     padding-left/right: 15px   .clearfix();  
+(row)margin-left/right: 15px;
+//媒体查询时
+(col-lg-x)  (container)max-width: 1170px;  float: left;  width: percentage((11/ @grid-columns));
+(col-lg-offset-x)margin-left: percentage((11/ @grid-columns));
+(col-lg-pull-x)   right: percentage((11/ @grid-columns));
+(col-lg-push-x)   left:  percentage((11/ @grid-columns));
+
+=============变量
+@grid-gutter-width :          30px;
+@screen-lg:                        1200px;
+@screen-lg-desktop:          @screen-lg;
+@container-lg-desktop:      ((1140px + @grid-gutter-width));
+@grid-columns:                  12;
+=============container
+.container {
+  .container-fixed();
+}
+.container-fixed() {
+  margin-right: auto;
+  margin-left: auto;
+  padding-left:  (@grid-gutter-width / 2);
+  padding-right: (@grid-gutter-width / 2);
+  .clearfix();
+}
+=============row
+.row {
+   .make-row();
+}
+.make-row(@gutter: @grid-gutter-width) {
+  margin-left:  (@gutter / -2);
+  margin-right: (@gutter / -2);
+  .clearfix();
+}
+==============col-lg-x  col-lg-offset-x   col-lg-pull-x  col-lg-push-x
+<div class="row">
+       <div class="col-lg-1 col-lg-pull-1">1</div>  
+        //其实就是right: 8.33333333%;   col本身有position: relative
+       <div class="col-lg-4 col-lg-push-4">6</div> 
+        //其实就是left: 33.33333333%;
+</div>
+@media (min-width: @screen-lg-desktop) {   //1200px
+  .container { 
+    max-width: @container-lg-desktop;  //1170px
+   }
+   .col-lg-11 {
+      float: left;
+   }
+   .col-lg-11 { width: percentage((11/ @grid-columns)); }
+   .col-lg-push-11 { left: percentage((11/ @grid-columns)); }
+   .col-lg-pull-11 { right: percentage((11/ @grid-columns)); }
+   .col-lg-offset-11 { margin-left: percentage((11/ @grid-columns)); }
+}
+===================================mixins
+.size(@width; @height) {
+  width: @width;
+  height: @height;
+}
+.square(@size) {
+  .size(@size; @size);
+}
+
+
+===============================
+1.lang="zh-CN"   
+约定:
+   1.在head中引入css文件,优先应用第三方css文件
+   2.在body末尾引入必要的js文件,优先加入第三方插件
+   3.直接子代,少用间接子代
+2.字体:font-family: "Helvetica Neue", Helvetica, Microsoft Yahei, Hiragino Sans GB, WenQuanYi Micro Hei, sans-serif;
+3.container   container-fluid
+  1200=>1170  992=>970  768=>750   一定要从小到大写    (lg)1200 (md) 992 (sm) 768 (xs) 
+4.container  row  col-md-1  col-sm-1 col-xs-1 col-lg-1
+5.col-md-offset-2偏移
+6.嵌套列  col-md-6  > row > col-md-6*2
+7.列排序  col-md-push-3 和 col-md-pull-9
+9.对齐  text-left   text-center   text-right   text-justify  text-nowrap
+10.text-capitalize  text-lowercase    text-uppercase 
+11.列表 list-unstyled  list-inline
+12.dl-horizontal
+==========================================================
+table:
+table table-striped  table-bordered table-hover table-condensed
+active success info  warning danger  作用到td上
+响应式表格 <div class="table-responsive"><table></table></div>
+=========================================================
+form:表单
+1.div.form-group > label&&input
+2.form.form-inline
+3.水平排列的表单 form.form-horizontal
+4.label.checkbox-inline  > input
+5.p.form-control-static
+6.fieldset disabled   input readonly
+7.添加额外的图标
+8.设置大小 div.form-group form-group-lg   > input.form-control 或者 input-lg
+9.调整列的尺寸: div.col-xs-2 > input.form-control
+======================================================
+按钮:
+1.a button都可以使用按钮类  导航和导航条组件只支持 button元素
+2.a用来触发功能就加上role="button"   return false;
+3. 颜色btn btn-default btn-primary   btn-success btn-info  btn-warning btn-danger btn-link
+4. 大小 btn-lg  btn-md btn-sm btn-xs
+5.btn-block  块级  让它拉伸至父元素的100%宽度
+6. active
+7.button 设置disabled属性   a  加disabled类
+8.
+====================================================
+img: img-responsive img-rounded  img-circle  img-thumbnail
+情境颜色: text-muted   text-primary  text-success   text-info text-warning text-danger
+背景颜色: bg-primary   bg-success    bg-info     bg-warning     bg-danger
+三角符号: <span class="caret"></span>
+浮动:<div class="pull-left">左边</div>  pull-right
+内容块居中: <div class="center-block">内容块居中</div>
+显示隐藏  show  hidden  text-hide
+=============================================================
+字体图标
+不能和其他组件混合使用  创建span包裹图标  只对内容为空的元素起作用
+======================================================
+下拉框:
+1.div.dropdown  > dropdown-toggle    div.dropup > dropdown-toggle
+2.下拉菜单的左右对齐  dropdown-menu  dropdown-menu-right 
+1.视口的作用: 在移动浏览器中 ,当页面宽度超出设备,浏览器内部虚拟了一个页面容器缩放到手机宽度,然后展示 手机浏览器的视口980px
+<meta name="viewport"   content="width=device-width, initial-scale=1.0,user-scalable=no ">
+user-scalable=no  不可以缩放  yes/no  1 / 0
+minimum-scale  maximum-scale  最大最小缩放
+2.低版本加载html5  和  媒体查询
+   <!--[if lt IE 9]>
+      <script src="./lib/html5shiv/dist/html5shiv.min.js"></script>
+      <script src="./lib/respond/dest/respond.min.js"></script>
+    <![endif]-->
+==================================================================
+
+列表
+list-unstyled            作用直接子元素
+list-inline                内联列表  加在ul上
+dl-horizontal          dl dt dd 水平排列
+================================================================
+5.  按钮  a  button
+btn btn-default    role="button"   a只做一个按钮
+btn btn-primary
+btn btn-success
+btn btn-info
+btn btn-warning
+btn btn-danger
+btn btn-link
+btn-lg
+btn-sm
+btn-xs
+btn-block   时期拉伸至父元素100%宽度
+active
+disabled
+===================================================================
+6.图片
+img-responsive 
+center-block
+img-rounded     Internet Explorer 8 不支持 CSS3 中的圆角属性
+img-cicle
+img-thumbnai
+===================================================================l
+7.文字颜色
+<p class="text-muted">...</p>
+<p class="text-primary">...</p>
+<p class="text-success">...</p>
+<p class="text-info">...</p>
+<p class="text-warning">...</p>
+<p class="text-danger">...</p>
+文字大小
+<small>标签包裹
+大小写: text-lowercase  text-uppercase   text-captalize
+h1 36  //h2 30 //h3 24 //h4 18 //h5 14  //h6 12
+====================================================================
+8.背景色
+<p class="bg-primary">...</p>
+<p class="bg-success">...</p>
+<p class="bg-info">...</p>
+<p class="bg-warning">...</p>
+<p class="bg-danger">...</p>
+====================================================================
+9. 通过使用一个象征关闭的图标，可以让模态框和警告框消失。
+<button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+10.center-block
+11.清除浮动
+clearfix
+12.显示隐藏
+show 
+hidden
+13.显示隐藏
+visible-xs-*   不使用了
+visible-sm-*
+visible-md-*
+visible-lg-*
+hidden-xs
+hidden-sm
+hidden-md
+hidden-lg
+.visible-*-block	  display: block;
+.visible-*-inline	  display: inline;
+.visible-*-inline-block  display: inline-block;
+上面三个以xs为例:
+.visible-xs-block、.visible-xs-inline 和 .visible-xs-inline-block
+===============================bootstrap4===========================
+1.网格系统  采用flex布局
+.row上带有margin-left: -15px;margin-right: -15px;属性，你可以在.row上上定义.no-gutters属性，从而消除这个属性，使页面不会额外宽出30px，即<div class="row no-gutters"
+1.媒体查询
+ @media (min-width: 640px) {
+            #myP{
+                font-size: 24px;
+                color: #096;
+            }
+        }
+2.图片处理
+<figure class="figure">
+        <img src="../images/md.jpg" alt="" class="figure-img img-fluid rounded">
+        <figcaption class="figure-caption text-center">A caption for the above image.</figcaption>
+</figure>
+3.浮动   float-xl-left
+ <div style="border: 1px solid #f00;" class="clearfix">
+            <img src="../images/sm.jpg" alt="" class="float-xl-left">
+            <img src="../images/sm2.jpg" alt="" class="float-xl-right">
+</div>
+4.display属性  d-none
+5.最大min-width:100%;   mw-100 mh-100
+6.间隔阴影
+<div class="p-3 mb-5 bg-white rounded">网战天下</div>
+p-3 padding 1rem;
+mb-5   margin-bottom:1rem;
+bg-whilte: 背景颜色
+rounded :     border-radius:0.25rem;
+shadow-(lg):   shadow:0 .5rem 1rem rgba(0,0,0,.15)!important;
+7.关闭按钮
+<a href="###" class="close">&times;</a>
+8.弹性布局  d-flex   order-xl-first
+<div class="border border-danger mt-3 d-flex" style="width: 402px;height: 402px;">
+            <div class="bg-primary p-3">111</div>
+            <div class="bg-success p-3 order-1">222</div>
+            <div class="bg-primary p-3 order-xl-first">333</div>
+            <div class="bg-success p-3 order-2">444</div>
+</div>
+9.alert
+<div class="alert alert-danger alert-dismissible fade show" id="myAlert">
+            <strong>登录失败!</strong> 您的用户名或密码错误.
+            <button class="close" id="btn">&times;</button>
+</div>
+$('#btn').click(function () {
+        $('#myAlert').alert('close')
+    })
+
+    $('#myAlert').on('close.bs.alert',function () {
+        alert('close');
+    }).on('closed.bs.alert',function () {
+        alert('closed');
+    })
+10.面包屑
+<ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="">首页</a></li>
+        <li class="breadcrumb-item"><a href="">女装</a></li>
+        <li class="breadcrumb-item active">连衣裙</li>
+</ol>
+====================================================================
+组件: alert  button  breadcrumb面包屑  dropdown  form  curousel  jumbotron广告大块屏幕
+media-object图文混排  toast提示框  tooltip提示条 popover提示栏  modal nav  navbar  card图文显示
+collapse折叠   progress   scrollspy滚动监听  spinners加载按钮
+1. 图标
+<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+错误信息图标  alert  sr-only
+<div class="alert alert-danger" role="alert">
+  <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+  <span class="sr-only">Error:</span>
+  Enter a valid email address
+</div>
+2.按钮组:
+<div class="btn-group" role="group" aria-label="...">
+  <button type="button" class="btn btn-default">Left</button>
+  <button type="button" class="btn btn-default">Middle</button>
+  <button type="button" class="btn btn-default">Right</button>
+</div>
+
+1.media   min-width : 750px  and  max-width    780px 

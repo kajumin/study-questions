@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<script>
+	Promise.prototype.done = function(onFulfilled, onRejected) {
+		this.then(onFulfilled, onRejected)
+		.catch((reason) => {
+			console.log(reason)
+			setTimeout(() => { throw new Error(reason) }, 0)
+		})
+	}
+
+	new Promise(resolve => {
+		resolve()
+	})
+	.then(res => {
+		console.log(1)
+		throw new Error('error')
+	})
+	.catch(err => {
+		console.log(err)
+		throw new Error('error2')
+	})
+	.done()
+
+	Promise.resolve()
+	.finally(function() {
+		console.log('finally')
+	})
+
+	
+</script>
+</body>
+</html>

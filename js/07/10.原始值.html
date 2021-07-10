@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<script type="text/javascript">
+	// String.raw取模板字符串的原始字符串, 它返回一个字符串.忽略转义字符(\n \v \t等)
+	var path = 'c:\\path'
+	console.log(String.raw`${path}`) //'c:\path'
+	console.log(String.raw`c:\path`) //直接使用忽略转义字符
+
+	// typeof 可以判断除null以外的所有基本类型 判断引用类型为object 除了function 
+	// instanceof 无法判断基本类型  除非是使用new构造函数出来的
+	console.log(new String('123') instanceof String)//true
+	console.log(new Number(123) instanceof Number)//true
+	console.log(new Boolean(false) instanceof Boolean)//true
+
+	console.log(function(){} instanceof Function)//true 
+
+	// 字符串方法: includes startsWith endsWith repeat padStart padEnd
+	// 字符串可能包含0或多个字符, \符号是转义字符, unicode是一个16位的字符串,
+	// js所有字符都是16位的  两个字节
+	// startsWith endsWith  includes都支持第二个参数 
+	// 第二个参数为开始搜索的位置 endsWith比较特殊 前几个字符
+
+	console.log('hello'.repeat(0)) //''
+	console.log('hello'.repeat(1)) //hello
+	console.log('hello'.repeat(2)) //hellohello
+	console.log('hello'.repeat(2.9))//hellohello
+	console.log('hello'.repeat(-0.1))//''
+	// console.log('hello'.repeat(-1))//报错
+	// console.log('hello'.repeat(Infinity))//报错 Invalid count value
+
+	console.log('hello'.repeat('na'))//''
+	console.log('hello'.repeat('3px'))//''
+
+	// padStart()  padEnd()  第一个参数最小长度  第二个补全的字符串
+	console.log('hello'.padStart(2, 'nnn'))//hello //不变
+	console.log('hello'.padStart(10, 'nnn4515431'))//nnn45hello  截取
+	console.log('hello'.padStart(10))//     45hello  空格
+	console.log('2020-07-30'.padStart(10, 'YYYY-MM-DD'))//指定格式  空格
+	console.log('2020.07.30'.padStart(10, 'YYYY.MM.DD'))//指定格式  空格
+
+	// 读取索引0
+	var str = 'abcdef'
+	console.log(str[0]) //a
+
+
+	console.log(typeof obj8.toString) //function
+	console.log(typeof obj8.constructor) //function
+</script>
+</body>
+</html>

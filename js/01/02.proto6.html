@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<script type="text/javascript">
+	// 只继承原型
+	// function Shape(){
+
+	// }
+	// Shape.prototype.name = 'shape';
+	// Shape.prototype.toString = function(){
+	// 	return this.name;
+	// }
+	// function TwoDShape() {
+
+	// }
+	// TwoDShape.prototype = Shape.prototype;
+	// TwoDShape.prototype.constructor = TwoDShape;
+	// TwoDShape.prototype.name = '2d shape';
+	// function Triangle(width,height){
+	// 	this.width = width;
+	// 	this.height = height;
+	// }
+	// Triangle.prototype = TwoDShape.prototype;
+	// Triangle.prototype.constructor = Triangle;
+	// Triangle.prototype.getArea = function(){
+	// 	return this.width * this.height;
+	// }
+	// Triangle.prototype.name = 'triangle';
+	// var triangle = new Triangle(5,10);
+	// console.log(triangle)
+	// console.log(triangle.toString())
+	// console.log(triangle.getArea())
+	// // 出现问题
+	// var shape = new Shape();
+	// console.log(shape.name)  //taiangle
+
+
+
+	// 解决办法  通过一个构造函数来传递
+	function Shape(){
+
+	}
+	Shape.prototype.name = 'shape';
+	Shape.prototype.toString = function(){
+		return this.name;
+	}
+	function TwoDShape() {
+
+	}
+	var F = function(){}
+	F.prototype = Shape.prototype;
+	TwoDShape.prototype = new F();
+	TwoDShape.prototype.constructor = TwoDShape;
+	
+	TwoDShape.prototype.name = '2d shape';
+	function Triangle(width,height){
+		this.width = width;
+		this.height = height;
+	}
+	var F = function(){}
+	F.prototype = TwoDShape.prototype;
+	
+	Triangle.prototype = new F();
+	Triangle.prototype.constructor = Triangle;
+	Triangle.prototype.getArea = function(){
+		return this.width * this.height;
+	}
+	Triangle.prototype.name = 'triangle';
+
+	var triangle = new Triangle(5,10);
+	console.log(triangle)
+	console.log(triangle.toString()) //triangle
+	console.log(triangle.__proto__.__proto__.toString()) //2d shape
+	console.log(triangle.__proto__.__proto__.__proto__.toString()) //shape
+	console.log(triangle.getArea())
+	// 解决了
+	var shape = new Shape();
+	console.log(shape.name)  //shape
+
+	console.log(triangle.__proto__.constructor)  //Triangle
+	console.log(triangle.__proto__.__proto__.constructor)  //TwoDShape
+	console.log(triangle.__proto__.__proto__.__proto__.constructor)  //Shape
+	
+</script>
+</body>
+</html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<!-- 
+	1.借助call方法实现继承
+	2.借助原型链实现继承
+	3.组合继承
+	4.寄生式继承
+	5.寄生组合式继承
+
+	 -->
+<script>
+	// 1.借助call实现继承
+	function Person1() {
+		this.name = 'parent'
+	}
+	function Child1() {
+		Person1.call(this)
+	}
+	var c1 = new Child1()
+	console.log(c1)
+
+	// 2.借助原型链实现继承
+
+	function Person2() {
+		this.name = 'parent2'
+		this.play = [1, 2, 3]
+	}
+	function Child2(){
+
+	}
+	Child2.prototype = new Person2()
+	var c21 = new Child2()
+	var c22 = new Child2()
+	c21.play.push(4)
+	console.log(c21.play, c22.play)
+
+	function Person3() {
+		this.name = 'parent3'
+		this.play = [1, 2, 3]
+	}
+	function Child3() {
+		Person3.call(this)
+	}
+	Child3.prototype = new Person3()
+	var c31 = new Child3()
+	var c32 = new Child3()
+	c31.play.push(4)
+	console.log(c31.play, c32.play)
+
+	function Person4() {
+		this.name = 'parent4'
+		this.play = [1, 2, 3]
+	}
+	function Child4() {
+		Person4.call(this)
+	}
+	Child4.prototype = Person4.prototype
+
+	var c41 = new Child4()
+	var c42 = new Child4()
+	c41.play.push(4)
+	console.log(c41)
+	console.log(c41.play, c42.play)
+
+	function Person5() {
+		this.name = 'parent5'
+		this.play = [1, 2, 3]
+	}
+	Person5.getName = 'parent5'
+	function Child5() {
+		Person5.call(this)
+	}
+
+	Child5.prototype = Object.create(Person5.prototype)
+	Child5.prototype.constructor = Child5
+	Child5.__proto__ = Person5
+	var c5 = new Child5()
+	console.log(c5)
+	console.log(Child5.__proto__ == Person5)
+	console.log(Child5.getName)
+
+	// es6 class
+	class A {
+		constructor(name) {
+			this.name = name
+		}
+		static getName = 'AAA'
+		sayHello() {
+			console.log('i am ' + this.name)
+		}
+	}
+	class B extends A {
+		constructor(name, age) {
+			super(name)
+			this.age = age
+		}
+	}
+	var b = new B('bang', 20)
+	console.log(b)
+	console.log(B.getName)
+	b.sayHello()
+
+</script>
+</body>
+</html>

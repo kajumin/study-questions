@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.par div:nth-of-type(1){
+			width: 100px;
+			/*vertical-align: middle;*/
+			/*height: 100px;*/
+		}
+		.par{
+			overflow:hidden;
+		}
+		
+		.par img{
+			float: left;
+			width: 100px;
+			height: 100px;
+		}
+		img {
+			width: 100px;
+			height: 100px;
+		}
+		.par2 {
+			height: 100px;
+			background-color: #f1f1f1;
+			background-image: url('../images/lyt/1.jpg');
+			background-size: 100px;
+			background-repeat: no-repeat;
+			padding-left: 100px;
+			vertical-align: middle;
+		}
+		p{
+			margin: 0px;
+		}
+		.par3::after {
+			content: '';
+			display: block;
+			clear: both;
+			height: 0;
+			visibility: hidden;
+		}
+		.par3 div {
+			float: left;
+		}
+		.par3 div img {
+			display: block;
+			float: left;
+			width: 100px;
+			height: 100px;
+		}
+	</style>
+</head>
+<body>
+	<!-- 
+		1.float + overflow
+		2.height + background-image -->
+<div class="par">
+	<img src="../images/lyt/1.jpg">
+	<span>中国中国中国中国中国中国中国</span>
+</div>
+<div class="par2">
+	<p>中国中国中国中国中国中国中国</p>
+</div>
+<div class="par3">
+	<div>
+		<img src="../images/lyt/1.jpg">
+	</div>
+	<div>
+		<p>中国中国中国中国中国中国中国</p>
+	</div>
+</div>
+
+<!-- a链接禁止 -->
+<a href="javascript:void(0);">链接</a>
+<a href="#name" class="a">链接</a>
+<script type="text/javascript">
+	var a = document.querySelector('.a');
+	a.onclick = function(e) {
+		e.preventDefault();
+	}
+</script>
+</body>
+</html>

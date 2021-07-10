@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title></title>
+</head>
+<body>
+  <!-- 
+    1.queryURlParameter
+      正则和字符串方法对比
+
+
+   -->
+  <script>
+    (function() {
+      function queryURlParameter(url) {
+        let obj = {}
+        if(url.indexOf('?') < 0) return obj
+
+        let ary = url.split('?')[1].split('&')
+        // console.log(ary);
+        ary.forEach(val => {
+          let arr = val.split('=')
+          obj[arr[0]] = arr[1]
+        });
+
+        return obj
+      }
+      console.log(queryURlParameter('www.baidu.com?name=bang&age=20'))
+
+      function queryURlParameter2(url) {
+        let obj = {}
+        let reg = /([^?&]+)=([^?&]+)/g
+        url.replace(reg, function(...arg) {
+          // console.log(arg);
+          obj[arg[1]] = arg[2]
+        })
+        return obj
+      }
+      console.log(queryURlParameter2('www.baidu.com?name=bang&age=20'));
+    })();
+
+    ;(function() {
+
+    })();
+    
+    console.log(a); //undefined
+    var a = 12
+    // a = 12 //替换为a = 12 报错
+    function fn() {
+      console.log(a); //undefined
+      // var a = 13
+      a = 13 //替换为a = 13
+    }
+    fn()
+    console.log(a); //12
+  </script>
+</body>
+</html>

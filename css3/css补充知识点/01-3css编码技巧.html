@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.box1-1 {
+			font-size:20px;
+			line-height:1.5;
+		}
+		.box1-2 {
+			padding:.3em .8em;
+			border:1px solid #446d88;
+			background:#58a linear-gradient(#77aebb,#58a);
+			border-radius:.2em;
+			box-shadow:0 .05em .25em gray;
+			color:white;
+			text-shadow:0 -.05em .05em #335166;
+			font-size:125%;
+			line-height:1.5;
+		}
+		.box1-3 {
+			padding:.3em .8em;
+			border:1px solid rgba(0,0,0,0.1);
+			background:#58a linear-gradient(hsla(0,0%,100%,.2),transparent);
+			border-radius:.2em;
+			box-shadow:0 .05em .25em rgba(0,0,0,0.5);
+			color:white;
+			text-shadow:0 -.05em .05em rgba(0,0,0,0.5);
+			font-size:125%;
+			line-height:1.5;
+		}
+		.no { background-color: #c00;}
+		.ok { background-color: #6b0;}
+		body {
+			color: #eee;
+		}
+		p {
+			/*color: red;*/
+		}
+		a {
+			color: inherit;
+		}
+	</style>
+</head>
+<body>
+<!-- 
+1.DRY，即don`t repeat yourself，尽量减少代码重复
+  (1)font-size:20px;  line-height: 1.5;
+  (2)em单位
+  (3)颜色 使用bgc半透明
+2.currentColor
+3.继承  inherit
+4.合理使用简写
+ -->
+ <div class="box1-1">中国</div>
+ <div class="box1-2">中国</div>
+ <div class="box1-3">中国</div>
+ <div class="box1-3 no">中国</div>
+ <div class="box1-3 ok">中国</div>
+ <hr>
+ <div>
+ 	<p><a href="#">首页</a></p>
+ 	
+ </div>
+</body>
+</html>

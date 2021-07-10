@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<script type="text/javascript">
+	function proxy(func) {
+	    let instance;
+	    let handler = {
+	        constructor(target, args) {
+	            if(!instance) {
+	                instance = Reflect.constructor(fun, args);
+	                console.log(instance)
+	            }
+	            console.log(instance)
+	            return instance;
+	        }
+	    }
+	    return new Proxy(func, handler);
+	}
+	function getScript() {
+		return document.createElement('script')
+	}
+	// var gets = proxy(getScript)
+	// var s1 = gets()
+	// var s2 = gets()
+	proxy(getScript)
+	var s1 = getScript()
+	var s2 = getScript()
+	console.log(s1)
+	console.log(s1 === s2)
+
+</script>
+</body>
+</html>

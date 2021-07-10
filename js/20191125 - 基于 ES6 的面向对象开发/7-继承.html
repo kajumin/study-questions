@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #box {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100px;
+            height: 100px;
+            background: red;
+        }
+        #box2 {
+            position: absolute;
+            left: 100px;
+            top: 0;
+            width: 100px;
+            height: 100px;
+            background: blue;
+        }
+    </style>
+</head>
+<body>
+   <div id="box"></div>
+   <div id="box2"></div>
+<script>
+class Parent{
+    constructor(name){
+        this.name = name
+    }
+    sayName(){
+        console.log(this.name);
+    }
+}
+
+class Child extends Parent{
+    constructor(name,age){
+        super(name);//继承父类的构造函数
+        this.age = age;
+    }
+    sayAge(){
+        console.log(this.age);
+    }
+}
+console.log(new Child("KKB",8));
+console.log(new Parent("KKB"));
+
+// 继承：把父级的属性和方法都拿过来
+// class Child {
+//     constructor(name,age){
+//         this.name = name;
+//         this.age = age;
+//     }
+//     sayName(){
+//         console.log(this.name);
+//     }
+//     sayAge(){
+//         console.log(this.age);
+//     }
+// }
+
+</script>       
+</body>
+</html>

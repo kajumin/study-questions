@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<!-- 
+	1. 转成string类型： +（字符串连接符） 2 + + '2' = 4
+    2..转成number类型：++/--(自增自减运算符) + - * / %(算术运算符) > < >= <= == != === !== (关系运算符) 
+	3. 转成boolean类型：!（逻辑非运算符）
+-->
+<!-- 坑一：字符串连接符与算术运算符隐式转换规则混淆 -->
+<!-- 坑二：关系运算符：会把其他数据类型转换成number之后再比较关系 -->
+<!-- 坑三：复杂数据类型在隐式转换时会先转成String，然后再转成Number运算 -->
+<!-- 坑四：逻辑非隐式转换与关系运算符隐式转换搞混淆 -->
+
+<!-- 
+1.x, y都为undefined或null    都true
+2.x, y一方为null或undefined  都false
+3.x, y一方为NaN 都false
+4.x, y都是string  boolean number 都转为number
+5.x, y一方为复杂数据类型, 获取原始值 valueOf() 再 toString()  
+6.都为复杂数据类型  比较内存地址
+特殊: 
+! 将表达式转为boolean值 undefined null ''  0  -0 NaN 为假 
+  {} [] function(){}为真 Infinity为真
++ 一边为字符串  另一个也转为字符串 其他情况转为数值类型
+  两边都转为数值  不能连接字符串
+
+对象转换成基本类型时, 会调用toPrimitive()。
+如果要转换为number就先调用valueOf(), 如果为原始值, 则返回, 调用toString(), 如果是原始值则返回, 否则报错
+
+如果转为string就先调用toString(), 再调用valueOf()  
+
+ -->
+<script type="text/javascript">
+	console.log(Object.prototype)
+	console.log(+{})
+	console.log(Number({}.valueOf().toString())) //[object Object] 
+	console.log(+[])
+	console.log(Number([].valueOf().toString())) //''
+
+	// 转为number valueOf toString
+	console.log(new Date() - 1)
+	console.log(new Date().valueOf())
+	console.log(new Date().valueOf() - 1)
+	// 转为string
+	console.log(new Date() + '')
+	console.log(new Date().toString())
+	console.log(new Date().toString() + '')
+
+	// + 一个为string, 另一个转为string, 包括引用类型转换为原始值的时候
+	console.log('2' + 0) //20
+	console.log('2' + false) //2false
+	console.log('2' + true) //2true
+	console.log('2' + [])//2
+	console.log('2' + {})//2[object Object]
+	// + 其他情况转为number
+	console.log(1 + undefined) //NaN = 1 + NaN
+	console.log(1 + NaN) //NaN = 1 + NaN
+	console.log(1 + null) //1 = 1 + 0
+	console.log(1 + {}) //1[object Object] = 1 + '[object Object]'
+	console.log(1 + []) //1 = 1 + '' 
+
+	// ++ -- - / * % > < == 都是转为number 
+	var num1 = 1
+	var num = (num1++) + 1;
+	console.log(num) //2
+	console.log('2' - 1) //1
+	console.log('2' / 1) //2
+	console.log('2' * 1) //2
+	console.log('2' % 1) //0
+	console.log('2' > 1)//true
+	console.log('2' == 3)//false
+	console.log(undefined == 0) //false
+	console.log(null == 0) //false
+	console.log([] == 0) //true
+	console.log({} == 0) //false
+
+	// 取非转为boolean值  undefined null '' 0 -0 NaN 为假
+	console.log(!'2')  //false
+	console.log(!'0')  //false
+	console.log(!'')  //true
+	console.log(!0)  //true
+	console.log(!-0)  //true
+	console.log(!false)  //true
+	console.log(!NaN)  //true
+	console.log(!undefined)  //true
+	console.log(!null)  //true
+	console.log(![])  //false
+
+	// 转为数值类型, 2 > 10 
+	console.log("2" > 10) //false
+	
+
+	// 两个字符串比较, 比较的是unicode, 数字越大unicode越大
+	// 字母越大unicode越大
+	console.log("2" > "10") //true
+	console.log("2".charCodeAt(),"10".charCodeAt()) //50 49
+	// a比完  比下一个  一个个比
+	console.log("abc" > "b") //false
+	console.log("abc" > "aab") //false
+	console.log('a'.charCodeAt(), 'b'.charCodeAt())
+
+	// 特殊
+	console.log(null == null) //true
+	console.log(undefined == undefined) //true
+	console.log(null == undefined) //true
+
+	// valueOf 再 toString  再number
+	console.log([1,2] == '1,2') //true  左转为string 再比unicode
+	console.log([1,2].valueOf()) //[1,2] 
+	console.log([1,2].valueOf().toString())//1,2 
+	console.log({} == '[object Object]')// 
+	console.log({}.valueOf())// {}
+	console.log({}.valueOf().toString())// [object Object]
+
+	// 特殊案例
+	var a = {
+		i: 1,
+		valueOf () {
+			console.log(this.i)
+			var i = this.i
+			this.i += 2
+			return i
+		}
+	};
+	if (a == 1 && a == 3 && a == 5) {
+		console.log('出来了')
+	}
+	 // 空数组的toString()方法会得到空字符串，
+	 // 而空对象的toString()方法会得到字符串`[object Object]` 
+	console.log([] == '')//true  ''  ''
+	console.log([] == 0) //true* ''  0   转换'' 等于 0
+
+	console.log(![] == 0) //true*  
+	// []转为boolean值是true 取非false  false转为number 0 
+
+	
+	console.log(!{} == {}) //false
+	console.log(!{} == 0) //true
+	// !{}为false   {}转为字符串[object Oject] 转为number NaN
+
+	console.log(Number({}.toString())) //NaN
+	console.log(Number({}.toString()) == Number(false)) //NaN 0  不相等
+
+
+	console.log({} == {}) //false 引用类型 比较内存地址
+	console.log([] == ![]) //true*  '' false 转为number都是0
+	console.log([] == [])  //false*  引用类型比较 内存地址
+
+	console.log([] + []) //''
+	console.log([] - []) //''
+	console.log({} + []) //[object Object]
+	console.log(true + false) //1 
+
+
+</script>
+</body>
+</html>

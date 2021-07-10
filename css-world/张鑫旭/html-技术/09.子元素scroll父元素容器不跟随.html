@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.test1 {
+			width: 210px;
+   	 		height: 200px;
+    		overflow: auto;
+		}
+		.test1 img {
+			position: relative;
+		    display: inline-block;
+		    color: transparent;
+		    overflow: hidden;
+		    object-fit: contain;
+		}
+		.test2 {
+			width: 210px;
+   	 		height: 200px;
+    		overflow: auto;
+		}
+		.test2 img {
+			position: relative;
+		    display: inline-block;
+		    color: transparent;
+		    overflow: hidden;
+		    object-fit: contain;
+		}
+	</style>
+</head>
+<body>
+	<!-- 
+	DOMMouseScroll firefox浏览器专用
+	onmousewheel
+
+	 -->
+<div class="test1">
+	<img src="../images/mm2.jpg">
+</div>
+
+<div class="test2">
+	<img src="../images/mm2.jpg">
+</div>
+<div style="height: 1000px;background-color: red;"></div>
+<script type="text/javascript" src="../js/jquery-3.4.1.min.js"></script>
+<script type="text/javascript">
+	var test2 = document.querySelector('.test2')
+	test2.onmousewheel = function(e) {
+		console.log('scroll')
+		// console.log(this.scrollTop)
+		// console.log(this.children[0])
+		var parentHeight = parseInt(window.getComputedStyle(this)['height'])
+		var height = parseInt(window.getComputedStyle(this.children[0])['height'])
+		// console.log(height)
+		// console.log(parentHeight)
+		// console.log(this.scrollTop)
+		// console.log(this.scrollTop >= height - parentHeight)
+		if (this.scrollTop >= height - parentHeight) {
+			e.preventDefault()
+		}
+		
+	}
+	$.fn.scrollUnique = function() {
+		// console.log(this)
+	    return $(this).each(function() {
+	        var eventType = 'mousewheel';
+	        if (document.mozSetImageElement != undefined) {
+	            eventType = 'DOMMouseScroll';
+	        }
+	        $(this).on(eventType, function(event) {
+	            // 一些数据
+	            var scrollTop = this.scrollTop,
+	                scrollHeight = this.scrollHeight,
+	                height = this.clientHeight;
+	            console.log(scrollTop)
+	            console.log(scrollHeight)
+	            console.log(height)
+	            var delta = (event.originalEvent.wheelDelta) ? event.originalEvent.wheelDelta : -(event.originalEvent.detail || 0);        
+
+	            if ((delta > 0 && scrollTop <= delta) || (delta < 0 && scrollHeight - height - scrollTop <= -1 * delta)) {
+	                // IE浏览器下滚动会跨越边界直接影响父级滚动，
+	                // 因此，临界时候手动边界滚动定位
+	                this.scrollTop = delta > 0? 0: scrollHeight;
+	                // 向上滚 || 向下滚
+	                event.preventDefault();
+	            }        
+	        });
+	    });	
+	};
+
+	var scroll = $('.test1').scrollUnique();
+	console.log(scroll)
+</script>
+</body>
+</html>

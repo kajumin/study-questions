@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.box1 {
+			width: 100px;
+			height: 100px;
+			background-color: red;
+			border-radius: 10px;
+			behavior: url(./assets/css/ie-css3.htc)
+		}
+		.box2 {
+			width: 100px;
+			height: 100px;
+			background-color: red;
+			box-shadow: 2px 2px 5px #000;
+			behavior: url(./assets/css/ie-css3.htc)
+		}
+		.box3 {
+			text-shadow: 2px 2px 5px #000;
+			/*behavior: url(./assets/css/ie-css3.htc)*/
+		}
+		.box4 {
+			width: 100px;
+			height: 100px;
+			background-color: red;
+			transition: all 1s;
+			/*-ms-transition: all 1s;*/
+		}
+		.box4:hover {
+			background-color: #000;
+		}
+		.box5 {
+			width: 100px;
+			height: 100px;
+			border: 5px solid green;
+			/*box-sizing: border-box;*/
+			/*-ms-box-sizing: border-box;*/
+			background-color: red;
+		}
+		.box6 {
+			width: 100px;
+			height: 100px;
+			background-color: #000;
+			transform: translate(20px);
+		}
+		.box7 {
+			width: 100px;
+			height: 100px;
+			display: flex;
+		}
+		.box7 div {
+			flex: 1 1;
+			background-color: red;
+		}
+		.box7 div:nth-child(2) {
+			background-color: pink;
+		}
+		@media screen and (min-width: 970px) {
+			#box6 {
+				background-color: #096;
+			}
+		}
+		ul li:first-child {
+			color: red;
+		}
+		ul li[class*=li2] {
+			color: red;
+		}
+		.box8 {
+			width: 100px;
+			height: 100px;
+			background-color: #000;
+		}
+		.box8:after {
+			position: absolute;
+			left: 10px;
+			content: '';
+			width: 10px;
+			height: 10px;
+			background-color: red; 
+		}
+		.box8:before {
+			position: absolute;
+			left: 30px;
+			content: '';
+			width: 10px;
+			height: 10px;
+			background-color: red; 
+		}
+	</style>
+</head>
+<body>
+<div class="box1"></div>
+<div class="box2"></div>
+<p class="box3">中国</p>
+
+<div class="box4"></div>
+<div class="box5"></div>
+<div class="box6" id="box6"></div>
+<div class="box7">
+	<div></div>
+	<div></div>
+</div>
+<ul>
+	<li>1</li>
+	<li class="li2">2</li>
+</ul>
+<div class="box8"></div>
+
+<!-- 
+	ie-css3: box-shadow text-shadow border-radius 
+-->
+<!-- 
+ie10: flex animation transition 文字阴影
+ie9: transform box-shadow 背景 opacity 媒体查询 边框圆角 颜色
+ie8: 盒模型定义box-sizing 
+ie7: > + ~ 属性选择器
+ -->
+</body>
+</html>

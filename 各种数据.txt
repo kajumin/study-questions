@@ -1,0 +1,99 @@
+1.FormData基本使用 append set get has delete   遍历for(var key of fd.keys())
+==============
+使用a标签点击后效果
+chrome中直接下载
+firefox弹出提示框
+============Content-Type指定上传数据的编码
+文件上传: enctype="mutipart/form-data"
+无需文件上传: enctype="application/x-www-form-urlencoded" 
+body-parser中间件只能处理enctype="application/x-www-form-urlencoded"编码
+application/json: json格式的字符串
+===================================formData对象
+formData: 让我们可以异步上传一个二进制文件
+new FormData();
+fd.append(key, value)
+fd.get(key)
+fd.set(key, value)
+fd.has(key)
+fd.delete(key)
+遍历 for(var key of fd.keys())
+
+添加文件:
+fd.append('file', this.files[0])
+this.$axios.post('upload', formData)
+.then(res => {} )
+===========================FileRender
+render.readAsDataURL(file)      异步读取文件内容，结果用data:url(即Base64格式)的字符串形式表示
+reader.readAsArrayBuffer(file)  异步按字节读取文件内容，结果用ArrayBuffer对象表示
+render.onload() {  this.result //结果 }
+==========转为base64显示下载
+var render = new FileRender()
+reader.onload = function(){
+    document.getElementById("file_img").src = this.result;
+    // 下载
+    var a = document.createElement('a');
+    a.href = this.result;
+    a.download = '图片1';
+    document.body.appendChild(a);
+    // console.log(a)
+     a.click();
+}
+render.readAsDataURL(this.files[0])
+
+===========转为blob下载
+blob是二进制数据的容器, filerender是操作二进制数据
+var fr = new FileReader();
+fr.onload = function() {
+	console.log(this.result)
+	var blob = new Blob([this.result],{type: 'text/plain'});  // blob数据, 用于数据保存
+	console.log(blob)
+	var src = URL.createObjectURL(blob);  // 可以用于显示和下载图片 blob:null   新的对象表示指定blob或者file
+      	console.log(src)
+	document.getElementById("file_img").src = src;
+	      	
+	var a = document.createElement('a');
+	a.href = src;
+	a.download = '图片1';
+	document.body.appendChild(a);
+	// a.click()
+};
+fr.readAsArrayBuffer(this.files[0]); //异步按字节读取文件内容，结果用ArrayBuffer对象表示
+
+===============canvas图片下载
+var canvas = document.createElement('canvas');
+ var ctx = canvas.getContext('2d');
+var img = new Image();
+img.crossOrigin = 'Anonymous';
+console.log(url)
+console.log(callback)
+img.onload = function(){	        
+     canvas.height = img.height;
+     canvas.width = img.width;
+     ctx.drawImage(img, 0, 0);
+     var dataURL = canvas.toDataURL('image/png');  //base64格式
+     // 可以直接显示 可以用于下载
+     callback(dataURL);
+     canvas = null;
+ };
+img.src = url;  // url = './1.jpg'
+========================blob对象
+========================URL
+可以使用base64字符串作为内容的DataURI将一个文件嵌入到另外一个文档里
+
+URL对象用于生成指向File对象或Blob对象的URL
+URL.createObjectURL()
+该方法会创建一个 DOMString，其中包含一个表示参数中给出的对象的URL。这个 URL 的生命周期和创建它的窗口中的 document 绑定。这个新的URL对象表示指定的 File 对象或 Blob 对象。
+URL.revokeObjectURL()
+该方法用来释放一个之前通过调用 URL.createObjectURL() 创建的已经存在的 URL 对象。当你结束使用某个 URL 对象时，应该通过调用这个方法来让浏览器知道不再需要保持这个文件的引用了。
+=====================URLSearchParams 
+URLSearchParams:  接口定义了一些实用的方法来处理URL的查询字符串
+new URLSearchParams()
+params.append()
+params.get
+params.set
+params.has
+params.delete
+遍历: for(val p of params.keys()) {}    
+params.values()   params.entries()
+sort()
+toString()

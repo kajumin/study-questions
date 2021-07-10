@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<!-- 
+	1.正则是对象 typeof reg -> 'object' 赋值 比较都是对象特性
+	2.[A-z] 等效[A-Za-z]
+	3. 获取扩展名
+	-->
+<script type="text/javascript">
+	var reg = /123/
+	reg2 = reg
+	var reg3 = /123/
+	console.log(typeof reg)//object
+	console.log(reg == reg2) //true
+	console.log(reg === reg3) //false
+
+	var reg4 = /^[A-Za-z]$/
+	var reg5 = /^[A-z]$/
+	console.log(reg4.test('a')) //true
+	console.log(reg5.test('a'))
+
+	function getFileExtension (filename) {
+		var result = filename.match(/\.([^.]+)$/)
+		var result = filename.match(/[.]([^.]+)$/)
+		var result = /\.([^.]+)$/.exec(filename)
+		var result = /[.]([^.]+)$/.exec(filename)
+		// var result = filename.indexOf('.') !== -1 ? filename.split('.').pop() : null
+		// return result
+		return result && result[1]
+	}
+	console.log(getFileExtension('file.txt'))
+	console.log(getFileExtension('file'))
+	console.log(getFileExtension('file.file.txt'))
+</script>
+</body>
+</html>

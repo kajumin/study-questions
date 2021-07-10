@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1.0">
+	<style type="text/css">
+		body {
+			margin: 0;
+		}
+		.box {
+			width: 7.5rem;
+			height: 100px;
+			background-color: red;
+		}
+	</style>
+</head>
+<body>
+	<div class="box"></div>
+<script type="text/javascript">
+	function setRem () {
+	  let width = window.innerWidth || document.documentElement.clientWidth
+	  console.log(width)
+	  // 预设基准值 / 设计稿尺寸 * 设备独立像素
+	  let rem = 100 / 750 * width 
+	  document.documentElement.style.fontSize = rem + 'px'
+	}
+	// 监听窗口变化
+	setRem()
+	addEventListener("resize", setRem)
+</script>
+</body>
+</html>

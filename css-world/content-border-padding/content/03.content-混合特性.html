@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.i:before {
+			content: "("attr(href)")";
+		}
+		.i {
+			counter-reset: wangxiaoer 2;
+		}
+		.i:after {
+			counter-increment: wangxiaoer;
+			content: '-' counter(wangxiaoer);
+		}
+	</style>
+</head>
+<body>
+	<!-- 混合在一起使用 -->
+<a class="i" href="#"></a>
+</body>
+</html>

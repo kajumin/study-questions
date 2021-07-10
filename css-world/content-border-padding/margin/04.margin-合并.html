@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		body {
+			margin: 0;
+		}
+		.box {
+			margin-bottom: 20px;
+			background-color: rgba(0,0,0,0.8);
+		}
+		.box1 {
+			line-height: 30px;
+		}
+		.box1 div {
+			background-color: #eee;
+		}
+		.box2 div {
+			margin-top: 20px;
+			background-color: #eee;
+		}
+		.box2-1 {
+			overflow: hidden;
+		}
+		.box2-2 {
+			border: 1px solid red;
+		}
+		.box2-3 {
+			padding: 1px;
+		}
+		.box2 .son {
+			margin-top: 30px;
+		}
+		.box2-bottom {
+			max-height: 100px;
+		}
+		.box2-bottom div {
+			margin-bottom: 10px;
+			margin-top: 0;
+		}
+		.box2-bottom2 {
+			max-height: 0;
+			min-height: 21px;
+		}
+		.box2-bottom3 {
+			height: 21px;
+		}
+		.box3 {
+			overflow: hidden;
+			background-color: red;
+		}
+		.box3 .son {
+			margin: 1em 0;
+		}
+	</style>
+</head>
+<body>
+	<!-- 
+	1.相邻兄弟元素合并
+	2.margin-top合并
+	  	阻止margin-top合并: 
+		父元素设置为块级格式化上下文元素
+		父元素设置border-top值
+		父元素设置padding-top值
+		父元素和第一个子元素之间添加内联元素进行分割
+		阻止margin-bottom: 多一个height min-height max-height
+	3.空块级元素的margin合并 margin: 1em 0; 父元素16px
+	 -->
+<div class="box box1">
+	<div>123</div>
+	<div>456</div>
+</div>
+<div class="box box2">
+	<div>222</div>
+</div>
+<div class="box2 box2-1">
+	<div>222</div>
+</div>
+<div class="box2 box2-2">
+	<div>222</div>
+</div>
+<div class="box2 box2-3">
+	<div>222</div>
+</div>
+<div class="box2 box2-4">
+	<span>span</span>
+	<div>222</div>
+</div>
+<div class="box2 box2-bottom">
+	<div>666</div>
+</div>
+<div class="box2-top">
+	<div>666</div>
+</div>
+<div class="box2 box2-bottom box2-bottom2">
+	<div>666</div>
+</div>
+<div>66666</div>
+<div class="box2 box2-bottom box2-bottom3">
+	<div>666</div>
+</div>
+<div>66666</div>
+<div class="box3">
+	<div class="son"></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		body {
+			margin: 0;
+		}
+		.box1 {
+			width: 300px;
+			height: 200px;
+			overflow: hidden;
+		}
+		.box1 .son {
+			height: 1000px;
+			background: linear-gradient(to bottom, red 0%, green 50%, yellow 100% );
+		}
+		.box2 {
+			width: 300px;
+			height: 200px;
+			overflow: hidden; 
+		}
+		.box2 .son {
+			height: 1000px;
+			background: linear-gradient(to bottom, red 0%, green 50%, yellow 100% );
+			transform: translateY(0px);
+		}
+		.box3 {
+			position: relative;
+			width: 300px;
+			height: 200px;
+			overflow: hidden; 
+		}
+		.box3 .son {
+			position: absolute;
+			left: 0;
+			top: 0;
+			width: 300px;
+			height: 1000px;
+			background: linear-gradient(to bottom, red 0%, green 50%, yellow 100% );
+		}
+	</style>
+</head>
+<body>
+	<!-- 
+	scrollTop
+	(1)实现简单, 无须做边界判断
+	(2)可与原生的scoll事件天然集成, 无缝对接
+	(3)无须改变子元素的结构
+
+	 -->
+<p>父元素scrollTop</p>
+<div class="box1">
+	<div class="son"></div>
+</div>
+<p>transform</p>
+<div class="box2">
+	<div class="son"></div>
+</div>
+<p>left</p>
+<div class="box3">
+	<div class="son"></div>
+</div>
+
+<script type="text/javascript">
+	var index = 0;
+	var scrollOffset = 20
+	var box1 = document.querySelector('.box1')
+	var box2 = document.querySelector('.box2')
+	var box2Son =  document.querySelector('.box2 > .son')
+	var box3 = document.querySelector('.box3')
+	var box3Son =  document.querySelector('.box3 > .son')
+	console.log(box1)
+	setInterval(() => {
+		// console.log(box1.scrollTop, index)
+		box1.scrollTop = index * scrollOffset;
+
+		box2Son.style.transform = `translateY(${-index * scrollOffset}px)`;
+
+		box3Son.style.top = -index * scrollOffset + 'px'
+		index++
+	}, 500)
+</script>
+</body>
+</html>

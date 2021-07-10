@@ -1,0 +1,96 @@
+HTML相关: 
+1.
+   (1)html5标签和特性
+   (2)html5表单引出的伪类选择器
+   (3)全局属性(id class style title)  hidden data-* tabindex  dir  
+        lang  draggable  contenteditable accesskey
+   1.1<!DOCTYPE html>  老版为xhtml   XHTML 严格文档模型
+   1.2link script无需type
+   1.3引号还是不引号  都可以
+   1.4新标签 header footer nav aside article  hgroup
+   1.5 .audio  vedio  contros preload
+   1.6. mark 高亮
+   1.7. output  显示部分计算 progress meter
+
+   2.1:required :optional  :invalid :valid :in-range  :out-of-range
+   3. 全局属性: id   class   style   title
+   3.1. hidden  ||   type="hidden"   display:none; 
+   3.2. data-*   ele.getAttribute || ele.dataset.key(驼峰)   delete ele.dataset.key(标签内也删) ele.dataset(对象)
+   3.3. dir  微信聊天(案例)
+   3.4. tabIndex  draggable  contenteditable  accesskey访问快捷键
+
+2. progress   兼容问题: ie6+
+3. html原生懒加载 load="lazy||auto||eager"  ele.loading(属性)   'loading' in document.createElement('img')
+    clientHeight   scrollTop
+     最底下的pageY  - window.height - window.scrollTop < 150
+     img有高度当滚动到一定位置时, src设置为data-src中的值
+4.  ul > li 无序列表  ol > li 有序列表  ul/ol{margin: 0 16rem; padding-left: 40px;}
+     dl > dt(标题) + dd  有标题的内容快  dl{margin: 0 16em;}  dd{margin-left: 40px;}
+
+5.  wbr精准换行   针对连续的英文字符
+     配合white-space:nowrap;使用, 在可以换行的地方加上wbr标签   不能和break-all使用
+
+6.  audio vedio  preload预载 controls loop src width/height
+     ele.playbackRate=""  设置播放倍数
+
+7.span-a模拟按钮
+  form表单中button默认有提交行为, type="button"取消提交表单行为
+===================技术类
+1. meta标签  元信息  
+     http-equiv="Content-Type"   http-equiv="X-UA-Compatible"  
+     name="viewport description keywords author"
+     favicon  是一组16×16、32×32和48×48图像集合
+2.rel属性: relativeship; 指明两个文档之间的关系, 专门用来链接相关元素上
+<a>、<area>、<form>或<link>
+属性值:
+alternate: (1)换肤 (href替换 | class控制 | alternate) (2)media响应处理
+prefetch: 预获取   (首个商品 分页的下一页)
+preload: 预加载
+prerender: 预渲染
+dns-prefetch: dns预解析
+
+3.git暂停
+   (1)多张img资源控制  src
+   (2)animation  background-position  步进函数 利用动画的暂停效果
+
+4.em(强调) i(技术术语) strong(重要) mark(高亮)
+
+5.clip: rect(10px, 90px,90px, 10px)
+   (1) 可访问性隐藏
+   (2) img标签下的CSS Sprite定位
+   (3) 图像剪裁 案例
+
+6.form 属性 action target  enctype  method
+
+7.html文件格式下载 
+
+8.响应式图片
+
+9.子容器滚动父元素不跟随滚动
+
+10.fieldset > legend  用于表单form
+
+11.hover效果的逆向思维
+
+12.file文件上传   利用iframe实现异步加载
+
+===================标签难点
+1. focus伪类
+    (1) submit 与 label    :focus  ouline兼容性: ie8   clip: rect(0 0 0 0);
+    (2) 删除按钮 hover显示隐藏内容的键盘可访问性  opacity可以键盘访问    display  visibility不可以 
+    (3) hover/点击下拉菜单显示  使用插件 
+         hover显示:  添加:focus控制    click显示无需额外处理   js的hover显示添加foucus事件
+
+2. map > area  属性usemap  shape  coords
+    实用: 链接嵌套   外层使用a  里面使用map> area
+3. tabindex 负值鼠标  js可以focus 键盘不行
+    (1) 显示下拉键盘支持  tabindex = "0"  :focus {}
+    (2) 对网站模块进行自定义的键盘支持 添加tabindex="-1"并使用js focus
+    (3) 临时改变页面索引起始位置  tabindex="-1" 然后js触发focus行为
+4.accesskey="key"  alt + key  触发click行为  ie是触发focus行为
+   使用插件.js   (1)修复浏览器的统一行为 (2)增加单独accesskey属性值对应按键的focus行为
+
+==========================CSS相关
+1. css变量   --key : 值   使用 var(--key)   ele.style.setProperty('--key', 值)
+2. background-attachment: fixed; (相对窗体固定)  local(滚走, 可能看不见)  scroll(固定, 一直能看见)
+3.active和checkbox交互设计

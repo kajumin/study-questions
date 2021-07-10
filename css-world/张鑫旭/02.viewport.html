@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<style type="text/css">
+		body {
+			margin: 0;
+			overflow: auto;
+			background-color: #096;
+		}
+		.box1 {
+			width: 100px;
+			height: 100px;
+			background-color: red;
+		}
+		.box2 {
+			width: 370px;
+			height: 370px;
+			background-color: red;
+		}
+		.box3 {
+			width: 970px;
+			height: 100px;
+			background-color: red;
+		}
+		.box4 {
+			height: 100px;
+			background-color: red;
+		}
+		.box5 {
+			width: 1200px;
+			height: 40px;
+			background-color: red;
+		}
+	</style>
+</head>
+<body>
+	<div class="box1">100px</div>
+	<div class="box2">375px;</div>
+	<div class="box3">970px;</div>
+	<div class="box4">auto</div>
+	<div class="box5">
+		中国
+	</div>
+<script type="text/javascript">
+	window.onload = function() {
+		// *不设置viewport  页面宽度为980px  满屏980px 
+		// 没有超过980px的元素时  视觉视口等于布局视口
+		// 有超过980px的元素时, 视口视口等于超过980px的元素宽度值
+
+		// scale = 理想视口(375) / 视觉视口
+		// 当scale=1时    理想视口 = 视觉视口 = 布局视口  375px满屏
+		// 当scale=0.5时  理想视口 = 视觉视口 = 布局视口  750px满屏
+		// 当scale=2时  理想视口 = 视觉视口 = 布局视口  750px满屏
+		var layout = document.documentElement.clientWidth;
+		console.log(layout)
+		var visual = window.innerWidth;
+		console.log(visual)
+		var ideal = window.screen.width;
+		console.log(ideal)
+	}
+	
+</script>
+<!-- <script>
+	var test = document.querySelector('.test');
+	test.innerHTML = '屏幕宽度:' + screen.width + '<br>视觉视口:' + window.innerWidth;
+	setTimeout(function(){
+	    var meta = document.getElementsByTagName('meta')[1];
+	    meta.setAttribute('content','initial-scale=2');
+	    test.innerHTML = '屏幕宽度:' + screen.width + '<br>视觉视口:' + window.innerWidth;
+	},3000);
+</script> -->
+
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<style type="text/css">
+		body {
+			padding: 0;
+			margin: 0;
+		}
+		.container {
+			border-left: 200px solid #34538b;
+			background-color: red;
+		}
+		.container:after {
+			content: '';
+			display: block;
+			clear: both;
+			*zoom: 1;
+		}
+		.column-left {
+			float: left;
+			width: 200px;
+			margin-left: -200px;
+		}
+		.column-right {
+			float: left;
+			width: 100%;
+			padding: 10px;
+			box-sizing: border-box;
+			
+		}
+	</style>
+</head>
+<body>
+<div class="container">
+	<div id="colLeft" class="column-left">
+		<h4>正方观点</h4>
+		<p>观点1</p>
+	</div>
+	<div id="colRight" class="column-right">
+		<h4>反方观点</h4>
+		<p>观点1</p>
+	</div>
+</div>
+<p>
+	<input type="button" id="leftMore" value="更多正方观点">
+	<input type="button" id="rightMore" value="更多反方观点">
+</p>
+<script type="text/javascript">
+	var $ = function (id) {
+	    return document.getElementById(id);
+	};
+	// 分栏元素
+	var colLeft = $('colLeft'), colRight = $('colRight');
+	// 按钮元素
+	var leftMore = $('leftMore'), rightMore = $('rightMore');
+	// 序号
+	var indexLeft = 1, indexRight = 0;
+	if (colLeft && colRight && leftMore && rightMore) {
+	    leftMore.onclick = function () {
+	        indexLeft = indexLeft + 1;
+	        colLeft.insertAdjacentHTML('beforeend', '<p>观点'+ indexLeft +'</p>');
+	    };
+	    rightMore.onclick = function () {
+	        indexRight = indexRight + 1;
+	        colRight.insertAdjacentHTML('beforeend', '<p>观点'+ indexRight +'</p>');
+	    };
+	}
+</script>
+</body>
+</html>

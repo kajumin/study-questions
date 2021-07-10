@@ -1,0 +1,392 @@
+2020-8-15:
+巩固: 
+(1)正则
+(2)animation  transition 
+(3)text-shadow  box-shadow   x y 模糊距离  颜色  |  x y 模糊距离  阴影尺寸  颜色  阴影方向
+
+
+2020-8-16:
+巩固: 
+(1)background   背景图 和 渐变  color image repeat attachment position size clip origin
+                          liear-gradient(to top 0deg)    (repeating-)radial-gradient(circle, size , position)
+(2)省略号  overflow:hidden; text-overflow:ellipse; white-space:nowrap; 
+(3)flex     order  align-self   flex-grow   flex-shrink  flex-basis
+(4)内联元素  3个概念  
+(5)float概念  clear   bfc块级格式上下文
+(6)居中问题 3种   五种 transform line-height  table-cell flex grid
+
+学习: 
+css阻塞dom解析?false dom渲染?true  后面js代码执行? true 
+
+2020-8-17:
+巩固: 
+(1)border-image   source slice width outset repeat 
+    border-radius    10px 50% 1个值 2个值 3个值 4个值    水平 / 垂直
+(2) z-index   层叠上下文  层叠水平
+(3) letter-spacing 字符间距 => 英文字母, 汉字以及空格  间隔 重叠(负值)  反向(负值)  
+     word-spacing  单词间距 => word-spacing的作用是增加空格的间隙宽度
+(4)word-break: normal | keep-all | break-all
+(5)text-align(justify)  text-decoration(del line-through underline overline)  text-transform(uppercase lowercase)
+(6)first-letter 优先级大于 first-line  
+    first-letter  选择第一个非辅助符字符  无效: inline inline-table table flex
+    嵌套span无效:  inline-block  inline-table
+(7)font-size  largger smaller  xx-large(h1) x-large(h2)  large(h3) medium(h4) small (h5)  x-small(h6)  xx-small(没有)
+学习: 
+    promise 源码实现
+
+2020-8-18:
+巩固: 
+(1)axios请求处理
+(2)FormData  FileRender  Blob  URL  URLSearchParams  file  
+
+2020-8-19:
+巩固: 
+(1)原始值 与  引用类型 
+(2)闭包和泄露
+(3)面向对象与多种继承方式
+(4)事件驱动原理
+(5)ajax请求与同源策略
+
+2020-8-21:
+巩固: 
+(1)defer与async区别
+学习: 
+(1)promise源码实现最终版
+
+
+2020-8-22:
+巩固: 
+(1)generator()函数
+(2)隐式转换  (+)  -  /  *  %
+
+2020-8-25:
+巩固: 
+(1)axios  get   params  query  string  URLSearchParams 
+             post  string    对象  URLSearchParams   formData  
+
+2020-8-26:
+巩固: 
+(1)absolute定位元素
+
+
+2020-8-27:
+巩固: 
+(1)absolute定位元素  + z-index  层叠上下文
+
+
+2020-8-28:
+巩固: 
+(1) axios  FormData  Blob  URL  File  URLSearchParams  fileRender
+    axios  
+    fileRender  入参都是File或Blob对象
+    blob存储二进制数据的容器, new  Blob(dataArr, type)  dataArr(domstring, blob, ArrayBuffer)
+    blob:  { size, type}
+        1.  .slice(start,end)方法
+        2.  convas.toblob()
+        3.  URL.createObjectURL(blob)
+    file对象 是blob的子类 比blob主要多出一个name的属性。
+    URLSearchParams               .toString()   转化为序列化字符串
+    URL    URL.createObjectURL()   创建一个donstring, 是URL对象
+
+2020-8-29:
+巩固:
+(1) content 与 替换元素
+(2) padding
+(3) 居中对齐   line-height  inline-block(需要一个辅助元素或者使用伪元素)
+(4) 浏览器渲染机制  单线程(GUI, js)  dom树 cssom 渲染树 计算布局 绘制颜色  重排和重绘 DOMContentLoaded defer和async 
+(5) rem布局解析
+(6) css6新特性  选择器  tansition animation transform(倾斜)  shadow(box,text)   边框  背景(渐变)  文字 颜色(rgba, hsla) 
+弹性布局  网格布局  多列布局  盒模型定义 媒体查询
+
+
+2020-9-10:
+(1) 设计角度  表单  
+     阻止用户填写表单 不标记必填 微调 一种按钮 
+     大块区域 date 为何提问  尽量一个输入框(电话号码|门牌号/街道)
+(2) 简单的滚动插件  simpScroller(container, options);
+(3) 移动端适配  
+(4) html全局属性 
+     hidden 
+     tabindex
+     data-*   ele.dataset.key    .mm[data-name='']{ }
+     dir  可以用于布局
+(5) 懒加载原生
+     手写懒加载:  页面滚动高度 可视区域高度 存放删除的索引
+     插件: lazyLoad('', { selector: '.lazyload' })
+
+2020-9-11:
+(1)键盘可访问性: 
+    focus
+    map area
+    tabindex
+    accesskey
+
+(2)favicon图标
+https://image.zhangxinxu.com/image/blog/201908/favicon-16.png
+https://realfavicongenerator.net/
+https://realfavicongenerator.net/
+http://faviconit.com/zh
+(3) ul-ol-dl
+     导航条  下拉菜单
+(4) html5特征
+    data-*  hgroup doctype figure figation  无需type 本地存储
+
+2020-9-12:
+(1) css变量  --*: 值   使用var(--*, default)   setProperty  不合法则使用默认值
+(2) wbr标签使用  可以精准换行
+(3) html5播放器速度  playbackRate = this.value
+(4) 文件下载   .txt  .html .json文件
+(5) background-attachment 作用
+
+2020-9-13:
+(1)details/summary  可以实现很多效果
+     open   改变颜色/大小/自定义   a默认outline效果   js获取键盘行为*
+(2)fieldset/legend
+    使用场合: 单选或者多选的问题提问 或者 几个输入框使用的是同一个主题(收货地址)
+
+2020-9-14:
+(1)file文件上传
+    兼容性
+(2) git暂停和播放技术  (1)src替换  (2)animation  (3)canvas技术
+(3) 子元素scroll父元素容器不跟随  
+     e.preventDefault()   (chrome) : onmousewheel  wheelDelta(120)   (firefox): DOMMouseScroll     detail(6)
+     滚动的案例学习
+(4)hover效果的逆向思维
+    (1)position (2)边框取巧覆盖  (3) clip: rect()   (4)逆向思维 先写hover状态样式, 再翻转过来
+(5)rel  alternate preload prefetch prerender dns-prefetch
+(6) clip: rect();
+(7) html5标签  picture > source
+     datalist
+
+
+2020-9-16
+(1) offsetWidth  clientWidth  offsetParent  offsetTop clientTop  
+     clientHeight  content + padding  -  滚动条
+     scrollHeight(padding+子)   受滚动条的影响   垂直滚动条影响水平(17px)   水平滚动条影响水平(15px) 
+                       当前不可见部分的元素的高度
+     scrollTop最大值(scroll)   =  scrollHeight - clientWidth  滚动条向下滚动的距离也就是元素顶部被遮住部分的高度
+(2) clientX(视口) pageX(文档) offsetX(padding-box)  layerX(border-box)   screenX(屏幕)
+
+2020-9-17
+(1) color 
+    1.关键字  ie9才支持   css3新增(css1(16) + css2(1)orange + css3(100多个))
+    2.transparent     bgc: ie6    bc:  ie7   color: ie9    使用默认替代
+    3.rgba hsla(0-360色调, 0-100%饱和度, 0-100%亮度)  100%白色   0%黑色  百分比  数值不能混合使用  
+      hsl: ie9  rgba: ie9
+(2)background: css3(size大小 origin初始定位 clip剪切 多背景) image position repeat attachment color 
+    1.background-imagedisplay:none加载? ie加载  firefox不加载  chrome父级是隐藏则不加载
+    2.background-position百分比相对于剩余  负值百分比在图片大于容器时也是有效的
+    3.background-repeat: 性能问题 平铺太多性能不好   1像素不如100像素
+    4.background-color背景色最低  一站通用的:active样式
+    5.多背景hack   利用背景属性的兼容性  svg/png? 多背景(ie9)  gif/png?渐变(ie10)  另外svg: ie9
+    6.渐变背景: ie9  和rgba: ie9背景色兼容处理   解决办法: 使用ie原生的渐变滤镜
+      start,end, 垂直0水平1
+
+2020-9-18:
+(1) 元素的显示和隐藏
+(2) getBoundingClientRect()   {x,y,left,right,top,bottom,width,height}  相对于视觉窗口
+    window.scrollTop({top: 100, behavior: 'smooth'}) //instant     ele.scrollTo({top,left,behavior})
+(3) dom 获取节点  操作节点  属性操作  文本操作   节点判断   元素样式   事件
+
+2020-9-19:
+(1) direction: rtl/ltr; 改变水平流向  作用于: 替换元素 inline-block  inline-table
+     应用: 确认框  省略号在左边
+     unicode-bidi: normal;默认值  embed   bidi-override;
+(2) writing-mode: (lr-tb => horizontal-tb)   (tb-rl => vertical-rl)  (tb-lr => vertical-lr)
+    图片和普通块级元素垂直居中,  文字下沉  ie低版本图标旋转  高度自适应布局
+
+(3) 垂直居中的弹窗  vertical-align  + 辅助元素
+
+(4)active和check交互设计 css样式只有一两个
+   不直接在自身写样式,  而是关系(自身, 父子, 兄弟)
+
+
+2020-9-20:
+(1) fixed的absolute模拟  页面的滚动使用普通元素代替
+     fixed的背景锁定  fiexed蒙层依然可以滚动,  使用absolute模拟的则不会滚动, 
+            可以利用overflow禁止滚动, 使用border占位滚动条
+(2) srcset=""  (url, 描述符)  描述符(w, x)  w与sizes有关(向上取值)  x与设备像素比有关(向上取值)
+(2) form  formaction formenctype  formtarget  formmethod  formnovalidate
+(3) span a标签模拟按钮  (1)tabindex="0"  (2)role="button"  (3)附加键盘事件(32||13)
+(4) progress 兼容性: ie10+
+(5) 基于html5的可预览多图片ajax上传    使用zxxFile.js插件
+
+(6) gulp 强调工作流程  task src pipe dest series parallel   exports.default = parallel()
+     watch(['./src/css/*.*'], series('css'))
+
+
+2020-10-18
+1.获取节点 操作节点  节点判断  元素样式  事件
+
+2020-10-19
+1.css3复习
+   选择器(+ ~) nth-child   nth-last-child   nth-of-type   nth-last-of-type  
+   优先级  行内  id  (类 < 属性 = 伪类)  元素
+
+2020-10-21
+1. 选择器  transition  animation
+
+2020-10-22
+1.animation.css  总结 (1)定义变量  (2) 特殊类名 (3) setProperty()
+
+2020-10-23
+1.动画补充   api animationstart  animationend   animationiteration
+   属性: bubbles   cancelable   animationName    elapsedTime
+2.形状转换  translate    skew scale   rotate matric(a,b,c,d,e,f) ad控制缩放  bc控制倾斜  ef控制位移
+
+2020-20-24
+1.background  color image  position   attachment repeat  size origin  clip   IE9+
+2.六种颜色模式   hsl  hsla  rgba  IE9+
+3.flex弹性布局
+4.多列布局
+5.混合模式
+
+2020-10-25
+1.背景渐变 linear-gradient radial-gradient  conic-gradient
+
+2020-10-26
+1.内联元素  content
+
+2020-10-27
+1. padding  margin  border 
+
+2020-10-28
+1. 滑动门
+2. 伪元素本质 默认inline元素  必须设置content属性才有效  不占位置
+3. 透视  perspective越小越不明显   backface-visibility: hidden;
+
+2020-10-29
+1.flex布局   携程案例
+
+2020-10-30
+1. 小黄人  absolute
+2. 旋转轮播图
+
+2020-10-31
+1. ie-css3.htc   PIE.htc  兼容css3部分属性   box-shadow  text-shadow border-radius 
+   rgba  border-image 渐变
+
+2020-11-1
+1.百度钱包  音乐盒  滚动导航 会翻转的文字
+2. bom对象  history  location(URL)  超时 间歇定时器
+
+2020-11-2
+1.offset  client  scroll三大系列
+2. 拖拽  弹出登录框  放大镜(chrome webp格式)
+3. 滚动条制作 
+4. 动画函数   timeId 不要初始化为null;
+5. 滚动动画  无缝滚动只需多加一张  &gt;
+
+2020-11-3
+1. 京东tab栏  onmouseenter  animation函数  dataset  getAttribute
+
+2020-11-4
+1.迷你微信聊天框  direction  scrollTop  offsetHeight
+
+
+2020-11-5
+1. 瀑布流布局
+2. 下拉刷新 插件使用  iScroll插件   方法: scrollstart  scroll  scrollend
+3. 像素鸟 动画使用  两个图片为管道  小鸟y轴运动
+     (1) 背景移动(position)  小鸟移动(top值)
+     (2) 管道创建   管道移动  管道重置(高度与位置) 
+
+
+2020-11-6
+1. 飞机大战
+
+2020-11-7
+1.jquery学习
+
+2020-11-8
+1.bootstrap学习
+
+2020-11-9
+1.bootstrap 和 jquery复习
+
+2020-11-10
+1.es6和bootstrap实战 
+
+2020-11-11
+1.jquery插件和其他demo复习  
+
+2020-11-14
+1.html规范  初始html(超文本 预留字符)  锚点(链接 下载 锚点 手机号码(功能) target rel(关系))    图像(src alt usemap figure > figcaption map > area)   多媒体(video audio)  结构元素(section article aside nav header footer )
+内联元素(span strong(重要) em(强调) i(发言技术词) b(其他) mark(高亮) small(次要) 代码(code(内嵌) kdb(用户输入) pre(代码块) var(变量) samp(程序输出))
+
+2.css规范
+
+2020-11-15
+1.bootstrap学习
+2.bootstrap项目完结
+
+2020-11-16
+1.bootstrap项目重做一遍
+
+2020-11-17
+(1)像素 dpr 
+(2)视口(布局视口 视觉视口 理想视口)
+(3)bootstrap导航栏的使用技巧
+
+2020-11-18
+(1) touch事件  addEventListener(type, fn [, useCapture] || [, options])    passive
+(2) 陀螺仪 横竖屏 设备方向  设备移动(摇一摇)
+(3) 响应式(弹性布局 媒体查询 弹性图片)    列下沉 流体式(固定宽度)  交换式(顺序)  抽屉式(隐藏) 
+     响应式图片   picture srcset sizes   js处理
+(4) 常见问题处理
+
+快捷键
+ctrl + end     //尾部
+ctrl + home  //头部  
+"ctrl+shift+l  //多行编辑  先选中多行
+delete           //右删
+
+2020-11-19
+1. jquery选择器  简单 基本过滤  属性过滤  表单过滤  子元素过滤   进一步选择器
+2. bootstrap导航栏
+3. html规范  css规范
+4. node学习
+
+2020-11-20
+1. 滚动 simplScroll
+2. 张鑫旭复习  html(标签 特性 全局属性)  技术
+
+2020-11-21
+1.gulp
+
+2020-11-22
+1.node
+
+2020-11-23
+1.es6
+
+2020-11-24
+1.vue基础
+
+2020-11-25
+1.webpack  webpack-dev-server 
+   css-loader style-loader 
+   vue-loader babel-core  file-loader url-loader
+
+2020-11-26
+1.webpack-merge  html-webpack-plugin
+2.vue-router
+3.vuex
+
+2020-11-27
+1.babel  
+2.sass
+3.postcss
+4.vue
+5.单个单页面应用配置
+
+
+2020-11-28
+1.多个单页面应用配置
+2.js设计模式和开发实践  第1-3章
+
+
+2020-12-15
+1.复习vue-router vuex
+2.
+  

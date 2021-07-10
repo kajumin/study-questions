@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<script>
+	// Object.getOwnPropertyDescriptors()
+	// 正确复制setter getter函数
+	const source = {
+		bar: 'bar',
+		set foo(val) {
+			console.log(val)
+		}
+	}
+	console.log(Object.getOwnPropertyDescriptors(source))
+	
+	const target = {}
+	Object.defineProperties(target, Object.getOwnPropertyDescriptors(source))
+
+	console.log(Object.getOwnPropertyDescriptor(target, 'foo'))
+
+	// 继承
+	// (1)
+	const prop = {foo: 'foo'}
+	const obj = { 
+		__proto__: prop,
+		bar: 'bar' 
+	} 
+	console.log(obj)
+
+	const obj2 = Object.create(prop)
+	obj2.bar = 'bar'
+	console.log(obj2)
+
+	const obj3 = Object.assign(Object.create(prop), {
+		bar: 'bar'
+	})
+	console.log(obj3)
+
+	const obj4 = Object.create(
+		prop, 
+		Object.getOwnPropertyDescriptors({
+			bar: 'bar'
+		})
+	)
+	console.log(obj4)
+</script>
+</body>
+</html>

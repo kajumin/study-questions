@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.box { 
+			overflow: hidden;
+			position: relative;
+			width: 250px;
+		    max-height: 80px;
+		    transition: max-height .25s;  
+		}
+		.more {
+		    position: absolute;
+		    /*width: 100%;*/
+		    padding-top: 20px;
+		    bottom: 0; 
+		    left: 0;
+		    right: 0;
+		    background: linear-gradient(to bottom, hsla(0,0%,100%,0), hsla(0,0%,100%,.9) 50%, hsla(0,0%,100%,1));
+		}
+		.box.active {
+		    max-height: 200px;
+		}
+		.box.active > .more {
+		    display: none;
+		}
+	</style>
+</head>
+<body>
+	<!-- 
+		.active等JS交互类名自身绝对不能有CSS样式,
+		active本质上扮演的角色不是类名样式，而是一个标识符！,
+		用来和其他类名发生关系，然后让其他类名的样式发生变化。这种关系可以是父子，兄弟或者自身。
+
+		好处:
+		(1)CSS和JS代码可读性更强了
+		(2)js代码量更少
+		   var ACTIVE = 'active'; 压缩, 当我们JS压缩的时候，其压缩率要高很多,也更好维护.
+		(3)类名压缩成为可能: 
+		JS文件中只有不参与CSS样式的类名选择器，以及不参与CSS样式的交互效果占位符，则我们就可以通过简单的设置不过滤的类名，实现我们的类名压缩效果了。
+
+
+		> ~ +都是ie7+
+		状态类名: 
+		active 
+		disabled 
+		checked   单复选框UI组件
+		selected  自定义下拉
+	-->
+<div id="box" class="box">
+    flv.js-B站HTML5播放器内核开源
+	项目地址：https://github.com/Bilibili/flv.js
+	一个纯JS的不依赖Flash的HTML5 Flash视频 (FLV)播放器！
+	本项目受hls.js启发，需要依赖Media Source Extensions才能生效。
+    <a href="javascript:" id="more" class="more">更多↓</a>
+</div>
+<script type="text/javascript">
+	var box = document.getElementById('box'), 
+	    more = document.getElementById('more');
+	if (box && more) {
+	    more.onclick = function () {
+	        box.className += ' active';    
+	    };    
+	}
+</script>
+</body>
+</html>

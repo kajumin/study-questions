@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.box {
+			width: 100px;
+			height: 100px;
+			background-color: red;
+		}
+		.box1 {
+			animation-name: move, fontSize;
+			animation-duration: 1s, 1s;
+			animation-delay: -1s;
+		}
+		.box2 {
+			animation: move2 1s 1s 1.8 reverse;
+			animation-fill-mode: forwards;
+		}
+		.box3 {
+			animation: move2 1s 1s 1 reverse;
+			animation-fill-mode: backwards;
+		}
+		@keyframes move {
+			50% {
+				transform: translate(100px);
+			}
+			100% {
+				transform: translate(0);
+			}
+		}
+		@keyframes move2 {
+			100% {
+				transform: translate(100px);
+			}
+		}
+		@keyframes fontSize {
+			50% {
+				font-size: 20px;
+			}
+		}
+	</style>
+</head>
+<body>
+	<!--
+	1.delay负值  动画失效 
+	2.不一定为100%的位置 可以反向运动reverse 或者 alternate
+	3.不一定为0%的位置   可能反向运动reverse 或者 alternate-reverse
+
+	 -->
+<p>duration 一个周期的时间</p>
+<div class="box box1">中国</div>
+<div class="box box2">中国</div>
+<div class="box box3">中国</div>
+</body>
+</html>

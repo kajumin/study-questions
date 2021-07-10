@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<div class="box1"></div>
+	<div class="box2"></div>
+<script type="text/javascript">
+
+	function asyncAdd(a, b, callback) {
+		setTimeout(() => {
+			callback(null, a + b)
+		}, 1000)
+	}
+	async function sum (...rest) {
+		console.log(rest)
+		if (rest.length <= 1) {
+			return rest[0] || 0
+		}
+		const promises = []
+		for(let i = 0; i < rest.length; i += 2) {
+			promises.push(
+				new Promise(resolve => {
+					if(rest[i+1] === undefined) {
+						resolve(rest[i])
+					} else {
+						// console.log(rest[i], rest[i+1])
+						asyncAdd(rest[i], rest[i+1], (_, res)=>{
+							// console.log(res) // 3 7 11
+							resolve(res)
+						})
+					}
+				})
+			)
+		}
+		const result = await Promise.all(promises)
+		console.log(result)
+		let sum = 0
+		result.forEach(item => {
+			sum += item
+		})
+		return sum
+		
+		// return await sum(...result)
+		// console.log(result)
+		// for(let num of rest) {
+		// 	// console.log(num)
+		// 	result = await new Promise(resolve => {
+		// 		asyncAdd(result, num, (_, res)=>{
+		// 			console.log(res)
+		// 			resolve(res)
+		// 		})
+		// 	})
+		// }
+		// return result;
+		
+		
+	}
+	let start = window.performance.now()
+	console.log(start)
+	sum(1,2,3,4,5,6,7)
+	.then(res => {
+		console.log(res)
+		console.log('消耗时间为:' , window.performance.now() - start)
+	})
+
+	
+
+	// 1.sessionStorage   关闭选项卡失效
+	// 2.可以抛出任意数据类型
+	// 3.累加器没有放回值就为 undefined
+	// 4.symbol 不可枚举 getOwnPropertySymbols
+	// 5.引入的模块是只读的
+
+	// 变量的赋值分为三个阶段
+	// 1.创建变量, 开辟内存空间
+	// 2.初始化变量, 将变量初始化为undefined
+	// 3.真正赋值
+	// var  创建和初始化提升
+	// let  创建提升
+	// function 创建 初始化 赋值都提升
+
+	
+
+</script>
+</body>
+</html>

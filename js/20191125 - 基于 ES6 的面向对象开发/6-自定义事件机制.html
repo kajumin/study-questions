@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<!-- 
+    addEventListener()
+    removeEventListener()
+-->
+<script>
+/*
+    事件池：存储相应的事件
+    事件添加机制: 添加相应的事件处理函数
+    事件删除机制: 删除相应的事件处理函数
+    事件的触发机制: 如何触发对应的事件
+*/    
+/*
+    click:
+*/
+
+class Event {
+    constructor(){
+        this.events = {};
+        /*
+            this.events = {
+                click:[f1,f2,f3],
+                mouseover: [f1,f2,f3]
+            }
+        */
+    }
+    // 添加相应的事件处理
+    on(event,f){
+        if(!this.events[event]){
+            this.events[event] = [];
+        }
+        this.events[event].push(f);
+    }
+    // 删除相应的事件处理
+    off(event,f){
+        if(this.events[event]){
+            // 过滤：返回值为 true 保留，false 过滤掉
+            this.events[event] = this.events[event].filter(item=>f!=item);
+        }
+    }
+    // 触发事件
+    dispatch(event,...arg){
+        if(this.events[event]){
+            this.events[event].forEach(item => {
+                item.call(this,...arg);
+            });
+        }
+    }
+}
+
+{
+    let event = new Event();
+    let f2 = ()=>{
+        console.log(2);
+    };
+    event.on("dragstart",(e)=>{
+        console.log(1);
+    });
+    event.on("dragstart",f2)
+    document.onclick = function(){
+        event.dispatch("dragstart");
+    };
+    console.log(event);
+}
+</script>
+</body>
+</html>

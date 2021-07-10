@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<!-- 
+1、src: 图像地址
+2、alt: 图像替代文本，供探索引擎抓取使用
+3.ismap: 为图像定义为服务器端图像映射
+4.longdesc: 与alt属性类似，提供多于1024字符的长文本描述
+5、usemap:为图像定义客户端图像映射 usemap = "#<map>元素的name或id属性"
+6、srcset:指定图片的地址和对应的图片质量。属性格式：图片地址 宽度描述w 多个资源之间用逗号分隔。对于srcset里面出现了一个w单位，可以理解成图片质量。如果可视区域小于这个质量的值，就可以使用，当然，浏览器会自动选择一个最小的可用图片。但是，会发现随着浏览器窗口宽度变大，图片也在不断变大
+7、sizes:用来设置图片的尺寸零界点，主要跟响应式布局打交道。属性格式：媒体查询 宽度描述(支持px)，多条规则用逗号分隔
+[注意]如果加上sizes属性，会发现，随着浏览器宽度变大，图片一直保持其初始尺寸。所以，应该sizes和srcset两个属性配合使用
+
+figure 代表一段独立的内容figure 通常用来插入图片，但它也可以是一段代码、图片、音乐或者视频
+
+figcatption用来定义figure元素的标题，且应该位于figure元素的第一个或最后一个子元素的位置。figure中只能包含一个figcaption
+
+
+<map> 与 <area>属性一起使用来定义一个图像映射
+[注意]<img>中的usemap属性可引用<map>中的id或name属性(取决于浏览器)，所以应同时向<map>添加id和name属性。
+<area>用来定义图像热区，<area>总是嵌套在<map>标签中
+
+【必须属性】
+
+1、alt: 替代文本	
+【可选属性】
+1、coords:定义可点击区域的坐标
+2、href:定义此区域的目标URL
+3、nohref:排除某个区域(html5中已废弃)
+4、shape:定义区域的形状
+a、圆形(circ/circle) coords= "x,y,r" x,y是圆心坐标；r是半径
+b、多边形(poly/polygon) coords = "x1,y1,x2,y2,x3,y3……" x,y是多边形每个顶点的坐标
+c、矩形(rect/rectangle) coords = "x1,y1,x2,y2" x1,y1是左上角坐标；x2,y2是右下角坐标
+d、全部区域default(默认)
+[注意]<area>标签采用"先来先得"的顺序，如果区域有重叠，以先出现的<area>为准	
+
+ -->
+<img src="" width="200" longdesc="01.html文档类型.html" alt="liyitong">
+</body>
+</html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		body {
+			margin: 0;
+		}
+		img {
+			width: 100px;
+			height: 100px;
+		}
+		.box1-1 span {
+			margin-top: 10px;
+		}
+		.box1-2 img {
+			margin-top: 10px;
+		}
+		.box3 {
+			margin-top: 30px;
+		}
+		.box3 .son {
+			margin-top: 20px;
+		}
+		.box4 {
+			height: 30px;
+			position: relative;
+		}
+		.box4 div {
+			position: absolute;
+			left: 10%;
+			top: 10%;
+			margin-right: 30px;
+		}
+		.box5-1 {
+			width: 100px;
+		}
+		.box5-1 div {
+			width: 80px;
+			margin-right: 100px;
+		}
+		.box7 {
+			height: 200px;
+			background-color: #eee;
+		}
+		.box7 img {
+			margin-top: -20px;
+		}
+		
+	</style>
+</head>
+<body>
+
+	<!-- 
+	margin无效情况:
+  	(1)display:inline的非替换元素垂直方向的margin无效
+  	   替换元素有效并且没有合并的问题 所以图片永远没有margin合并
+  	(2)tr td 和display:tabel-cell和table-row无效
+  	(3)margin合并的时候,更改margin值不一定有效, 需要大于合并值
+  	(4)绝对定位的非定位方向的margin值无效,  left:30%; margin-right: 30px;
+  	(5)定高容器的子元素margin-bottom和宽度定死的子元素margin-right的定位无效
+  	(6)鞭长莫及导致的margin无效  两栏布局中  margin-left小于左侧内容宽度 
+  	(7)内联特性导致margin无效 大到一定值时  vertical-align
+	 -->
+<div class="box1-1">
+	<span>span</span>
+</div>
+<div class="box1-2">
+	<img src="../../images/1.jpg">
+</div>
+<div class="box3">
+	<div class="son">div</div>
+</div>
+<div class="box4">
+	<div>div</div>
+</div>
+<div class="box5-1">
+	<div>div</div>
+</div>
+<div class="box7">
+	x<img src="../../images/1.jpg">
+</div>
+
+</body>
+</html>

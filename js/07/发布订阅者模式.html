@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<!-- 
+	发布订阅模式
+作用:
+1.广泛应用于异步编程中(替代了传递回调函数)
+2.对象之间松散耦合的编写代码
+
+ -->
+ <script type="text/javascript">
+ 	let crop = {}
+ 	crop.list = []
+
+ 	// 去订阅事件
+ 	crop.on = function(key, fn) {
+ 		if(!crop.list[key]) {
+ 			crop.list[key] = []
+ 		}
+ 		crop.list[key].push(fn)
+ 	}
+ 	// 发布事件
+ 	crop.emit = function(key) {
+ 		if(crop.list[key]) {
+ 			crop.list[key].forEach((cb => {
+ 				// 当发布的时候再把列表里存的函数依次执行
+ 				cb.apply(this, arguments)
+ 			}))
+ 		}
+ 	}
+
+ 	crop.on('join1', function(position, salary) {
+ 		console.log('您的职位是: ', position)
+ 		console.log('薪水: ', salary)
+ 	})
+ 	crop.on('other', function(skill, hobby) {
+ 		console.log('您的技能是: ', skill)
+ 		console.log('爱好: ', hobby)
+ 	})
+ 	crop.emit('join1', '前端', 10000)
+ 	crop.emit('other', '端茶和倒水', '乒乓球')
+
+ </script>
+<script type="text/javascript">
+
+	// 1. 创建一个对象(缓存列表)
+	// 2. on方法用来把回调函数fn都加到缓存列表中
+	// 3. emit方法取到arguments里第一个当做key，根据key值去执行对应缓存列表中的函数
+	// 4. remove方法可以根据key值取消订阅
+	let event = {
+		list: {},
+		on (key, fn) {
+			if (!this.list[key]) {
+				 this.list[key] = []
+			}
+			this.list[key].push(fn)
+		},
+		emit () { 
+			let key = [].shift.call(arguments),
+	            fns = this.list[key]
+
+	        if (!fns || fns.length === 0) {
+	            return false;
+	        }
+	        fns.forEach(fn => {
+	            fn.apply(this, arguments)
+	        });
+
+		},
+		remove (key, fn) {
+			let fns = this.list[key];
+        	// 如果缓存列表中没有函数，返回false
+       		if (!fns) return false
+       		 // 如果没有传对应函数的话
+	        // 就会将key值对应缓存列表中的函数都清空掉
+	        if (!fn) {
+	            fns && (fns.length = 0)
+	        } else {
+	            // 遍历缓存列表，看看传入的fn与哪个函数相同
+	            // 如果相同就直接从缓存列表中删掉即可
+	            fns.forEach((cb, i) => {
+	                if (cb === fn) {
+	                    fns.splice(i, 1)
+	                }
+	            });
+	        }
+		}
+	};
+
+	function cat () {
+		console.log('一起喵喵喵')
+	}
+	function dog () {
+		console.log('一起汪汪汪')
+	}
+	event.on('pet', data => {
+		console.log('接收数据')
+		console.log(data)
+	})
+	event.on('pet', cat)
+	event.on('pet', dog)
+	event.remove('pet', dog)
+	event.emit('pet', ['二哈', '波斯猫'])
+</script>
+</body>
+</html>

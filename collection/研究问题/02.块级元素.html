@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		body {
+			margin: 0;
+		}
+		.box {
+			background-color: #eee;
+		}
+		.box1 .son {
+			height: 30px;
+			margin-bottom: 10px;
+			background-color: red;
+		}
+		.box2 .son:nth-child(1) {
+			width: 100px;
+			height: 100px;
+			margin: 0 auto;
+			margin-bottom: 20px;
+			background-color: red;
+		}
+		.box2 .son:nth-child(2) {
+			width: 100px;
+			height: 100px;
+			margin-bottom: 20px;
+			margin-right: 20px;
+			margin-left: auto;
+			background-color: red;
+		}
+	</style>
+</head>
+<body>
+	<!-- 
+		display: block || list-item table
+	1.块级元素(特征): 一个水平流上只能显示一个块级元素, 多个块级元素换行显示. 
+
+	2.margin:0 auto;
+
+	-->
+<div class="box box1">
+	<div class="son"></div>
+	<div class="son"></div>
+</div>
+<div class="box box2">
+	<div class="son"></div>
+	<div class="son"></div>
+</div>
+
+<div class="block"></div>
+<ul>
+	<li class="list-item"></li>
+</ul>
+<table class="table"></table>
+
+<script>
+	var block = document.querySelector('.block')
+	console.log(getComputedStyle(block)['display']);
+	
+	var listItem = document.querySelector('.list-item')
+	console.log(getComputedStyle(listItem)['display']);
+
+	var table = document.querySelector('.table')
+	console.log(getComputedStyle(table)['display']);
+</script>
+</body>
+</html>

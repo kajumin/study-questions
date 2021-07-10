@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<video id="video" height="314" autobuffer controls src="../images/123.mp4" type="video/mp4"></video>
+<p>选择播放速率：<select id="selRate">
+    <option value="0.5">0.5</option>
+    <option value="1" selected>1.0</option>
+    <option value="1.25">1.25</option>
+    <option value="1.5">1.5</option>
+    <option value="2">2.0</option>
+</select></p>
+<p><button id="btnPlay">视频播放</button></p>
+<script type="text/javascript">
+	var eleSelect = document.getElementById('selRate');
+	var eleButton = document.getElementById('btnPlay');
+	// 视频元素
+	var video = document.getElementById('video');
+	// 改变播放速率
+	eleSelect.addEventListener('change', function () {
+		console.log(video.__proto__)
+	    video.playbackRate = this.value;
+	});
+	// 点击播放按钮
+	eleButton.addEventListener('click', function () {
+		console.log(this.innerHTML)
+		console.log(video.paused)
+		console.log(video.played)
+		if(this.innerHTML == '播放') {
+			this.innerHTML = '暂停'
+			video.play();
+		} else {
+			this.innerHTML = '播放'
+			video.pause();
+
+		}
+		
+	    
+	});
+</script>
+</body>
+</html>

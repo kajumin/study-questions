@@ -1,0 +1,81 @@
+=========================博雅互动boyya
+<!DOCTYPE>声明, 它的作用是告诉浏览器页面使用哪个HTML版本进行编写的
+html5之前都使用了DTD(document type definition) 用来程序之间进行数据交换产生的的语法规则
+文档模式: 
+(1)混杂模式：不引用任何文档类型定义，对文档的渲染影响很大。 
+(2)标准模式：可以使用下面任何一种文档类型来开启，使用严格型（strict）文档来触发, 否则浏览器会进入怪异模式或混杂模式
+   <!-- HTML5 -->
+   <!-- HTML   4.01 严格型  框架集型 过渡型 -->
+   <!-- XHTML 1.0   严格型  框架集型 过渡型 -->   使用xml编写标记
+   <!-- XHTML 1.1 -->   等同于xhtml 1.0严格型
+    过渡型:    包括展示的和废弃的元素(font)
+    框架集型: 允许框架集内容
+    重点是html5  和  过渡型 区别 1.doctype  2.meta更详细
+               严格型:  完全按照h4进行解析
+
+    html4严格 strict.dtd   4.01/en   大小写 闭合标签  非规范浏览器规范了
+    html4过渡 loose.dtd  4.01   Transitional
+    html:xs   xhtml  更早  1999  Transitional.dtd
+    html:ts    xhtml  更早  1999  strict.dtd
+1.项目搭建
+2.首页  二级页面   (英文名称)
+3.外链式css引入   
+   清除默认样式reset.css  原子类base.css  公共样式common.css  单页面样式index.css
+4.版心inner
+5.样式不一样   给同级的元素加类型  li>a  给li加
+6.图片路径写相对路径
+7.同级元素之间有间隔使用margin
+8.padding > margin
+9.先导符号  使用padding挤
+10.nomargin: {margin: 0 !important;}  原子类
+11.内联元素    不能设置宽高 大小由内容撑开  并排显示 
+     块级元素    不设置宽度 盛满父盒子的内容宽度   高度不设置  内容撑开
+12.大背景水平居中  center  bottom   ||  center top
+13.footer  使用outline和absolute  clip: rect(0 9999px 9999px 0);
+
+========================学成网
+1. 准备工作  项目骨架
+2. 版心1366px  标尺工具
+3. 调整头部的宽度
+4. 切片工具    
+   cutterman截图工具   
+   可以清楚清除参考线   清除切片    视图工具中
+5.label + submit    absolute +clip: rect(0,0,0,0);
+6.符号使用arial字体
+
+========================ps使用
+
+========================智能家居
+1.  导航底边框加三角  
+2.  图标显示   inline-block  line-height重置
+3.  三栏布局   (1)float   (2)absolute
+     flex-basis: 1px;  可以让伸缩不依照内容决定   flex-grow: 1;
+4.  chrome最小字号12px
+5. hack   条件注释  <!--[if gt ie 8]>  <![endif]-->   属性级hack
+    _      ie6及以下
+    \9    ie6以上
+    *+    ie789   选择符hack    *+html  .test { }
+6. screen.availWidth  屏幕的宽度   不管浏览器的大小   不算电脑任务栏   算浏览器的工具栏
+    window.innerWidth   窗口文档显示区域的宽度   受浏览大小的影响
+
+======================jquery插件
+easing  + lavalamp         导航
+lavalamp  +  interfade    文字翻滚切换
+
+=======================
+modernizr.js   浏览器功能检测  判断浏览器是否支持某些HTML5/CSS3特性
+1.运行的时候它会在html元素上添加一批CSS的class名称   支持直接写上特性的名称   不支持写上no-特性名称
+2.利用html中的类名编写不同的样式效果(如阴影和边框)
+其他作用:
+1. 使用Modernizr的load()函数来动态加载脚本, 支持则加载哪个脚本, 不支持则加载哪个脚本, 都要加载哪个脚本
+2. 加载cdn脚本失败时, 可以加载备用的文件
+
+respond.js     媒体查询 解决低版本ie响应式的插件
+
+<!--[if lt IE 9]>
+<script src="dist/html5shiv.js"></script>  //ie低版本支持html5新标签
+<![endif]-->
+==========================响应式开发    弹性布局 响应式图片 媒体查询
+1.广告  Owl carousel插件  依赖于jquery或者zepto
+组件:  (1)使用人数  (2)是否开源  (3)文档  (4)活跃性 (5)小巧
+

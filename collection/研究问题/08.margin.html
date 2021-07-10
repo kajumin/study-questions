@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		body {
+			margin: 0;
+		}
+		.box1 {
+			overflow: hidden;
+			background-color: #eee;
+		}
+		.box1 .son {
+			float: left;
+			width: 100px;
+			height: 100px;
+			margin-right: 10px;
+			background-color: red;
+		}
+		.box1 .son:nth-child(1) {
+			margin-top: -10px;
+		}
+		.box2 {
+			width: 300px;
+			border: 1px solid red;
+			background-color: #eee;
+		}
+		.box2 .son {
+			display: inline-block;
+			width: 100px;
+			height: 100px;
+			background-color: red;
+		}
+		.box2 .son:nth-child(1) {
+			/*负值无效*/
+			margin-top: -10px;
+		}
+		.box2 .son:nth-child(2) {
+			/*正值无效, 一起向下*/
+			margin-top: 10px;
+		}
+		.box3 {
+			background-color: #eee;
+		}
+		.box3 .son {
+			display: inline;
+			width: 100px;
+			height: 100px;
+			background-color: red;
+		}
+		.box3 .son:nth-child(1) {
+			margin-top: 10px;
+		}
+		.box3 .son:nth-child(2) {
+			margin-top: -10px;
+		}
+		.box4 {
+			border: 1px solid red;
+		}
+		.box4 span {
+			background-color: red;
+		}
+		.box4 img {
+			/*margin-top: 10px;*/
+			/*vertical-align: 100px;*/
+			vertical-align: -100px;
+		}
+	</style>
+</head>
+<body>
+	<!-- 
+	浮动元素margin-top负值有效
+
+	inline-block元素margin-top负值无效 正值有效
+
+	inline无效
+
+	img: margin有效  负值受幽灵空白节点vertical-align: baseline;的影响, 内联元素不能到计算容器外部的
+	    vertical-align则不受限制, 正值向上, 负值向下 
+	 -->
+<div class="box box1">
+	<div class="son"></div>
+	<div class="son"></div>
+	<div class="son"></div>
+</div>
+<div class="box box2">
+	<div class="son"></div>
+	<div class="son"></div>
+	<div class="son"></div>
+</div>
+<div class="box box3">
+	<div class="son">son</div>
+	<div class="son">son</div>
+	<div class="son">son</div>
+</div>
+
+<div class="box box4">
+	<span>x</span><img src="../assets/images/1.jpg" width="40">
+	<span>1</span>
+</div>
+</body>
+</html>

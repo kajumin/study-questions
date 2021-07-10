@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+	</style>
+</head>
+<body>
+	<!-- 
+	details -> summary
+	summary 和 details都有ouline
+	属性选择器: [open] [focus] not([open])
+	1. open默认展开
+	2. summary缺省则显示: 详细信息(标题)
+	3. 三角形改变颜色，改变大小，使用自定义的图形代替，或者直接隐藏等
+	4. 阻止选择, focus聚焦
+	   (1)利用<a>标签的outline交互体验
+	   	1.details,summary {ouline: none};
+	   	2.summary 设置tabindex="-1"
+	   	3.利用a标签模拟ouline  鼠标点击的时候不显示轮廓, 键盘访问时候显示轮廓
+	    4.解决问题: 回车键不能展开和收起
+	   这是因为HTML元素中如果多个focusable同时带click浏览器行为元素嵌套的时候，点击里面的元素，外部元素的浏览器行为是不会触发的。类似的有<label>内嵌<a>标签。
+
+	   需要注意的是上面处理在<summary>自己额外绑定click事件时候可能会有double触发的问题，此时，阻止<a>元素的冒泡即可。
+
+	   	2.JS捕获键盘行为手动设置outline
+	   	1.details, summary {ouline: none};
+	   	2.html不需要任何处理
+	   	3.summary[focus] {outline: 5px auto -webkit-focus-ring-color }
+	   	4.利用js有效区分是点击触发的focus行为还是键盘触发的focus行为
+		  对于键盘focus则添加outline
+		     	
+	   	focus:当focusable元素获得焦点时，不支持冒泡;
+		focusin:和focus一样，只是此事件支持冒泡;
+		blur:当focusable元素失去焦点时，不支持冒泡;
+		focusout:和blur一样，只是此事件支持冒泡;
+		focusin(包括冒泡) > focus > focusout(包括冒泡) > blur
+
+		focus事件代理 true捕获阶段 因为focus不支持冒泡
+		IE只有冒泡, 没有捕获
+		默认是false（冒泡阶段执行）true(捕获阶段产生)
+		focusable元素:
+		(1)window：当页面窗口从隐藏变成前置可见时，focus 事件就会触发
+		(2)表单元素(form controllers)：input/options/textarea/button
+		(3)链接元素(links)：a标签、area标签(必须要带href属性, 包括href属性为空)
+		(4)设置了 tabindex 属性（tabindex 值非-1）的元素
+		(5)设置了 contenteditable = "true"属性的元素
+	-->
+	<!-- 
+	案例: 
+	(1) 展开 收起
+	    利用open属性
+	(2) 无JS实现点击显示悬浮菜单，自定义下拉框等效果
+	(3) accordion多项折叠效果 做父子元素 dt > dd
+	(4) 带slideUp/slideDown效果的多项折叠菜单 需要是兄弟元素
+	(5) 多级嵌套的树形菜单交互效果  背景渐变
+	    嵌套details > summary
+	-->
+	<!-- 
+	details/summary如果不想要行为:
+	(1)summary标签设置 tabindex="-1"禁止键盘访问
+	(2)设置CSS：
+		summary {
+	  		outline: 0;
+	  		pointer-events: none;
+		}
+
+	polyfill: 兼容性: ie11
+	支持性: 
+	var isSupportDetails = 'open' in document.createElement('details');
+	-->
+<details open="" class="details">
+    <summary>这是摘要1</summary>
+    <content>这里具体描述，标签相对随意，例如这里使用的&lt;p&gt;标签。</content>
+    <p>这里具体描述，标签相对随意，例如这里使用的&lt;p&gt;标签。</p>
+</details>
+<details open="" class="details">
+    <content>这里具体描述，标签相对随意，例如这里使用的&lt;p&gt;标签。</content>
+    <p>这里具体描述，标签相对随意，例如这里使用的&lt;p&gt;标签。</p>
+</details>
+
+<script type="text/javascript">
+	var details = document.querySelector('.details-1')
+	details.removeAttribute('open')
+</script>
+</body>
+</html>

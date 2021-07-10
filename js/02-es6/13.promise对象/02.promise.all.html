@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<script type="text/javascript" src="./assets/axios.js"></script>
+<script>
+	var promise1 = new Promise((resolve, reject) => {
+		setTimeout(() => {
+			resolve(1)
+		}, 1000)
+	})
+	var promise2 = new Promise((resolve, reject) => {
+		setTimeout(() => {
+			resolve(2)
+		}, 2000)
+	})
+	var promise3 = new Promise((resolve, reject) => {
+		setTimeout(() => {
+			resolve(3)
+		}, 3000)
+	})
+	var error = new Promise((resolve, reject) => {
+		reject('error')
+	})
+
+	var p1 =  Promise.all([promise1, promise2, promise3])
+
+	p1.then(pros => {
+		console.log(p1)
+		console.log(pros)
+	})
+	.catch(err => {
+		console.log(err)
+	})
+
+	var p2 = Promise.all([promise1, promise2, error])
+	
+	p2.then(pros => {
+		console.log(pros)
+	})
+	.catch(err => {
+		console.log(p2)
+		console.log(err)
+	})
+
+
+	var race = Promise.race([promise1, promise2, promise3])
+	
+	race.then(pros => {
+		console.log(pros)
+	})
+	.catch(err => {
+		console.log(err)
+	})
+</script>
+</body>
+</html>

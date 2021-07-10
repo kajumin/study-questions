@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<!--[if !IE]>
+		<link rel="stylesheet" type="text/css" href="css/1.css">
+	<![endif]-->
+	
+</head>
+<body>
+
+<!-- 
+1.文档声明
+2.字符编码
+3.keywords description
+4.title
+
+资源引入
+1.favicon
+2.css js无需指定type
+3.css指明 rel="stylesheet"
+4.使用link将css文件引入，并置于head中；使用script将js文件引入，并置于body底部
+
+结构优化: 
+1、尽量遵循 HTML 标准和语义，但是不要以牺牲实用性为代价。任何时候都要尽量使用最少的标签并保持最小的复杂度
+2、结构、表现、行为三者分离，避免内联
+3、可以在大的模块之间用空行隔开，使模块更清晰
+
+语义化:
+1.尽可能少地使用无语义化标签span 和 div
+2、在语义不明显，既可以使用p也可以使用div的地方，尽量用p
+3、在既可以使用div也可以使用section的地方，尽量用section
+4、不要使用纯样式标签，如b、u等，而改用CSS设置
+
+代码格式:
+1.缩进
+2.命名 class小写  -间隔
+3.同一页面, 避免使用相同的name和id
+
+4.标签 小写 闭合问题 嵌套规则
+5.注释 类似标签闭合的写法，与HTML统一格式；注释文案两头空格，与CSS注释统一格式
+<!-- --> <!-- /注释文案 -->
+
+<!-- 
+属性
+1、属性和值全部小写
+2、属性值必须用双引号包围
+3、布尔类型的属性，建议不添加属性值
+4、自定义属性建议以 xxx- 为前缀，推荐使用 data-
+5、可以省略style标签和script标签的type属性 
+
+属性顺序:
+id
+class
+name
+data-xxx
+src, for, type, href
+title, alt
+aria-xxx, role
+-->
+
+<!-- 图片:
+1、禁止 img 的 src 取值为空，否则会导致部分浏览器重新加载一次当前页面
+2、为图片添加 alt 属性，提高图片加载失败时的用户体验
+3、避免为 img 添加不必要的 title 属性，多余的 title 影响看图体验，并且增加了页面尺寸
+4、为图片添加 width 和 height 属性，以避免页面抖动
+<img src="#" alt="#" width="#" height="#">
+5、有下载需求的图片采用 img 标签实现，无下载需求的图片采用 CSS 背景图实现
+-->
+
+<!-- 表单: 
+1、有文本标题的控件使用 label 标签将其与其标题相关联。最好将控件置于 label 内，以减少不必要的 id
+2、使用 button 元素时必须指明 type 属性值。因为button 元素的默认 type 为 submit，如果被置于 form 元素中，点击后将导致表单提交. 不需要使用type="button"
+3、在针对移动设备开发的页面时，根据内容类型指定输入框的 type 属性，能获得友好的输入体验
+
+-->
+<!-- 多媒体:
+ 	1、在支持 HTML5 的浏览器中优先使用 audio 和 video 标签来定义音视频元素，并使用退化到插件的方式来对多浏览器进行支持 
+-->
+
+<!-- 
+条件注释: 
+因为从IE10开始，IE浏览器已经不再支持条件注释。所以下面的写法，只能识别IE9-浏览器
+识别IE:
+<!--[if IE]>
+<div class="box" id="box"></div>
+<![endif]-->
+<!-- 识别单一IE:
+[if IE 6]
+[if IE 7]
+[if IE 8]
+[if IE 9]
+识别范围:
+gt        　大于(greater than)
+gte     　　 大于等于(greater than or equal)
+lt          小于(less than)
+lte         小于等于(less than or equal)  -->
+
+识别非IE:
+<!--[if !IE]>
+<div class="box" id="box"></div>
+<![endif]-->
+
+嵌套规则: 交互型 标题型 内嵌型
+(1)a不能嵌套交互型元素(a input img(设置了usemap) video audio(设置了controls) button iframe)
+(2)form不能嵌套form
+(3)button不能嵌套交互型元素
+-->
+</body>
+</html>

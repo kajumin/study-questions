@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .selectBox {
+            position: fixed;
+            border: 1px solid #06c0fd;
+            background: rgba(6, 192, 255, .3);
+        }
+    </style>
+</head>
+<body>
+<script>
+/*
+    鼠标按下
+        鼠标移动
+        鼠标抬起
+*/
+{
+    let startMouse = {}; // 摁下时 鼠标坐标
+    let select = null;
+    // 鼠标移动的处理函数
+    let move = (e)=>{
+        let nowMouse = {
+            x: e.clientX,
+            y: e.clientY
+        };
+        let dis = {
+            x: nowMouse.x - startMouse.x,
+            y: nowMouse.y - startMouse.y
+        };
+        select.style.width = Math.abs(dis.x) + "px"; // 框的宽度就是两个坐标点的x差值
+        select.style.height = Math.abs(dis.y) + "px"; // 框的高度就是两个坐标点的y差值
+        select.style.left = Math.min(nowMouse.x,startMouse.x) + "px"; // 两个坐标谁在左侧，谁就是left
+        select.style.top = Math.min(nowMouse.y,startMouse.y) + "px";// 两个坐标谁在顶部，谁就是top
+    };
+
+    document.addEventListener("mousedown",(e)=>{
+        startMouse = {
+            x: e.clientX,
+            y: e.clientY
+        };
+        select = document.createElement("div");
+        select.className = "selectBox";
+        document.body.appendChild(select);
+        document.addEventListener("mousemove",move);
+        document.addEventListener("mouseup",()=>{
+            select.remove();
+            document.removeEventListener("mousemove",move);
+        },{
+            once: true
+        })
+    });
+
+
+}
+</script>       
+</body>
+</html>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.box {
+			width: 100px;
+			height: 100px;
+		}
+		.box1-1 {
+			background-color: #000;
+			transition: color 1s;
+			color: red;
+		}
+		.box1-1:hover {
+			color: #fff;
+		}
+		.box1-2 {
+			color: #fff;
+			transition: background-color 1s;
+			background-color: #000;
+		}
+		.box1-2:hover {
+			background-color: #fff;
+		}
+		.box1-3 {
+			color: #fff;
+			background-color: red;
+			transition: opacity 1s;
+			opacity: 1;
+		}
+		.box1-3:hover {
+			opacity: 0;
+		}
+		.box1-4 {
+			color: #fff;
+			background-color: red;
+			transition: 1s;
+		}
+		.box1-4:hover {
+			font-size: 20px;
+		}
+		.box1-5 {
+			color: #fff;
+			background-color: red;
+			transition: 1s;
+		}
+		.box1-5:hover {
+			letter-spacing: 10px;
+		}
+
+		/* transform */
+		.box2-1 {
+			color: #fff;
+			background-color: red;
+			transition: transform 1s;
+			transition-timing-function: ease-out;
+		}
+		.box2-1:hover {
+			transform: translate(100px, 0);
+		}
+		.box2-2 {
+			color: #fff;
+			background-color: red;
+			transition: 1s;
+		}
+		.box2-2:hover {
+			transform: scale(1.5);
+		}
+		.box2-3 {
+			color: #fff;
+			background-color: red;
+			transition: 1s;
+		}
+		.box2-3:hover {
+			transform: rotate(90deg);
+		}
+		.box2-4 {
+			color: #fff;
+			background-color: red;
+			transition: 1s;
+		}
+		.box2-4:hover {
+			transform: skew(90deg);
+		}
+
+		
+	</style>
+</head>
+<body>
+<!-- 
+	transition: property duration timing-function delay
+	  linear线性 ease平滑 ease-in 慢到快 ease-out 快到慢 ease-in-out 慢快慢
+	1.color background-color opacity font-size letter-spacing
+	2.transform: translate() scale() rotate() skew()
+
+ -->
+ <div class="box box1-1">中国</div>
+ <div class="box box1-2">中国</div>
+ <div class="box box1-3">中国</div>
+ <div class="box box1-4">中国</div>
+ <div class="box box1-5">中国</div>
+
+ <p>transform: translate scale rotate skew;</p>
+ <div class="box box2-1">中国</div>
+ <div class="box box2-2">中国</div>
+ <div class="box box2-3">中国</div>
+ <div class="box box2-4">中国</div>
+</body>
+</html>

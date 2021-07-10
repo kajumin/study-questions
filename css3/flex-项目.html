@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.container {
+			display: flex;
+			width: 600px;
+			height: 300px;
+			margin: 30px auto 0;
+			background-color: #f1f1f1;
+		}
+		.box {
+			width: 100px;
+			height: 100px;
+			background-color: red;
+		}
+		.box1:nth-child(3) {
+			order: 1;
+			flex-grow: 1;
+			/*flex: grow shrink*/
+			background-color: #096;
+		}
+	    .box2:nth-child(3) {
+			flex-shrink: 0;
+			/*不缩放*/
+			background-color: #096;
+		}
+	    .box3:nth-child(3) {
+			flex-shrink: 0;
+			background-color: #096;
+			align-self: flex-end;
+		}
+		.box3:nth-child(4) {
+			flex-shrink: 0;
+			height: auto;
+			align-self: center;
+			align-self: stretch;
+			/*stretch 为auto时才能自动填充高度*/
+			background-color: #adc;
+		}
+		.box3:nth-child(5) {
+			flex-shrink: 0;
+			align-self: baseline;
+			background-color: #afc;
+		}
+		.box4:nth-child(3) {
+			/*flex-grow: 1;*/
+			flex-basis: 10px;
+			background-color: #096;
+		}
+	</style>
+</head>
+<body>
+	<!-- 
+	1.order  越小越前 0最大
+	  flow-grow: 比例放大  默认为0; 不放大
+	2.flow-shrink: 1; 默认1(缩小)  0为不缩小
+	3.align-self: 设置子项目的排列方式
+-->
+<div class="container">
+	<div class="box box1">box1</div>
+	<div class="box box1">box2</div>
+	<div class="box box1">box3</div>
+	<div class="box box1">box4</div>
+	<div class="box box1">box5</div>
+</div>
+	<!-- 3.flow-shrink: 默认为1 缩放 0为不缩放-->
+<div class="container">
+	<div class="box box2">box1</div>
+	<div class="box box2">box2</div>
+	<div class="box box2">box3</div>
+	<div class="box box2">box4</div>
+	<div class="box box2">box5</div>
+	<div class="box box2">box6</div>
+	<div class="box box2">box7</div>
+	<div class="box box2">box8</div>
+</div>
+<!-- 4.align-item: auto;默认继承父 -->
+<div class="container">
+	<div class="box box3">box1</div>
+	<div class="box box3">box2</div>
+	<div class="box box3">box3</div>
+	<div class="box box3">box4</div>
+	<div class="box box3">box5</div>
+	<div class="box box3">box6</div>
+	<div class="box box3">box7</div>
+</div>
+<div class="container">
+	<div class="box box4">box1</div>
+	<div class="box box4">box2</div>
+	<div class="box box4">box3</div>
+	<div class="box box4">box4</div>
+</div>
+
+</body>
+</html>

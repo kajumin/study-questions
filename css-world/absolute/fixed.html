@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.box {
+			width: 300px;
+			height: 300px;
+			background-color: #eee;
+		}
+		.box1 {
+			overflow: auto;
+		}
+		.box1 > .son {
+			height: 500px;
+			background-color: red;
+		}
+		.box1  .right {
+			height: 0;
+			overflow: hidden;
+			text-align: right;
+		}
+		.box1  .icon {
+			display: inline;
+			position: fixed;
+			width: 20px;
+			height: 20px;
+			margin-top: 10px;
+			margin-left: -30px;
+			background-color: #fff;
+		}
+		p {
+			margin-top: 0;
+		}
+	</style>
+</head>
+<body>
+	<!-- 
+	fiexd固定定位 包含块是根元素(html)
+	1.fixed使用在局部, 把某个元素固定到某个模块右上角 
+	  利用了absolute/fixed的无依赖定位
+	2.fixed的absolted模拟
+	  body设置100%;  利用page来滚动滚动条
+	3.fixed与背景锁定
+	 -->
+	 <div class="box box1">
+	 	<div class="right">
+	 		&nbsp;<div class="icon"></div>
+	 	</div>
+	 	<div class="son">
+	 		<p>中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国</p>
+	 	</div>
+	 </div>
+</body>
+</html>

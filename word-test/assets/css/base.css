@@ -1,0 +1,35 @@
+*, 
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+}
+ul {
+  padding-left: 0;
+  list-style-type: none;
+}
+.fixed {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+.input-reset {
+  border: 0;
+  outline: 0;
+}
+.c3 {
+  background-color: #096;
+  color: #000;
+}
+.c2 {
+  background-color: red;
+  color: #000;
+}
+.c1 {
+  background-color: #333;
+  color: red;
+}

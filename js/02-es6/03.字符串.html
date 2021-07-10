@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<script type="text/javascript">
+	/*
+		字符串: 加强了对unicode的支持, 扩展了字符串对象
+		\uxxxx形式表示一个字符, 其中xxxx表示字符的unicode的码点
+		限于\u0000-\uffff, 超出必须用2个双字节的形式表达
+		ES6: 码点放进大括号, 大括号表示法与四个字节的UTF-16编码等价的
+		字符以UTF-16的格式存储, 每个字符固定2个字节, 大于\uffff的字符, 是两个字符
+
+		str.codePointAt(): 类似于charCodeAt() 返回十进制, toString(16)转为16进制
+
+		String.fromCodePoint(): 类似于fromCharCode() 与codePointAt()相反
+
+		for of 可以识别大于\uffff的码点
+		
+		//第二个参数指定开始搜索的位置
+		includes(str)   是否包含  
+		startsWith(str) 是否以指定字符开始
+		endsWith(str)   是否以指定字符结束
+		repeat(num)   重复次数
+
+		padStart(5, 'ab')  头部补全
+		padEnd(5, 'ab')    尾部补全
+
+		模板字符串`${}`
+	*/
+	console.log('\ud842\udfb7')
+	console.log('\u{20bb7}')
+
+
+	console.log('𠮷'.length)
+	console.log('𠮷'.charAt(0))
+	console.log('𠮷'.charAt(1))
+	console.log('𠮷'.charCodeAt(0))
+	console.log('𠮷'.charCodeAt(1))
+	console.log(('𠮷').codePointAt(0))
+	console.log(('𠮷').codePointAt(0).toString(16))
+
+	console.log(String.fromCodePoint(0x20bb7, 97)) //𠮷a
+
+	for(let s of '𠮷𠮷𠮷') {
+		// 识别unicode编码大于0xffff的值
+		console.log(s.codePointAt(0).toString(16))
+	}
+
+	// es5方法
+	console.log('abc'.charCodeAt(0)); //97
+	console.log(String.fromCharCode(97, 98));//97
+		
+
+	
+</script>
+</body>
+</html>

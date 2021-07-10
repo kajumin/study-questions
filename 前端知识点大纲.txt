@@ -1,0 +1,43 @@
+==================html5
+h5新标签   header footer nav aside article(定义文章) hgroup(标题组)
+h5新特性   本地存储  地理位置 表单类型 | 属性 | 元素  应用缓存  FileReader  视频音频 画布canvas  拖放 svg
+表单类型  color range date search url email number 
+表单属性  placeholder required autofocus  autocomplete pattern multiple min max  form list
+表单元素  datalist keygen output
+==================css3
+选择器 结构伪类选择: first-child last-child  nth-child nth-of-type only-child  only-of-type empty
+          属性选择器: p[class^=text] p[class$=text]  p[class$=text]
+          伪类选择器: p::after {} p::before
+边框背景
+背景  size  clip  origin
+2d/3d转换
+文本效果   text-shadow
+动画 transition
+多列布局
+弹性布局  grid网格布局
+box-sizing   border-box  content-box  
+resize outline
+===================html
+===================css
+块级元素和行内元素
+float  clear overflow
+absolute  fixed relative
+z-index
+content padding  margin
+行内元素   vertical-align  font-size line-height
+文本处理   font-family font-weight font-style  font-variant 
+                text-index  letter-spacing  word-spacing word-break word-wrap white-space  text-align first-letter first-line text-transform text-decoration
+
+===================js
+数组
+对象
+正则
+set和map
+原型链  class
+promise
+async/await
+generater
+
+
+
+

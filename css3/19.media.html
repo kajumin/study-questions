@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"> 
+<title></title> 
+	<style>
+	body {
+	    background-color: pink;
+	}@media screen and (min-width: 300px) {
+	    body {
+	        background-color: green;
+	    }
+	}@media screen and (min-width: 480px) {
+	    body {
+	        background-color: lightgreen;
+	    }
+	}@media screen and (min-width: 768px) {
+	    body {
+	        background-color: yellow;
+	    }
+	}@media screen and (min-width: 960px) {
+	    body {
+	        background-color: darkgoldenrod;
+	    }
+	}
+	.box1 {
+		position: absolute;
+		bottom: 0;
+		width: 100%;
+		height: 200px;
+		background-color: red;
+
+	}@media screen and (max-width: 960px) {
+	    .box1 {
+	        background-color: darkgoldenrod;
+	    }
+	}@media screen and (max-width: 768px) {
+	    .box1 {
+	        background-color: yellow;
+	    }
+	}@media screen and (max-width: 480px) {
+	    .box1 {
+	        background-color: lightgreen;
+	    }
+	}@media screen and (max-width: 300px) {
+	    .box1 {
+	        background-color: green;
+	    }
+	}
+	</style>
+</head>
+<body>
+<h1>min-width从小到大  max-width从大到小</h1>
+<h1>重置浏览器窗口查看效果！</h1>
+<p>如果媒体类型屏幕的可视窗口宽度小于 960 px ，背景颜色将改变。</p>
+<p>如果媒体类型屏幕的可视窗口宽度小于 480 px ，背景颜色将改变。</p>
+<div class="box1"></div>
+</body>
+</html>

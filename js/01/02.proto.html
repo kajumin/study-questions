@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<script type="text/javascript">
+	window.onpopstate = function (event) {
+  		console.log('location: ' + document.location);
+  		console.log('state: ' + JSON.stringify(event.state));
+	};
+	function f () {
+  		if(this instanceof arguments.callee)
+    		console.log('此处作为构造函数被调用');
+ 		else {
+    		console.log('此处作为普通函数被调用');
+		}
+		if(this != window)
+    		console.log('此处作为构造函数被调用');
+ 		else {
+    		console.log('此处作为普通函数被调用');
+		}
+	}
+	f();//此处作为普通函数被调用
+	new f();//此处作为构造函数被调用
+	console.log(Object.__proto__ === Function.prototype); //难理解
+	console.log(Function.prototype.__proto__ === Object.prototype);
+	console.log(Object.prototype.__proto__ === null); 
+	console.log({name:'bang'}.__proto__.__proto__) //null
+	console.log({name:'bang'}.__proto__ == Object.prototype) //true
+	console.log({name:'bang'}.__proto__.constructor == Object) //true
+	console.log({name:'bang'}.__proto__.constructor.__proto__ == Function.prototype) //true
+
+	// 总结: 
+// (一) 私有属性、公有属性、静态属性概念：
+// 私有属性和方法：只能在构造函数内访问不能被外部所访问(在构造函数内使用var声明的属性)
+// 公有属性和方法(或实例方法)：对象外可以访问到对象内的属性和方法(在构造函数内使用this设置，或者设置在构造函数原型对象上比如Cat.prototype.xxx)
+// 	静态属性和方法：定义在构造函数上的方法(比如Cat.xxx)，不需要实例就可以调用(例如Object.assign())
+
+// (二) 实例对象上的属性和构造函数原型上的属性：
+// 定义在构造函数原型对象上的属性和方法虽然不能直接表现在实例对象上，但是实例对象却可以访问或者调用它们。
+// 当访问一个对象的属性 / 方法时，它不仅仅在该对象上查找，还会查找该对象的原型，以及该对象的原型的原型，一层一层向上查找，直到找到一个名字匹配的属性 / 方法或到达原型链的末尾（null）。
+
+// (三) 遍历实例对象属性的三种方法:
+// 使用for...in...能获取到实例对象自身的属性和原型链上的属性
+// 使用Object.keys()和Object.getOwnPropertyNames()只能获取实例对象自身的属性
+// 可以通过.hasOwnProperty()方法传入属性名来判断一个属性是不是实例自身的属性
+
+	// 构造函数内var是私有属性方法  this.xxx是公有属性方法
+	// 静态属性和方法  descript  actingCute  如: Promist.all()  Object.asign()  Array.form()
+	// 公有属性和方法  name  color jump  cleanTheBoby  如: push shift 
+	// guaiguai.hasOwnProperty(key)  //for in 可以获取到原型上的属性方法
+	// Object.keys(guaiguai);    //只能获取自身可枚举属性
+	// getOwnPropertyNames(guaiguai); //只能获取自身属性 (包括不可枚举)
+	function Cat (name, color) {
+	  var heart = '❤️'
+	  var stomach = '胃'
+	  var heartbeat = function () {
+	    console.log(heart + '跳')
+	  }
+
+	  this.name = name
+	  this.color = color
+
+	  this.jump = function () {
+	    heartbeat() // 能跳起来表明这只猫是活的,心也就能跳
+	    console.log('我跳起来了~来追我啊')
+	  }
+	}
+	Cat.descript = '我这个构造函数是用来生产出一只猫的'
+	Cat.actingCute = function () {
+	  console.log('一听到猫我就想到了它会卖萌')
+	}
+	Cat.prototype.cleanTheBody = function () {
+	  console.log('我会用唾液清洁身体')
+	}
+	var guaiguai = new Cat('guaiguai', 'white')
+
+	console.log(guaiguai.__proto__ == Cat.prototype) //true
+	console.log(guaiguai.__proto__.__proto__ == Object.prototype) //true
+	console.log(guaiguai.__proto__.__proto__.__proto__) //null
+	console.log(Cat.descript)
+	Cat.actingCute()
+	console.log(guaiguai.descript)
+	guaiguai.cleanTheBody()
+	var guaiguai = new Cat('guaiguai', 'white')
+	console.log(guaiguai)
+	guaiguai.jump()
+	// 1.(理解私有属性方法和公有属性方法)
+	// (1)var name = 'bang';  私有属性方法
+	// (2)this.name = name 公有属性方法
+	// 2.(理解静态属性方法和公有属性方法)
+	// (1)Cat.descript 静态属性和方法
+	// (2)this.name = name 公有属性方法
+	// 3.理解实例自身的属性和定义在构造函数原型对象中的属性的区别 
+	// 定义在构造函数原型对象上的属性和方法虽然不能直接表现在实例对象上,
+	// 但是实例对象却可以访问或者调用它们
+
+	// 4.如何区分它们呢?
+	console.log('44444444444444444444')
+	for (key in guaiguai) {
+	  if (guaiguai.hasOwnProperty(key)) {
+	    console.log('我是自身属性', key)
+	  } else {
+	    console.log('我不是自身属性, 我在原型上', key)
+	  }
+	}
+	console.log('-分隔符-')
+	console.log(Object.keys(guaiguai))
+	console.log(Object.getOwnPropertyNames(guaiguai))
+
+	// 5.我的构造函数和构造函数原型对象上有相同属性?  获取到构造函数上的
+	// 6.
+	// 当访问一个对象的属性 / 方法时，它不仅仅在该对象上查找，还会查找该对象的原型，以及该对象的原型的原型，一层一层向上查找，直到找到一个名字匹配的属性 / 方法或到达原型链的末尾（null）。
+
+	// 7.
+	console.log('777777777777')
+	function Cat2() {
+	  this.color = 'white'
+	  this.getColor = function () {
+	    console.log(this.color)
+	  }
+	}
+	Cat2.prototype.color = 'black'
+	Cat2.prototype.backgroundColor = 'red'
+	Object.prototype.backgroundColor = 'orange'
+	Object.prototype.color = 'yellow'
+	Object.prototype.feature = 'cute'
+	var cat2 = new Cat2()
+
+	cat2.getColor() //white
+	console.log(cat2)
+	console.log(cat2.backgroundColor) //red
+	console.log(cat2.feature) //cute
+</script>
+</body>
+</html>

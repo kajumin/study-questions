@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.box {
+			width: 300px;
+			height: 300px;
+	    	border: 15px solid transparent;
+	    	background-color: #eee;
+	    	margin-bottom: 30px; 
+		    border-image-source: url("../../images/border.jpg");
+		}
+		.box1 {	    
+		    border-image-slice: 90;
+		}
+		.box2 {	    
+		    border-image-slice: 90 0 90 0 fill;
+		    border-image-slice: 0 90 0 90 fill;
+		}
+
+		.teshu {
+		 	width: 200px;
+		  	height: 100px;
+		  	padding: 10px;
+		 	border: 10px solid;
+		 	border-image: repeating-linear-gradient(-225deg, red 0, red 10px, transparent 10px, transparent 20px, #58a 20px, #58a 30px, transparent 30px, transparent 40px) 20;
+		  /*background: repeating-linear-gradient(-225deg, red 0, red 10px, transparent 10px, transparent 20px, #58a 20px, #58a 30px, transparent 30px, transparent 40px);*/
+		}
+	</style>
+</head>
+<body>
+<!-- 
+	border-image可以使用背景渐变
+
+ 	1、若不写单位，具体值默认单位是px
+   	2、fill表示图片边框的中间部分将保留下来
+   	3、四值方向是上右下左，代表切割线的方向，切割的分别是高宽高宽
+   	4、图片边框是在边框范围内显示的，若边框宽度不等于slice切片值，则图片边框会按比例放大缩小，以使图片边框正好显示在边框范围内
+   	5、若slice值为负，或大于盒子的宽度或高度会被100%，四个角将显示整个背景图片
+   	6、若右切和左切大于盒子宽度，则上中和下中部分为空；若上切和下切大于盒子高度，则左中和右中部分为空 
+
+-->
+<p>border-image-slice负值或者大于盒子宽度 则四个角显示整个图片</p>
+<div class="box box1"></div>
+<p>border-image-slice上下或者左右切割大于盒子宽度 对应和中间部分为空</p>
+<div class="box box2"></div>
+
+<p>信封效果: 可以使用图片边框border-image来实现航空信封的效果。图片边框使用线性渐变来实现</p>
+<div class="teshu" contenteditable ="true">请修改文字</div>   
+</body>
+</html>

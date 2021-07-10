@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.box {
+			width: 300px;
+			height: 300px;
+			margin: 0 auto;
+			border: 1px solid red;
+			display: flex;
+		}
+		.flex1 {
+		
+		}
+		.item {
+			width: 40px;
+			height: 40px;
+			border: 1px solid pink;
+			font-size: 24px;
+			line-height: 40px;
+			text-align: center;
+			/*都不缩放  就在外面了*/
+			/*flex-shrink: 0;*/
+		}
+		.item:nth-child(1) {
+			/*默认  0*/
+			flex-shrink: 0;
+			/*flex: 1 0 150px;*/
+		}
+		.item:nth-child(3) {
+			flex-shrink: 0;
+		}
+	</style>
+</head>
+<body>
+	<!-- flex-shrink:  默认为1,  缩放比例  0为不缩放-->
+<div class="box flex1">
+	<div class="item">1</div>
+	<div class="item">2</div>
+	<div class="item">3</div>
+	<div class="item">4</div>
+	<div class="item">5</div>
+	<div class="item">6</div>
+	<div class="item">7</div>
+	<div class="item">8</div>
+	<div class="item">9</div>
+</div>
+
+</body>
+</html>

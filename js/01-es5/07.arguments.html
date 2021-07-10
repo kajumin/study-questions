@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+</head>
+<body>
+<script type="text/javascript">
+	/*
+	 * 在调用函数时，浏览器每次都会传递进两个隐含的参数：
+	    活动对象: this和arguments
+	 * 	1.函数的上下文对象 this
+	 * 	2.封装实参的对象 arguments
+	 * 		- arguments是一个类数组对象
+	
+	arguments: 实参的对象集合(不定义形参也存在)  有iterator接口   可以使用扩展运算符  解构赋值
+	   类数组对象  arguments instanceof Array | Array.isArray(arguments)-> false
+	   转为数组     [].slice.call(arguments)  Array.from(arguments)  |   [...arguments]
+	   length属性: 实参的个数
+	   callee属性: 指向当前调用的函数
+
+	  func.caller     调用该函数的函数
+	  func.arguments  调用该函数的实参
+	*/
+	function fun(a,b,c){
+		console.log(arguments instanceof Array);//false
+		console.log(Array.isArray(arguments));//false
+		console.log({}.toString.call(arguments)) //[object Arguments]
+		console.log(arguments.__proto__ == Object.prototype)//true
+
+		console.log(arguments.length); //2
+
+		// arguments适用于: 
+		// (1)扩展运算符 [...arguments]
+		// (2)解构赋值 [a,b] = arguments
+		// (3)Array.from(arguments)
+		// (4)for of
+		// (5)fn.apply(obj, arguments)
+
+		// var [c, d] = arguments
+		// console.log(c, d)
+
+		// 转为数组
+		console.log([].slice.call(arguments));
+		console.log([...arguments]);
+		console.log(Array.from(arguments));
+
+		// arguments  可用于apply方法
+		for(let o of arguments) {
+			console.log(o)
+		}
+		console.log([].concat(arguments)) //不实用
+	}
+	console.log(fun.length);
+	fun("hello",true);
+
+	function fun2() {
+		"use strict" //callee arguments caller
+		// arguments依然可以使用
+		// 严格模式 arguments.callee 
+		// 严格模式 inner.caller
+		// 严格模式 inner.arguments  都无法使用
+	
+
+		console.log(arguments);
+		console.log(arguments.length);
+		// console.log(arguments.callee);
+		// console.log(arguments.callee == fun2);
+
+		// func.caller  调用该函数的那个函数
+		// func.arguments 调用该函数的实参对象集合
+		// console.log(inner.caller) //null 没有调用该函数的函数
+		function inner(a) {
+			// console.log(inner.caller)
+			// console.log(inner.arguments)
+		}
+		inner(12)
+	}
+	fun2('hello', true)
+	
+</script>
+</body>
+</html>

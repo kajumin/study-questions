@@ -1,0 +1,402 @@
+=============================vue-router vuex学习
+vue-cli  (babel vue-router vuex)
+或者vue add router  || vue add vuex
+
+1. mode: 'history'
+2. router-view   router-link(a标签  :to属性(字符串或者对象))
+3. redirect: '/pageA'  //路由重定向
+4. name: 'pageA'      //命名路由  router-link中使用  {name: 'pageA'}
+5. /:id                      //动态路由   this.$route.params.id获取数据   query不需要处理 直接获取 this.$route.query.id 
+                              设置了props: true   可以props: ['id'] 获取直接使用
+6. children: [{path,component}]  //嵌套路由   pageD中router-link设置to="/pageD/test"   同时pageD有router-view
+    children必须是一个数组
+7. components: {default: pageE, a: Test}   //命名视图   <router-view name="a"/>  对其他页面没有影响
+8. router.beforeEach     //全局守卫  全局前置beforeEach 后置afterEach  beforeResolve解析   
+    beforeEnter               //路由独享
+                                      //组件内守卫   
+                                      beforeRouteEnter(没有this)  beforeRouteUpdate(参数不一样)  beforeRouteLeave(离开)
+    beforeRouteUpdate //相同组件只是参数不同  触发时 全局守卫都是会触发的  路由独享守卫不会触发  Leave也不会触发
+    beforeRouteLeave   //用于保存数据
+9. component: import('@/views/pageH');    //路由懒加载
+
+补充知识:
+1. props: (route)=> return new Date();      //props函数模式   route = this.routes可以使用params  query等数据
+2. watch: { $route: 'fetchData' }   //watch $route   执行一些逻辑比如loading
+3. meta: { title: '首页' }     //meta元信息   to.meta.title获取   可在路由钩子中使用
+4. 动画transition包裹router-view
+
+
+vuex 开课吧的太简单了没有记录下来
+a.js  开启命名空间 namespace: true;  获取数据$store.state.a(模块).num
+
+
+没有特点
+打动hr, 不懂技术
+
+==============================vue-router  vuex  vue服务端渲染
+historyApiFallback: true;   //路由刷新时 不返回404页面  开发时
+(1) 路由重定向 direction: '/app'
+(2) 命名路由  :to="{name: 'app'}"
+(3) 嵌套路由children是一个数组 每一项是一个对象
+(4) transition动画  name="fade"  transition包裹router-view
+(5) 路由参数   app/123   /:id   this.$route.params.id
+                    app?id=123   不需要处理   this.$route.query.id
+(6) 命名视图 name="a"  components: { default: app, 'a': login }   //多栏布局
+(7) 路由守卫  全局守卫  路由专享守卫  组件内守卫
+(8) 异步组件  懒加载
+=========router配置参数
+    mode: 'history',
+    // base: '/base/',    //基础路径  /base/app
+    linkActiveClass: 'active-link',  //激活类名   包含路径就会有这个类名
+    linkExactActiveClass: 'exact-active-link', //完全匹配才有这个类名
+    scrollbehavior (to, from, savePosition) {  //页面跳转的时候是否滚动  
+      if (savePosition) {
+        return savePosition   //滚动完之后
+      } else {
+        return { x: 0, y: 0 }
+      }
+    },
+    // parseQuery (query) {  //定制转的方法
+
+    // },
+    // stringfiyQuery (obj) {  //定制转的方法
+
+    // },
+    fallback: true,   // 浏览器不是全部都支持 对于不支持history的使用hash那套
+==============routes配置参数
+    path: '/app',   //路径
+    component: app, //组件
+    name:  'app', //组件名字
+    children: [{}],   //嵌套路由
+    meta:{ },        //meta信息
+    props: true,   //路由跟组件解耦 参数   可以是true ||  函数 返回一个对象(route)=>({ id: route.params.id })
+    beforeEnter (to, from, next) {}   //路由专享守卫
+=====导航守卫
+beforEach         //全局前置守卫
+beforeResolve   //全局守卫  
+afterEach          //全局后置守卫
+
+beforeEnter              //路由独享守卫
+beforeRouteEnter     //组件内
+初始进入时: beforeRouteUpdate  beforeEach(前置)  beforeEnter(路由专享)  beforeRouteEnter(组件内)  beforeResolve(解析)  afterEach(后置)   > next(beforeRouteEnter)中的回调函数
+重用组件只触发: beforeEach  beforeRouteUpdate
+
+{ path:'/login', replace: true, name: 'login', query: { id: 123 } }
+1.   导航被触发。  <router-link>
+2.   在失活的组件里调用离开守卫。beforeRouteLeave
+3.   调用全局的 beforeEach 守卫。
+4.   在重用的组件里调用 beforeRouteUpdate 守卫 (2.2+)。
+5.   在路由配置里调用 beforeEnter。
+6.   解析异步路由组件。
+7.   在被激活的组件里调用 beforeRouteEnter。 没有this 可以通过vm回调函数
+8.   调用全局的 beforeResolve 守卫 (2.5+)。
+9.   导航被确认。
+10. 调用全局的 afterEach 钩子。
+11. 触发 DOM 更新。   包含created等生命周期钩子函数
+12. 用创建好的实例调用 beforeRouteEnter 守卫中传给 next 的回调函数。
+
+不同组件之间的路由跳转流程图: 
+1.导航被触发（A–>B）<router-link>  或者this.router.push()
+2.调用A组件内路由守卫beforeRouteLeave(to,from,next)   
+3.调用全局路由前置守卫router.beforeEach(to,from,next)
+4.调用B路由独享守卫 beforeEnter(to,from.next)
+5.解析异步路由组件B
+6.调用B的组件内路由守卫beforeRouteEnter(to,from,next)
+7.调用全局路由解析守卫 router.beforeResolve(to,from,next)
+8.导航被确认
+9.调用全局路由钩子router.afterEach(to,from)
+10.渲染B组件DOM
+然后用B组件实例调用beforeRouteEnter传给 next 的回调函数。
+
+复用组件的路由跳转流程图
+1.导航被触发（改变动态路由参数相同组件
+2.调用全局路由前置守卫 router.beforeEach(to,from,next)
+3.调用复用组件的组件内路由守卫 beforeRouteUpdate(to,from,next)
+4.调用全局路由解析守卫router.beforeResolve(to,from,next)
+5.导航被确认
+6.调用全局路由钩子 router.afterEach(to,from)
+7.更新DOM
+
+=================================vuex
+npm i -D babel-plugin-stage-1  //env是支持...展开运算符的  
+strict: true, //不能直接修改state   报错  规范开发
+state: { count: 0 },
+mutations: {
+   updateCount(state, data) { state.count += num }
+},
+getters: { filterList(state, getters ,rootState) } //对比computed 可以复用多个组件页面 getters.getText获取其他的getters
+actions: { updateCountAync({ commit, state, getters }, data)}   
+====使用
+$store.state.count   ||  this.$store.state.count   ...mapState(['count'])   ...mapState({ countC: 'count' })
+$store.commit('updateCount', 2)    有map时  this.updateCount(2)
+$store.dispatch('updateCountAync', {num:2, time: 2000 })      有map时  this.updateCountAync({ num: 3, time: 2000 })
+$store.getters.getCount    this.$store.getters.getCount  有map时  this.getCount
+
+{countC: 'count'}   //对象取别名   更components一样
+
+======模块   默认getters  mutations是全局的
+modules: {a: {} }
+state:      使用$store.state.a.firstname   map使用 (state) => state.a.firstName
+getters:   使用$store.getters.getName  map可以直接使用
+mutations:    map可以直接使用
+actions:   map可以直接使用
+
+======namespaced: true
+...mapState({  firstnameb: (state) => state.b.firstName  })
+...mapGetters(['b/getNameB']),
+...mapMutations(['b/updateNameB']),
+...mapActions(['b/updateNameAyncB'])
+
+使用其他模块的mutations:   
+commit('a/updateNameB', data.firstName, { root: true })   //其他模块有namespaced
+commit('updateName', data.firstName, { root: true })   //其他模块没有namespaced
+
+=======store
+热更替功能: module.hot  module.hot.accept([], ()=>{store.hotUpdate([])})
+store.registerModule('c', { state })
+store.unregisterModule('c')
+
+store.watch((state) => state.count+1, (state)=> console.log(state)
+
+store.subscribe((mutation, state) => { console.log(mutation.type, mutataion.payload)})  //监听mutation
+store.subscribeAction((action, state) => { console.log(action.type, action.payload)})//监听actions
+
+plugins: [(state) => { console.log(state) }]
+===================================
+
+
+===VueRouter路由  (1)路由重定向  (2)嵌套路由  (3)动态匹配(参数)  (4)命名路由   (5)编程式导航
+seo   搜索引擎优化   
+sem  搜索引擎营销
+路由概念和本质
+1.后端路由
+   概念: 根据不同的用户URL请求, 返回不同的内容
+   本质: URL请求地址与服务器资源之间的对应关系
+2.前端路由
+   概念: 根据不同的用户事件, 显示不同的页面内容
+   本质: 用户事件与事件处理函数之间的对应关系
+
+// 1.引入相关的库 vue  vue-router
+// 2.添加路由链接
+// 3.添加路由填充位
+// 4.定义路由组件
+// 5.配置路由规则并创建路由实例
+// 6.把路由挂载到Vue根实例中
+
+history模式  mode: 'history'
+重定向(redirect)  
+命名路由  
+命名视图(name) 
+嵌套路由  
+路由组件传参(三种)  props    
+动态路由匹配     /:id
+编程式导航        this.$router.go(1)
+路由守卫           beforeEnter: (to, from, next) {}
+路由元信息        meta
+过渡动效  
+数据获取          this.$route.query   this.$route.params
+懒加载
+
+(1)路由重定向:
+{path:'/', redirect:'/user'},
+
+(2)嵌套路由  register下有tab1  tab2
+{ path:'/register', component: Register,
+	children:[
+		{ path: '/tab1', component: Tab1 },
+		{ path: '/tab2', component: Tab2 }
+	]
+}
+
+(3)动态路由匹配    props传参三种方式: 布尔模式  对象模式   函数模式
+通过this.$route.params.id获取  或者通过以下获取
+{ path:'/user/:id', component: User, props: true },  动态 params路由参数被props接收  直接使用
+{ path:'/register', component: Register ,props: { uname:'lisi',pwd:123 }},    对象方式  静态传递参数   动态丢失
+{ path:'/login/:id', component: Login , 
+	props: route => ({uname:'joycechu',age:'20',id:route.params.id})
+}    函数方式   动态和静态都保留
+
+(4)命名路由
+:to="{name:'user',params:{uname:'bang',age:20}}   //路由链接
+       { path:'/user',name:'user', component: User}  //对应的路由规则
+
+(5)编程式导航(通过js跳转)         声明式导航(点击链接)
+this.$router.push('hash地址');  //this.$router.push('/register');
+this.$router.push({path:'/home'});  //路由路径
+this.$router.push({name:'home'})    //路由名称
+this$router.go(n);
+this.$router.push({name:'home', params:{userId: 123}});
+this.$router.push({path:'/home', query:{uName: 'bang'}});
+
+(6)命名视图
+<router-view></router-view>
+<router-view name="a">命名视图</router-view>
+//同时存在
+{
+	path: '/pagea',
+	components: {   //注意有s
+		default: PageA,
+		a: Test
+	}
+}
+(7)匹配优先级  谁先定义就是谁
+   捕获所有路由   需要后台设置一个not found页面  || 页面
+
+(8)
+1.全局守卫  前置   解析  后置
+2.路由独享守卫     前置
+3.组件内的守卫    beforeRouteEnter(不能访问this)  beforeRouteUpdate  beforeRouteLeave
+  导航被触发。
+  在失活的组件里调用 beforeRouteLeave 守卫。
+  调用全局的 beforeEach 守卫。
+  在重用的组件里调用 beforeRouteUpdate 守卫 (2.2+)。
+  在路由配置里调用 beforeEnter。
+  解析异步路由组件。
+  在被激活的组件里调用 beforeRouteEnter。
+  调用全局的 beforeResolve 守卫 (2.5+)。
+  导航被确认。
+  调用全局的 afterEach 钩子。
+  触发 DOM 更新。
+  用创建好的实例调用 beforeRouteEnter 守卫中传给 next 的回调函数。
+
+(9)元信息
+{
+          path: 'bar',
+          component: Bar,
+          // a meta field
+          meta: { requiresAuth: true }
+        }
+if(to.matched.some(record => record.meta.requiresAuth))  //获取并检验
+
+
+
+(10)数据获取
+导航完成后获取数据   loading
+导航完成前获取数据   vm => next(vm => vm.setData(err, post))
+
+
+(11)过渡动效
+(12)路由懒加载   使用webpack按组件分块
+
+原理:
+window.onhashchange = function() {
+	console.log(location.hash);
+}
+
+
+this.$route对象
+fullPath  hash  metched  meta  name  params  query  path
+
+
+1.Vue.use(VueRouter); vue使用vue-router
+2.var router = new VueRouter({   //创建vuerouter实例化对象
+3.配置路由对象
+routes:[
+// 路由匹配的规则
+	{
+		path:'/login',
+		name:'login',
+		component:Login
+	},
+	{
+		path:'/register',
+		name:'register',
+		component:Register
+	}
+]
+});
+4.router:router,  关联到vue实例化对象上
+5.使用
+<!--router-link默认会被渲染成a标签，to默认会被渲染成href属性-->
+<router-link to = '/login'>登录</router-link>
+<router-link to = '/register'>注册</router-link>	
+<!--路由组件的出口-->
+<router-view></router-view>
+<router-view name="a"></router-view>   //命名视图
+
+=========参数问题
+(1) xxxxx.html#/user/1                    params 动态路由参数  this.$route.params.id
+(2) ooooo.html#/user?userId = 1    query                         this.$route.query.id
+
+
+next();放行
+next(false) ; 取消导航行为
+next({name:'/Login' });  重定向
+next('/login');   重定向
+
+拦截器(一次代码公共使用): axios.interceptors.use(fn);
+请求发起前    操作请求头 配置请求体数据  transformRequest  baseURL  params  查询字符串
+响应回来后    操作响应数据(头行体) 接收并将该值保存起来  有则添加请求头
+应用: 显示隐藏loading
+可以搭一个私有镜像源
+shadowsocks
+vue-cli   -> npm -> vue-cli  -> yyx
+
+mint-ui   饿了么( pc->element-ui    移动端mint-ui)
+
+============API
+// Vue.extend
+使用基础 Vue 构造器，创建一个“子类”。参数是一个包含组件选项的对象。
+// Vue.$nextTick
+在下次 DOM 更新循环结束之后执行延迟回调。在修改数据之后立即使用这个方法，获取更新后的 DOM。
+// Vue.set()   //this.$set
+// vue.directive   
+
+注册或获取全局指令。
+// 注册
+Vue.directive('my-directive', {
+  bind: function () {}, //绑定时调用
+  inserted: function () {},
+  update: function () {},
+  componentUpdated: function () {},
+  unbind: function () {}
+})
+// 注册 (指令函数)
+Vue.directive('my-directive', function () {
+  // 这里将会被 `bind` 和 `update` 调用
+})
+// Vue.filter     filters: { }   
+注册或获取全局过滤器
+// Vue.component
+注册或获取全局组件
+// Vue.use()
+(1)安装 Vue.js 插件。如果插件是一个对象，必须提供 install 方法。如果插件是一个函数，它会被作为 install 方法。install 方法调用时，会将 Vue 作为参数传入。
+(2)该方法需要在调用 new Vue() 之前被调用。
+(3)当 install 方法被同一个插件多次调用，插件将只会被安装一次。
+// Vue.mixin()
+全局注册一个混入，影响注册之后所有创建的每个 Vue 实例
+// Vue.compile
+将一个模板字符串编译成 render 函数。只在完整版时可用。
+// Vue.observable(object)
+让一个对象可响应。Vue 内部会用它来处理 data 函数返回的对象。
+
+
+选项 / 数据
+props: { type:  String   Number   Boolean   Array   Object   Date   Function  Symbol  }
+//例子
+height: Number,
+    // 检测类型 + 其他验证
+    age: {
+      type: Number,
+      default: 0,
+      required: true,
+      validator: function (value) {
+        return value >= 0
+      }
+    }
+//data
+限制:  组件的定义只接受 function。
+data: vm => ({ a: vm.myProp })
+// methods
+methods 将被混入到 Vue 实例中。可以直接通过 VM 实例访问这些方法，或者在指令表达式中使用。方法中的 this 自动绑定为 Vue 实例。
+// watch
+一个对象，键是需要观察的表达式，值是对应回调函数。值也可以是方法名，或者包含选项的对象。Vue 实例将会在实例化时调用 $watch()，遍历 watch 对象的每一个 property。
+
+// el
+// template
+一个字符串模板作为 Vue 实例的标识使用。模板将会替换挂载的元素。挂载元素的内容都将被忽略，除非模板的内容有分发插槽。
+// render
+字符串模板的代替方案，允许你发挥 JavaScript 最大的编程能力。该渲染函数接收一个 createElement 方法作为第一个参数用来创建 VNode。return h()
+如果组件是一个函数组件，渲染函数还会接收一个额外的 context 参数，为没有实例的函数组件提供上下文信息。
+
+

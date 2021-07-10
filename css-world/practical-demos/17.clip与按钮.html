@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<style type="text/css">
+		.clip {
+			position: absolute;
+			clip: rect(0, 0, 0, 0);
+		}
+		.btn-submit {
+			background-color: #ccc;
+			border: 1px solid #999;
+			padding: 2px 4px;
+		}
+		.btn-submit2 {
+			margin-top: 5px;
+		}
+		.btn-submit:hover {
+			background-color: #eee;
+		}
+		.hidden {
+			display: none;
+		}
+		.opacity {
+			opacity: 0;
+		}
+		.abs-out {
+			position: absolute;
+			top: -999px;
+			left: -999px;
+		}
+	</style>
+</head>
+<body>
+	<!-- 
+	1.display:none; visiability:hidden; 按钮无法被focus, ie8以下提交行为丢失
+	2.opacity 移动端好, 成本高
+	3.position: top: -999px; left: -999px;  对于页面跳转不好
+	4.使用absolute 和clip  最佳选择
+	 -->
+
+<form>
+	<input type="submit" id="submitId" name="" value="提交" class="hidden">
+	<p><label for="submitId" class="btn-submit">提交</label></p>
+</form>
+
+<form>
+	<input type="submit" id="submitId" name="" value="提交" class="opacity">
+	<p><label for="submitId" class="btn-submit btn-submit2">提交</label></p>
+</form>
+
+<form>
+	<input type="submit" id="submitId" name="" value="提交" class="abs-out">
+	<p><label for="submitId" class="btn-submit">提交</label></p>
+</form>
+
+<form>
+	<input type="submit" id="submitId" name="" value="提交" class="clip">
+	<p><label for="submitId" class="btn-submit">提交</label></p>
+</form>
+</body>
+</html>

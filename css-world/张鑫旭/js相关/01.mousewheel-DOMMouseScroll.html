@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.mw_slide{
+			width: 558px; 
+			height:80px; 
+			margin-left:auto; 
+			margin-right:auto; 
+			overflow:hidden; 
+			position:relative;
+			outline: 1px solid red;
+
+		}
+		.mw_slide_inner{
+			position: absolute; 
+			left: 0;
+			width: 2000px;
+			margin: 0; 
+			padding: 0; 
+			list-style-type: none;
+			transition: 1s;
+		}
+		.mw_slide_list{
+			width: 140px; 
+			float: left;
+		}
+		.mw_slide_list img {
+			/*display: block;*/
+			width: 140px;
+			height: 80px;
+		}
+	</style>
+	<meta charset="utf-8">
+</head>
+<body>
+<!-- 
+
+-->
+<div class="mw_slide">
+    <ul id="slideBox" class="mw_slide_inner">
+        <li class="mw_slide_list"><img src="../assets/images/zza/1.jpg"></li>
+        <li class="mw_slide_list"><img src="../assets/images/zza/2.jpg"></li>
+        <li class="mw_slide_list"><img src="../assets/images/zza/3.jpg"></li>
+        <li class="mw_slide_list"><img src="../assets/images/zza/4.jpg"></li>
+        <li class="mw_slide_list"><img src="../assets/images/zza/5.jpg"></li>
+        <li class="mw_slide_list"><img src="../assets/images/zza/6.jpg"></li>
+        <li class="mw_slide_list"><img src="../assets/images/zza/7.jpg"></li>
+        <li class="mw_slide_list"><img src="../assets/images/zza/8.jpg"></li>
+        <li class="mw_slide_list"><img src="../assets/images/zza/9.jpg"></li>
+       
+    </ul>
+</div>
+<div style="height: 1000px;background-color: red;margin-top: 50px;"></div>
+<script type="text/javascript" src="../assets/js/addEvent.js"></script>
+<script type="text/javascript">
+	// var mw_slide_inner = document.querySelector('.mw_slide_inner')
+	// var index = 0;
+	// var len = 0;
+	// var widths = 0;
+	// var offsetWidth = 0;
+	// addEvent(mw_slide_inner, 'mousewheel', function(e) {
+	// 	console.log(e)
+	// 	console.log(index)
+	// 	len = this.children.length
+	// 	console.log(len)
+	// 	if(!widths) {
+	// 		[...this.children].forEach(function(c, i){
+	// 			// console.log(c)
+	// 			// console.log(window.getComputedStyle(c)['width'])
+	// 			var width = parseInt(window.getComputedStyle(c)['width'])
+	// 			if(width > offsetWidth) {
+	// 				offsetWidth = width
+	// 			}
+	// 			widths += width
+	// 			console.log(widths)
+	// 		})
+	// 		widths -= 558
+	// 	}
+	// 	console.log(mw_slide_inner.children)
+	// 	var left = parseInt(mw_slide_inner.style.left) + offsetWidth || 0
+	// 	console.log(offsetWidth)
+	// 	console.log(left)
+	// 	console.log(widths)
+	// 	console.log(left < widths)
+	// 	console.log(left != 0)
+	// 	console.log(left < widths || left != 0)
+	// 	if(left < widths) {
+	// 		if (e.delta < 0) {		
+	// 			index--
+	// 			console.log('向下滚动')
+	// 			mw_slide_inner.style.left = (index+1) * offsetWidth + 'px'	
+	// 		} else {
+	// 			if(left < 0) {	
+	// 				index++
+	// 				console.log('向上滚动')
+	// 				mw_slide_inner.style.left = (index+1) * offsetWidth + 'px'
+	// 			}		
+	// 		}
+	// 	}
+	// 	e.preventDefault()
+	// })
+
+
+	// FireFox浏览器的方向判断的数值的正负与其他浏览器是相反的
+
+	// FireFox浏览器向下滚动是正值(detail)，而其他浏览器是负值(whellDelta)。
+	addEvent(document, 'mousewheel', function(e) {
+		console.log(e.delta) //1(向上)  -1(向下)
+		if(e.delta > 0) {
+			console.log('向上滚动')
+		} else {
+			console.log('向下滚动')
+		}
+	}, false)
+	// document.body.onmousewheel = function(e) {
+	//     e = e || window.event;
+	//     var direction =  e.wheelDelta
+	//     // 上: 120  下: -120
+	//     console.log(direction)
+	// };
+	// document.body.addEventListener("DOMMouseScroll", function(e) {
+	// 	e = e || window.event;
+	//     var direction =  e.detail
+	//     // 上: -6  下: 6
+	//     console.log(direction)	 
+	//     console.log(e);
+	// });
+</script>
+</body>
+</html>

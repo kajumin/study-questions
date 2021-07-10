@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.box {
+			width: 100px;
+			height: 100px;
+			background-color: red;
+		}
+		.box1 {
+			animation: move 1s 2;
+		}
+		.box2 {
+			animation: move 1s;
+			animation-timing-function: steps(4);
+		}
+		.box3 {
+			animation: move 1s 2;
+			/*animation-direction: alternate;*/
+			/*animation-direction: reverse;*/
+			animation-direction: alternate-reverse;
+		}
+		.box4 {
+			animation: move2 1s;
+			animation-delay: 1s;
+			animation-fill-mode: none;
+			/* 立即到0%的位置 */
+			animation-fill-mode: backwards;
+			/* 留在结束时的位置 */
+			animation-fill-mode: forwards;
+			animation-fill-mode: both;
+		}
+		@keyframes move {
+			to {
+				transform: translate(100px);
+			}
+		}
+		@keyframes move2 {
+			from {
+				transform: translate(-10px);
+			}
+			to {
+				transform: translate(100px);
+			}
+		}
+	</style>
+</head>
+<body>
+	<!-- 
+		1.duration 一个周期的运动时间
+		2.timing-function 运动曲线 默认ease(结束慢)
+		3.direction 是否反向 影响填充模式
+		4.fill-mode 填充模式
+
+	 -->
+<p>duration 一个周期的时间</p>
+<div class="box box1">中国</div>
+
+<p>timing-function 运动曲线</p>
+<div class="box box2">中国</div>
+
+<p>direction 是否反向</p>
+<div class="box box3">中国</div>
+
+<p>fill-mode 填充模式 开始和结束状态</p>
+<div class="box box4">中国</div>
+</body>
+</html>

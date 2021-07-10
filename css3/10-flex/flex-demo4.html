@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <style>
+        body {
+            margin: 0;
+            font-size: 16px;
+        }
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-content: space-between;
+            height: 6.6rem;
+        }
+        .container .box1 {
+            flex-basis: 3.6rem;
+            height: 2rem;
+            background-color: red;
+        }
+        .container .box5 {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .container .box5 .box5-son1 {
+            position: relative;
+            height: 0.6rem;
+            line-height: 0.6rem;
+            background-color: #adc;
+        }
+        .container .box5 .box5-son1 div {
+            margin-left: 0.3rem;
+            padding-left: 0.1rem;
+            border-left: 0.03rem solid #fff;
+        }
+        .container .box5 .box5-son2 {
+            height: 1.2rem;
+            background-color: #adc;
+        }
+        .container .box6 {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-content: space-between;
+        }
+        .container .box6 .box6-son {
+            flex-basis: 1.7rem;
+            height: 0.9rem;
+            background-color: #adc;
+        }
+        
+
+    </style>
+</head>
+<body>
+    <!-- 
+        设置正常值 如15px(设计稿) 对应的应该是7.5px
+     -->
+    <div class="container">
+        <div class="box1">
+        </div>
+        <div class="box1">
+        </div>
+        <div class="box1">
+        </div>
+        <div class="box1">
+        </div>
+        <div class="box1 box5">
+            <div class="box5-son1">
+                <div>中国人民共和国</div>
+            </div>
+            <div class="box5-son2"></div>
+        </div>
+        <div class="box1 box6">
+            <div class="box6-son"></div>
+            <div class="box6-son"></div>
+            <div class="box6-son"></div>
+            <div class="box6-son"></div>
+        </div>
+       
+        
+    </div>
+    <script>
+        function resize() {
+            var html = document.documentElement
+            var fontSize = 100 / 750 * html.clientWidth
+            html.style.fontSize = fontSize + 'px';
+        }
+        window.onresize = resize
+        resize()
+    </script>
+</body>
+</html>

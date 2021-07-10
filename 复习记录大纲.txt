@@ -1,0 +1,91 @@
+=================html相关
+html概念  文档类型(html4.01 xhtml1.0过渡和严格型)
+瞄点target(_self _blank _top _parent 指定框架)
+图像src alt longdesc usemap
+audio video
+html结构元素 header footer nav section(区域 区块通用) aside article(独立结构)
+元素分类: 块级元素 内联元素  结构元素 表单元素
+规范: 文档声明 语言 编码 keywords description title 结构优化 语义化 代码格式 属性 图片 表单
+         注释(条件) 嵌套
+=================css相关
+css3:  选择器 transition animation transfrom box-shadow text-shodow border-image
+         background  省略号  颜色 flex grid 多列布局 盒模型 混合模式  媒体查询
+
+css世界: 内联元素 块级元素 盒模型  float position z-index 文字处理  元素装饰与美化 显示与隐藏 流向改变
+
+css实用案例: 
+
+----其他: 
+布局相关: 
+水平居中对齐(内联 块级 浮动 绝对定位)  垂直居中对齐(改变流 内联 绝对定位)
+水平垂直对齐(定宽高: 3种)  (不定宽高: 6种)
+两栏自适应布局: 基于纯流体特性  基于BFC特性   table - table-cell
+双飞翼margin 圣杯 区别在圣杯使用relative padding
+
+animation.css
+css变量
+css案例: 滑动门 伪元素本质(inline 需要有content) 透视(preserve-3d transform-style)
+-------boostrap
+
+
+------移动端
+案例: weijinsuo suning
+
+=============js相关
+es5(2009):  js编写规范(注释 变量 函数 字面量 命名等问题)
+数据类型(6种): 数字(整数 浮点数 特殊值)
+字符串:  转义 \  \n  \t  \r
+布尔值: true false   typeof  -> boolean
+undefined: 未定义的值  typeof -> undefined
+null: 空对象  typeof -> object
+typeof 可以显示出来: number string boolean undefined function object symbol(七种)
+
+强制转换: String  toString  Number Boolean 
+parseInt parseFloat  第二个参数为指定字符串的进制   0B  0X   0O
+隐式转换: ==  if  while 关系运算符 !   
+
+运算符: 数学/算数   一元  自增自减  逻辑  赋值  关系  相等
+
+unicode编码   a(97)  \u1c00
+优先级: () . new [] 
+语句: 代码块{} 条件判断语句 if else if  switch while for
+continue break break outer;
+
+对象: 内置(Math String Number Boolean) 宿主(window ) 自定义
+Math: PI floor ceil  round abs random max min pow sqrt
+Date: getTime getDay  getFullYear getMonth getDate getMinutes getSeconds
+JSON: JSON.parse()  JSON.stringify()  undefined function忽略  NaN转为null
+
+函数: 声明方式 参数 arguments return IIFE 对象方法  作用域 debug this函数上下文
+      call apply bind  构造函数  原型对象
+
+数组: length属性
+push pop unshift shift
+concat  join  reverse sort
+forEach map filter some every 
+indexOf lastIndexOf reduce rightReduce
+
+字符串: 
+length charAt charCodeAt fromCharCode(97) 
+
+js: 获取节点 操作节点 阶段判断 元素样式  事件
+
+黑话: 1.!与!!2.~与!!3.&与&&4.|与||5.==与===6.^7.数值表示法8.0B 0X 0O
+9.sort concat.apply push.apply length toString.call create(null) JSON.parse(stringify())
+10.虚值11.原码 反码 补码
+
+14个面试题: 1.typeof
+字符串方法: 
+
+jquery: 
+
+=========================文章类
+=======css类
+css加载会造成阻塞吗? 
+不可思议的纯 CSS 滚动进度条效果
+css3新特性
+从青铜到王者10个css3伪类使用技巧和运用，了解一哈
+CSS 常用技巧(有很多技巧, 待学习)
+Web开发者需要知道的CSS Tricks(有很多的css效果实现, 待学习)
+解决css3新特性在ie中的兼容问题   -> IE9.js
+

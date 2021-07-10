@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<div>parent</div>
+	<iframe src="./iframe-sub.html" id="iframe-sub"></iframe>
+<script type="text/javascript" src="./jquery-3.4.1.min.js"></script>
+<script type="text/javascript">
+	var iframe = document.querySelector('#iframe-sub')
+	function ifrmLoaded() {
+		console.log('parent')
+		console.log($('#iframe-sub'))
+		
+		console.log(iframe.contents)
+	}
+	// 监听iframe
+	document.getElementById('iframe-sub').onload = function() {
+		console.log('onload')
+		console.log(this)
+		var text = this.contentDocument.body.outerText || this.contentDocument.body.innerText
+		console.log(text)
+	}
+</script>
+</body>
+</html>

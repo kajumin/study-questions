@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<script>
+	// 冒泡排序  从小到大
+	var arr = [5, 4, 3, 2, 1];
+	
+	function sort(arr) {
+		var temp;
+		for (var i = 0;i < arr.length; i++){
+			for (var j = 0;j < arr.length - i; j++){
+				if (arr[j] > arr[j + 1]){
+					temp = arr[j + 1];
+					arr[j + 1] = arr[j];
+					arr[j] = temp;
+				}
+			}
+		}
+	}
+	// 从大到小
+	function sort2(arr) {
+		var temp;
+		for (var i = 0;i < arr.length; i++){
+			for (var j = 0;j < arr.length - i; j++){
+				if (arr[j] < arr[j + 1]){
+					temp = arr[j + 1];
+					arr[j + 1] = arr[j];
+					arr[j] = temp;
+				}
+			}
+		}
+	}
+
+	sort(arr);
+	console.log(arr);
+	sort2(arr);
+	console.log(arr);
+	
+</script>
+</body>
+</html>

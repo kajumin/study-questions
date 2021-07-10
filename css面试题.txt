@@ -1,0 +1,425 @@
+2.响应式图片  
+   (1)js和服务端  不方便
+   (2)srcset sizes   从大到小没有响应  因为已经缓存了大图
+   (3)picture  多组适配
+   (4)svg       矢量图   根据规则绘制  文本内容   缩放不会影响图片显示  缺点: 色彩丰富多很难
+
+
+
+======================
+过渡动画    需要状态改变 hover  active  focus  js
+关键帧动画  逐帧动画(steps) 没有补间
+性能对比:  没有确定的
+(1) css动画性能不坏
+(2) 部分情况优于js
+(3) js可以做得更好
+(4) 部分高危属性    box-shadow等 变化大小
+
+clip-path: 属性  inset  circle    可以配合transition
+对容器进行裁剪  按路径裁剪
+自定义路径
+
+选择器优先级
+权重确定
+!important
+内联样式
+后写的优先级高
+
+雪碧图
+减少http请求
+
+自定义字体
+1. 当做字体用
+2. 字体图标
+
+base64
+图片变成文本  
+1. 减少http请求
+2. 使用于小图
+3. 体积会增大  4/3
+
+伪元素和伪类
+伪类表是状态
+伪元素是真的元素  内联元素
+前者单冒号   后者双冒号
+
+美化check  
+(1)label[for] id
+(2)隐藏原生input
+(3):checked+label
+
+csshack:  兼容ie 不合法但是生效   
+注意: 标准在前面   hack在后面  
+
+缺点: 难理解 难维护 易失效
+替代方案: 特性检测
+替代方案: 针对加class
+
+两栏(三栏)布局: 
+1. float + margin
+2. inline-block  间隙问题   空白字符 font-size
+
+清除浮动:
+overflow: hidden;
+:after{ clear: both;}
+
+使用移动端页面
+viewport  meta标签
+大小尺寸上:  rem 适配
+媒体查询  隐藏 折行 自适应大小
+
+主流网站布局方式:
+1. float布局
+2. flex布局
+
+
+=============检测没有使用的css
+控制台:  Coverage:   注意移动端样式和交互才有的样式也会被标红
+
+避免复杂选择器
+减少冗余
+简写属性  url("1.img") no-repeat 100px 100px
+不要删除轮廓
+移动优先
+压缩
+==============
+w3c标准盒子模型：宽度= 内容的宽度（content） + padding + border + margin
+怪异盒模型低版本IE盒子模型：宽度 = 内容宽度（content+border+padding）+ margin
+============
+!important > 内联 > [ id > class > tag ]
+==========display值
+inline（默认）--内联
+none             --隐藏
+block             --块显示
+inline-block   --内联块
+table              --表格显示
+table-cell       --表格单元
+list-item         --项目列表
+
+
+浏览器兼容问题: 
+1. 个个浏览器默认的标签样式不一样, 可以使用Normalize来初始化一下样式
+    保护有用的浏览器默认样式  一般化的样式  修复浏览器自身的bug  优化css可用性  解释代码
+
+2. 块属性标签float后，又有横行的margin情况下，在IE6显示margin比设置的大
+
+3. 设置较小高度标签（一般小于10px），在IE6，IE7，遨游中高度超出自己设置高度
+    解决办法:  给超出高度的标签设置overflow: hidden;
+
+4. 超链接访问过后hover样式就不出现了，被点击访问过的超链接样式不再具有hover和active了。解决方法是改变CSS   属性的排列顺序:L-V-H-A ( love hate ): a:link {} a:visited {} a:hover {} a:active {}
+
+5.清除浮动： *zoom: 1;
+
+6.Chrome 中文界面下默认会将小于 12px 的文本强制按照 12px 显示
+
+7.img默认有间距   使用float属性为img布局   margin负值本身有兼容问题
+
+8.各种特殊样式的兼容  css3 box-shadow
+   div { height: 300px; *height: 200px; _height:100px; }
+
+9.ul标签  ie6 7有margin外边距   ie8及其他浏览器有padding内边距
+   解决方法:  统一都清除
+
+10.图片的下方有空隙    display: block;
+
+11.ie6  margin: 0 auto;  无法居中  text-align: center;
+
+9. 行内属性标签，设置display: block后采用float布局，又有横行的margin的情况，IE6间距bug
+
+1.H5新标签在IE9以下的浏览器识别    插件  IE的条件注释hack
+<!--[if lt IE 9]>
+ <script type="text/javascript" src="js/html5shiv.js"></script>
+<![endif]-->
+
+js兼容:
+addEventListener  removeEventListener  attachEvent  detachEvent  有on  this指向window
+IE:  冒泡型事件  其他先捕获再冒泡
+e || window.event
+event.target，        event.srcElement
+e.stopPropation()    e.cancelBubble() 
+e.preventDefault()   e.returnValue = false
+window.getComputedStyle(element)[cssPropertyName];    element.currentStyle[cssPropertyName];     IE9
+======
+color: green\0;   ie8以上
+background-color:#f1ee18;      /*所有识别*/
+background-color:#00deff\9;   /*IE6、7、8识别*/    (ie 678910)
++background-color:#a200ff;    /*IE6、7识别*/    (+ *都可以)
+_background-color:#1e0bd1;   /*IE6识别*/    
+
+\0                                        /*IE8/IE9/IE10/IE11*/
+.test9 { color: orange\9\0; }   /ie9 ie10/
+
+IE6 (*)
+*html .test { color: gold; }    
+
+IE7 (*+)
+*+html .test { color: black; }
+
+
+==========
+2.CSS里的visibility属性有个collapse属性值？在不同浏览器下以后什么区别？
+当一个元素的visibility属性被设置成collapse值后，对于一般的元素，它的表现跟hidden是一样的。
+chrome中，使用collapse值和使用hidden没有区别。
+firefox，opera和IE，使用collapse值和使用display：none没有什么区别。
+
+3.display:none与visibility：hidden的区别？
+display： none 不显示对应的元素，在文档布局中不再分配空间（回流+重绘）
+visibility：hidden 隐藏对应元素，在文档布局中仍保留原来的空间（重绘）
+
+4.移动端的布局用过媒体查询吗？
+通过媒体查询可以为不同大小和尺寸的媒体定义不同的css，适应相应的设备的显示。
+1.<head>里边
+  <link rel="stylesheet" type="text/css" href="xxx.css" media="only screen and (max-device-width:480px)">
+2.CSS : @media only screen and (max-device-width:480px) {/css样式/}
+
+5.如果需要手动写动画，你认为最小时间间隔是多久，为什么？
+多数显示器默认频率是60Hz，即1秒刷新60次，所以理论上最小间隔为1/60＊1000ms ＝ 16.7ms。
+
+6.i与li之间有看不见的空白间隔是什么原因引起的？有什么解决办法？
+行框的排列会受到中间空白（回车空格）等的影响，因为空格也属于字符,这些空白也会被应用样式，占据空间，所以会有间隔，把字符大小设为0，就没有空格了。
+解决方法：
+1.可以将<li>代码全部写在一排
+2.浮动li中float：left
+3.在ul中用font-size：0（谷歌不支持）；可以使用letter-space：-3px
+
+7.display:inline-block 什么时候会显示间隙？
+有空格时候会有间隙 解决：移除空格
+margin正值的时候 解决：margin使用负值
+使用font-size时候 解决：font-size:0、letter-spacing、word-spacing
+
+8.CSS属性overflow属性定义溢出元素内容区的内容会如何处理?
+参数是scroll时候，  必会出现滚动条。
+参数是auto时候，   子元素内容大于父元素时出现滚动条。
+参数是visible时候， 溢出的内容出现在父元素之外。
+参数是hidden时候，溢出隐藏。
+
+9.  _  (ie6)  *(ie67)  \9(全部ie)
+background: red;//firefox
+_background: green;//IE6
+*background: blue;//IE6，IE7
+background: black\9;//IE6---IE10
+
+
+1.html5有哪些新特性、移除了那些元素？如何处理HTML5新标签的浏览器兼容问题？如何区分 HTML 和 HTML5？
+常用语义化标签  进度条 音频视频  表单元素/属性中新增   datalist标签  新增事件 获取dom元素 操作类样式方法 自定义属性 
+网络接口  全屏接口  地理定位接口  拖动事件 
+localStorage  sessionStorage Web存储  canvas   应用缓存
+废弃: center  font  big  frame，frameset，noframes
+
+2. Screen计算机默认屏幕，all适用于所有设备，max-width超过最大宽度就不执行，min-width必须大于最小宽度才执行。
+
+3. 元信息meta中name 属性主要用于描述网页，与之对应的属性值为content，content中的内容主要是便于搜索引擎机器人查找信息和分类信息用的。
+<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no,maximum-scale=1.0">
+<meta charset="utf-8"> 
+<meta name="keywords" content="">
+<meta name="description" content="">
+<meta name="author" content="">
+http-equiv顾名思义，相当于http的文件头作用，它可以向浏览器传回一些有用的信息，以帮助正确和精确地显示网页内容，与之对应的属性值为content，content中的内容其实就是各个参数的变量值。
+content-type
+name="X-UA-Compatible"    content="IE=edge,chrome=1" 
+Set-Cookice 
+
+4.body{  font-size=62.5%  } 此时1rem = 10px; 若是12px则是1.2rem.
+当前rem基准值 = 预设的基准值 / 设计稿宽度 * 当前设备的宽度
+10/200/300  1.5
+适配不同屏幕大小其实只需要遵循一条原则，确保页面元素大小的与屏幕大小保持一定比例。也就是：按比例还原设计稿。
+// 假设设计稿的宽度是 375px，假设取设计稿宽度下 1rem = 100px
+$baseFontSize: 100;
+@function px2rem($px) {
+    @return $px / $baseFontSize * 1rem;
+}
+750px / 100px  
+
+5.sass 和 scss
+文件扩展名不同，Sass 是以“.sass”后缀为扩展名，而 SCSS 是以“.scss”后缀为扩展名；语法书写方式不同，Sass 是以严格的缩进式语法规则来书写，不带大括号({})和分号(;)，而 SCSS 的语法书写和我们的 CSS 语法书写方式非常类似。
+
+6.如果对css进行优化如何处理？
+压缩打包，图片整合(雪碧图)，避免使用Hack，解决兼容问题，使用简写，让CSS能保证日后的维护。
+
+
+8.src：视频的URL poster：视频封面，没有播放时显示的图片 preload：预加载 autoplay：自动播放 loop：循环播放 controls：浏览器自带的控制条 width：视频宽度 height：视频高度
+
+9.
+视频格式：MPEG-1、MPEG-2和MPEG4 、AVI 、RM、ASF和WMV格式
+视频编码格式：H.264、MPEG-4、MPEG-2、WMA-HD以及VC-1
+
+10.渐进增强 progressive enhancement：针对低版本浏览器进行构建页面，保证最基本的功能，然后再针对高级浏览器进行效果、交互等改进和追加功能达到更好的用户体验。
+优雅降级 graceful degradation：一开始就构建完整的功能，然后再针对低版本浏览器进行兼容。
+
+11
+.CSS3实现圆角（border-radius），阴影（box-shadow），
+对文字加特效（text-shadow、），线性渐变（gradient），旋转（transform）
+transform:rotate(9deg) scale(0.85,0.90) translate(0px,-30px) skew(-9deg,0deg);
+//旋转,缩放,定位,倾斜增加了更多的CSS选择器 多背景 rgba 在CSS3中唯一引入的伪元素是::selection.媒体查询，多栏布局 border-image
+
+
+12.2: vertical-align : baseline top middle  bottom text-top text-bottom  sub super 20px 2em 基线向上/下
+生效前提：
+内联元素span、strong、em、img、button、input等
+display值为inline、inline-block、inline-table或table-cell的元素
+需要注意浮动和绝对定位会让元素块状化，因此此元素绝对不会生效
+
+13.选择器:
+通用选择器  id  class 标签 属性 后代  子代 兄弟 组合   伪类 伪元素
+!important style属性  id class 伪类 属性 标签 通用  浏览器自定义
+
+14.css属性继承
+css继承特性主要是指文本方面的继承(比如字体、颜色、字体大小等)
+(1)所有: visibility和cursor
+(2)内联元素：
+letter-spacing、word-spacing、white-space、line-height、color、font-family、font-size、font-style(italic)、font-variant、font-weight、text-decoration、text-transform、direction
+(3)列表元素
+list-style、list-style-type、list-style-position、list-style-image
+
+15.@的用途
+/*导入css文件*/
+@import "base.css"
+/*自定义字体*/
+@font-face {}
+/*声明CSS3 animation动画关键帧*/
+@keyframes fadeIn {}
+/*媒体查询*/
+@media{}
+
+16 如何防止CSS阻塞渲染
+默认情况下，CSS 被视为阻塞渲染的资源，这意味着浏览器将不会渲染任何已处理的内容，直至 CSSOM 构建完毕。请务必精简您的 CSS，并利用媒体类型和查询来解除对渲染的阻塞
+
+17.
+-webkit-transform:rotate(-3deg); /*为Chrome/Safari*/
+ -moz-transform:rotate(-3deg); /*为Firefox*/   
+ -ms-transform:rotate(-3deg); /*为IE*/  
+ -o-transform:rotate(-3deg); /*为Opera*/  
+
+18.
+设备独立像素 = CSS 像素 = 逻辑像素
+物理像素 = 设备像素
+设备像素比 = 设备像素 / CSS 像素 
+在视网膜屏幕中，以 dpr = 2 为例，把 4(2x2) 个像素当 1 个像素使用，这样让屏幕看起来更精致，但是元素的大小本身却不会改变：
+ppi = sqrt(1920X1920 +1080X1080)/5.5
+dpr = 设备像素 / 设备独立像素
+
+
+19.CSS里的 visibility 属性有个 collapse 属性值是干吗用的？在不同浏览器下以后什么区别？当一个元素的 visibility 属性被设置成 collapse 值后，对于一般的元素，它的表现跟 hidden 是一样的。但例外的是，如果这个元素是table相关的元素，例如table行，table group，table列，table column group，它的表现却跟 display: none 一样，也就是说，它们占用的空间也会释放。在谷歌浏览器里，使用 collapse 值和使用 hidden 值没有什么区别。在火狐浏览器、Opera和IE11里，使用 collapse 值的效果就如它的字面意思：table的行会消失，它的下面一行会补充它的位置。
+
+20.display:none 与 visibility:hidden 的区别是什么？display : none 隐藏对应的元素，在文档布局中不再分配空间（回流+重绘）visibility:hideen 隐藏对应的元素，在文档布局中仍保留原来的空间（重绘）使用 CSS display:none 属性后，HTML 元素（对象）的宽度、高度等各种属性值都将“丢失”;而使用 visibility:hidden 属性后，HTML元素（对象）仅仅是在视觉上看不见（完全透明），而它所占据的空间位置仍然存在。
+
+======重绘与回流
+回流：当我们对 DOM 的修改引发了 DOM 几何尺寸的变化（比如修改元素的宽、高或隐藏元素等）时，
+    浏览器需要重新计算元素的几何属性（其他元素的几何属性和位置也会因此受到影响），
+    然后再将计算的结果绘制出来。这个过程就是回流（也叫重排）。
+重绘：当我们对 DOM 的修改导致了样式的变化、却并未影响其几何属性（比如修改了颜色或背景色）时，
+    浏览器不需重新计算元素的几何属性、直接为该元素绘制新的样式（跳过了上图所示的回流环节）。这个过程   叫做重绘。
+
+
+21. 浏览器是怎样解析CSS选择器的？CSS选择器的解析是从右向左解析的，为了避免对所有元素进行遍历。若从左向右的匹配，发现不符合规则，需要进行回溯，会损失很多性能。若从右向左匹配，先找到所有的最右节点，对于每一个节点，向上寻找其父节点直到找到根元素或满足条件的匹配规则，则结束这个分支的遍历。两种匹配规则的性能差别很大，是因为从右向左的匹配在第一步就筛选掉了大量的不符合条件的最右节点（叶子节点），而从左向右的匹配规则的性能都浪费在了失败的查找上面。而在 CSS 解析完毕后，需要将解析的结果与 DOM Tree 的内容一起进行分析建立一棵 Render Tree，最终用来进行绘图。在建立 Render Tree 时（WebKit 中的「Attachment」过程），浏览器就要为每个 DOM Tree 中的元素根据 CSS 的解析结果（Style Rules）来确定生成怎样的 Render Tree。
+
+22. 什么是响应式设计？响应式设计的基本原理是什么？如何兼容低版本的IE？响应式网站设计(Responsive Web design)是一个网站能够兼容多个终端，而不是为每一个终端做一个特定的版本。基本原理是通过媒体查询检测不同的设备屏幕尺寸做处理。页面头部必须有meta声明的viewport。
+
+23. 视差滚动效果？视差滚动（Parallax Scrolling）通过在网页向下滚动的时候，控制背景的移动速度比前景的移动速度慢来创建出令人惊叹的3D效果。CSS3实现优点：开发时间短、性能和开发效率比较好，缺点是不能兼容到低版本的浏览器jQuery实现通过控制不同层滚动速度，计算每一层的时间，控制滚动效果。优点：能兼容到各个版本的，效果可控性好缺点：开发起来对制作者要求高,插件实现方式例如：parallax-scrolling，兼容性十分好
+
+24. ::before 和 :after中双冒号和单冒号有什么区别？解释一下这2个伪元素的作用单冒号(:)用于CSS3伪类，双冒号(::)用于CSS3伪元素。::before就是以一个子元素的存在，定义在元素主体内容之前的一个伪元素。并不存在于dom之中，只存在在页面之中。
+
+25. 你对line-height是如何理解的？
+行高是指一行文字的高度，具体说是两行文字间基线的距离。CSS中起高度作用的是height和line-height，没有定义height属性，最终其表现作用一定是line-height。单行文本垂直居中：把line-height值设置为height一样大小的值可以实现单行文字的垂直居中，其实也可以把height删除。
+(2)多行文本垂直居中：需要设置display属性为inline-block。
+
+26. 有一个高度自适应的div，里面有两个div，一个高度100px，希望另一个填满剩下的高度外层div使用
+position：relative；高度要求自适应的div使用position: absolute; top: 100px; bottom: 0; left: 0
+
+
+27.  png、jpg、gif 这些图片格式解释一下，分别什么时候用。有没有了解过webp？
+png是便携式网络图片（Portable Network Graphics）是一种无损数据压缩位图文件格式.优点是：压缩比高，色彩好。 大多数地方都可以用。
+jpg是一种针对相片使用的一种失真压缩方法，是一种破坏性的压缩，在色调及颜色平滑变化做的不错, 被用来储存和传输照片的格式。
+gif是一种位图文件格式，以8位色重现真色彩的图像。可以实现动画效果
+webp格式是谷歌在2010年推出的图片格式，压缩率只有jpg的2/3，大小比png小了45%。缺点是压缩的时间更久了，兼容性不好，目前谷歌和opera支持。
+
+28. 什么是外边距重叠？重叠的结果是什么？　　外边距重叠就是 margin-collapse。　　在CSS当中，相邻的两个盒子的外边距可以结合成一个单独的外边距。这种合并外边距的方式被称为折叠，并且因而所结合成的外边距称为折叠外边距。　　
+(1)折叠结果遵循下列计算规则：两个相邻的外边距都是正数时，折叠结果是它们两者之间较大的值。
+(2)两个相邻的外边距都是负数时，折叠结果是两者绝对值的较大值。
+(3)两个外边距一正一负时，折叠结果是两者的相加的和。
+
+CSS Hack常见的有三种形式：CSS属性Hack、CSS选择符Hack以及IE条件注释Hack， Hack主要针对IE浏览器。
+属性级:      IE6能识别下划线“_”和星号“*”，IE7能识别星号“*”
+选择符级： IE6能识别*html .class{}，IE7能识别*+html .class{}  !important
+29.兼容性问题
+(1)IE6双边距
+{
+background-color:#f1ee18;        /*所有识别*/
+.background-color:#00deff\9;    /*IE6、7、8识别*/
+.background-color:#00deff\0;    /*IE8+*/
++background-color:#a200ff;      /*IE6、7识别*/
+_background-color:#1e0bd1;     /*IE6识别*/
+}
+(2)设置较小高度标签（一般小于10px），在IE6，IE7中高度超出自己设置高度。hack：给超出高度的标签设置overflow:hidden;或者设置行高line-height 小于你设置的高度。
+
+30ie6bug的解决方法
+1. 双边距BUG float引起的  使用display:inline;
+2. 3像素问题 使用float引起的 使用dislpay: inline  -3px 
+3. link  visited  hover active
+4. 为什么没有办法定义1px左右的宽度容器(IE6默认的行高造成的，使用overflow:hidden,zoom:0.08 line-height:1px)
+5. ie 6 不支持!important
+
+31.解决img三像素问题的总结：
+1.img标签的父标签增加font-size:0;
+如、body{
+　　　　font-size: 0;
+　　}
+2.img三像素问题
+img标签增加display:block;
+img{
+display:block;
+}
+3.img标签增加vertical-align: middle;
+img{
+vertical-align: middle;//或者vertical-align:top;
+}
+4.img标签增加float:left
+img{
+ float:left;
+}
+
+49. 什么是 Css Hack？ie6,7,8 的 hack 分别是什么？
+\9   所有ie浏览器都支持
++  ie7支持
+*     ie6 7支持
+_    仅仅ie6支持
+\0     ie89支持  opera部分支持
+\9\0  ie9支持
+
+50. xhtml 和 html 有什么区别
+功能上的差别：HTML是一种基本的WEB网页设计语言；XHTML是一个基于XML的置标语言，XHTML可兼容各大浏览器、手机以及PDA，并且浏览器也能快速正确地编译网页。
+　
+
+51. CSS引入的方式有哪些？使用Link和@import有什么区别？  
+答：内联，内嵌，外链，导入
+（1）link 属于 XHTML 标签，除了加载 CSS 外，还能用于定义RSS，定义 rel 连接属性等作用，无兼容性，支持使用javascript改变样式；而@import是CSS提供的，只能用于加载CSS，不支持使用 javascript 改变样式；
+（2）页面被加载的时，link 会被同时加载，而@import 引用的CSS会等到页面加载完再加载；（3）import是CSS2.1 提出的，CSS2.1以下浏览器不支持，只在IE5以上才能被识别，而link是XHTML标签，无兼容问题。
+
+52. 对WEB标准以及W3C的理解与认识标签闭合、标签小写、不乱嵌套、提高搜索机器人搜索几率、使用外链css和js脚本、结构行为表现的分离、文件下载与页面速度更快、内容能被更多的用户所访问、内容能被更广泛的设备所访问、更少的代码和组件，容易维护、改版方便，不需要变动页面内容、提供打印版本而不需要复制内容、提高网站易用性;
+
+53.css hack原理及常用hack有哪些？
+原理： 利用不同浏览器对CSS的支持和解析结果不一样编写针对特定浏览器的样式。
+常见的hack有： 属性hack、选择器hack、IE条件注释。
+
+45.视差滚动效果以及如何实现？
+视差滚动（Parallax Scrolling）指网页滚动过程中，多层次的元素进行不同程度的移动，视觉上形成立体运动效果的网页展示技术（3D效果）。
+
+
+========
+all属性:  inital  重置为初始值  不继承    inherit继承    unset能继承就继承
+caret-color     input输入光标  |
+clip-path         circle(40%) 圆 ellipse(130px 140px at 10% 20%)  椭圆
+shape-outset   配合clip-clip使用  设置文字的环绕  跟clip-path设置为同值 
+
+object-fit / object-position    可替换元素有 iframe，video，embed，img
+object-fit 属性指定可替换元素的内容应该如何适应到其使用的高度和宽度确定的框。
+    fill 充满父容器
+    contain     较短的边会出现自动填充的空白
+    cover        按照图片最短的边
+    none         放置到父容器的“中心”位置
+    scale-down     介于none和contain值  图片大  contain   图片小  none
+object-position   属性来指定被替换元素的内容对象在元素框内的对齐方式
+    object-position: 50px 50px;   (对fill)    object-position: right top;  (对contain)
+font-stretch
+
+

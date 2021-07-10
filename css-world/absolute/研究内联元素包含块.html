@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		body {
+			margin: 0;
+		}
+		.span1 {
+			outline: 1px solid red;
+			position: relative;
+			line-height: 40px;
+		}
+		.span1:after {
+			content: '';
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 0;
+			height: 0;
+			border-width: 4px;
+			border-style: solid;
+			border-color: transparent transparent transparent red;
+		}
+		big {
+			font-size: 200%;
+			color: red;
+		}
+		.p1 {
+			text-align: right;
+			background-color: #eee;
+		}
+		.p1 span {
+			position: relative;
+		}
+		.p1 span img {
+			position: absolute;
+			right: 0;
+		}
+		img {
+			width: 5px;
+			height: 5px;
+		}
+		.box1 {
+			width: 80px;
+		}
+		.span2 {
+			outline: 1px solid red;
+			position: relative;
+		}
+		.span2:after {
+			content: '';
+			position: absolute;
+			bottom: 0;
+			right: 0;
+			width: 0;
+			height: 0;
+			border-width: 4px;
+			border-style: solid;
+			/*border-color: transparent transparent transparent red;*/
+		}
+		.span3 {
+			outline: 1px solid red;
+			position: relative;
+			display: inline-block;
+			width: 100px;
+			height: 40px;
+			line-height: 40px;
+		}
+		.span3:after {
+			content: '';
+			position: absolute;
+			top: 0;
+			right: 0;
+			width: 0;
+			height: 0;
+			border-width: 4px;
+			border-style: solid;
+			border-color: transparent transparent transparent red;
+		}
+		.box2 {
+			position: relative;
+			outline: 1px solid red;
+		}
+		.box2:after {
+			content: '';
+			position: absolute;
+			bottom: 0;
+			right: 0;
+			width: 10px;
+			height: 10px;
+			background-color: red;
+		}
+		.span4 {
+			position: absolute;
+		}
+		.box3 {
+			outline: 1px solid red;
+			height: 30px;
+		}
+		.box4 {
+			outline: 1px solid red;
+		}
+		.box4 .span5 {
+			position: relative;
+			display: inline-block;
+			width: 20px;
+			height: 20px;
+			background-color: #096;
+		}
+		.box4 .span5:after {
+			content: '';
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 10px;
+			height: 10px;
+			background-color: red;
+		}
+	</style>
+</head>
+<body>
+	<div style="width: 1000px;margin: 0 auto;">
+		<div>
+			<span class="span1">
+				<big>中国</big>中国
+			</span>
+		</div>
+		<p class="p1">
+			<span>
+				<img src="../images/zza/1.jpg">
+			</span>
+		</p>
+		<div class="box1">
+			<span class="span2">中国中国中国中国中国中国</span>
+			<span class="span3">
+				中国<big>中国</big>中国
+			</span>
+		</div>
+
+		<div class="box2">
+			中国<span >span4中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国</span>
+		</div>
+		<div class="box3">
+			<span>中国</span>
+			<span class="span4">span4中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国</span>
+		</div>
+
+		<div class="box4">
+			<span class="span5">1</span>中国
+		</div>
+	</div>
+	
+</body>
+</html>

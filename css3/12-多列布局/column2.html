@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		body {
+			margin: 0;
+		}
+		.box1 {
+			margin: 10px auto 0;
+			max-width: 1000px;
+			column-width: 14em;
+			-webkit-column-width: 14em;
+			-moz-column-width: 14em;
+			column-count: 3;
+			-webkit-column-count: 3;
+			-moz-column-count: 3;
+			column-rule: 1px dashed #096;
+			-webkit-column-rule: 1px dashed #096;
+			-moz-column-rule: 1px dashed #096;
+			column-gap: 2em;
+			column-fill: balance;
+			background-color: #eee;
+		}
+		p {
+			margin: 0;
+		}
+		.box1 img {
+			display: block;
+			width: 80%;
+			height: 200px;
+			margin: 10px auto;
+			column-span: all;
+		}
+	</style>
+</head>
+<body>
+	<!-- 
+	column-width
+	column-count
+	column-rule
+	column-gap
+	column-fill: balance
+
+	 -->
+<div class="box1">
+	<p>multicol 的基本思想是，你可以把一大块内容带到多个列中，就像报纸一样。您可以使用两个属性中的其中一个来完成此操作。您可以使用 cloumn-count 属性来指定内容的列数。还可以使用 column-width 属性来指定理想的列宽，让浏览器来决定合适的列数。不论你的内容包含什么样的元素，当你将它转换为多列布局时，一切都将保持正常的内容流，但是将以列的形式展现。这使得 multicol 布局与如今在浏览器中常见的其他布局会有所不同。例如 Flexbox 和 Grid，获取容器元素中子元素，让这些子元素参与到 flex 和 grid 的布局中来。</p>
+	<img src="../../images/BBB_Poster.png">
+	<p>使用 multicol ，在每一列的内部，您还可以获得正常的内容流。在下面的例子中，我们正在使用 column-width，最小列宽为 14em 。Multicol 会尽可能多的分配宽度为 14em 的列，然后，让每一列分享剩余的空间。每一列的宽度至少 14em ，除非，容器的宽度小于 14em ，那么将只展示一列。multicol 也是 CSS 中首次出现的一种行为，可以创建出列，同时也默认符合响应式的规则。您不必增加 CSS 查询条件 (Media Queries) ，修改每一个断点的列数，而是制定一个最佳的宽度，让浏览器自身来进行处理。</p>
+</div>
+</body>
+</html>

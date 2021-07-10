@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<script type="text/javascript">
+	"use strict";
+
+	var fn = ()=> {
+		var fn2 = ()=>{
+			console.log(this)
+		}
+		fn2()
+		console.log(this)
+	}
+	fn();
+
+	var obj = {
+		fn:()=>{
+			console.log(this)
+		}
+	}
+	obj.fn();
+</script>
+</body>
+</html>

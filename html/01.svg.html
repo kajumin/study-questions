@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title></title>
+  <style>
+    stop.begin { stop-color:yellow; }
+    stop.end { stop-color:green; }
+    body.invalid stop.end { stop-color:red; }
+    #err { display:none; }
+    body.invalid #err { display:inline; }
+  </style>
+  <script>
+    function signalError() {
+      document.getElementById('body').setAttribute("class", "invalid");
+    }
+  </script>
+</head>
+<body id="body"
+  style="position:absolute; z-index:0; border:1px solid black; left:5%; top:5%; width:90%; height:90%;">
+
+  <!-- 
+  svg: 
+  (1)可缩放矢量图形, 是一种用于描述二维的矢量图形
+  
+  (2)SVG 图像及其相关行为被定义于XML文本文件之中，
+  这意味着可以对它们进行搜索、索引、编写脚本以及压缩
+
+  (3)SVG格式提供的是矢量图，
+  这意味着它的图像能够被无限放大而不失真或降低质量，并且可以方便地修改内容。
+   -->
+  <form>
+  <fieldset>
+    <legend>HTML Form</legend>
+    <p><label>Enter something:</label>
+    <input type="text"/>
+    <span id="err">Incorrect value!</span></p>
+    <p><input type="button" value="Activate!" onclick="signalError();" /></p>
+  </fieldset>
+</form>
+
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1"
+  viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice"
+  style="width:100%; height:100%; position:absolute; top:0; left:0; z-index:-1;">
+  <linearGradient id="gradient">
+    <stop class="begin" offset="0%"/>
+    <stop class="end" offset="100%"/>
+  </linearGradient>
+  <rect x="0" y="0" width="100" height="100" style="fill:url(#gradient)" />
+  <circle cx="50" cy="50" r="30" style="fill:url(#gradient)" />
+</svg>
+
+  
+
+  </script>
+</body>
+</html>

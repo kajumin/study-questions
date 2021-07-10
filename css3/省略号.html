@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.box1 {
+			width: 100px;
+			height: 100px;
+			background-color: red;
+			overflow: hidden;
+			white-space: nowrap;
+			text-overflow: ellipsis;
+		}
+		.box2 {
+			width: 100px;
+			height: 130px;
+		}
+		.box2 .son{
+			padding: 5px;
+			line-height: 30px;
+			background-color: red;
+			display: -webkit-box;
+			-webkit-box-orient: vertical;
+			-webkit-line-clamp: 4;
+			text-overflow: ellipsis;
+			overflow: hidden;
+			
+		}
+		.box3 {
+			color: red;
+			line-height: 30px;
+		}
+		.box3 > p:nth-child(1) {
+			all: inherit;
+			/*line-height: inherit;*/
+		}
+		input {
+			caret-color: red;
+		}
+	</style>
+</head>
+<body>
+<div class="box1">中国中国中国中国</div>
+<div class="box2">
+	<div class="son">中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国
+	</div>
+</div>
+<div class="box3">
+	中国
+	<p>中国</p>
+	<p>中国</p>
+</div>
+<div>
+	<input type="text" name="username">
+</div>
+</body>
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<p id="p"></p>
+	<p class="p"></p>
+	<p></p>
+<script type="text/javascript">
+	var Zepto = (function(){
+
+		var zepto = {},
+			simpleSelectorRE = /^[\w-]*$/,
+			emptyArray = [], 
+			slice = emptyArray.slice,
+			$;
+
+		$ = function (selector, context){
+			return zepto.init(selector, context);
+ 		}
+ 		zepto.init = function(selector, context) {
+		    var dom
+		    // $()没有写参数时  直接返回
+		    if (!selector) return zepto.Z()
+		    // Optimize for string selectors
+		    else if (typeof selector == 'string') {
+		      selector = selector.trim()
+		      // $('<div><div>')
+		      if (selector[0] == '<' && fragmentRE.test(selector))
+		        dom = zepto.fragment(selector, RegExp.$1, context), selector = null
+		      // $('p','div')   在div中找p
+		      else if (context !== undefined) return $(context).find(selector)
+		      // $('p')   querySelectorAll去找
+		      else dom = zepto.qsa(document, selector)
+		    }
+		    // $(function(){})   相当于ready方法
+		    else if (isFunction(selector)) return $(document).ready(selector)
+		    // $($('p'))  传入的是zepto对象  直接返回
+		    else if (zepto.isZ(selector)) return selector
+		    else {
+		      // 如果是数组  将null undefined去除
+		      if (isArray(selector)) dom = compact(selector)
+		      // Wrap DOM nodes.
+		      else if (isObject(selector))
+		        dom = [selector], selector = null
+		      // If it's a html fragment, create nodes from it
+		      else if (fragmentRE.test(selector))
+		        dom = zepto.fragment(selector.trim(), RegExp.$1, context), selector = null
+		      // If there's a context, create a collection on that context first, and select
+		      // nodes from there
+		      else if (context !== undefined) return $(context).find(selector)
+		      // And last but no least, if it's a CSS selector, use it to select nodes.
+		      else dom = zepto.qsa(document, selector)
+
+		    }
+		    // create a new Zepto collection from the nodes found
+		    // console.log(dom)
+		    return zepto.Z(dom, selector)
+		  }
+		   zepto.Z = function(dom, selector) {
+		    dom = dom || []
+		    dom.__proto__ = $.fn //$.fn =  zepto.Z.prototype
+		    dom.selector = selector || ''
+		    return dom
+		  }
+		// 选择器
+		zepto.qsa = function(element, selector){
+		    var found,
+		        maybeID = selector[0] == '#',
+		        maybeClass = !maybeID && selector[0] == '.',
+		        nameOnly = maybeID || maybeClass ? selector.slice(1) : selector, // Ensure that a 1 char tag name still gets checked
+		        isSimple = simpleSelectorRE.test(nameOnly)
+		        // console.log(nameOnly,isSimple)
+		        // console.log(document.getElementById(nameOnly))
+		    return (isDocument(element) && isSimple && maybeID) ?
+		      ( (found = element.getElementById(nameOnly)) ? [found] : [] ) :
+		      (element.nodeType !== 1 && element.nodeType !== 9) ? [] :
+		      slice.call(
+		        isSimple && !maybeID ?
+		          maybeClass ? element.getElementsByClassName(nameOnly) : // If it's simple, it could be a class
+		          element.getElementsByTagName(selector) : // Or a tag
+		          element.querySelectorAll(selector) // Or it's not simple, and we need to query all
+		      )
+		  }
+
+		function isDocument(obj)   { return obj != null && obj.nodeType == obj.DOCUMENT_NODE }
+
+
+		return $;
+	})();
+	window.Zepto = Zepto
+	window.$ === undefined && (window.$ = Zepto)
+</script>
+<script type="text/javascript">
+	console.log(Zepto) //是一个函数
+	console.log($)
+	console.log($('p'))
+	console.log($('#p'))
+	console.log($('.p'))
+</script>
+</body>
+</html>

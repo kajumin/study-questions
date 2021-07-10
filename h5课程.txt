@@ -1,0 +1,252 @@
+1. html概述  超文本标记语言(超文本 标记语言)   单标签   双标签   字符预留
+2. 文档声明  html5 html4  严格型  过渡型 框架型  IE9(会触发怪异模式)
+3. html规范    整体结构(头部 引用 结构 语义化)  代码格式(缩进 注释 命名 标签 属性)  特殊元素(img 表单 多媒体)
+4. html锚点  href属性(链接 下载 锚点(本页和其他页))   href(引用)和src(引入到)  target(_self _blank _top _parent framename) 
+    download属性(文件名)   rel(链接关系)  a(嵌套a 继承样式)
+5. 图像 src(地址)  alt(替代文本)  属性(usemap srcset sizes)  figure > figcaption  area > map
+6. 多媒体(audio video)  属性(src controls loop autoplay preload video特有: poster width height)   source(备选内容) 
+   方法(play pause load canPlayType)  事件(loadstart progress error abort)
+7. 块级元素  常见(div p(段落) h1-6 hr pre blockquote address html body ul ol dl dd dt 表单form fieldset option legend)
+    结构(article aside header footer nav section main)
+8. span 
+strong(重要) 
+em(强调) 
+i(技术术语) 
+b(加粗) 
+del(删除)
+mark(高亮) 
+small(小字号)
+ins(下划线)
+abbr 引用(cite q) 换行(br wbr) 上下标(sup sub)  时间(time) (var samp code)
+
+
+1.HTML5不是新的语言   html第五次重大修改--版本
+2.支持：所有的主流浏览器都支持 chrome  firefox  safari  IE9及以上支持H5
+3.改变了用户与文档的交互方法：多媒体: video audio canvas
+4.增加了其他的新特性：语义特性，本地存储特性，网页多媒体，二维三维，特效(过渡，动画)
+5.进步： 1.抛弃了一些不合理不常用的标记和属性  font  b
+             2.新增一些标记和属性  nav header section footer aside feildset  main article
+             3.代码更简洁
+
+1.语义化标签  header(页眉) footer(页脚)  main主体  nav导航 section  aside主体内容其外 article文章  hgroup
+   html5shiv兼容ie8及以下
+2.新增input类型  email url number range search date color 
+   属性autocomplete autofucus multiple pattern required placeholder
+      min max  step  list novalidate
+   表单新增事件:   oninput    oninvalid
+    表单新增伪类选择器:  :required :optional :invalid   :valid    :out-of-range  :in-range  
+3.新增标签  mark高亮 output输出 progress进度条  meter度量衡  wbr精准换行
+                  details > summary   datalist > option  picture > source  fieldset > legend  dialog
+   新增属性  data-*    ele.dataset[key] 使用驼峰命名法 
+                  loading="lazy"  原生懒加载  
+                  元素的相对于文档的偏移量offsetTop -  文档滚动的距离window.scrollTop  -  可视区域window.clientWidth < 150
+4.音频和视频 audio vedio
+5.画布canvas  svg 
+6.拖放接口  全屏接口  地理位置接口 网络接口
+7.本地存储  localStorage sessionStorage
+8.应用缓存  
+9.web workers
+
+
+语义化标签的兼容问题   IE9及以上有问题的  高度无效--行内元素
+IE8  完全不支持  不认识  无法解析
+script  创建标签   document.createElement("header")	   设置样式display: block;
+引用插件  html5shiv.min.js
+
+新增13个input类型   7个属性
+email       有验证 @和域名
+url           有验证合法的网址http://
+number   输入不了非字符  小数点可以  value max min step
+range      value默认50 max min step 
+search     提示和删除按钮
+date        年月日
+color       颜色  onchange 获取值
+
+time        时分秒
+datetime   大多数都不支持  苹果支持
+datetime-local  时间和日期
+month
+week
+tel           移动端弹出数字键盘
+
+属性:  
+提示：placeholder 
+自动获取焦点   autofocus
+自动完成  autocompete   on/off    条件：提交后才能记录和必须name属性
+模式   partern="^(\+86)?1\d{10}$"  手机号码
+必须输入   required 
+多个文件上传   multiple   email  默认验证 可以给multiple设置多个email 逗号分隔
+form="myForm"    指定表单  个别分离时使用  
+novalidate="true"  不校验表单      this.setCustomValidity("请输入合法的11位手机号");  自己写检验
+
+新增表单元素：
+datalist--option可以是单标签   label提示信息   配合list="datalistid号"   firefox不支持value   url需要http://
+keygen  生成一个公钥和私钥 信息加私钥二次加密 传给服务器(公钥和二次加密的数据)  服务器解密
+output  只能显示不能修改  
+
+readonly 不可编辑，但可以选择和复制；值可以传递到后台
+disabled 不能编辑，不能复制，不能选择；值不可以传递到后台
+
+表单事件：
+oninput       只要内容改变就会触发  复制也可以实现
+oninvalid     当验证不通过时  this.setCustomValidity()   改变默认提示信息
+
+onkeyup      不是新的   e.key  e.keyCode
+onkeydown 不是新的
+
+进度条：
+propress  max min  value当前进度值
+meter  量度器 衡量当前进度值 high规定较高的值  low规定较低的值  max最大值 min最小值   high和low将其分成三块
+
+音频和视频  
+1.embed  调用本机已经安装的文件  有兼容性问题  
+2.
+audio src  controls控制面板 autoplay  loop循环播放
+video   width height注意一般情况下设置一个    poster="images/zza/1.jpg"  没有加载完  第一针    controls loop
+source标签    兼容视频浏览器类型  多个文件一起
+object   配合 param标签使用    跟embed差不多
+
+获取元素：索引值不直观  
+document.querySelector("")[0].    选择器的名称即可  获取单个元素  类加点  id加#
+document.querySelectorAll("")     返回类数组
+
+jquery中:  addClass() removeClass() toggleClass() hasClass()
+
+classList.add()     
+classList.remove()
+classList.toggle(一个参数)      切换 
+classList.contains()  是否包含    返回布尔值
+classList.item(0);   获取类值   document.querySelector("li").classList.item(1);
+
+自定义属性  data-开头  最少一个字符  都使用小写 不要有特殊符号
+data-school-name="itcast";
+
+dataset["schoolName"];    获取值    data-  后面的单词使用驼峰法书写  dataset.schoolName
+
+fieldset  legend
+
+第二章：
+网络接口
+ononline   window.addEventLister("online",function(){});
+onoffline   window.addEventLister("offline",function(){});
+
+全屏接口  不同浏览器需要浅醉   webkit(chrome)   moz(火狐)   ms(IE)   opera o
+requestFullScreen() 开启全屏显示   webkitRequestFullScreen
+cancelFullScreen() 退出全屏显示  只能是document   document.cancelFullScreen()
+document.fullscreenElement  是否全屏状态  document.webkitFullscreenElement()  只有火狐(S)才是mozFullScreenElement()
+
+fileReader: 读取文件内容
+readAsText();   可以使用Txt打开的文件  返回文本编码  utf-8
+readAsBinaryString()  任意文件类型的文件  返回二进制  获取二进制数据给后台
+readAsDataURL()  读取文件获取一段以data开头的字符串 是一种将文件(图像，html)嵌入到文本的方案
+将资源转化为base64编码的字符串，并且将这些内容直接存储在url中   (优化网站)  
+abort  中断读取
+1.创建文件读取对象  var read=new FileRead();
+1--2 var file=document.querySelector("#myFile").files;  返回数组
+    /* 2.读取文件，获取DataURL
+     * 2.1.说明没有任何的返回值: void：但是读取完文件之后，它会将读取的结果存储在文件读取对象的result中
+     * 2.2.需要传递一个参数 binary large object:文件(图片或者其它可以嵌入到文档的类型)
+     * 2.3:文件存储在file表单元素的files属性中，它是一个数组*/
+2.读取文件  获取DataURL    没有返回值  需要参数(blob) 
+reader.readAsDataURL(file[0]);
+console.log(reader.result);  获取数据  但是没有任何值  因为没有读取完成
+
+/*获取数据*/
+/*FileReader提供一个完整的事件模型，用来捕获读取文件时的状态
+onabort   读取文件中断时触发
+onerror   文件读取错误时触发
+onload    文件读取成功时触发
+onloadend    读取完成时触发  无论成功还是失败
+onloadstarr   开始读取时触发
+onprogress    读取持续触发
+
+拖拽：拖拽事件   应用于被拖拽元素 和 目标元素
+被拖拽元素：ondrag 持续事件 ondragstart ondragleave不在原位置 ondragend松开
+目标元素：ondragenter ondragover阻止浏览器默认行为 ondrag松开鼠标时默认不触发 ondragleave 离开目标时
+e.preventDefault()阻止浏览器默认行为    在 ondragover中添加
+ondrag   div.appendChild()
+draggable=true；  图片和超链接自动可以拖拽
+
+document.ondragstart    e.target   事件捕获  传给obj
+appendChild()    obj=null
+
+e.setDataTransfer.setData(format,data)  format:数据类型text/html text/uri-list  data=e.target.id
+只能在ondrag中获取
+e.setDataTransfer.getData("html/text")
+
+地理定位：  IP地址  GPS  wifi  手机信号  用户自定义
+navigator.geolocation
+navigator.geolocation.getCurrentPosition(sucess,error,option)  option 跳整获取当前地理信息的方式
+position是个参数名 position.coords/.latitude纬度/longitude经度/.accuracy精度/.altitude海拔高度  
+error.code
+1.PE
+
+密钥：DarF2LCCGzn6T16zgy8ZPkvYYE5CT6fu
+
+localStorage  20m  不同浏览器不能   同浏览器不同窗口可以   永久生效的 存储在硬盘上
+window.localStorage.setItem(key,value);
+window.localStorage.getItem(key);
+window.localStorage.remove(key);
+window.localStorage.clear();
+
+sessionStorage  存储数据到电脑上 5m
+window.sessionStorage.setItem(key,value)  重设了等于修改
+window.sessionStorage.getItem(key);         找不到返回null
+window.sessionStorage.remove(key);          找不到不会报错也不会删除
+window.sessionStorage.clear(); 
+
+应用程序缓存 创建cache manifest：
+mainfest="demo.appcache"  建议扩展名appcache
+CACHE MANIFEST   
+
+CACHE:
+#需要缓存的文件清单列表
+*代表全部文件
+
+NETWORK:
+#每一次都要重新从服务器获取的文件清单
+
+#替换文件
+FALLBACK
+../img/zza/1.jpg  ../img/zza/banner.jpg
+/代表所有文件
+
+.appcache   text/cache-mainifest
+ctrl+f5 强制刷新
+
+自定义播放器  两个控件  四层
+load()  play()  pause()暂停
+1.获取播放器  $("video")[0]
+
+2.实现播放与暂停  oncanplay=function  video.paused play()  pause()   toggleClass("fa-play  fa-pause")
+
+3.全实现屏操作  requestFullScreen  
+
+4.实现播放业务逻辑：当视频文件可以播放时触发下面的事件
+(1).将视频文件设置为显示
+(2).获取当前视频文件的总时长并显示
+
+5.实现播放过程中的业务逻辑，当视频播放时会触发ontimeupdate事件
+(1)获取当前的播放时间并显示  video.currentTime
+(2)设置当前播放进度条样式   通过改变width百分比
+
+6.实现视频的跳播
+        $(".bar").click(function(e){
+            /*1.获取当前鼠标相对于父元素的left值--偏移值*/
+            var offset= e.offsetX;
+            /*2.计算偏移值相对总父元素总宽度的比例*/
+            var percent=offset/$(this).width();
+            /*3.计算这个位置对应的视频进度值*/
+            var current=percent*video.duration;
+            /*4.设置当前视频的currentTime*/
+            video.currentTime=current;
+        });
+
+7.播放完毕之后，重置播放器的状态
+        video.onended=function(){
+            video.currentTime=0;
+            $(".switch").removeClass("fa-pause").addClass("fa-play");
+        }
+
+
+

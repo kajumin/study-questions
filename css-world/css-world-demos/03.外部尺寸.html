@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		table {
+		    width: 280px;
+		    margin: 0 auto;
+		    text-align: left;
+		}
+
+		.father {
+		  	width: 150px;
+		  	 : 10px;
+		  	background-color: #cd0000;
+		  	white-space: nowrap;
+		}
+		.child {
+		  	display: inline-block;
+		  	padding: 5px;
+		  	background-color: #f0f3f9;
+		}
+
+		.nav {
+			width: 240px;
+		}
+		.width {
+		  width: 100%;
+		}
+		.nav {
+		  background-color: #cd0000;
+		}
+		.nav-a {
+		  display: block;
+		  margin: 0 10px;
+		  padding: 9px 10px;
+		  border-bottom: 1px solid #b70000;
+		  border-top: 1px solid #de3636;
+		  color: #fff;
+		}
+		.nav-a:first-child { border-top: 0; }
+		.nav-a + .nav-a + .nav-a { border-bottom: 0;}
+
+		.box {
+		    width: 240px;
+		    margin: 20px auto;
+		}
+
+		.box2 {
+		  width: 120px; 
+		  padding: 10px;
+		  background-color: #cd0000;
+		  text-align: center;
+		}
+		.content {
+		  display: inline-block;
+		  text-align: left;
+		}
+	</style>
+</head>
+<body>
+	<!-- 
+	1.width: auto;
+	  (1)充分利用可用空间
+	  (2)收缩与包裹
+	  (3)收缩到最小
+	  (4)超出容器限制
+
+
+	2.外部尺寸和流体特性
+	(1)正常流宽度
+	(2)格式化宽度 
+	案例: 导航栏自适应
+	
+	li display: list-item; 附加盒子
+
+	外在盒子负责是否一行显示
+	内在盒子负责宽高, 内容显示
+	a { display:block; width: 100%; } 
+	width: 100%;是多余的
+	 -->
+<table>
+    <tr>
+        <td>就1列就1列就1列就1列就1列</td>
+        <td>当父级relative，且宽度很小的时候，例如{position:relative; width:20px;}，absolute元素也会出现一柱擎天的情况；</td>
+        <td>当父级relative，且宽度很小的时候，例如{position:relative; width:20px;}，absolute元素也会出现一柱擎天的情况；</td>
+    </tr>
+</table>
+
+<div class="father">
+    <span class="child">恰如一江春水向东流，流到断崖也不回头</span>
+</div>
+<div style="width: 150px;">
+    <span>fffffffffffffffffffffffffffffffffffff</span>
+</div>
+
+
+<h4>无宽度，借助流动性</h4>
+<div class="nav">
+  <a href="" class="nav-a">导航1</a>
+  <a href="" class="nav-a">导航2</a>
+  <a href="" class="nav-a">导航3</a>
+</div>
+<h4>width:100%</h4>
+<div class="nav">
+  <a href="" class="nav-a width">导航1</a>
+  <a href="" class="nav-a width">导航2</a>
+  <a href="" class="nav-a width">导航3</a>
+</div>
+
+
+<div class="box">
+  <button>按钮</button>
+  <button>按钮按钮按钮按钮按钮按钮</button>
+  <button>按钮按钮按钮按钮按钮按钮按钮按钮按钮按钮</button>
+</div>
+
+<div class="box2">
+  <p id="conMore" class="content">文字内容文字内容文字内容文字内容</p>
+</div>
+
+</body>
+</html>

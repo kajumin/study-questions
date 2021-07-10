@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.file-upload:focus + .upload {
+			outline: 5px auto -webkit-focus-ring-color;
+		}
+		.upload {
+			display: inline-block;
+			padding: 6px 12px;
+			background-color: #096;
+			color: #fff;
+			cursor: pointer;
+		}
+		.upload:hover {
+			outline: 1px auto -webkit-focus-ring-color;
+		}
+		.upload-message {
+			position: absolute;
+			margin-left: 6px;
+			font-size: 14px;
+			padding: 6px 12px;
+		}
+
+		.clip_a {
+			display: block; 
+			width: 128px; 
+			height: 128px;
+		}
+		.clip_a img{
+			border: 0; 
+			position: absolute; 
+			clip: rect(0 128px 128px 0);
+		}
+		.clip_a:hover {
+			border: 0;
+		}
+		.clip_a:hover img {
+			margin-top: -128px; 
+			clip: rect(128px 128px 256px 0);
+		}
+		.clip_b {
+			display: block; 
+			width: 128px; 
+			height: 128px;
+			overflow: hidden;
+		}
+		.clip_b img{
+			border: 0; 
+		}
+		.clip_b:hover img {
+			margin-top: -128px; 
+			/*clip: rect(128px 128px 256px 0);*/
+		}
+
+	</style>
+</head>
+<body>
+<!-- clip: rect实验
+auto: 不剪裁  作用是重置rect
+rect(top, right, bottom, left)
+如果left >= right或者bottom <= top, 元素不可见
+
+1. 可访问性隐藏 常用于input
+2. img标签下的CSS Sprite定位
+   overflow: visible; 默认显示  但是不影响后面的元素
+3. 图像剪裁 案例
+-->
+
+<form id="form" style="margin: 10px 0;">
+	<input class="file-upload" type="file" id="xFile" style="position: absolute;clip: rect(0,0,0,0);" accept="image/jpeg"> 
+	<label class="upload ui_button ui_button_primary" for="xFile">上传文件</label><span class="upload-message"></span>
+
+</form>
+<a href="javascript:" class="clip_a">
+    <img src="../assets/images/sofa_sprite.png" />
+</a>
+<a href="javascript:" class="clip_b">
+    <img src="../assets/images/sofa_sprite.png" />
+</a>
+</body>
+</html>

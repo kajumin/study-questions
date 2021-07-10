@@ -1,0 +1,62 @@
+1.npm init  初始化项目
+2.wepack.config.js
+没有使用vue-cli, 自己手动搭建,webpack负责处理.vue和.js文件  ,使用gulp负责css和less文件
+tap自定义事件
+使用vuex   vue-router
+swipe.js   zepto.js
+
+app - > index/vedio -> indexTop / infoBox /Swipe -> GitLoader/JpgLoader
+gif图片开始使用图片  后面使用gif图片
+高亮显示 v-bind:class="{'cur' : $router.history.current.name == item.name}"  //当前路由名等于item.name名
+点击tap路由跳转 router.push({"name" : props.value.name});    
+
+
+=====补充知识
+==vm.$data   获取Vue实例的全部data
+     vm.$el    获取绑定元素
+==<a v-on:[eventName]="doSomething"> ... </a>  动态绑定事件
+     <a v-bind:[attributeName]="url"> ... </a>           动态绑定属性
+==创建实例后不能添加数据
+==vm.$watch("a" , function(newvalue , oldvalue){
+      console.log(newvalue , oldvalue);
+});
+=={{*a}}   不会再更新
+==computed : {
+	b : function(){
+		console.log("我是b函数")
+		return this.a * this.a;
+	}
+}
+==v-bind:style="{width:w + 'px' , height : h + 'px'}"   样式绑定
+==数据触发视图更新  push  pop shift unshift splice sort reverse
+<==span v-for="n in 10">{{ n }} </span>
+    复杂数据类型子改变父也会改变
+==属性验证  props : {
+	"c" : null,
+	"d" : null,
+	"e" : {
+		type : Number,
+		required : true
+	}
+},
+==4种实现b的平方的方法
+(1) b* b
+(2) bpingfang()  在data中声明bpingfang()
+(3) bpingfang()  在methods中声明
+(4) bpingfang    在computed中声明bpingfang()
+==  ref属性
+    this.$refs.box.style.background = "red"; 
+    this.$refs.bigcanlendar.setCanlendar();   父调用子的函数  ref="bigcanlender"绑定到子组件上
+==事件修饰符  .stop   .prevent  .capture  .self  .once
+==自定义全局指令Vue.directive("hong",{
+		inserted : function(el){
+			el.style.backgroundColor = "red"
+		}
+	});
+<p @click="changeF" v-hong>{{text}}改父数据</p>  使用
+==vuex  参数只能携带一个值，所以我们要传输很多值的时候，采用对象封装。
+state、mutations、actions、getters 四个属性 
+modules:{ a: }合并四个属性
+
+==vm.$set( vm.data,'data1', data );   beforeRouteEnter(to,form,next)
+

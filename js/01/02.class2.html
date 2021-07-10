@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<script type="text/javascript">
+	// (1)constructor中的属性覆盖会class上的公有属性
+	// (2)class上的公有方法外部环境是window  原型上的方法外部环境也是window
+	// (3)constructor上的公有方法外部环境是constructor
+	// class Cat {
+ //        constructor () {
+ //            this.name = 'guaiguai'
+ //    		var type = 'constructor'
+ //    		this.type = 'type'
+ //    		this.getType2 = function() {
+ //    			console.log(this.type) //class
+ //    			console.log(type) //constructor
+ //    		}
+ //  		}
+ //  		type = 'class' //会被覆盖
+ // 		getType = function () {
+ //    		console.log(this.type) //class
+ //    		console.log(type)  //window
+ //  		}
+ //  		getType3(){
+ //  			console.log(this.type) //class
+ //    		console.log(type) //window
+ //  		}
+	// }
+	// var type = 'window'
+	// var guaiguai = new Cat()
+	// console.log(guaiguai)
+	// guaiguai.getType()
+	// guaiguai.getType2()
+	// guaiguai.getType3()
+
+	// 同上完全实现
+	// function Cat () {
+	//   this.type = 'class'
+	//   // var type = 'constructor' 
+	//   this.getType = () => {
+	//     console.log(this.type)  //class
+	//     console.log(type) //window
+	//   }
+	// }
+	// Cat.prototype.constructor = function () {
+	//   this.name = 'guaiguai'
+	//   var type = 'constructor'
+	//   this.getType2 = function() {
+	//     console.log(this.type)  //class
+	//     console.log(type) //constructor
+	//   }
+	// }
+	// Cat.prototype.getType3 = function() {
+	// 	console.log(this.type)  //class
+	//     console.log(type) //window
+	// }
+	// var type = 'window'
+	// var guaiguai = new Cat()
+	// guaiguai.constructor()
+	// guaiguai.getType()
+	// guaiguai.getType2()
+	// guaiguai.getType3()
+	// console.log(guaiguai) // Cat {type: "class", name: "guaiguai", getType: ƒ}
+
+	class Cat {
+	  constructor () {
+	    this.name = 'guaiguai'
+	    // this.type = 'constructor type'
+	    var type = 'constructor'
+	    this.getType = function(){  //执行的是这个getType
+	      console.log(this.type) //class
+	      console.log(type)  //constructor
+	    }
+	  }
+	  type = 'class'
+	  getType = function() {
+	    console.log(this.type) // class
+	    console.log(type) // window
+	  }
+	}
+	var type = 'window'
+	var guaiguai = new Cat()
+	guaiguai.getType() //constructor优先
+	console.log(guaiguai)
+</script>
+</body>
+</html>

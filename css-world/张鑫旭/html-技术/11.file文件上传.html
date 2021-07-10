@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<style type="text/css">
+		.file-upload:focus + .upload {
+			outline: 5px auto -webkit-focus-ring-color;
+		}
+		.upload {
+			display: inline-block;
+			padding: 6px 12px;
+			background-color: #096;
+			color: #fff;
+			cursor: pointer;
+		}
+		.upload:hover {
+			outline: 1px auto -webkit-focus-ring-color;
+		}
+		.upload-message {
+			position: absolute;
+			margin-left: 6px;
+			font-size: 14px;
+			padding: 6px 12px;
+		}
+	</style>
+</head>
+<body>
+<!-- 
+对于PC项目，IE8-IE9浏览器还是不能忽略的,处理往事
+HTML5 file上传和flash swfupload上传一起整合的模式
+flash swf upload就是不使用原生的file-input
+
+enctype="multipart/form-data"
+enctype属性规定在发送到服务器之前应该如何对表单数据进行编码，默认的编码是: "application/x-www-form-urlencoded"
+"application/form-data": 以二进制的文件上传数据
+"application/json": 以json格式的字符串
+
+IE10+以及其他现代浏览器，可以让我们直接读取图片的数据，然后在页面上呈现，实现了上传前预览；加上之前老IE的滤镜策略, 但是老的IE浏览器只能最多一次选择一个文件,
+只有单图上传的时候，大家可以考虑考虑。
+
+HTML5里面支持二进制formData数据提交，因此，可以从容Ajax提交上传的文件数据；那老旧的IE浏览器怎么办？ 使用iframe标签元素, 表单提交到iframe中
+-->
+<!-- 
+处理input控件丑的问题:
+(1)让file类型的元素透明度0，覆盖在我们好看的按钮上。然后我们去点击好看的按钮，实际上点击是是file元素。
+  不足: 
+  (1)尺寸控制不灵活。CSS width属性有些浏览器不管用，需要使用size，然后高度控制也不精准，我们很难正好覆盖在好看的自定义按钮上。
+  (2)样式不好控制，按钮的hover态以及active态不好处理。
+  (3)HTML结构限制以及定位成本。
+
+*更好的方法是，使用label元素与file控件关联
+ -->
+<!-- 
+input属性:
+accept: accept="image/*"  | accept="image/jpeg"
+上传文件推荐使用 accept="image/png, image/jpeg, image/gif, image/jpg"
+常用: 
+accept="application/pdf"
+accept="audio/x-mpeg"
+accept="text/html"
+accept="video/x-mpeg2"
+多个使用逗号分隔
+
+capture属性: capture="user"(前置摄像头) capture="environment"(后置摄像头)
+            capture=>(摄像头和麦克风)
+
+ <input type="file" webkitdirectory directory multiple/> //只能选择文件夹
+
+清除选择的文件: 
+高级浏览器value= ""
+form.reset()
+ -->
+<input type="file" name="avatar">
+<form id="form" style="margin: 10px 0;">
+	<input class="file-upload" type="file" id="xFile" style="position: absolute;clip: rect(0,0,0,0);" accept="image/jpeg"> 
+	<label class="upload ui_button ui_button_primary" for="xFile">上传文件</label><span class="upload-message"></span>
+
+</form>
+<button class="btn">清除选择的文件</button>
+<script type="text/javascript">
+	var btn = document.querySelector('.btn')
+	var xFile = document.querySelector('#xFile')
+	var form = document.querySelector('#form')
+	var message = document.querySelector('.upload-message')
+	btn.onclick = function() {
+		// xFile.value = ''
+		form.reset()
+	}
+	xFile.onchange = function() {
+		console.log(this.value)
+		var arr = this.value.split('\\')
+		message.textContent = arr[arr.length-1]
+		console.log(arr[arr.length-1])
+	}
+</script>
+</body>
+</html>

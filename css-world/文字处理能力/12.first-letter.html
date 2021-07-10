@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>l</title>
+	<style type="text/css">
+		.p1 {
+			/*有效*/
+			display: inline-block;
+			display: list-item;
+			display: table-cell;
+			display: table-caption;
+			/*无效*/
+			display: table;
+			display: inline;
+			display: flex;
+			display: inline-table;
+		}
+		.p1::first-letter, 
+		.p2::first-letter, 
+		.p3::first-letter, 
+		.p3-2::first-letter,
+		.p4-1::first-letter,
+		.p4-2::first-letter
+		{
+			color: red;
+		}
+		.p4-2 span {
+			/*有效*/
+			display: table;
+			display: inline;
+			display: flex;
+			display: list-item;
+			display: table-cell;
+			display: table-caption;
+			/*无效*/
+			display: inline-block;
+			display: inline-table;
+		}
+		.p4 {
+			/*有效*/
+			display: inline-block;
+			display: list-item;
+			display: table-cell;
+			display: table-caption;
+			/*无效*/
+			display: table;
+			display: inline;
+			display: flex;
+			display: inline-table;
+		}
+		.p5::first-line {
+			color: red;
+		}
+		.p6 span {
+			display: inline-block;
+			display: list-item;
+			display: table-cell;
+			display: table-caption;
+			/*无效*/
+			display: table;
+			display: inline;
+			display: flex;
+			display: inline-table;
+		}
+		.p6::first-line {
+			color: red;
+		}
+		a {
+			display: inline-block;
+		}
+		.red  {
+			color: red;
+		}
+		.blue  {
+			color: blue;
+		}
+		.green  {
+			color: green;
+		}
+		.black {
+			color: black;
+		}
+		.btn-normal {
+			padding: 6px 12px;
+			background-color: currentColor;
+		}
+		a::first-line {
+			/*不可行*/
+			/*color: #fff;*/
+		}
+		.btn-normal span {
+			color: #fff;
+		}
+	</style>
+</head>
+<body>
+<!-- first-letter 选择第一个非辅助符字符 伪元素生效的前提的
+	display: block inline-block list-item table-cell table-caption -->
+<!-- 1.无效: inline inline-table flex table  -->
+<!-- 2.辅助字符 ! . ? -->
+<!-- 3.应用 $  $不是辅助符 -->
+<!-- 4.嵌套 inline-block  inline-table无效-->
+
+
+<!-- first-line 有效无效跟first-letter一样 -->
+<!-- first-letter 优先级大于first-line -->
+
+<!-- 首行嵌套 只有inline  和 list-item有效-->
+<!-- 应用实例  button -->
+	<p class="p1">中国中国中国中国中国p1</p>
+	<p class="p2">?!.中国中国中国中国p2</p>
+	<p class="p3">$123p3</p>	
+
+
+	<p class="p4-1"><span>?!.中国</span>中国中国中国p3-2</p>	
+	<p class="p4-2"><span>?!.中国</span>中国中国中国p3-2</p>	
+
+	<p class="p5">?!.中国中国中国中国p4</p>
+
+	<p class="p6"><span>?!.中国</span>中国中国<span>中国</span>p5</p>
+
+	<div>
+		<a href="#" class="btn-normal red" role="button"><span>红色</span></a>
+		<a href="#" class="btn-normal blue" role="button"><span>蓝色</span></a>
+		<a href="#" class="btn-normal green" role="button"><span>绿色</span></a>
+		<a href="#" class="btn-normal black" role="button"><span>黑色</span></a>
+	</div>
+	<script type="text/javascript">
+		// var btns = document.querySelectorAll('.btn-normal')
+		// Array.from(btns).forEach(item => {
+		// 	item.style.color = '#fff'
+		// })
+	</script>
+</body>
+</html>

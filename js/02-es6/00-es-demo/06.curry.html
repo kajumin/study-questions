@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<script>
+	function curry(fn, n) {
+		return function(m) {
+			return fn.call(this, m, n)
+		}	
+	}
+	function tailFactorial2(n, tatol) {
+		if(n === 1) return tatol;
+		return tailFactorial2(n - 1, n * tatol)
+	}
+
+	var factorial = curry(tailFactorial2, 1)
+	console.log(factorial(5))	
+
+	//蹦床函数, 递归使用循环替代
+	function trampoline (f) {
+		while(f && f instanceof Function) {
+			f = f();
+		}
+		return f
+	}
+	function tailFactorial3(n, tatol) {
+		if(n === 1) return tatol;
+		return tailFactorial3.bind(null, n - 1, n * tatol)
+	}
+	console.log(trampoline(tailFactorial3(5, 1)))
+</script>
+</body>
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		ul {
+			margin: 0;
+			padding: 0;
+		}
+		img {
+			display: block;
+			width: 200px;
+			height: 200px;
+		}
+	</style>
+</head>
+<body>
+<ul>
+	<li data-src="../images/zza/1.jpg"><i></i></li>
+	<li data-src="../images/zza/2.jpg"><i></i></li>
+	<li data-src="../images/zza/3.jpg"><i></i></li>
+	<li data-src="../images/zza/4.jpg"><i></i></li>
+	<li data-src="../images/zza/5.jpg"><i></i></li>
+	<li data-src="../images/zza/6.jpg"><i></i></li>
+	<li data-src="../images/zza/7.jpg"><i></i></li>
+	<li data-src="../images/zza/8.jpg"><i></i></li>
+	<li data-src="../images/zza/9.jpg"><i></i></li>
+	<li data-src="../images/zza/10.jpg"><i></i></li>
+	<li data-src="../images/zza/11.jpg"><i></i></li>
+	<li data-src="../images/zza/12.jpg"><i></i></li>
+	<li data-src="../images/zza/13.jpg"><i></i></li>
+	<li data-src="../images/zza/14.jpg"><i></i></li>
+</ul>
+<script type="text/javascript">
+	//（1）
+	// 获取节点和节点的“data-src”属性，继而判断此节点的子节点有没有创建img，
+	// 没有则动态创建img标签将其“data-src”的值赋给img的src，有则不做任何处理
+	
+	/* 获取节点 */    
+	var oUl = document.getElementsByTagName('ul')[0];
+	var aLi = oUl.getElementsByTagName('li');
+	
+	/* 创建img标签函数 */    
+	function createImg(obj){
+	    var src = '';
+	    if(obj.dataset.src){
+	        src = obj.dataset.src;
+	    }else{
+	        src = obj.getAttribute('data-src');
+	    }
+	    if(obj.children.length <= 1){
+	        var img = document.createElement('img');
+	        img.src = src;
+	        obj.appendChild(img);
+	    }
+	}
+	
+	//（2）通过“offsetTop”来连续获取节点到文档顶部的距离并更新，直到节点再没有父级为止
+	/* 计算节点到文档顶部的距离 */    
+	function getTop(obj, i, height){
+	    var h = 0;
+	    if(obj){
+	    	// console.log('offsetTop',obj.offsetTop)
+	        h = h + (i-2) * height; //当前对象到其上级层顶部的距离.
+	        obj = obj.offsetParent; //方法返回最近的祖先定位元素。
+	    }
+		// console.log(h)
+	    return h;
+	}
+
+	//（3）滚动实时计算所到区域计算“节点到顶部距离”与“滚动条滚动距离”的大小，当“滚动条滚动距离”大于“节点到顶部距离”时开始创建一个img（（1）的函数）
+	/* 滚动实时计算所到区域并进行相关计算 */
+	window.onscroll = function(){
+		var image = new Image()
+		image.src = aLi[0].dataset.src
+		image.style.display = 'none'
+		document.body.appendChild(image)
+		var height = parseInt(window.getComputedStyle(image)['height'])
+		// console.log(height)
+		// console.log(image)
+
+	    var t = document.documentElement.clientHeight + (document.body.scrollTop || document.documentElement.scrollTop);
+	    for(var i=0;i<aLi.length;i++){
+	        if(getTop(aLi[i], i, height) < t) {  
+	        	// createImg(aLi[i])
+	            setTimeout('createImg(aLi['+i+'])', 1000)
+	        }
+	    } 
+	}
+	
+	/* 页面加载完便执行一次滚动函数 */
+	window.onload = function(){
+	    window.onscroll();
+	}		
+</script>
+</body>
+</html>

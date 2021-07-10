@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<script>
+	var obj = {bar: '123'}
+	Object.defineProperty(obj, 'foo', {
+		value: true,
+		// configurable: true,
+		// writable: true,
+		// enumerable: true
+	})
+	obj['foo'] = false
+	obj['bar'] = 456
+	delete obj.bar
+	delete obj.foo
+	console.log(obj)
+	for(let o in obj) {
+		console.log(o)
+	}
+</script>
+</body>
+</html>

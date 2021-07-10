@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<!-- 
+	ie能让普通控件获焦, 不是控件则没有效果, 其他浏览器触发click行为
+	ie对隐藏元素不能获焦, 所有无效, 其他浏览器可以
+	设置相同的acescskey, chrome后来者居上, ie/firefox是fucus行为
+	-->
+	<!-- 
+
+	1. 统一IE浏览器和其它浏览器的快捷访问行为; 因为ie是focus行为
+	2. 增加单独accesskey属性值对应按键按下的focus行为; key就触发focus
+	3. 增加accesskey生效的前置键按下的提示行为，例如window上Alt键提示，Mac下的Alt + control组合提示等; alt有提示功能
+	4. 增加shift + '?'(keyCode=191)键的提示行为支持 可以显示全部的快捷键
+ -->
+<div accesskey="3" onClick="this.style.color='red';">测试</div>
+<div accesskey="1" tabindex="0" onClick="this.style.color='red';">测试1</div>
+<div accesskey="1" tabindex="0" onClick="this.style.color='red';">测试2</div>
+</body>
+</html>

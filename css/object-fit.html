@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.clip-mode {
+			object-fit: fill;
+			object-fit: contain;
+			object-fit: cover;
+			object-fit: none;
+			object-fit: scale-down;
+		}
+		.fill-position {
+			object-fit: fill;
+			object-position: 50px 50px;   
+			/*//距离左侧10px，距离顶部10%*/
+		}
+		.contain-position {
+			object-fit: contain;
+			object-position: right top;  
+			/*//停留子容器 右上方*/
+		}
+	</style>
+</head>
+<body>
+<div style="width: 500px; height: 500px; background-color:gray;">
+    <img class="clip-mode" style="height: 100%; width: 100%;" src="../images/flowers.jpg">
+</div>
+<div style="width: 500px; height: 500px; background-color:gray;">
+    <img class="clip-mode fill-position" style="height: 100%; width: 100%;" src="../images/flowers.jpg">
+</div>
+<div style="width: 500px; height: 500px; background-color:gray;">
+    <img class="clip-mode contain-position" style="height: 100%; width: 100%;" src="../images/flowers.jpg">
+</div>
+</body>
+</html>

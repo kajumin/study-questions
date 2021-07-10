@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<script type="text/javascript">
+	/*
+		对象的扩展: 
+		属性的简洁写法
+		属性名的表达式 
+		  字面量定义对象es6才能使用表达式
+		定义属性的方法: (1)标识符 (2)表达式
+
+		对象方法的name属性: bound anonymous
+
+		Object.is(): 同值相等 
+		与严格相等相比: NaN 和0 -0 的处理不同
+
+		Object.assign(浅复制): 将源对象自身的所有可枚举属性复制到目标对象上
+		  Object.assign(target(目标对象), source(源对象))
+			
+		第一个参数: 
+		  (1)只有一个参数, 直接返回
+		  (2)参数不是对象, 转为对象
+		  (3)undefined和null 报错
+
+		不是第一个参数:
+		  (1)其他类型的值不会产生效果, 也不会报错
+		  (2)字符串有效
+
+		es5: getOwnPropertyDescriptor(obj, 'a'): 返回该属性的描述对象
+		es6: getOwnPropertyDescriptors(obj): 返回该对象的描述对象
+
+		对象的属性遍历方法: 
+		1. for in 含继承可枚举(不含symbol)
+ 		2. Object.keys 不含继承可枚举(不含symbol)
+ 		3. Object.getOwnPropertyNames 所有属性(含不可枚举, 不含symbol)
+ 		4. Object.getOwnPropertySymbols() 返回所有的symbol属性
+ 		5. Reflect.ownKeys() 返回所有属性(含symbol 含不可枚举)
+
+ 		属性遍历次序规则: 
+ 		(1)数值
+ 		(2)字符串
+ 		(3)symbol属性
+	
+		_proto_属性  浏览器部署
+ 		Object.getPrototypeOf(obj)
+ 		Object.setPrototypeOf(obj, proto)
+
+ 		Object.keys()  返回数组
+ 		Object.values()
+ 		Object.entries()
+
+ 		对象扩展运算符:
+ 		let newObj = {...obj}
+
+ 		null传导运算符 ?. 只要有一个返回null和undefined, 就返回undefined
+ 		obj?.prop
+ 		obj?.[prop]
+ 		func?.(..args)
+ 		new C?.(..args)
+	*/
+	
+	console.log(Reflect.ownKeys({[Symbol()]: 0, b: 'b', a: 'a', 1: 'a', 0: '0'}))
+	// ["0", "1", "b", "a", Symbol()]
+
+	let obj = {a: 'a', b: 'b', c: 'c'}
+	let newObj = {...obj}
+	console.log(newObj)
+	
+</script>
+</body>
+</html>

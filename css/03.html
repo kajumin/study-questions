@@ -1,0 +1,43 @@
+<!DOCTYPE DTD>
+<html>
+<head>
+	<title></title>
+	<meta name="viewpoint" content="width=device-width,initial-scale=1.0,user-scalable=no">	
+</head>
+<body>
+	<!-- 点击前面那个按钮 两者交换位置 -->
+	<div>
+		<input  type="button" id="btn1"  value="btn1" onclick="this.parentNode.insertBefore(document.getElementById('btn2'), this)"/>  
+		<input  type="button"  id="btn2"  value="btn2"/> 
+	</div>
+
+	<div>
+		<input  type="button" id="btn3" value="btn3" onclick="this.parentNode.appendChild(document.getElementById('btn3'), this)"/>  
+		<input  type="button"  id="btn4"  value="btn4"/> 
+	</div>
+
+	<button id="button">获取</button>
+
+<script type="text/javascript">
+	// 用户位置
+	if (navigator.geolocation) {
+	   var n = navigator.geolocation.getCurrentPosition(function(res){
+	       console.log(res); // 需要的坐标地址就在res中
+	   });
+	} else {
+	    alert('该浏览器不支持定位');
+	}
+
+
+	document.getElementById('button').addEventListener('click',function(){
+        Notification.requestPermission(function(permission){
+            var notification = new Notification("通知标题",{
+                  body:'我是通知内容',
+                  icon:' ' 
+            });
+        });
+    });
+
+</script>
+</body>
+</html>

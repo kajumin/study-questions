@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		body {
+			margin: 0;
+		}
+		.section {
+			height: 500px;
+			background-color: red;
+		}
+		h1-par {
+			height: 50px;
+		}
+		h1 {
+			position: relative;
+			top: 0;
+			width: 100%;
+			height: 50px;
+			margin: 0;
+			background-color: green;
+		}
+		h1:nth-of-type(2) {
+			background-color: yellow;
+			z-index: 1;
+		}
+		h1:nth-of-type(3) {
+			z-index: 2;
+			background-color: pink;
+		}
+		.fixed {
+			position: fixed;
+			top: 0;
+		}
+		.topbox {
+   	 		position: sticky;
+    		top:0;
+    		height: 30px;
+    		width: 100%;
+    		text-align: center;
+    		background: rgba(0,0,0,0.5);
+  		}
+  		.title_box {
+  			width: 100%;
+  			height: 50px;
+  			line-height: 50px;
+  			background-color: #096;
+  		}
+	</style>
+</head>
+<body>
+	<!-- <div class="topbox">
+      这是顶部盒子
+    </div> -->
+    
+<div class="section"></div>
+<div class="h1-par">
+	<h1>标题1</h1>
+</div>
+<div class="titile_box-par">
+	<div class="title_box">这是顶部盒子</div>
+</div>
+
+<div class="section"></div>
+<div class="h1-par">
+	<h1>标题2</h1>
+</div>
+
+<div class="section"></div>
+<div class="h1-par">
+	<h1>标题3</h1>
+</div>
+
+
+<div class="section"></div>
+
+<script type="text/javascript">
+	var ele = document.querySelector('.title_box')
+	var title = document.querySelector('.titile_box-par')
+	
+	// 利用div的offsetTop, fixed的是它的子元素, 可以实现时有时无
+	var fn = jieliu(function(e) {
+		// let offsetTop = title.getBoundingClientRect().top;
+		let offsetTop = title.offsetTop - document.documentElement.scrollTop;
+		console.log(offsetTop)
+		if(offsetTop <= 0) {
+			ele.classList.add('fixed')
+		} else {
+			ele.classList.remove('fixed')
+		}
+	
+	});
+	function jieliu(fn) {
+		var flag = false
+		return function() {
+			if(flag) return
+			var that = this
+			flag = true
+			var arg = arguments
+			setTimeout(function() {
+				fn.apply(that, arg)
+				flag = false
+			}, 500)
+		}
+	}
+	window.addEventListener('scroll', fn)
+
+	// IntersectionObserver可以用来监听元素是否进入了设备的可视区域之内，而不需要频繁的计算来做这个判断。
+	// var ele = document.querySelector('.title_box')
+	// let observer = new IntersectionObserver(function(e) {
+	//   let offsetTop = ele.getBoundingClientRect().top;
+	//   // console.log(e)
+	//   console.log(offsetTop)
+	//   // 实现吸顶效果时, 只会触发一次
+	//   // fixed之后不会触发了
+	//   if(offsetTop <= 0) {
+	//   	ele.classList.add('fixed')
+	//   } else {
+	//   	ele.classList.remove('fixed')
+	//   }
+	// },{ threshold: [1] });
+	// observer.observe(ele);
+</script>
+</body>
+</html>

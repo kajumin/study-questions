@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="zh-cn">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <title></title>
+    <style type="text/css">
+      .row-align {
+        height: 200px;
+        background-color: red;
+      }
+    </style>
+  </head>
+  <body>
+
+    <!--
+    (1)xl(1200) lg(992) md(768) sm(576) xs(更小) 
+    (2)col-* 等分 或者剩余空间
+    (3)align-item[-sm]-center/end/start justify-content[-sm]-center/end/start
+    (4)no-gutters row加类no-gutters margin会没有 col会没有padding
+     -->
+   	<div class="container box1">
+   		<div class="row">
+       <div class="col-xl-6 col-lg-4 col-md-3 col-sm-2">
+       col-xl-6 col-lg-4 col-md-3 col-sm-2
+      </div>  
+       <div class="col-xl-6 col-lg-4 col-md-3 col-sm-2">col-xl-6 col-lg-4 col-md-3 col-sm-2</div> 
+      </div>
+      <div class="row">
+        <div class="col-sm">col-sm</div>
+        <div class="col-sm">col-sm</div>
+        <div class="col-sm">col-sm</div>
+      </div>
+      <div class="row">
+        <div class="col-sm-3">col-sm</div>
+        <div class="col-sm-6">col-sm</div>
+        <div class="col-sm">col-sm</div>
+      </div> 
+      <div class="row row-align align-items-sm-end align-items-center">
+        <div class="col-sm-3">col-sm</div>
+        <div class="col-sm-6">col-sm</div>
+        <div class="col-sm">col-sm</div>
+      </div>  
+      <div class="row row-align justify-content-start justify-content-lg-end justify-content-xl-center">
+        <div class="col-sm-3">col-sm</div>
+      </div>
+
+   	</div>
+    <div class="container">
+       <div class="row no-gutters">
+        <div class="col-sm-3">col-sm</div>
+        <div class="col-sm-6">col-sm</div>
+        <div class="col-sm">col-sm</div>
+      </div> 
+    </div>
+
+
+    <!-- 
+    间距消除: row加类no-gutters margin没有 col也会没有padding
+     -->
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="./js/jquery-3.3.1.slim.min.js"></script>
+    <script src="./js/popper.min.js"></script>
+    <script src="./js/bootstrap.min.js"></script>
+  </body>
+</html>

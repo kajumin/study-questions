@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<!-- 
+	1.不依赖z-index数值的层叠上下文, 默认是auto; 可看成是0级别
+	 -->
+<div>
+	<img src="../images/zza/1.jpg" width="100" style="position: relative;left: 40px;">
+	<img src="../images/zza/2.jpg" width="100" style="transform: scale(1.1);">	
+	<img src="../images/zza/1.jpg" width="100" style="position: relative;z-index: 0;left: -80px;">
+</div>
+
+<div>
+	<img src="../images/zza/2.jpg" width="100" style="transform: scale(1.1);">
+	<img src="../images/zza/1.jpg" width="100" style="position: relative;left: -40px;">
+	<img src="../images/zza/1.jpg" width="100" style="position: relative;z-index: 0;left: -80px;">
+</div>
+
+
+</body>
+</html>

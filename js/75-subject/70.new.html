@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<script type="text/javascript">
+	// 没有返回对象, 则返回新建的对象
+	// 安全类 this指向window  this instanceof Person
+	function Person(name = '前端小智') {
+		// if(this === window) {
+		// 	console.log('不能直接调用该函数, 请使用new命令!')
+		// }
+		if(!(this instanceof Person)) {
+			console.log('不能直接调用该函数, 请使用new命令!')
+		}
+ 		this.name = name
+ 		// return null
+ 		// return 123
+ 		// return function(){}
+ 		// return {}
+ 		return []
+	}
+	var p = new Person('bang')
+	console.log(p)
+	Person()
+</script>
+</body>
+</html>

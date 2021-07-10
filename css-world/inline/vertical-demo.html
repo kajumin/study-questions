@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.box {
+		    max-width: 360px;
+		    background-color: #f0f3f9;
+		    text-align: justify;
+		}
+		.box img {
+		    width: 96px; 
+            height: 72px;
+		}
+		.justify-fix { 
+		    display: inline-block;
+		    width: 96px;
+		}
+		/* 测试与示意 */
+		.box-1 .justify-fix,
+		.box-2 .justify-fix,
+		.box-3 .justify-fix,
+		.box-4 .justify-fix {
+		    outline: 1px dashed red;
+		}
+		.box-2 {
+		    line-height: 0;
+		}
+		.box-3 {
+		    font-size: 0;
+		}
+		.box-4 {
+		    /* 此处对应HTML中的&nbsp;很关键 */
+		    line-height: 0;
+		}
+	</style>
+</head>
+<body>
+<div class="box">
+    <img src="../../images/1.jpg">
+    <img src="../../images/1.jpg">
+    <img src="../../images/1.jpg">
+    <img src="../../images/1.jpg">
+    <i class="justify-fix"></i>
+    <i class="justify-fix"></i>
+    <i class="justify-fix"></i>
+</div>
+<h4>辅助空标签outline高亮：</h4>
+<div class="box box-1">
+    <img src="../../images/1.jpg">
+    <img src="../../images/1.jpg">
+    <img src="../../images/1.jpg">
+    <img src="../../images/1.jpg">
+    <i class="justify-fix"></i>
+    <i class="justify-fix"></i>
+    <i class="justify-fix"></i>x
+</div>
+<h4>容器line-height:0清除间隙：</h4>
+<div class="box box-2">
+    <img src="../../images/1.jpg">
+    <img src="../../images/1.jpg">
+    <img src="../../images/1.jpg">
+    <img src="../../images/1.jpg">
+    <i class="justify-fix"></i>
+    <i class="justify-fix"></i>
+    <i class="justify-fix"></i>x-baseline
+</div>
+<h4>容器font-size:0清除间隙：</h4>
+<div class="box box-3">
+    <img src="../../images/1.jpg">
+    <img src="../../images/1.jpg">
+    <img src="../../images/1.jpg">
+    <img src="../../images/1.jpg">
+    <i class=" "></i>
+    <i class="justify-fix"></i>
+    <i class="justify-fix"></i>
+</div>
+<h4>标签插入空格同时line-height:0：</h4>
+<div class="box box-4">
+    <img src="../../images/1.jpg">
+    <img src="../../images/1.jpg">
+    <img src="../../images/1.jpg">
+    <img src="../../images/1.jpg">
+    <i class="justify-fix">&nbsp;</i>
+    <i class="justify-fix">&nbsp;</i>
+    <!-- <i class="justify-fix">&nbsp;</i> -->
+</div>
+</body>
+</html>

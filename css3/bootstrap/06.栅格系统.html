@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+</head>
+<body>
+<!-- 
+网格系统的实现原理非常简单，仅仅是通过定义容器大小，平分12份(也有平分成24份或32份，但12份是最常见的)，再调整内外边距，最后结合媒体查询，就制作出了强大的响应式网格系统。Bootstrap框架中的网格系统就是将容器平分成12份
+
+1.行(row)必须包含在 .container固定宽度或.container-fluid(100%) 宽度）中，以便为其赋予合适的排列(aligment)和内边距(padding)
+2.通过“行(row)”在水平方向创建一组“列(column)”
+3.内容应当放置于“列(column)”内，并且，只有“列(column)”可以作为行(row)”的直接子元素
+4.类似 .row 和 .col-xs-4 这种预定义的类，可以用来快速创建栅格布局。
+5、通过为“列（column）”设置 padding 属性，从而创建列与列之间的间隔（gutter）。通过为 .row 元素设置负值 margin 从而抵消掉为 .container 元素设置的 padding，也就间接为“行（row）”所包含的“列（column）”抵消掉了padding
+6、栅格系统中的列是通过指定1到12的值来表示其跨越的范围。例如，三个等宽的列可以使用三个 .col-xs-4 来创建
+7、如果一“行（row）”中包含了的“列（column）”大于 12，多余的“列（column）”所在的元素将被作为一个整体另起一行排列
+8、栅格类适用于与屏幕宽度大于或等于分界点大小的设备 ， 并且针对小屏幕设备覆盖栅格类。 因此，在元素上应用任何 .col-md-* 栅格类适用于与屏幕宽度大于或等于分界点大小的设备 ， 并且针对小屏幕设备覆盖栅格类。 因此，在元素上应用任何 .col-lg-* 不存在， 也影响大屏幕设备
+
+.container设置有padding: 0 15px;  col也设置有padding: 0 15px;
+.row设置有margin: 0 -15px;
+涉及两个css特性: 浮动与宽度百分比
+.contianer .row都做了清除浮动
+
+lg 1200px  md 992px sm 768px
+.container最大宽度1170px 970px 750px
+
+列偏移: 原理margin-left: 百分比
+
+列排序: col-md-push-*”和“col-md-pull-* 使用right: 百分比;left:百分比; col设置了relative相对定位;
+
+列嵌套: row > col > row > col
+
+显示隐藏: 要实现≥992px时存在三列，(≥768px and <992px)的时候存在两列，(<768px)的时候只存在一列　
+hidden-*-block
+ -->
+<div class="container">
+	<div class="row">
+		<div class="col-md-6">col-md-6</div>
+		<div class="col-md-6">col-md-6</div>
+	</div>
+</div>
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-6">col-md-6</div>
+		<div class="col-md-6">col-md-6</div>
+	</div>
+</div>
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-6 col-md-push-6">col-push-6</div>
+		<div class="col-md-6 col-md-pull-6">col-pull-6</div>
+	</div>
+</div>
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-4 col-sm-6">aaaa</div>
+		<div class="col-md-4 col-sm-6 hidden-xs">bbbb</div>
+		<div class="col-md-4 hidden-sm hidden-xs">cccc</div>
+	</div>
+</div>
+</body>
+</html>

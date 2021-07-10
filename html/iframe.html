@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<h1 class="h1">标题1</h1>
+<iframe src="1px.html" id="iframe">
+	
+</iframe>
+<script type="text/javascript">
+	document.cookie = 'user='+encodeURIComponent('name') + ';expires='+new Date(new Date().getTime() + 1000 * 60 * 10);
+	var iframe = document.querySelector('#iframe').contentWindow.document;
+	console.log(iframe)
+	var h1 = document.querySelector('h1');
+	console.log(h1.getAttribute('class'))
+	console.log(h1.setAttribute('class','hh'))
+	console.log(h1.classList.add('ww'))
+	console.log(h1.classList.remove('ww'))
+	console.log(h1.classList.contains('hh'))
+	console.log(h1.classList.toggle('ff'))
+	console.log(h1.classList.item(0))
+	
+</script>
+</body>
+</html>

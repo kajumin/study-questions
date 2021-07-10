@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<script type="text/javascript">
+	// 有结果就全部执行完
+	const p = Promise.race([
+	  fetch('/resource-that-may-take-a-while'),
+	  new Promise(function (resolve, reject) {
+	    setTimeout(() => reject(new Error('request timeout')), 5000)
+	  })
+	]);
+	// 5秒钟没有返回结果就执行reject
+	p
+	.then(console.log)
+	.catch(console.error);
+
+
+
+	// Promise.allSettled().then(res=>{})
+	// 全部promise返回结果了才执行
+	const resolved = Promise.resolve(42);
+	const rejected = Promise.reject(-1);
+
+	const allSettledPromise = Promise.allSettled([resolved, rejected]);
+
+	allSettledPromise.then(function (results) {
+	  console.log(results);
+	});
+	// [{status: "fulfilled", value: 42},
+	// {status: "rejected", reason: -1}]
+
+
+	// 异步代码异步执行  同步代码同步执行  使用promise
+	// const f = () => new Promise((resolve,reject)=>{
+	// 	resolve(123);
+	// 	console.log('now')
+	// });
+	const f = () => console.log('now');
+	(async () => f())()
+	.then(res=>{
+		console.log(res)  //同步undefined  异步有数据
+	});
+	console.log('next');
+
+
+	// 方法二
+	// const f = () => console.log('now');
+	(
+	  () => new Promise(
+	    resolve => resolve(f())
+	  )
+	)();
+	console.log('next');
+
+	// 同步异常:try catch处理    异步异常: .catch处理
+	try {
+	  database.users.get({id: userId})
+	  .then()
+	  .catch()
+	} catch (e) {
+	  // ...
+	}
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+https://github.com/snowzijun/vue-vant-base  项目地址
+
+===============删减部分
+stylelint
+compress-webpack-plugin
+console.log删除
+替换  prettier  @vue/eslint-config-prettier eslint-plugin-prettier -> @vue/eslint-config-stardard
+==============
+1.适配  postcss-px-to-viewport
+2.请求封装  +  mock数据模拟
+3.装饰器的使用
+   提示(不能取消)  确认提示框(可以取消)  

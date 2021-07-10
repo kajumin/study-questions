@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<script type="text/javascript">
+	// 前向正向匹配 前向负向匹配
+	// 前行断言 后行断言
+	var reg = /([A-Za-z0-9]{1,10})(?=%)/i; //只匹配%前的字符
+	var reg2 = /([A-Za-z0-9]{1,10})(?!%)/i; //只匹配不在%前的字符
+
+	var reg3 = /(?<=%)([A-Za-z0-9]{1,10})/i; //只匹配%之后的字符
+	var reg4 = /(?<!%)([A-Za-z0-9]{1,10})/i; //只匹配不在%之后的字符
+
+	console.log(reg.exec("abc123")) //null 没有匹配返回null	
+	console.log(reg.exec("abc%123")) 
+	//["x123", "x123", index: 3, input: "abcx123", groups: undefined]
+
+	console.log(reg.test("abc%123")) //true
+	console.log(reg.test("abc123"))  //false 没有匹配
+	
+	console.log(reg2.exec("a%")) //
+	// null
+	console.log(reg2.exec("abc123%")) //
+	// ["abc12", "abc12", index: 0, input: "abc123%", groups: undefined]
+
+	console.log(reg2.test("abc123")) //true 
+	console.log(reg2.test("a%")) // false 没有匹配
+	
+	console.log("后行断言") 
+	//在%之后的字符
+	console.log(reg3.exec('abc%')) //null
+	console.log(reg3.exec("%abc")) //["abc", "abc", index: 1, input: "xabc", groups: undefined]
+
+	console.log(reg3.test('abc%')) //false
+	console.log(reg3.test("%abc")) //true
+
+	// 不在%之后的字符
+	console.log(reg4.exec('%a')) //null
+	console.log(reg4.exec("%abc")) //["bc", "bc", index: 2, input: "%abc", groups: undefined]
+
+	console.log(reg4.test('%a')) //false
+	console.log(reg4.test("%abc")) //true
+
+</script>
+</body>
+</html>

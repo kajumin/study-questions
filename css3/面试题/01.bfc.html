@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.box {
+			width: 100px;
+			height: 100px;
+		}
+		.box5 {
+			border: 10px solid;
+			border-color: transparent transparent transparent red; 
+		}
+		.box7 {
+		    position: relative;
+		}
+		.box7:after {
+		    content: "";
+		    position: absolute;
+		    left: 0;
+		    right: 0;
+		    height: 1px;
+		    background-color: #000000;
+		    -webkit-transform: scaleY(.5);
+		    transform: scaleY(.5);
+		}
+	</style>
+</head>
+<body>
+	<div class="box5"></div>
+	<div class="box7"></div>
+<!-- 
+1.bfc块级格式化上下文, 是一个独立的渲染区域，让处于 BFC 内部的元素与外部的元素相互隔离，使内外元素的定位不会相互影响。
+触发条件 (以下任意一条)
+(1)float的值不为none
+(2)position的值不为static或则releative中的任何一个
+(3)overflow的值不为visible
+(4)display的值为table-cell、tabble-caption和inline-block之一
+
+
+BFC布局规则:
+(1)浮动的元素会被父级计算高度(父级元素触发了BFC)   ->清除浮动
+(2)非浮动元素不会覆盖浮动元素的位置(非浮动元素触发了BFC) -> 基于bfc的两栏自适应布局
+(3)margin不会传递给父级(父级触发BFC) -> 阻止margin合并
+(4)属于同一个BFC的两个相邻元素上下margin会重叠 ->阻止margin合并
+
+应用: 
+(1)清除浮动
+(2)自适应布局
+(3)margin合并重叠
+
+2.css3新增选择器:
+  (1)属性选择器 ^ * $
+  (2)结构伪类选择器 :root nth-child nth-of-type only-child only-of-child
+     :empty
+  css3新增属性:
+  (1)transition animation
+  (2)transform
+  (3)box-shadow text-shadow
+  (4)border-radius border-image
+  (5)opacity outline rgba hsl hsla
+  (6)background-size || clip || origin 多背景
+
+3.
+水平居中: 
+行内元素: text-align:center
+块级元素: margin:0 auto
+浮动元素: 外包裹一层 使用text-align: center;
+绝对定位和移动: absolute + transform
+绝对定位和负边距: absolute + margin
+绝对定位和margin:0 auto: absolute + margin
+flex布局: flex + justify-content:center
+
+垂直居中:
+子元素为单行文本: line-height: height; 
+多行文本: line-height: height; display: inline-block;
+absolute + top + margin
+absolute + top + transform
+display:table-cell; vertical-align: middle
+flex + align-items:center
+
+水平垂直居中:
+(1)absolute + margin负值    //IE6+
+(2)absolute + transform     //IE9+
+(3)absolute + margin: auto  //IE8+
+(4)absolute left: calc(50% - 50px);  //IE9+
+(5)line-height: 父元素高度; vertical-align: middle  //IE8+
+(6)table-cell vertical-align:center  //IE8+
+(7)flex  IE10
+(8)grid  
+
+不定宽高水平垂直居中:
+(1)absolute + transform  //IE9+
+(2)line-height: 父元素高度; vertical-align: middle   //IE8+
+(3)table-cell vertical-align:center  //IE8+
+(4)flex  //IE10+
+(5)grid  //IE不支持
+
+4.清除浮动有哪些方法, 各有什么优缺点
+(1)
+(2)空元素 clear: both;
+   优点: 简单, 写少量代码, 兼容性也好 缺点: 添加无语义html元素, 不利于代码语义化, 后期维护成本大
+(3)overflow: hidden;
+   优点: 简单, 代码少, 浏览器支持好 缺点: 不能和position配合使用, 因为超出的尺寸会被隐藏overflow:hidden
+(4)伪元素clear: both;  IE8+
+   *zoom: 1; 针对IE6 IE7
+
+5.三角形
+  border-color: transparent transparent transparent red;
+
+6.三栏自适应布局
+(1)flex flex
+(2)绝对定位
+(3)双飞翼布局
+(4)圣杯布局
+(5)float 1.margin: 0 200px;
+         2.overflow: hidden;
+
+7.0.5px的细线 transform: scaleY(0.5);
+
+8.link 与 @import 的区别
+(1)link不只可以加载 CSS 文件，还可以定义 RSS、rel 连接属性
+(2)加载页面时，link标签引入的 CSS 被同时加载； @import引入的 CSS 将在页面加载完毕后被加载。
+(3)@import是 CSS2.1 才有的语法，故只可在 IE5+ 才能识别；link标签作为 HTML 元素，不存在兼容性问题。
+
+9.开发中为什么要初始化css样式
+   因为浏览器的兼容问题，不同浏览器对有些标签的默认值是不同的，如果没对CSS初始化往往会出现浏览器之间的页面显示差异。
+
+10.CSS优化、提高性能的方法有哪些
+(1)尽量将样式写在单独的css文件里面，在head元素中引用  将代码写成单独的css文件有几点好处：
+  (1)内容和样式分离，易于管理和维护
+  (2)减少页面体积
+  (3)css文件可以被缓存、重用，维护成本降低
+(2)利用CSS继承减少代码量
+(3)不使用@import
+(4)避免使用复杂的选择器，层级越少越好 建议选择器的嵌套最好不要超过三层
+(5)避免！important，可以选择其他选择器
+(6)精简页面的样式文件，去掉不用的样式
+ -->
+</body>
+</html>

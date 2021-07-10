@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<!-- <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no"> -->
+</head>
+<body>
+<script type="text/javascript">
+	var reg = /abc/;
+	console.log(reg.test('abcdef'))
+	var reg2 = /abc/g;
+	console.log(reg2.exec('abcdefabc'))//没有全局g
+	// ["abc", index: 0, input: "abcdefabc", groups: undefined]
+
+
+	console.log('abcdefabc'.match(reg))
+	// ["abc", index: 0, input: "abcdefabc", groups: undefined]
+
+	console.log('abcdefabc'.match(reg2))//有全局g   ['abc','abc']
+	console.log('abcdefabc'.search(reg))
+	console.log('abcdefabc'.split(reg))
+	console.log('abcdefabc'.replace(reg,'aaa'))  //aaadefabc
+	console.log('abcdefabc'.replace(reg2,'aaa')) //aaadefaaa
+</script>
+</body>
+</html>

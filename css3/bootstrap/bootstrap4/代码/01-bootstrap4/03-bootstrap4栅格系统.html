@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="lib/css/bootstrap.css">
+    <title>栅格布局</title>
+    <style>
+        .container{
+            height: 100px;
+            background-color: pink;
+        }
+        .container>div>div:nth-child(1){
+            background-color: red;
+        }
+
+        .container>div>div:nth-child(2){
+            background-color: green;
+        }
+
+        .container>div>div:nth-child(3){
+            background-color: blue;
+        }
+
+    </style>
+</head>
+<body>
+    <!--
+    <div class="container">
+        <div class="row">
+             <div class="col-8">第一部分</div>
+             <div class="col-2">第二部分</div>
+             <div class="col-2">第三部分</div>
+        </div>
+    </div>
+    -->
+
+    <!--
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-5">第一部分</div>
+            <div class="col-sm-5">第二部分</div>
+            <div class="col-sm">第三部分</div>
+        </div>
+    </div>
+    -->
+
+    <!--
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">第一部分</div>
+            <div class="col-md-6">第二部分</div>
+            <div class="col-md-3">第三部分</div>
+        </div>
+    </div>
+    -->
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-1 col-md-3 col-lg-5">第一部分</div>
+            <div class="col-sm-10 col-md-6 col-lg-2">第二部分</div>
+            <div class="col-sm-1 col-md-3 col-lg-5">第三部分</div>
+        </div>
+    </div>
+
+<script src="lib/js/jquery-3.3.1.js"></script>
+<script src="lib/js/popper.js"></script>
+<script src="lib/js/bootstrap.js"></script>
+</body>
+</html>

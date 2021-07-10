@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.wrap {
+			position: relative;
+			width: 400px;
+			height: 600px;
+			margin: 20px auto 0;
+			border: 1px solid red;
+			box-sizing: border-box;
+		}
+		.xhr {
+			position: absolute;
+			left: 50%;
+			top: 50%;
+			width: 250px;
+			height: 400px;
+			margin-left: -125px;
+			margin-top: -200px;
+			border: 5px solid #000;
+			border-radius: 250px;
+			background-color: yellow;
+		}
+		.xhr-hair .xhr-hair-1,
+		.xhr-hair .xhr-hair-2 {
+			position: absolute;
+			width: 130px;
+			height: 100px;
+			border-top: 10px solid #000;
+			border-radius: 50%;
+			animation: hair 5s ease-in infinite;
+			z-index: -1;
+		}
+		.xhr-hair .xhr-hair-1 {
+			top: -10px;
+			left: 37px;
+			transform: rotate(35deg);
+		}
+		.xhr-hair .xhr-hair-2 {
+			top: -23px;
+    		left: 32px;
+    		transform: rotate(35deg);
+		}
+		.xhr-foot {
+			position: absolute;
+			bottom: -60px;
+			width: 170px;
+			height: 70px;
+			margin-left: 40px;
+			z-index: -1;
+		}
+		.xhr-foot-l,
+		.xhr-foot-r {
+			position: absolute;
+			width: 40px;
+			height: 70px;
+			background-color: #000;
+		}
+		.xhr-foot-l {
+			left: 40px;
+		}
+		.xhr-foot-r {
+			right: 40px;
+		}
+		.xhr-foot-l:after,
+		.xhr-foot-r:after {
+			position: absolute;
+			content: '';
+			width: 60px;
+			height: 40px;
+			border-radius: 20px;
+			background-color: #000;
+		}
+		.xhr-foot-l:after {
+			left: -40px;
+			bottom: 0;
+		}
+		.xhr-foot-r:after {
+			left: 20px;
+			bottom: 0;
+		}
+		.xhr-head-l,
+		.xhr-head-r {
+			position: absolute;
+			width: 100px;
+			height: 100px;
+			border: 5px solid #000;
+			border-radius: 30px;
+			background-color: yellow;
+			z-index: -1;
+		}
+		.xhr-head-l {
+			top: 200px;
+			left: -17px;
+			transform: rotate(30deg);
+		}
+		.xhr-head-r {
+			top: 200px;
+			right: -17px;
+			transform: rotate(-30deg);
+		}
+		.xhr-head-l::after,
+		.xhr-head-r::after {
+			position: absolute;
+			content: '';
+			width: 30px;
+			height: 10px;
+			background-color: #000;
+			border-radius: 5px;
+		}	
+		.xhr-head-l::after {
+			bottom: 24px;
+			left: 6px;
+			transform: rotate(-90deg);
+		}
+		.xhr-head-r::after {
+			bottom: 24px;
+			right: 6px;
+			transform: rotate(-90deg);
+		}
+		.xhr-eyes {
+			position: absolute;
+			top: 60px;
+			left: 25px;
+			z-index: 0;
+			/*border: 1px solid red;*/
+		}
+		.xhr-eyes-l,
+		.xhr-eyes-r {
+			position: relative;
+			width: 90px;
+			height: 90px;
+			border: 5px solid #000;
+			border-radius: 50%;
+			background-color: #fff;
+			float: left;
+		}
+		.xhr-eyes-l:after,
+		.xhr-eyes-r:after {
+			position: absolute;
+			content: '';
+			width: 35px;
+			height: 20px;
+			background-color: #000;
+			z-index: -1;
+		}
+		.xhr-eyes-l:after {
+			top: 33px;
+			left: -32px;
+			transform: rotate(20deg);
+		}
+		.xhr-eyes-r:after {
+			top: 33px;
+			right: -32px;
+			transform: rotate(-20deg);
+		}
+		.xhr-eyes-l-circle, 
+		.xhr-eyes-r-circle {
+			position: absolute;
+			left: 50%;
+			top: 50%;
+			transform: translate(-50%,-50%);
+			width: 60px;
+			height: 60px;
+			border: 5px solid #fff;
+			border-radius: 50%;
+			animation: eyes 3s ease-in infinite;
+			background-color: #000;
+		}
+		.xhr-eyes-l-circle:after,
+		.xhr-eyes-r-circle:after {
+			content: '';
+			position: absolute;
+			width: 20px;
+			height: 20px;
+			border-radius: 50%;
+			background-color: #fff;
+		}
+		.xhr-eyes-l-circle:after {
+			left: 30px;
+			top: 30px;
+		}
+		.xhr-eyes-r-circle:after {
+			right: 30px;
+			top: 30px;
+		}
+		.box1 {
+			width: 100px;
+			height: 100px;
+			border-top: 5px solid #000;
+			border-radius: 20px;
+		}
+		.box2 {
+			width: 100px;
+			height: 100px;
+			border-top: 5px solid #000;
+			border-bottom: 5px solid #000;
+			/* 相对于水平和垂直 border-box*/
+			border-radius: 100px/110px;
+			border-radius: 50%;
+		}
+		@keyframes hair {
+			10%,50%,100% {
+				transform: rotate(35deg);
+			}
+			20% {
+				transform: rotate(40deg);
+			}
+			30% {
+				transform: rotate(45deg);
+			}
+			80% {
+				transform: rotate(45deg);
+			}
+		}
+		@keyframes eyes {
+			10% {
+				transform: translate(-42%,-48%);
+			}
+			25% {
+				transform: translate(-42%,-48%);
+			}
+			40% {
+				transform: translate(-50%,-50%);
+			}
+			50% {
+				transform: translate(-50%,-50%);
+			}
+			65% {
+				transform: translate(-58%,-48%);
+			}
+			75% {
+				transform: translate(-58%,-48%);
+			}
+			90% {
+				transform: translate(-50%,-50%);
+			}
+		}
+	</style>
+</head>
+<body>
+<div class="wrap">
+	<div class="xhr">
+		<div class="xhr-hair">
+			<div class="xhr-hair-1"></div>		
+			<div class="xhr-hair-2"></div>		
+		</div>
+		<div class="xhr-eyes">
+			<div class="xhr-eyes-l">
+				<div class="xhr-eyes-l-circle"></div>
+			</div>
+			<div class="xhr-eyes-r">
+				<div class="xhr-eyes-r-circle"></div>
+			</div>
+		</div>
+		<div class="xhr-mouth">
+			<!-- <div class="xhr-eyes"></div> -->
+		</div>
+		<div class="xhr-trousers">
+			<div class="xhr-trousers-t">
+				<div class="xhr-trousers-t-l"></div>
+				<div class="xhr-trousers-t-r"></div>
+			</div>
+			<div class="xhr-trousers-b">
+			</div>
+		</div>
+		<div class="xhr-head-l"></div>
+		<div class="xhr-head-r"></div>
+		<div class="xhr-foot">
+			<div class="xhr-foot-l"></div>
+			<div class="xhr-foot-r"></div>
+		</div>
+	</div>
+</div>
+
+<div class="box1"></div>
+<div class="box2"></div>
+</body>
+</html>

@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title></title>
+	<style type="text/css">
+		.haveInput:before{content:attr(placeholder);display:block;color:#333}
+		.box10 {
+			width: 100px;
+			height: 100px;
+			background-color: red;
+		}
+		.box {
+			width: 100px;　
+			height: 100px;
+		 	line-height: 100px;
+		  	background: pink;
+		  	margin: 30px auto 0;
+		  	text-align: center;
+		}
+	</style>
+</head>
+<body>
+	<!-- 
+	11 个有趣实用的 JS 特性:
+	1.监听屏幕旋转变化接口: orientationchange 0(竖屏) 180(倒屏)
+	2.电池状态：navigator.getBattery()
+	3.让你的手机震动: window.navigator.vibrate(200)
+	4.当前语言：navigator.language
+	5.网络状态 navigator.onLine
+	6.页面可编辑：contentEditable
+	整个页面可以编辑: document.body.contentEditable=true
+	7.浏览器活跃窗口监听: window.onblur & window.onfocus
+	8.全屏 API（Fullscreen API）
+	  	document.fullscreenElement: 当前处于全屏状态的元素 element
+		document.fullscreenEnabled: 标记 fullscreen 当前是否可用
+		document.exitFullscreen(): 退出全屏
+	9.利用a标签解析 URL
+	10.getBoundingClientRect() 获得页面中某个元素的左，上，右和下分别相对浏览器视屏窗口的位置, 不包括卷入的
+	11.IntersectionObserver 可以用来监听元素是否进入了设备的可视区域之内，而不需要频繁的计算来做这个判断
+	 -->
+	 <div class="box box1"></div>
+	 <div class="box2"></div>
+	 <div class="box3">
+	 	<button class="btn3">按钮</button>
+	 </div>
+	 <div class="box5"></div>
+	 <div class='haveInput' contentEditable='true' placeholder='请输入'></div>
+	 <div class="box7"></div>
+	 <img src="./1.jpg" width="200" class="box8">
+	 <div class="box10"></div>
+
+	 <div class="box box20"></div>
+	 <div class="box box21"></div>
+
+
+<script type="text/javascript">
+	var box1 = document.querySelector('.box1')
+	var box2 = document.querySelector('.box2')
+	var btn3 = document.querySelector('.btn3')
+	var box5 = document.querySelector('.box5')
+	var box8 = document.querySelector('.box8')
+	var box10 = document.querySelector('.box10')
+	function screenOrientation(){
+
+		let orientation = screen.orientation || screen.mozOrientation ||screen.msOrientation;
+		console.log(screen.orientation)
+		console.log(screen.mozOrientation)
+		console.log(screen.msOrientation)
+		box1.innerText = orientation.angle;
+		window.addEventListener("orientationchange" in window ? "orientationchange" : "resize", function() {
+				console.log('orientation.angle: ', orientation.angle)
+				// alert(orientation.angle)
+				box1.innerText = orientation.angle;
+			});
+	}
+	screenOrientation()
+
+	if (navigator.getBattery) {
+    	navigator.getBattery().then(function(battery){
+        	// 判断是否在充电
+        	console.log(battery)
+        	box2.innerText = battery.charging ? `在充电: 剩余${battery.level * 100} % ` : `没充电: 剩余${battery.level * 100} % `;
+        	// 电池充电状态改变事件
+        	battery.addEventListener('chargingchange', function() {
+	            box2.innerText = battery.charging ? `在充电: 剩余${battery.level * 100} % `:`没充电: 剩余${battery.level * 100} % `;
+	        });
+    	});
+	} else {
+    	box2.innerText ='不支持电池状态接口';
+	}
+
+	btn3.addEventListener('click', function() {
+		if(navigator.vibrate) {
+			alert('支持震动')
+			console.log(navigator.vibrate)
+			navigator.vibrate([500, 500, 500, 500, 500, 500, 500, 500, 500,500])
+		} else {
+			box3.innerText = "您的设备不支持震动";
+		}
+	})
+	
+	// 清除震动
+	// navigator.vibrate(0);
+
+	// 持续震动
+    // setInterval(function(){ 
+    // 	navigator.vibrate(200);
+    // },500);
+
+    function getThisLang() {
+	  const langList = ['cn', 'hk', 'tw', 'en', 'fr'];
+	  const langListLen = langList.length;
+	  const thisLang = (navigator.language || navigator.browserLanguage).toLowerCase();
+	  console.log(thisLang)
+	  for (let i = 0; i < langListLen; i++) {
+	    let lang = langList[i];
+	    if (thisLang.includes(lang)) {
+	      return lang
+	    } else {
+	      return 'en'
+	    }
+	  }
+	}
+	// alert(getThisLang())
+	console.log(getThisLang())
+
+	// 联网状态：navigator.onLine
+	window.addEventListener('online', updateOnlineStatus, true);
+	window.addEventListener('offline', updateOnlineStatus, true);
+	function updateOnlineStatus() {
+		// alert(navigator.onLine ? "online": "offline");
+		box5.innerText = navigator.onLine ? "online": "offline";
+	}
+	updateOnlineStatus()
+
+	var timer = null;
+	var infoNum = '10'
+	var flashFlag = true
+  	window.addEventListener('blur', doFlashTitle, true);
+  	window.addEventListener('focus', function() {
+  		clearInterval(timer);
+    	document.title = '微信网页版'
+  	}, true);
+    function doFlashTitle() {
+    	timer = setInterval(() => {
+	      	if (!flashFlag) {
+	        	document.title = "微信网页版"
+	      	} else {
+	        	document.title = `微信${infoNum}`
+      		}
+      	}, 500)
+    }
+
+    console.log(document.fullscreenElement)//当前处于全屏状态的元素 element
+	console.log(document.fullscreenEnabled)//标记 fullscreen 当前是否可用
+	// console.log(document.exitFullscreen())//退出全屏
+
+	// alert(document.fullscreenEnabled ? '支持全屏':'')
+	console.log(document.fullscreenEnabled ? '支持全屏':'')
+
+	var url = 'http://tools.jb51.net/code/jscompress'
+	var a = document.createElement('a')
+	a.href = url
+	var obj = {
+		host: a.host,
+		port: a.port,
+		query: a.search,
+		params: (function(){
+			var ret = {},
+			seg = a.search.replace(/^\?/, '').split('&'),
+			len = seg.length,
+			i = 0,
+			s;
+			for (; i < len; i++) {
+			  if (!seg[i]) {
+			    continue
+			  }
+			  s = seg[i].split('=');
+			  ret[s[0]] = s[1]
+			}
+			return ret;
+		})(),
+		hash: a.hash.replace('#', '')
+
+	}
+	console.log(obj)
+
+	console.log(box10.getBoundingClientRect())
+
+	let box20 = document.querySelector('.box20');
+	window.addEventListener('deviceorientation',(e)=>{
+	  box20.innerHTML = Math.round(e.beta)
+	  console.log(Math.round(e.beta))
+	  box20.style.transform = `rotate(${e.beta}deg)`
+	})
+
+	let box21 = document.querySelector('.box21');
+	let lastX=0,lastY=0,lastZ=0;
+	window.addEventListener('devicemotion',(e)=>{
+	  requestAnimationFrame(()=>{
+	    let {x,y,z} = e.accelerationIncludingGravity
+	    x = 6*x
+	    y = 6*y
+	    z = 6*z
+	    box21.style.transform = `translate3d(${x+lastX}px,${y+lastY}px,${z+lastZ}px)`
+	    lastX = x
+	    lastY = y
+	    lastZ = z    
+	  })
+	});
+
+	var fullscreen = function() {
+
+		if(this.requestFullScreen){
+			fullscreen = () => {
+				if(document.FullscreenElement && document.CancelFullScreen) {
+                    document.cancelFullScreen();
+                } else {
+                	this.requestFullScreen();
+            	}
+			}
+        } else if(this.webkitRequestFullScreen){
+    		fullscreen = () => {
+    			// console.dir(document)
+    			if(document.webkitFullscreenElement && document.webkitCancelFullScreen) {
+    				// console.log('cancel')
+                    document.webkitCancelFullScreen();
+                } else {
+            		this.webkitRequestFullScreen();
+           	 	}
+			}
+        }
+        else if(this.mozRequestFullScreen){
+    		fullscreen = () => {
+    			if(document.mozFullscreenElement && document.mozCancelFullScreen) {
+                    document.mozCancelFullScreen();
+                } else {
+            	 this.mozRequestFullScreen();
+                }
+			}
+        } else if(this.msRequestFullScreen){
+    		fullscreen = () => {
+    			if(document.msFullscreenElement && document.msCancelFullScreen) {
+                    document.msCancelFullScreen();
+                } else {
+            	 	this.msRequestFullScreen();
+            	}
+			}
+        }
+      	console.log(fullscreen) 
+      	fullscreen() 
+	}
+	box8.addEventListener('click', fullscreen)
+	
+</script>
+</body>
+</html>

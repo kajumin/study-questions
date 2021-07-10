@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.p {
+			border-bottom: 3px solid #ccc;
+		}
+		.chart {
+			width: 300px;
+			height: 200px;
+			margin: 0 auto;
+			background-color: #ddd;
+			overflow: hidden;
+		}
+		
+		.chart .friend,
+		.chart .mime {
+			line-height: 30px;
+			margin: 15px 10px;
+			border-radius: 8px;
+			
+		}
+		.avatar {
+			display: inline-block;
+			width: 20px;
+			height: 20px;
+			border-radius: 3px;
+			margin: 0 8px;
+			line-height: 20px;
+			background-size: 20px;
+		}
+		.friend .avatar {
+			background-image: url(../assets/images/zza/1.jpg);
+		}
+		.mime .avatar {
+			background-image: url(../assets/images/zza/2.jpg);
+		}
+		.friend .message,
+		.mime .message {
+			position: relative;
+			padding: 2px 15px 2px 10px;
+			border-radius: 4px;
+			font-size: 14px;
+			line-height: 26px;
+			background-color: #fff;
+		}
+		.mime .message {
+			padding: 2px 10px 2px 15px;
+			background-color: rgb(139,233, 125);
+		}
+		.mime .message::before {
+			content: '';
+			position: absolute;
+			right: -12px;
+			top: 6px;
+			width: 0;
+			height: 0;
+			border: 6px solid;
+			border-color: transparent transparent transparent #8BE97D;
+		}
+		.friend .message::before {
+			content: '';
+			position: absolute;
+			left: -12px;
+			top: 6px;
+			width: 0;
+			height: 0;
+			border: 6px solid;
+			border-color:transparent #fff transparent transparent ;
+		}
+		.avatar:after {
+			content: '\3000';
+		}
+		.box1 {
+			line-height: 40px;
+			background-color: #eee;
+		}
+		.box1 span:nth-child(1) {
+			display: inline-block;
+			width: 20px;
+			height: 20px;
+			line-height: 20px;
+			background: url(../assets/images/lyt/1.jpg);
+		}
+		.box1 span:nth-child(4) {
+			display: inline-block;
+			width: 20px;
+			height: 20px;
+			line-height: 20px;
+			background: url(../assets/images/lyt/1.jpg);
+		}
+		.icon:before {
+			content: '\3000';
+		}
+	</style>
+</head>
+<body>
+<p class="p">hidden | data-* | tabindex | dir</p>
+<div hidden>中国</div>
+<div style="display: none;">中国</div>
+
+<div class="dataset" data-drink="coffee" data-food="sushi" data-meal="lunch" data-main-color="red">data-*</div>
+
+<a href="#">按钮</a>
+<div>
+	<input type="text" name="" tabindex="0">
+	<input type="text" name="" tabindex="0">
+	<input type="text" name="" tabindex="0">
+	<input type="text" name="" tabindex="1">
+	<input type="text" name="" tabindex="2">
+</div>
+
+<div class="chart">
+	<div class="friend"><span class="avatar"></span><span class="message">要不要吃点什么?</span></div>
+	<div class="mime" dir="rtl"><span class="avatar"></span><span class="message">不用了</span></div>
+	<div class="mime" dir="rtl"><span class="avatar"></span><span class="message">谢谢!</span></div>
+	<div class="friend"><span class="avatar"></span><span class="message">不客气</span></div>
+</div>
+<div class="box1" dir="rtl">
+	<span class="icon"></span><span>中国</span><span>人民</span><span class="icon"></span>
+</div>
+<script type="text/javascript">
+	var dataset = document.querySelector('.dataset')
+	var chartInput = [];
+	var expense = dataset.dataset
+	// 可以删除添加  delete dataset.dataset.key
+	// delete dataset.dataset.food //同时标签上的也会被删除
+	console.log(dataset.dataset)
+	console.log(dataset.dataset['mainColor'])
+	for (var item in expense) {
+  		chartInput.push(expense[item]);
+	}
+	console.log(chartInput)
+</script>
+</body>
+</html>

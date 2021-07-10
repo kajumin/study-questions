@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.box {
+			width: 300px;
+			height: 300px;
+			margin: 0 auto;
+			border: 1px solid red;
+			display: flex;
+			/*flex-direction: column;*/
+			flex-wrap: wrap;
+		}
+		.flex1 {
+			/*默认*/
+			align-content: stretch;
+		}
+		.flex1 .item {
+			height: auto;
+		}
+		.flex2 {
+			align-content: flex-start;
+		}
+		.flex3 {
+			align-content: flex-end;
+		}
+		.flex4 {		
+			align-content: center;
+		}
+		.flex5 {	
+			align-content: space-between;
+		}
+		.flex6 {
+			align-content: space-around;
+		}
+		.item {
+			width: 40px;
+			height: 40px;
+			border: 1px solid pink;
+			font-size: 24px;
+			line-height: 40px;
+			text-align: center;
+		}
+		
+	</style>
+</head>
+<body>
+	<!-- 
+		align-content: stretch 默认
+		stretch height没有设置或者auto; 在另一侧没有设置高度或者宽度时  可以被拉伸 
+	-->
+<div class="box flex1">
+	<div class="item">1</div>
+	<div class="item">2</div>
+	<div class="item">3</div>
+	<div class="item">4</div>
+	<div class="item">5</div>
+	<div class="item">6</div>
+	<div class="item">7</div>
+	<div class="item">8</div>
+	<div class="item">9</div>
+</div>
+<div class="box flex2">
+	<div class="item">1</div>
+	<div class="item">2</div>
+	<div class="item">3</div>
+	<div class="item">4</div>
+	<div class="item">5</div>
+	<div class="item">6</div>
+	<div class="item">7</div>
+	<div class="item">8</div>
+	<div class="item">9</div>
+</div>
+<div class="box flex3">
+	<div class="item">1</div>
+	<div class="item">2</div>
+	<div class="item">3</div>
+	<div class="item">4</div>
+	<div class="item">5</div>
+	<div class="item">6</div>
+	<div class="item">7</div>
+	<div class="item">8</div>
+	<div class="item">9</div>
+</div>
+<div class="box flex4">
+	<div class="item">1</div>
+	<div class="item">2</div>
+	<div class="item">3</div>
+	<div class="item">4</div>
+	<div class="item">5</div>
+	<div class="item">6</div>
+	<div class="item">7</div>
+	<div class="item">8</div>
+	<div class="item">9</div>
+</div>
+<div class="box flex5">
+	<div class="item">1</div>
+	<div class="item">2</div>
+	<div class="item">3</div>
+	<div class="item">4</div>
+	<div class="item">5</div>
+	<div class="item">6</div>
+	<div class="item">7</div>
+	<div class="item">8</div>
+	<div class="item">9</div>
+</div>
+<div class="box flex6">
+	<div class="item">1</div>
+	<div class="item">2</div>
+	<div class="item">3</div>
+	<div class="item">4</div>
+	<div class="item">5</div>
+	<div class="item">6</div>
+	<div class="item">7</div>
+	<div class="item">8</div>
+	<div class="item">9</div>
+</div>
+
+</body>
+</html>

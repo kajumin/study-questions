@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // 需要服务器开启
+    function setCookie(name, value, time) {
+      // time为毫秒
+      var d = new Date()
+      d.setTime(d.getTime() + time) //返回时间戳
+      console.log(d.toGMTString())
+      console.log(d.toUTCString())
+      document.cookie = name + "=" + value + ";expires="+ d.toGMTString();  
+      console.log(document.cookie);
+    }
+    setCookie('name', 'bang', 10000000)
+
+    function getCookie(name) {
+        // document.cookie
+        var array = document.cookie.split(';');
+        // 循环每个cookie
+        for (var i = 0, len = array.length; i < len; i++) {
+            // 将cookie截取成两部分
+            var item = array[i].split("=");
+            // 判断cookie的name 是否相等
+            if (item[0] == name) {
+                return item[1];
+            }
+        }
+        return null;
+    }
+    var name = getCookie('name')
+    console.log(name);
+
+    function delCookie(name) {
+        // 获取cookie是否存在
+        var value = getCookie(name);
+        if (value != null) {
+            var dexp = new Date();
+            d.setTime(d.getTime() - 1);
+            document.cookie = name + "=" + value + ";expires="+ d.toUTCString();
+        }
+    }
+    
+    // 装换时间的函数
+    var getSec = function(str){
+        var str1 = str.substr(0, str.length - 1);  //时间数值 
+        var str2 = str.substr(str.length-1, 1);    //时间单位
+        if (str2 == "s") {
+            return str1 * 1000;
+        }
+        else if (str2 == "m") {
+            return str1 * 60 * 1000;
+        }
+        else if (str2 == "h") {
+            return str1 * 60 * 60 * 1000;
+        }
+        else if (str2 == "d") {
+            return str1 * 24 * 60 * 60 * 1000;
+        }
+    }
+  </script>
+</body>
+</html>

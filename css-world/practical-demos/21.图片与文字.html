@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style>
+		.box {
+			position: relative;
+			width: 200px;
+		}
+		.box img {
+			display: block;
+		}
+		.box p {
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			margin: 0;
+			line-height: 40px;
+			text-align: center;
+			background-color: rgba(0,0,0,0.5);
+			color: #eee;
+		}
+		.box img:hover {
+			opacity: 0.5;
+		}
+		@keyframes fadeIn {
+		  0% { 
+		    opacity: 0;
+		  }
+		  100% {
+		    opacity: 1;
+		  }
+		}
+		.box3 img {
+			animation: fadeIn 2s linear 1s infinite;
+		}
+	</style>
+</head>
+<body>
+	<!-- 
+	1.当图片的opacity不为1时, 产生层叠上下文, 根据后来者居上原则, 图片变成在文字上方
+	  (1)调整dom顺序
+	  (2)设置文字的z-index:1;
+
+	 -->
+<div class="box box1">
+	<p>JOYCE CHU</p>
+	<img src="../images/zza/1.jpg" width="200">
+</div>
+
+<div class="box box2">
+	<img src="../images/zza/1.jpg" width="200">
+	<p>JOYCE CHU</p>
+</div>
+
+<div class="box box3">
+	<img src="../images/zza/1.jpg" width="200">
+	<p>JOYCE CHU</p>
+</div>
+</body>
+</html>

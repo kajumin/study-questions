@@ -1,0 +1,31 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="lib/css/bootstrap.css">
+    <title></title>
+</head>
+<body style="padding: 100px;">
+
+<!--
+<img src="img/s1.jpg" alt="" class="img-thumbnail float-left">
+<img src="img/s2.jpg" alt="" class="img-fluid float-right">
+-->
+
+​<picture>
+    <source srcset="img/s1.jpg"  media="(min-width: 1000px)" >
+    <source srcset="img/s2.jpg"  media="(min-width: 800px)">
+    <source srcset="img/s3.jpg"  media="(min-width: 500px)">
+    <img src="img/timg.jpg" alt="这是当浏览器不支持picture标签时显示的图片">
+</picture>
+
+
+
+<!-- bootstrap依赖于JQ -->
+<script src="lib/js/jquery-3.3.1.js"></script>
+<!--弹窗、提示、下拉菜单 -->
+<script src="lib/js/popper.js"></script>
+<script src="lib/js/bootstrap.js"></script>
+</body>
+</html>

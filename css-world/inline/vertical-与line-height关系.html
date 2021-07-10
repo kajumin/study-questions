@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.p1-1 {
+			line-height: 32px;
+			outline: 1px solid red;
+		}
+		.p1-1 span {
+			font-size: 24px;
+		}
+		.p1-2 {
+			line-height: 32px;
+			outline: 1px solid red;
+		}
+		.p1-2 span {
+			font-size: 24px;
+			vertical-align: top;
+			vertical-align: bottom;
+			vertical-align: -3px;
+		}
+	</style>
+</head>
+<body>
+<!-- 
+vertical-align的百分比值是相对于line-height计算的, 内联元素中同时出现
+
+问题的根源是幽灵节点和span标签的font-size不一致, font-size越大, 基线越往下,
+文字默认都是基线对齐, 所以发生上下移位.
+
+引导问题的解决办法: (1)设置vertical-align为middle或者top或者-3
+
+图片下间隙的问题解决办法: float block font-size line-height vertical-align: top;
+ -->
+<!-- 
+	35px 
+	23 + 3 = 21 - 16 / 2
+-->
+<p class="p1-1">
+	<span>文字</span>
+</p>
+<p class="p1-2">
+	x<span>文字</span>
+</p>
+
+<span style="line-height: 32px; font-size: 24px;">文字</span>
+</body>
+</html>

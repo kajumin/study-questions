@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.reset {
+			color: #333;
+			padding-left: 30px;
+		}
+		.reset {
+			/*默认为0*/
+			counter-reset: jisuan 0;	
+		}
+		.counter:before {
+			/*默认为1*/
+			counter-increment: jisuan;
+			content: counter(jisuan);	
+		}
+
+		.counter:before {
+			/*默认为1*/
+			/*counter-increment: jisuan 1;
+			content: counters(jisuan, '-') '. ';*/	
+		}
+	</style>
+</head>
+<body>
+	<!-- 
+	counter-reset: wangxiaoer 0; 默认值为0
+	counter-increment: wangxiaoer 1;默认值为1
+	counter(name, style);
+	counters(name, string, style) '. ';   
+	 -->
+<div class="reset">
+	<div class="counter">前端</div>
+	<div class="reset">
+		<div class="counter">css3</div>
+		<div class="reset">
+			<div class="counter">transition</div>
+			<div class="counter">animation</div>
+			<div class="counter">transform</div>
+			<div class="counter">box-shadow</div>
+		</div>	
+		<div class="counter">H5</div>	
+		<div class="counter">javascript</div>	
+		<div class="counter">node</div>	
+	</div>
+	<div class="counter">后端</div>
+	<div class="reset">
+		<div class="counter">php</div>
+		<div class="counter">java</div>
+		<div class="counter">python</div>
+	</div>
+	<div class="counter">测试</div>
+	<div class="reset">
+		<div class="counter">测试基础</div>
+		<div class="counter">数据库</div>
+		<div class="counter">python</div>
+	</div>
+</div>
+</body>
+</html>

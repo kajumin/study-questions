@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<style>
+		.box1 {
+			width: 400px;
+			border: 1px solid #adc;
+		}
+		.box1 img {
+			float: left;
+		}
+		.box1 div {
+			margin-left: 110px;
+		}
+		.clearfix:after {
+			content: '';
+			display: block;
+			clear: both;
+		}
+		.clearfix {
+			*zoom: 0;
+		}
+		.box2 {
+			width: 400px;
+			border: 1px solid #adc;
+		}
+	
+		.float-l {
+			float: left;
+		}
+		.bfc {
+			overflow: hidden;
+		}
+		.bfc-mg {
+			margin-right: 10px;
+		}
+		.box3 .l,
+		.box3 .r {
+			width: 100px;
+			height: 100px;
+			background-color: red;
+		}
+		.box3 .l {
+			float: left;
+		}
+		.box3 .r {
+			float: right;
+		}
+
+	</style>
+</head>
+<body>
+	<!-- 
+		float(浮动)：作用(1)清除浮动 (2)margin合并
+	1.基于纯流体特性的两栏自适应布局
+	2.基于bfc特性的两栏自适应布局
+
+	 -->
+<div class="box1 clearfix">
+	<img src="../images/1.jpg" width="100">
+	<div>中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国</div>
+</div>
+
+<div class="box2 bfc">
+	<img src="../images/1.jpg" width="100" class="float-l bfc-mg">
+	<div class="bfc">中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国</div>
+</div>
+
+<div class="box3 bfc">
+	<div class="l"></div>
+	<div class="r"></div>
+	<div class="bfc">中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国</div>
+</div>
+</body>
+</html>

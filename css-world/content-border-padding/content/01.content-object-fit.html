@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.img1 {
+			width: 200px;
+			height: 200px;
+			object-fit: fill;
+			background-color: #333;
+		}
+		.img2 {
+			width: 200px;
+			height: 200px;
+			object-fit: contain;
+			background-color: #333;
+		}
+		.img3 {
+			width: 200px;
+			height: 200px;
+			object-fit: none;
+			background-color: #333;
+		}
+		.img4 {
+			width: 200px;
+			height: 200px;
+		}
+		.img4:before {
+			content: url(../../images/1.jpg);
+			display: block;
+			width: 200px;
+			height: 200px;
+		}
+	</style>
+</head>
+<body>
+<img src="../../images/1.jpg" class="img1">
+<img src="../../images/1.jpg" class="img2">
+<img src="../../images/1.jpg" class="img3">
+<div class="img4"></div>
+</body>
+</html>

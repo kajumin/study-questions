@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style>
+	 	body{
+	 		padding: 0 100px;
+	 	}
+	 	.title1 {
+	 		overflow: hidden;
+	 		position: relative;
+	 		text-align: center;
+	 		font-size: 14px;
+	 		color: #ccc;
+	 	}
+	 	.title1:before,
+	 	.title1:after {
+	 		content: '';
+	 		position: absolute;
+	 		width: 100%;
+	 		border-top: 1px dashed #ccc;
+	 		top: 50%;
+	 	}
+	 	.title1:before {
+	 		margin-left: -10px;
+	 		transform: translateX(-100%);
+	 	}
+	 	.title1:after {
+	 		margin-left: 10px;
+	 	}
+
+		/*flex*/
+		.title2 {
+	 		overflow: hidden;
+	 		display: flex;
+	 		align-items: center;
+	 		text-align: center;
+	 		font-size: 14px;
+	 		color: #ccc;
+	 	}
+	 	.title2:before,
+	 	.title2:after {
+	 		content: '';
+	 		flex: 1;
+	 		height: 0;
+	 		border-top: 1px dashed #ccc;
+	 	}
+	 	.title2:before {
+	 		margin-right: 10px;
+	 	}
+	 	.title2:after {
+	 		margin-left: 10px;
+	 	}
+	 	/*fieldset legend*/
+	 	.title3 {
+		    border: 0;
+		    border-top: 1px dashed #ccc;
+		    padding: 0;
+		    font-size: 14px;
+		    color: #ccc;
+	 	}
+	 	.title3 .inner {
+	 		margin: 0 auto;
+	 		padding: 0 10px;
+	 	}
+
+
+		/*伪元素+right:100%*/
+		.title4{
+		    text-align: center;
+		    font-size: 14px;
+		    color: #999;
+		    overflow: hidden;
+		}
+		.title4 > .inner{
+		    position: relative;
+		}
+		.title4 > .inner::before,.title4 > .inner::after{
+		    position: absolute;
+		    content: '';
+		    width: 9999px;
+		    height: 1px;
+		    background: #ccc;
+		    top: 50%;
+		}
+		.title4 > .inner::before{
+		    right: 100%;
+		    margin-right: 10px;
+		}
+		.title4 > .inner::after{
+		    margin-left: 10px;
+		}
+
+		.title4{
+		    position: relative;
+		    text-align: center;
+		    font-size: 14px;
+		    color: #999;
+		    overflow: hidden;
+		    padding: .6em 0;
+		    /**把高度撑起来**/
+		}
+		.title4 > .inner{
+		    position: absolute;
+		    left: 50%;
+		    transform: translateX(-50%);
+		    white-space: nowrap;
+		    line-height: 1px;
+		    border-left: 9999px solid #ccc;
+		    border-right: 9999px solid #ccc;
+		    padding: 0 10px;
+		}
+	</style>
+</head>
+<body>
+<!-- 
+	(1)transform: translateX(-100%) margin-left: -10px/10px;
+	(2)flex align-item:center; flex:1; height:0;
+	(3)fieldset > legend
+-->
+<!-- margin-left: 100%; margin-right: 100%; -->
+<div class="title">我是分割线</div>
+<div class="title1">我是分割线</div>
+<!-- flex flex:1 -->
+<div class="title2">我是分割线</div>
+<!-- span position: absolute; -->
+
+<fieldset class="title3">
+    <legend class="inner">我是分割线</legend>
+</fieldset>
+
+<div class="title4">
+    <span class="inner">我是分割线</span>
+</div>
+
+<div class="title4">
+    <span class="inner">我是分割线</span>
+</div>
+
+
+</body>
+</html>

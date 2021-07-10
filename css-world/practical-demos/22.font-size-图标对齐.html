@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.p {
+			font-size: 16px;
+			line-height: 1.5;
+			background-color: #ccc;
+		}
+		.p0 img {
+			/*vertical-align: middle;*/
+		}
+		.p1 img {
+			vertical-align: 25%;
+		}
+		.p2 img {
+			vertical-align: 6px;
+		}
+		.p3 img {
+			position: relative;
+			top: 8px;
+			width: 16px;
+			height: 16px;
+			vertical-align: 6px;
+		}
+		.p4 {
+			font-size: 80px;
+		}
+		.p4 img {
+			position: relative;
+			top: 18px;
+			width: 36px;
+			height: 36px;
+			/*vertical-align: 1ex;*/
+			vertical-align: .6ex;
+		}
+	</style>
+</head>
+<body>
+	<!-- 
+		文字与图标对齐总结
+		1.使用vertical-align: middle;可以使背景(inline-block) 文字越大的时候, 对齐效果更不好
+		2.使用父元素line-height等于图标高度
+		  2.2不等时, 可以使用图标设置line-height值等于图标高度
+		3.vertical-align使用ex作为单位(.6ex)
+		  relative相对定位, top值需要计算(自身高度的一半)
+		  好处是: font-size值变化时不需要再改变
+
+	-->
+	<!-- 
+	1 2.研究vertical-align相对于line-height计算
+	    16 * 1.5 = 24 * 25% = 6px
+	3. vertical-align: 25%;让图片的下边缘跟文字的中心线对齐
+	   position: relative;top: 8px;移动自身的高度一半 高度不同就需要改变
+	4.使用ex单位更加适合, 即使font-size改变
+	  ex就是e-height的高度
+	 -->
+<p class="p p0">
+	文字<img src="../images/delete.jpg" width="10">x
+</p>
+<p class="p p1">
+	文字<img src="../images/delete.jpg" width="10">x
+</p>
+<p class="p p2">
+	文字<img src="../images/delete.jpg" width="10">x
+</p>
+
+<p class="p p3">
+	文字<img src="../images/delete.jpg">x
+</p>
+<p class="p p4">
+	文字<img src="../images/delete.jpg">x
+</p>
+</body>
+</html>

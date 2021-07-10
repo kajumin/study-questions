@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		body {
+			font: 14px/1.6 -apple-system-font,BlinkMacSystemFont,Helvetica Neue,PingFang SC,Hiragino Sans GB,Microsoft YaHei UI,Microsoft YaHei,Arial,sans-serif;
+			margin: 0;
+		}
+		ul {
+			margin: 0;
+			padding: 0;
+			list-style-type: none;
+		}
+		a {
+			text-decoration: none;
+		}
+		.container {
+			overflow: hidden;
+			height: 75px;
+			background-color: #333;
+		}
+		.header {
+			width: 1000px;
+			margin: 0 auto;
+		}
+		.header .logo {
+			float: left;
+		}
+		.header img {
+    		margin-top: 14px;
+			height: 44px;
+		}
+		.header .nav {
+			float: right;
+			margin-top: 21px;
+		}
+		.header .nav li {
+			float: left;
+			line-height: 33px;
+		}
+		.header .nav li + li {
+			margin-left: 10px;
+		}
+		.header .nav li a {
+			display: inline-block;
+			padding-left: 15px;
+			border-radius: 15px;
+			color: #fff;
+		}
+		.header .nav li a:hover {
+			font-weight: lighter;
+			background: url('../assets/images/beijing2.jpg') no-repeat;
+		}
+		.header .nav li a:hover span {
+			background: url('../assets/images/beijing2.jpg') no-repeat right;
+		}
+		.header .nav li.curr a {
+			font-weight: normal;
+			background: url('../assets/images/beijing.jpg') no-repeat;
+		}
+		.header .nav li a span {
+			display: inline-block;
+			padding-right: 15px;
+			border-radius: 15px;
+		}
+		.header .nav li.curr a span {
+			background: url('../assets/images/beijing.jpg') no-repeat right;
+		}
+		.box1:before {
+			content: '123';
+			color: red;
+		}
+		.box1:after {
+			/*content: '123';*/
+			display: block;
+			width: 100px;
+			height: 100px;
+			background-color: red;
+			color: red;
+		}
+	</style>
+</head>
+<body>
+<div class="container">
+	<header class="header">
+		<a href="#" class="logo"><img src="../assets/images/weixin.png" alt="微信"></a>
+		<ul class="nav">
+			<li class="curr">
+				<a href="#" ><span>首页</span></a>
+			</li>
+			<li>
+				<a href="#"><span>帮助与反馈</span></a>
+			</li>
+			<li>
+				<a href="#"><span>公众平台</span></a>
+			</li>
+			<li>
+				<a href="#"><span>开发平台</span></a>
+			</li>
+		</ul>
+	</header>
+</div>
+<div class="box1">中国</div>
+</body>
+</html>

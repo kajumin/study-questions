@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<!-- 
+class: 只是语法糖, 它的大部分功能, es5都能做到, 
+新的class写法只是让对象原型的写法更加清晰, 更像面向对象编程的语法而已
+
+typeof Point //function
+Point == Point.prototype.constructor //true
+
+1.类的所有方法都定义在类的prototype属性上
+Object.assign方法就可以很方便地向类添加多个方法
+Object.assign(Point.prototype, {toString(), toValue()})
+类的内部定义的所有方法都是不可枚举的, 与es5不一致
+
+2. 严格模式: 模块和类默认使用严格模式
+
+3. constructor方法: 通过new命令生成实例对象时自动调用该方法,  一个类必须有constructor方法, 如果没有显式定义, 一个空的constructor方法会被默认添加
+   
+4. class的实例对象
+类必须使用new来调用
+__proto__指向原型, 改变实例的__proto__属性必须谨慎, 这个改变会改变所有class的原始定义, 影响所有实例
+
+5. class的表达式
+var myClass(外部使用) = class me(内部使用, 外部不可以使用) {}
+
+6. 不存在变量提升
+
+7. 私有方法:
+(1)使用命名加以区别, 通过另一个实例方法调用私有方法
+(2)将私有方法移除模块, 因为模块内部的方法都是对外可见的. bar.call(this, baz)
+(3)symbol值的唯一性 bar = Symbol('bar')调用this[bar](baz)  定义: [bar](baz){}
+
+8. 私有属性:
+#x 
+
+9. this指向: 实例方法 原型对象方法 提取出来都会导致this丢失
+类的方法内部this, 默认指向类的实例, 提取出来再使用, 可能会造成this指向错误
+(1)构造方法中绑定this
+(2)箭头函数
+(3)proxy
+
+10. name属性:
+class关键字后面的类名
+myPoint.name //Point  都是class关键字后面的类名
+Point.name //Point  都是class关键字后面的类名
+
+11. class的取值函数(getter)和存值函数(setter):
+get set关键字对某个属性设置存值函数和取值函数
+
+12. class的generator函数
+*[Symbol.iterator]() { yield 1 }
+
+13. class的静态方法:
+static classMethod() {}
+父类的静态方法, 通过super也可以调用
+
+14. class的静态属性和实例属性
+静态属性 static myStatic = 'my static'
+
+实例属性: name = 'bang' 可以不写在constructor属性中, 对于已经定义的实例属性, 可以列举出来更加可读性
+重名冲突时, constructor内的优先
+
+15. new.target属性: 通过new调用构造函数会返回new命令所作用的构造函数, 
+不是通过new 命令调用的, 返回undefined
+子继承父类时, new.target返回子类, 根据这个可以写出不能独立使用而必须继承后才能使用的类
+
+-->
+<script>
+	// arguments.callee  inner.caller
+	var outer = function() {
+		// console.log(outer.caller) //null 
+		// console.log(arguments)  //
+		// console.log(arguments.callee) //outer
+		inner()
+		function inner() {
+			// console.log(inner.caller)
+		}
+		// callee: 指向拥有这个arguments对象的函数
+		// caller: 它是函数对象的属性
+	}
+	outer()
+
+
+
+	class Point {
+		name = 'Point'
+		x = 'x' //constructor内的优先使用
+		pointPen2 = function() {
+			// return pen //访问不到constructor方法内部的变量
+			return this.x //可以访问到
+		} //constructor内的优先使用
+		constructor(x, y) {
+			var pen = 'pen'
+			this.x = x
+			this.y = y
+			this.bar = '_bar'
+			this.prointX = function() {
+				return this.x
+			}
+			this.pointPen = function() {
+				return pen
+			}
+		}
+		static staticName = 'my static name'
+		static staticMethod = function() {
+			return 'my static method'
+		}
+		toString() {
+			return this.x + '-' + this.y
+		}
+		['f'+ 'oo']() {
+			return this._bar()
+		}
+		_bar() {
+			return this.bar
+		}
+		*[Symbol.iterator]() { 
+			yield 1 
+			yield 2
+			yield 3
+		}
+		
+	}
+
+	console.log(typeof Point) //function
+	console.log(Point == Point.prototype.constructor) //true
+	Point.prototype.toString = function() {
+		return this.x + '&' + this.y
+	} //覆盖class中定义
+	var proint = new Point(10, 20)
+	console.log(proint)
+	console.log(proint.toString()) //实例方法, 在原型对象上
+	console.log(proint.foo()) //调用私有方法
+	console.log(Point.staticName) //调用静态属性
+	console.log(Point.staticMethod()) //调用静态属性
+	console.log(proint.pointPen()) //调用静态属性
+	console.log(proint.pointPen2()) //调用静态属性
+
+	// 12. class的generator函数
+	// for(var o of proint) {
+	// 	console.log(o)
+	// }
+	// this指向: 实例方法 原型对象方法 提取出来都会导致this丢失
+	// let { toString } = proint
+	// console.log(toString())
+	// let { prointX } = proint
+	// console.log(prointX())
+
+	// var myPoint = class Point {
+	// 	constructor() {
+
+	// 	}
+	// }
+	// console.log(myPoint.name) //Point
+	// console.log(myPoint.name) //Point
+</script>
+</body>
+</html>

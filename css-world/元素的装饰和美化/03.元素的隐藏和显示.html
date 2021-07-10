@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.box {
+			width: 50px;
+			height: 50px;
+			margin-bottom: 20px;
+			background-color: red;
+		}
+		.box1 {
+			visibility: hidden;
+		}
+		.box2 {
+			position: absolute;
+			opacity: 0;
+			filter: alpha(opacity=0);
+		}
+		.box3 {
+			position: relative;
+			margin-top: 30px;
+		}
+		.box3 div {
+			background-color: #096;
+			position: absolute;
+			top: -10px;
+			z-index: -1;
+		}
+		.box4 a {
+			position: absolute;
+			clip: rect(0,0,0,0);
+		}
+		.box5 span {
+			text-indent: -99em;
+		}
+	</style>
+</head>
+<body>
+	<!-- 
+	占据空间:
+	visibility: hidden; 不占据空间使用absolute
+	z-index: -1; 
+	opacity: 0;   不存在空间使用absolute
+	    可以点击: opacity
+	    可以键盘/辅助设备访问: opacity  z-index负值 absolute + clip
+
+	键盘可访问:
+	opacity
+	z-index负值
+	absolute + clip
+
+	使用场景:
+	z-index: -1; 和层叠上下文之间存在父元素设置了背景色 
+	visibility: hidden;  淡入淡出
+	absolute + clip  最佳可访问性隐藏 表单隐藏  logo文字隐藏
+	display: none  二维码
+	opacity: 0;  淡入淡出效果  删除按钮的显示(为了保持键盘可访问性)
+	text-indent: 2em;  logo文字隐藏(中策) 
+
+	logo文字隐藏
+	absolute-clip最佳可访问性隐藏 上策
+	color: transparent;(IE8+) 移动端上策, 桌面端中策
+	text-indent(超出屏幕时, 屏幕阅读器忽略)  中策 
+	display:none; visibility: hidden; (屏幕阅读器忽略) 下策
+
+	详细介绍:
+	display: none 不占据空间 不能点击 辅助设备/键盘不能访问
+	    1.background-image加载? ie加载 firefox不加载 chrome父隐藏则不加载
+	        实例: 那些默认隐藏的图片作为背景图隐藏在子元素上
+		2. 对于html5新增的hidden布尔值属性  兼容: [hidden] {display:none}
+		3. 属性天然display标签天然display:none  input type="hidden"
+		4. 标签天然隐藏script style dialog 可以显示出来
+		5. 不能点击 例外: label submit可以点击  但是不推荐
+		6. display:none; 不影响css3的动画, 但是影响transition
+		 	transition和visibility亲近
+		7. 计数器忽略display:none的元素
+
+	visibility: 与display 占据空间? 
+	1. visibility: 继承性  子元素可以显示出来
+	2. visibility与css计数器 不会影响计数器, 同样有效
+	3. visibility与transition  配合opacity使用
+	4. 获取尺寸和位置与display相比
+	5. 无障碍访问
+	   role="button"  title才会被读
+	   visibility:hidden; 是不会被读的, 但是显示到隐藏会 
+
+
+	overflow: hidden; visible; auto; scroll;
+	-->
+<div class="box box1"></div>
+<div class="box box2"></div>
+<div class="box box3">
+	<div>中国</div>
+	<button class="forBox3">按钮</button>
+</div>
+<div class="box box4">
+	<a href="#">logo</a>
+	<p>123</p>
+</div>
+<div class="box box5">
+	<span>中国</span>
+</div>
+<script type="text/javascript">
+	var box1 = document.querySelector('.box1')
+	box1.onclick = function() {
+		console.log('box1')
+	}
+	var box2 = document.querySelector('.box2')
+	box2.onclick = function() {
+		console.log('box2')
+	}
+	var box4 = document.querySelector('.box4 > a')
+	box4.onclick = function() {
+		console.log('box4')
+	}
+	var box3 = document.querySelector('.box3 > div')
+	box3.onclick = function() {
+		console.log('box3')
+	}
+	var forBox3 = document.querySelector('.forBox3')
+	forBox3.onclick = function() {
+		box3.click()
+	}
+	
+</script> 
+</body>
+</html>

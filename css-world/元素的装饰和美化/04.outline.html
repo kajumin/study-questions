@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		[type="submit"] {
+			position: absolute;
+			clip: rect(0, 0, 0, 0);
+		}
+		.btn {
+			display: inline-block;
+			padding: 2px 12px;
+			background-color: #cd0000;
+			color: #fff;
+			font-size: 14px;
+			cursor: pointer;
+		}
+		#t:focus + label.btn {
+			outline: 1px dotted Highlight;
+			outline: 3px auto -webkit-focus-ring-color;
+		}
+		.crop {
+			position: relative;
+			width: 200px;
+			height: 200px;
+			background-image: url(../images/1.jpg);
+			background-size: 200px 200px;
+			overflow: hidden;
+		}
+		.crop > .crop-area {
+			position: absolute;
+			left: 20px;
+			top: 20px;
+			width: 80px;
+			height: 80px;
+			background-color: #eee;
+			outline: 256px solid rgba(0,0,0, 0.5);
+			cursor: move;
+		}
+		.footer {
+			height: 50px;
+		}
+		.footer > p {
+			position: absolute;
+			left: 0;
+			right: 0;
+			text-align: center;
+			padding: 15px 0;
+			background-color: #a0b3d6;
+			outline: 9999px solid #a0b3d6;
+			clip: rect(0 9999px 9999px 0);
+		}
+	</style>
+</head>
+<body>
+<!-- 
+万万不可全局设置outline: 0 none;
+一些浏览器内置的outline格格不入的话, 就局部重置, 并添加回:focus高亮
+outline不占据空间
+1. label + submit
+2. 镂空效果
+3. 自动填充满屏剩余空间
+
+
+-->
+<input type="text" name="">
+<input type="submit" name="" id="t">
+<label class="btn" for="t">提交</label>
+
+<div class="crop">
+	<div class="crop-area"></div>
+	
+</div>
+<div class="footer">
+	<p>Designed &amp; Powered by zhangxinxu</p>
+</div>
+</body>
+</html>

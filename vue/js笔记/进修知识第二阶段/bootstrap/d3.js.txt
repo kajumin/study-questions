@@ -1,0 +1,14 @@
+d3.js
+d3.select()   标签   selectAll
+style("color","red")
+append()
+text("文本")
+attr("attr","value")
+on("click",function(){ })
+
+d3.scaleBand().domain([]).rangeRound([])
+
+
+WebGL
+一种3D绘图协议 , 可以为HTML5Canvas提供硬件3D加速渲染
+three.js是库

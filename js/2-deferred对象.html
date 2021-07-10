@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script type="text/javascript" src="../js/jquery-3.4.1.min.js"></script>
+</head>
+<body>
+<script type="text/javascript">
+// 	$.ajax("api/test.html")
+// 　　.done(function(){ alert("哈哈，成功了！");} )
+// 　　.fail(function(){ alert("出错啦！"); } )
+// 　　.done(function(){ alert("第二个回调函数！");} );
+
+// 	// 多个同时使用
+// 	$.when($.ajax("api/test1.html"), $.ajax("api/test2.html"))
+// 　　.done(function(){ alert("哈哈，成功了！"); })
+// 　　.fail(function(){ alert("出错啦！"); });
+
+	// 普通操作的回调函数接口（上） 
+	// 为wait指定回调函数
+	var wait = function(){
+　　　　var tasks = function(){
+　　　　　　console.log("执行完毕！");
+　　　　};
+　　　　setTimeout(tasks,5000);
+　　};
+	$.when(wait())
+　　.done(function(){ console.log("哈哈，成功了！"); })
+　　.fail(function(){ console.log("出错啦！"); });
+	//以上方法是不行的  会立即执行  when()只接受deferred对象
+
+
+	// 改写wait函数
+	var dtd = $.Deferred(); // 新建一个deferred对象
+　　var wait2 = function(dtd){
+　　　　var tasks2 = function(){
+　　　　　　console.log("执行完毕！");
+　　　　　　dtd.resolve(); // 改变deferred对象的执行状态
+　　　　};
+　　　　setTimeout(tasks2,5000);
+　　　　return dtd;
+　　}; 
+	$.when(wait(dtd))
+　　.done(function(){ console.log("哈哈，成功了！"); })
+　　.fail(function(){ console.log("出错啦！"); });
+ 	// deferred.resolve()方法和deferred.reject()方法
+
+ 	// deferred.promise()
+ 	var dtd = $.Deferred(); // 新建一个Deferred对象
+　　var wait = function(dtd){
+　　　　var tasks = function(){
+　　　　　　console.log("执行完毕！");
+　　　　　  dtd.resolve(); // 改变Deferred对象的执行状态
+　　　　};
+　　　　setTimeout(tasks,5000);
+　　　　return dtd.promise(); // 返回promise对象
+　　};
+　　var d = wait(dtd); // 新建一个d对象，改为对这个对象进行操作
+　　$.when(d)
+　　.done(function(){ console.log("哈哈，成功了！"); })
+　　.fail(function(){ console.log("出错啦！"); });
+	// d.resolve(); // 此时，这个语句是无效的  not a function
+
+	// 变成内部对象
+	var wait = function(dtd){
+　　　　var dtd = $.Deferred(); //在函数内部，新建一个Deferred对象
+　　　　var tasks = function(){
+　　　　　 console.log("执行完毕！");
+　　　　　　dtd.resolve(); // 改变Deferred对象的执行状态
+　　　　};
+　　　　setTimeout(tasks,5000);
+　　　　return dtd.promise(); // 返回promise对象
+　　};
+　　$.when(wait())
+　　.done(function(){ console.log("哈哈，成功了！"); })
+　　.fail(function(){ console.log("出错啦！"); });
+
+	// 普通操作的回调函数接口（中）
+	$.Deferred(wait)
+　　.done(function(){ console.log("哈哈，成功了！"); })
+　　.fail(function(){ console.log("出错啦！"); });
+	// $.Deferred()可以接受一个函数名（注意，是函数名）作为参数，$.Deferred()所生成的deferred对象将作为这个函数的默认参数。 
+
+	// 普通操作的回调函数接口（下）
+	var dtd = $.Deferred(); // 生成Deferred对象
+　　var wait = function(dtd){
+　　　　var tasks = function(){
+　　　　　　console.log("执行完毕！");
+　　　　　　dtd.resolve(); // 改变Deferred对象的执行状态
+　　　　};
+　　　　setTimeout(tasks,5000);
+　　};
+　　dtd.promise(wait);
+　　wait.done(function(){ console.log("哈哈，成功了！"); })
+　　.fail(function(){ console.log("出错啦！"); });
+　　wait(dtd);
+</script>
+</body>
+</html>

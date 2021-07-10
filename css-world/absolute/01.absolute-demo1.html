@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		
+
+		.container {
+			width: 1000px;
+			margin: 0 auto;
+		}
+		.container  .list2 {
+			position: relative;
+			width: 200px;
+			height: 200px;
+			padding: 1rem;
+			background-color: red;
+		}
+		.container  .tag2 {
+			position: absolute;
+			top: 1rem;
+			right: 1rem;
+			width: 30px;
+			height: 30px;
+			background-color: #fff;
+		} 
+		.container  .list3 {
+			position: relative;
+			width: 200px;
+			height: 200px;
+			border: 1rem solid transparent;
+			background-color: red;
+		}
+		.container  .tag3 {
+			position: absolute;
+			top: 0;
+			right: 0;
+			width: 30px;
+			height: 30px;
+			background-color: #fff;
+		} 
+	</style>
+</head>
+<body>
+
+<!-- 使用border技巧 top:0; right:0-->
+<div class="container">
+	<div class="list2">
+		<div class="tag2"></div>
+	</div>
+</div>
+<div class="container">
+	<div class="list3">
+		<div class="tag3"></div>
+	</div>
+</div>
+</body>
+</html>

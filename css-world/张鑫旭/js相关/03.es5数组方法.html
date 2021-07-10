@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<div></div>
+<script type="text/javascript">
+	// forEach: 
+	// 1.第一个参数函数: 第1个是遍历的数组内容；第2个是对应的数组索引，第3个是数组本身。
+	//   第二个参数是this指向  没有则window   严格模式为undefined
+	// 2.不会遍历纯粹“占着官位吃空饷”的元素的 [1,,3]
+	[1,2,3].forEach(function(value,index,arr) {
+		// console.log(this)
+		console.log(value)
+	})
+	// var array = [1, 2, 3];
+	// delete array[1]; // 移除 2
+	// alert(array); // "1,,3"
+	// alert(array.length); // but the length is still 3
+	// array.forEach(alert); // 弹出的仅仅是1和3
+
+	// 判断是否为空值 Object.prototype.hasOwnProperty.call(arr, k)
+	if (typeof Array.prototype.forEach != "function") {
+	  Array.prototype.forEach = function (fn, context) {
+	    for (var k = 0, length = this.length; k < length; k++) {
+	    	console.log(k)
+	      if (typeof fn === "function" && Object.prototype.hasOwnProperty.call(this, k)) {
+	        fn.call(context, this[k], k, this);
+	      }
+	    }
+	  };
+	}
+	if (typeof Array.prototype.map != "function") {
+	  Array.prototype.map = function (fn, context) {
+	    var arr = [];
+	    if (typeof fn === "function") {
+	      for (var k = 0, length = this.length; k < length; k++) {      
+	         arr.push(fn.call(context, this[k], k, this));
+	      }
+	    }
+	    return arr;
+	  };
+	}
+	if (typeof Array.prototype.filter != "function") {
+	  Array.prototype.filter = function (fn, context) {
+	    var arr = [];
+	    if (typeof fn === "function") {
+	       for (var k = 0, length = this.length; k < length; k++) {
+	          fn.call(context, this[k], k, this) && arr.push(this[k]);
+	       }
+	    }
+	    return arr;
+	  };
+	}
+	if (typeof Array.prototype.some != "function") {
+	  Array.prototype.some = function (fn, context) {
+		var passed = false;
+		if (typeof fn === "function") {
+	   	  for (var k = 0, length = this.length; k < length; k++) {
+			  if (passed === true) break;
+			  passed = !!fn.call(context, this[k], k, this);
+		  }
+	    }
+		return passed;
+	  };
+	}
+	if (typeof Array.prototype.every != "function") {
+	  Array.prototype.every = function (fn, context) {
+	    var passed = true;
+	    if (typeof fn === "function") {
+	       for (var k = 0, length = this.length; k < length; k++) {
+	          if (passed === false) break;
+	          passed = !!fn.call(context, this[k], k, this);
+	      }
+	    }
+	    return passed;
+	  };
+	}
+
+	// array.indexOf(searchElement[, fromIndex])
+	// 没有匹配则-1, 位置开始搜索, 缺省或者格式不合要求 则为0,
+	// "3" 也是可以的
+	if (typeof Array.prototype.indexOf != "function") {
+	  Array.prototype.indexOf = function (searchElement, fromIndex) {
+	    var index = -1;
+	    fromIndex = fromIndex * 1 || 0;
+	    for (var k = 0, length = this.length; k < length; k++) {
+	      if (k >= fromIndex && this[k] === searchElement) {
+	          index = k;
+	          break;
+	      }
+	    }
+	    return index;
+	  };
+	}
+	// lastIndexOf
+	// 从尾部开始缺省或者格式不合要求 则为arr.length - 1
+	if (typeof Array.prototype.lastIndexOf != "function") {
+	  Array.prototype.lastIndexOf = function (searchElement, fromIndex) {
+	    var index = -1, length = this.length;
+	    fromIndex = fromIndex * 1 || length - 1;
+
+	    for (var k = length - 1; k > -1; k-=1) {
+	        if (k <= fromIndex && this[k] === searchElement) {
+	            index = k;
+	            break;
+	        }
+	    }
+	    return index;
+	  };
+	}
+
+	// array.reduce(callback[, initialValue])
+	// callback(previous, current, index, array)
+	// 应用: 扁平化
+	var arr = [[1,2,3],[4,5],[6,7]].reduce(function(previous, current, index, array) {
+		return previous.concat(current)
+	})
+	console.log(arr)
+
+	if (typeof Array.prototype.reduce != "function") {
+	  Array.prototype.reduce = function (callback, initialValue ) {
+	     var previous = initialValue, k = 0, length = this.length;
+	     if (typeof initialValue === "undefined") {
+	        previous = this[0];
+	        k = 1;
+	     }
+	    if (typeof callback === "function") {
+	      for (k; k < length; k++) {
+	         this.hasOwnProperty(k) && (previous = callback(previous, this[k], k, this));
+	      }
+	    }
+	    return previous;
+	  };
+	}
+	var div = document.getElementsByTagName('div');
+	[].forEach.call(div, function(div) {
+		console.log(div)
+	});
+</script>
+</body>
+</html>

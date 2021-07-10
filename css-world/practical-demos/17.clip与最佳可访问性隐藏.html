@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		a {
+			text-decoration: none;
+		}
+		.box2 .logo {
+			display: block;
+			width: 239px;
+    		height: 66px;
+			background:  #333 url(https://demo.cssworld.cn/common/css/images/logo.png) no-repeat 30px 50%;
+			background-size: 158px 30px;
+		}
+		.clip {
+			position: absolute;
+			clip: rect(0 0 0 0);
+		}
+
+		.box2-2 .logo h1 {
+			text-indent: -999px;
+		}
+
+		.box2-3 .logo h1 {
+			/*display: none;*/
+			visibility: hidden;
+		}
+		.box2-4 .logo h1 {
+			color: transparent;
+		}
+	</style>
+</head>
+<body>
+	<!-- 
+	1.下策 display: none; visibility: hidden; 屏幕阅读器设备会忽略
+	2.text-indent 中策 缩进过大 屏幕阅读器读取不到
+	3.color: transparent; 移动端是上策 桌面端是中策 ie8不兼容
+	4.clip: 是上策， 满足视觉又可以让屏幕阅读器读取到
+
+	 -->
+	<div class="box2 box2-1">
+		<a href="#" class="logo">
+			<h1 class="clip">css世界</h1>
+		</a>
+	</div>
+	<div class="box2 box2-2">
+		<a href="#" class="logo">
+			<h1>css世界</h1>
+		</a>
+	</div>
+	<div class="box2 box2-3">
+		<a href="#" class="logo">
+			<h1>css世界</h1>
+		</a>
+	</div>
+	<div class="box2 box2-4">
+		<a href="#" class="logo">
+			<h1>css世界</h1>
+		</a>
+	</div>
+</body>
+</html>

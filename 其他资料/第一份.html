@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		 .line {
+    	position: relative;
+	}
+	.line:after {
+    	content: "";
+    	position: absolute;
+    	left: 0;
+    	top: 0;
+    	width: 100%;
+    	height: 1px;
+    	background-color: #000000;
+    	-webkit-transform: scaleY(.5);
+    	transform: scaleY(.5);
+	}
+	</style>
+</head>
+<body>
+<h1>1--BFC</h1>
+BFC(Block Formatting Context)，块级格式化上下文，是一个独立的渲染区域，
+	让处于 BFC 内部的元素与外部的元素相互隔离，使内外元素的定位不会相互影响。
+<br>
+ 触发条件 (以下任意一条)
+	1.float的值不为none
+	2.overflow的值不为visible
+	3.display的值为table-cell、tabble-caption和inline-block之一
+	4.position的值不为static或者releative中的任何一个 
+<br>
+在IE下, Layout,可通过zoom:1 触发
+<br>
+ BFC布局规则:
+	1.浮动的元素会被父级计算高度(父级元素触发了BFC)
+	2.非浮动元素不会覆盖浮动元素的位置(非浮动元素触发了BFC)
+	3.margin不会传递给父级(父级触发BFC)
+	4.属于同一个BFC的两个相邻元素上下margin会重叠 
+<br>
+普通文档流布局: 
+	1.浮动的元素是不会被父级计算高度
+	2.非浮动元素会覆盖浮动元素的位置
+	3.margin会传递给父级元素
+	4.两个相邻元素上下的margin会重叠 
+<br>
+开发中的应用
+	1.阻止margin重叠	
+	2.可以包含浮动元素 —— 清除内部浮动(清除浮动的原理是两个 div都位于同一个 BFC 区域之中)	
+	3.自适应两栏布局	
+	4.可以阻止元素被浮动元素覆盖 
+
+<h1>2--CSS3中新增的选择器以及属性</h1>
+属性选择器 和 结构伪类选择器
+transition
+transform
+animation
+box-shadow
+text-shadow
+border-color
+boder-image
+text-overflow
+word-wrap
+border-radius
+opcity
+box-sizing
+outline
+background-size
+background-clip
+background-origin
+rgba
+<h1>3--居中</h1>
+水平居中
+行内元素: text-align: center
+块级元素: margin: 0 auto
+绝对定位和移动: absolute + transform
+绝对定位和负边距: absolute + margin
+flex布局: flex + justify-content:center
+
+垂直居中
+子元素为单行文本: line-height:height
+absolute + transform
+flex + align-items:center
+table: display:table-cell; vertical-align: middle
+利用position和top和负margin
+
+水平垂直居中：
+1.已知元素宽高:绝对定位+margin:auto:
+2.已知元素宽高:  绝对定位+负margin
+3.absolute+transform
+4.flex + justify-content + align-items：center
+<h1>4--清除浮动</h1>
+1.使用clear属性的空元素 在浮动元素后使用一个空元素如<div class="clear"></div>，并在CSS中赋予.clear{clear:both;}属性即可清理浮动。亦可使用<br class="clear" />或<hr class="clear" />来进行清理。
+2.使用css的overflow属性 给浮动元素的容器添加overflow:hidden;或overflow:auto;可以清除浮动，另外在 IE6 中还需要触发 hasLayout ，例如为父元素设置容器宽高或设置zoom:1。在添加overflow属性后，浮动元素又回到了容器层，把容器高度撑起，达到了清理浮动的效果。
+3.使用CSS的:after伪元素 结合 :after 伪元素（注意这不是伪类，而是伪元素，代表一个元素之后最近的元素）和 IEhack ，可以完美兼容当前主流的各大浏览器，这里的 IEhack 指的是触发 hasLayout。给浮动元素的容器添加一个 clearfix 的class，然后给这个class添加一个:after伪元素实现元素末尾添加一个看不见的块元素（Block element）清理浮动。通过CSS伪元素在容器的内部元素最后添加了一个看不见的空格"020"或点"."，并且赋予clear属性来清除浮动。需要注意的是为了IE6和IE7浏览器，要给clearfix这个class添加一条zoom:1;触发haslayout。
+4.给父级元素设置高度
+<h1>5--用纯CSS创建一个三角形的原理是什么</h1>
+.box{
+	width:0px;
+	height:0px;
+	border: 50px solid;
+	border-color:transparent transparent transparent #ef4848;
+}
+<h1>6--实现三栏布局有哪些方法, 分别描述一下</h1>
+1.Flex 布局
+2.绝对定位布局
+3.双飞翼布局
+4.圣杯布局
+<h1>7--css3实现0.5px的细线</h1>
+<div class="line"></div>
+ .line {
+    position: relative;
+}
+.line:after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 1px;
+    background-color: #000000;
+    -webkit-transform: scaleY(.5);
+    transform: scaleY(.5);
+}
+<h1>8--link 与 @import 的区别</h1>
+<h1>9--开发中为什么要初始化css样式:</h1>
+ 为浏览器的兼容问题，不同浏览器对有些标签的默认值是不同的，如果没对CSS初始化往往会出现浏览器之间的页面显示差异。
+<h1>10--CSS优化、提高性能的方法有哪些</h1>
+尽量将样式写在单独的css文件里面，在head元素中引用 将代码写成单独的css文件有几点好处：
+1.内容和样式分离，易于管理和维护
+2.减少页面体积
+3.css文件可以被缓存、重用，维护成本降低
+
+不使用@import
+避免使用复杂的选择器，层级越少越好 建议选择器的嵌套最好不要超过三层，比如：
+精简页面的样式文件，去掉不用的样式
+利用CSS继承减少代码量
+避免！important，可以选择其他选择器
+</body>
+</html>

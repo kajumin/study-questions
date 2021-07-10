@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+</head>
+<body>
+	<!-- 
+	12个插件,  可以单独引入
+	可以仅仅通过 data 属性 API 就能使用所有的 Bootstrap 插件，无需写一行 JavaScript 代码。这是 Bootstrap 中的一等 API，也应该是首选方式。
+	$(document).off('.data-api') //关闭功能
+
+	1.所有方法都可以接受一个可选的 option 对象作为参数，或者一个代表特定方法的字符串，或者什么也不提供（在这种情况下，插件将会以默认值初始化）
+
+	2.获取某个插件的实例: $('[rel="popover"]').data('popover')
+
+	3.修改默认值: $.fn.modal.Constructor.DEFAULTS.keyboard = false // 将模态框插件的 `keyboard` 默认选参数置为 false
+
+	4.命名冲突
+	var bootstrapButton = $.fn.button.noConflict() // return $.fn.button to previously assigned value
+	$.fn.bootstrapBtn = bootstrapButton            // give $().bootstrapBtn the Bootstrap functionality
+
+	5.事件: 
+	$('#myModal').on('show.bs.modal', function (e) {
+  		if (!data) return e.preventDefault() // 阻止模态框的展示
+	})
+
+	6.过渡效果: tansition.js文件 
+	$.support.transition = false  禁用过渡效果
+	 -->
+
+<button class="btn btn-success">show modal</button>
+<button class="btn3 btn-warning">toggle modal</button>
+<div class="modal fade" id="modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Modal title</h4>
+      </div>
+      <div class="modal-body">
+        <p>One fine body&hellip;</p>
+        <div>
+        	<img src="../../images/1.jpg">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+        <button class="btn2 btn-warning">hide modal</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div class="alert alert-warning alert-dismissible fade in" role="alert">
+	<button type="button" class="close fade in" data-dismiss="alert" aria-label="Close">
+  	<span aria-hidden="true">&times;</span>
+	</button>
+	<p>123456</p>
+  	<p>123456</p>
+</div>
+
+<script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+<script type="text/javascript" src="js/bootstrap.js"></script>
+<script type="text/javascript">
+	$.support.transition = false //禁止过渡效果
+	console.log($.support.transition)
+	$('.btn').on('click', function() {
+		console.log('按钮点击了')
+		$('.modal').modal();
+		
+	})
+	$('.btn2').on('click', function() {
+		$('.modal').modal('hide');
+		
+	})
+	$('.btn3').on('click', function() {
+		$('.modal').modal('toggle');
+		
+	})
+	$('.modal').on('show.bs.modal', function (e) {
+  		$('#myInput').focus()
+  		var button = $(e.relatedTarget);
+  		// console.log(button.data('target'))
+  		console.log(button)
+	})
+	$('.modal').on('shown.bs.modal', function (e) {
+  		$('#myInput').focus()
+  		var button = $(e.relatedTarget);
+  		// console.log(button.data('target'))
+  		console.log(button)
+	})
+	$('.modal').on('hide.bs.modal', function (e) {
+  		var button = $(e.relatedTarget);
+  		console.log(button)
+	})
+	
+	$('.modal').on('hidden.bs.modal', function (e) {
+  		var button = $(e.relatedTarget);
+  		console.log(button)
+	})
+	$('.modal').on('loaded.bs.modal', function (e) {
+  		var button = $(e.relatedTarget);
+  		if (!data.data('target')) return e.preventDefault() 
+  		// 阻止模态框的展示
+  		console.log(button)
+	})
+
+	/*
+	1.显示模态框 
+	  (1)data-toggle="modal" data-target="#modal"
+	  (2)$().modal(options)
+	2.relatedTarget 触发modal显示/关闭的按钮 通过按钮传递不同的信息进入函数
+	3.事件: 
+	show.bs.modal   show之后
+	shown.bs.modal  完全show之后
+	hide.bs.modal   hide方法之后
+	hidden.bs.modal 完全hide之后
+	loaded.bs.modal	从远端的数据源加载完数据之后触发该事件。
+	e.preventDefault() 阻止模态框显示
+
+	4.禁止动画效果(去掉fade) 
+	5.尺寸大小 modal-lg  modal-sm
+	6.$.support.transition = false 全局范围内禁止过渡效果
+
+	// 通过 data 属性或 JavaScript 调用模态框插件，可以根据需要动态展示隐藏的内容。模态框弹出时还会为 <body> 元素添加 .modal-open 类，从而覆盖页面默认的滚动行为，并且还会自动生成一个 .modal-backdrop 元素用于提供一个可点击的区域，点击此区域就即可关闭模态框
+	
+	// 
+	*/
+</script>
+</body>
+</html>

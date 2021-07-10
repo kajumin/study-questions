@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title></title>
+</head>
+<body>
+  <a href="./03.cookie%E4%B8%8Esession.html">跳转同源页面</a>
+  <a href="http://localhost:3000/03.cookie%E4%B8%8Esession.html">跳转不同源页面</a>
+  <script>
+    /*
+    webStorage两个主要目标:
+      1.提供一种在cookie之外存储会话数据的路径
+      2.提供一种存储大量可以跨会话存在的数据的机制
+
+      localStorage(本地存储) session(会话存储)
+      1.
+      localStorage的生命周期是永久的, 关闭页面或浏览器之后localStorage中的数据也不会消失。
+      sessionStorage的生命周期是仅在当前会话下有效, 关闭浏览器窗口后会消失
+
+      2.存储数据大小5mb
+      3.存储位置客户端
+      4.数据类型: localStorage和sessionStorage只能存储字符串类型
+      5.场景: localStorage：常用于长期登录（+判断用户是否已登录），适合长期保存在本地的数据
+              sessionStorage：敏感账号一次性登录
+
+      比cookie的优势:
+      1.大小更大:  5m  4kb
+      2.节省网络流量
+      3.用户浏览一组页面期间保存而关闭浏览器后就可以丢弃的数据, sessionStorage会非常方便
+      4.快速显示 配合浏览器缓存机制
+      5.安全性
+      6.WebStorage提供了一些方法，数据操作比cookie方便
+    */
+
+    localStorage.setItem('bang', 20)
+    sessionStorage.setItem('bang', 21)
+    // sessionStorage.removeItem('bang')
+    // sessionStorage.clear()
+    console.log(localStorage.key(0)) // 获取key值
+    console.log(sessionStorage.key(0)) // 获取key值
+
+
+  </script>
+</body>
+</html>

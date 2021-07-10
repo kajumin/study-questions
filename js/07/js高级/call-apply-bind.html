@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<!-- 
+	1.apply call传参不同, call的参数一个一个传递, apply传递一个数组
+	2.bind  不会立即执行, 而是返回一个函数
+	-->
+<script type="text/javascript">
+
+	var arr = [1,2,4,5,6,8,7];
+	console.log(Math.max.apply(null, arr))
+	console.log(Math.max(...arr))
+</script>
+</body>
+</html>

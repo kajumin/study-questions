@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		div {
+			margin-bottom: 200px;
+		}
+		.box1 {
+			width: 100px;
+			height: 100px;
+			background-color: red;
+			white-space: normal;
+		}
+		.box2 {
+			width: 100px;
+			height: 100px;
+			background-color: red;
+			white-space: nowrap;
+		}
+		.box3 {
+			width: 100px;
+			height: 100px;
+			background-color: red;
+			white-space: pre;	
+		}
+		.box4 {
+			width: 100px;
+			height: 100px;
+			background-color: red;
+			white-space: pre-wrap;
+		}
+		.box5 {
+			width: 100px;
+			height: 100px;
+			background-color: red;
+			white-space: pre-line;
+		}		
+	</style>
+</head>
+<body>
+	<!-- normal nowrap pre pre-wrap pre-line -->
+	<!-- 空格制表符合并  normal nowrap pre-line -->
+	<!-- 换行合并   normal nowrap -->
+	<!-- 文字不环绕 nowrap pre -->
+<div class="box1">whitespace &nbsp;&nbsp;&nbsp;哈哈    哈 this</br></br> is long worddd</br>dddddddddddddd ddddddddd ffffffffff</div>
+<div class="box2">whitespace &nbsp;&nbsp;&nbsp;哈哈    哈 this</br></br> is long worddd</br>dddddddddddddd ddddddddd ffffffffff</div>
+<div class="box3">whitespace &nbsp;&nbsp;&nbsp;哈哈    哈 this</br></br> is long worddd</br>dddddddddddddd ddddddddd ffffffffff</div>
+<div class="box4">whitespace &nbsp;&nbsp;&nbsp;哈哈    哈 this</br></br> is long worddd</br>dddddddddddddd ddddddddd ffffffffff</div>
+<div class="box5">whitespace &nbsp;&nbsp;&nbsp;哈哈    哈 this</br></br> is long worddd</br>dddddddddddddd ddddddddd ffffffffff</div>
+
+</body>
+</html>

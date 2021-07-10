@@ -1,0 +1,141 @@
+======================理论知识点
+vue.js 简单小巧, 压缩后大小只有17kb, 渐进式技术栈, 所谓渐进式, 就是可以一步一步, 
+有阶段性地使用它, 不必开始就使用所有东西
+
+MVVM模式: 它是由经典的软件架构MVC衍生而来的, 当view(视图)变化时, 会自动更新到ViewModel(视图模型), 
+反之亦然.
+view和viewModel之间通过双向数据绑定建立联系的
+
+生命周期: 八个阶段, 对应有八个钩子函数, 创建前/后 挂载前/后 更新前/后 销毁前后
+keep-alive专有 激活失活activated deactivated
+
+过滤器: 使用管道符'|' 对数据进行过滤, 常用语格式化文本, 复杂的使用计算属性
+
+v-model: 本质上时语法糖, v-model内部为不同的输入元素使用不同的属性并抛出不同的事件
+
+单向数据流: 父组件数据变化时会传递给子组件, 但是反过来不行. 
+                    子组件想要改变prop: (1)用data数据对象保存起来 (2)计算属性
+
+作用域: 父组件中的模板使用父组件作用域编译, 子组件中模板使用子组件作用域编译
+
+Vue.extend是基础vue构造器, 创建一个子类, 再new实例化
+
+异步更新队列:  vue在观察到数据变化时并不是直接更新dom, 而是开启一个队列, 并缓存同一事件循环中发生
+的所有数据变化, 在缓存时会去除重复的数据, 从而避免不必要的计算和dom操作, 然后再下一次事件循环tick中,
+vue刷新队列并执行实际工作. 
+根据浏览器环境优先使用:  promise.then 和 MutationObserve, 都不支持则使用setTimeout
+
+
+1.vue实例与数据绑定
+  1.1实例与数据 
+      el:  HTMLElement  ||  css选择器
+      app.a = 2   myData =3
+  1.2生命周期  
+       data created才有值  $el beforeMount才有值  $refs mounted才有值  dom mounted才有
+       beforeUpdate  update    数据更新时触发
+       beforeDestory  destoryed    vm.$destroy()触发销毁
+       activated  deactivated   //keep-alive专用   触发时: 只有beforeUpdate  updated会触发
+                       beforeMount之后才触发deactivated
+  1.3插值与表达式  三元运算符  {{}} 简单表达式不是语句 
+  1.4过滤器  第一个参数是数据本身   第二个参数开始才是传递的数据
+      Vue.filter('transformTime', function(value) {} )
+
+2. 指令与事件
+    v-if v-else-if  v-else  
+    v-bind    语法糖:
+    v-on       语法糖@
+
+3. 计算属性  computed: { comText () {}, fullName: { set: function(){}, get: function(){} }}   
+     
+4. v-bind与class style绑定
+    字符串写法: 变量所代表的字符串(类名)
+    对象写法:  :class="{active: isActive}"   属性是类名  属性值为true时, 有该类名
+    数组写法:  :class="[{active: isActive},'warning']"   直接使用 三元运算符 对象写法
+
+    对象写法:  :style="{color: isWhite, backgroundColor: isRed}" 属性是css属性  属性值是绑定值 可以运算
+    数组写法:  :style="[style1,style2]"   多个对象写法
+
+5. 内置指令
+    基本指令  v-cloak v-html v-text v-pre v-once
+    条件渲染指令  v-if  v-else-if  v-else v-show 
+    列表渲染指令  v-for  
+          数组更新 过滤和排序 方法和事件
+              push pop unshift  shift  sort reverse
+              通过数组索引改变值[0]和改变数组的长度.length  都不会触发视图更新
+              对象原有的属性会触发视图更新, 但是新增的属性不会触发视图更新 this.$set(obj, key, )
+          (修饰符: stop(阻止冒泡) prevent(阻止默认行为) capture(捕获模式) self(自身触发) once(一次事件))  
+          (enter tab delete esc space up down left right)  (ctrl shift alt meta)  组合使用或者配合鼠标使用
+
+6. 表单与v-model
+    radio  单个: 不需要使用v-model checked绑定一个布尔值   多个: 绑定一个布尔值  value值不一样
+    checkbox  单个: 绑定一个布尔值   多个: 绑定一个对象 value值不一样
+    select   单个: 绑定一个布尔值  多个: multiple属性  绑定一个数组
+    绑定值: 
+      单选框:  radio  选中时  app.picked === app.value
+      复选框:  checkbox   选中时  app.toggle===app.value1  app.toggle=== app.value2
+      选中框:  选中时  app.selected.number === 123
+   修饰符: lazy(change事件)  number(数字类型)  trim(去除空格)
+7. 组件
+    7.1组件分类  组件与复用  data为函数  命名:{ ComOne: component } 大驼峰  使用<com-one></com-one>
+    7.2使用props传递数据  单向数据流: 父组件数据变化时会传递到子组件, 但反过来不行  
+       子组件改变prop数据(1)使用data数据对象接受下来  (2)使用计算属性
+       type:  'Number'(需要绑定的形式)  ['String', 'Number'](多个)
+       type: String Number Boolean Object Function Array Function
+       require: false || true  是否必须
+       default: 字符串  || 函数(数组或者对象都需要)
+       validator: function (value) {}  //返回布尔值
+   7.3组件通信  
+       自定义事件  this.$emit('handleClick')
+       v-model  语法糖
+       this.parent   this.children  //父链 
+       非父子组件:  bus
+   7.4使用slot分发
+        (1)作用域问题: 父组件写的用父组件的数据,  子组件写的用子组件的数据
+        (2)单个插槽
+        (3)具名插槽
+        (4)作用域插槽  slot-scope="props"  2.5之后api, 可以用于普通元素
+        (5)访问slot  this.$slots.default  this.$slot.header
+   7.5组件高级用法
+        (1)递归组件    必须有一个条件来限制递归的数量
+        (2)内联模板    inline-template  重复时使用子组件数据
+        (3)动态组件    :is="currentView"  动态改变currentView的值的就可以改变显示组件, currentView也可以的组件
+        (4)异步组件    'child-component', function(resolve, reject) { resolve({template: '<div>异步组件</div>'})} 
+   7.6其他方法
+       (1)this.$nextTick: 下一次dom更新之后执行  案例: input显示之后, focus状态
+       异步更新队列: vue观察到数据变化时, 
+       (2)x-templates     type="text/x-template"  id="template1"   tempale: '#template1'
+       (3)手动挂载组件  实例通过new  Vue({})
+              Vue.extend({})  //vue构造器, 创建一个'子类', 参数是包含组件选项的对象
+              new MyComponent().$mount('#app')
+              new MyComponent({el: '#app'})
+              new MyComponent().$mount() 文档外先渲染  document.body.appendChild(component.$el)
+8.指定义指令 bind(指令绑定到元素上时调用, 只调用一次)  
+    unbind(指令与元素解绑时调用)
+    inserted(被绑定元素插入到父节点时调用)  
+    update(被绑定元素所在的模板更新时调用)  
+    componentUpdated(被绑定元素所在的模板完成一次更新周期时调用)  
+     
+    el: 绑定元素
+    binding: 一个对象(name, value, oldValue, expression, arg, modifiers) 
+    vnode: vue编译生成的虚拟节点
+    oldVnode 在update 和 componentUpdated钩子函数可用
+9.render函数
+
+================补充
+1.@hook:mounted   (1)监听子组件生命周期钩子函数
+   (2)子组件监自身生命周期钩子函数
+
+2.:title.sync="doc.title(绑定的数据)"    this.$emit('update:title', e.target.value)
+   扩展为一个自动更新父组件的v-on监听器
+   与v-model 区别  名字指定
+
+3.Vue.observable({})  打造一个状态管理  利用计算属性实现响应式
+
+4.is  动态组件  component内置组件上
+
+5.extends   继承   extend子类构造器
+  propsData应用在extend中, 传递给component组件选项
+
+6.mixins: [myMixin], data数据对象属性method方法相同(mixins被覆盖)  生命周期函数(先执行mixins的)
+
+

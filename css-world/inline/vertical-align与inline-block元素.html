@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.p {
+			border-bottom: solid #999;
+		}
+		.dib-baseline {
+			display: inline-block;
+			width: 150px;
+			height: 150px;
+			outline: 1px solid #cad5eb;
+			background-color: #f0f3f9;
+		}
+		.dib-baseline2 {
+			line-height: 0;
+		}
+
+		.p1 {
+			font-size: 20px;
+		}
+		.p1 span {
+			display: inline-block;
+			width: 20px;
+			height: 20px;
+			background-color: #096;
+		}
+		.p2-1 span {
+			display: inline-block;
+			width: 20px;
+			height: 20px;
+			vertical-align: middle;
+			background-color: #096;
+		}
+		.p2-2 {
+			line-height: 20px;
+		}
+		.p2-2 span {
+			display: inline-block;
+			width: 20px;
+			height: 20px;
+			background-color: #096;
+		}
+		.p3 {
+			line-height: 40px;
+			font-size: 20px;
+		}
+		.p3 span {
+			display: inline-block;
+			width: 40px;
+			height: 40px;
+			background-color: #096;
+		}
+
+	</style>
+</head>
+<body>
+<!-- 
+1.vertical-align默认值baseline, 在文本之类的内联元素就是x字符的下边缘, 对于替换元素就是替换元素的下边缘,
+对于inline-block元素: (1)里面没有内联元素, 或者overflow不是visible, 基线就是其margin低边缘, 否则就是基线就是元素里面最后一行内联元素的基线
+ -->
+<span class="dib-baseline"></span>xxxx
+<span class="dib-baseline" style="overflow: hidden;">x-baselinex-baselinex-baselinex-baselinex-baselinex-baseline</span>xxx
+<span class="dib-baseline">x-baselinex-baselinex-baselinex-baselinex-baselinex-baseline</span>xxx
+<br>
+<span class="dib-baseline"></span>
+<span class="dib-baseline dib-baseline2">x-baseline</span>
+
+
+<br>
+<p class="p">没有做任何处理</p>
+<p class="p1"><span>x</span>删除</p>
+
+<p class="p">行高设置20px  |  vertical-align:middle; </p>
+<div class="p2">
+	<p class="p2-1"><span>x</span>删除</p>
+	<p class="p2-2"><span>x</span>删除</p>
+	<p><button class="more">增大font-size</button></p>
+</div>
+
+<p>元素为inline-block, 元素内有内联元素, 基线为margin低边缘</p>
+<!-- 大于20px图标  40px -->
+<p class="p3-1"><span>x</span>删除</p>
+<p class="p3-2"><span>x</span>删除</p>
+
+<p class="p">元素为inline-block, 元素内有内联元素,或者overflow不为visible,  基线为margin低边缘. 否则是里面内联元素最后一行</p>
+<ul>
+	<li style="list-style-type: none;width: 150px;">
+		<span style="display: inline-block;background-image: url(../../images/1.jpg); background-size: 20px;width: 20px;height: 20px;">高度</span>xx高度高度
+	</li>
+</ul>
+<ul>
+	<li style="list-style-type: none;width: 150px;">
+		<span style="display: inline-block;background-image: url(../../images/1.jpg); background-size: 20px;width: 20px;height: 20px;"></span><span>xx高度高度</span>
+	</li>
+</ul>
+
+<p class="p">元素为inline-block, 通过重设line-height可以实现垂直居中. 外部设置行高或者内部设置行高, 同时设置可以实现多个</p>
+<ul>
+	<li style="list-style-type: none;font-size: 20px;line-height: 20px;">
+		<span style="display: inline-block;background-image: url(../../images/1.jpg); background-size: 20px;width: 20px;height: 20px;">1</span>删除
+	</li>
+</ul>
+<ul>
+	<li style="list-style-type: none;font-size: 20px;">
+		<span style="display: inline-block;background-image: url(../../images/1.jpg); background-size: 20px;width: 20px;height: 20px;line-height: 20px;">1</span>删除
+	</li>
+</ul>
+<ul>
+	<li style="list-style-type: none;line-height: 40px;font-size: 20px;">
+		<span style="display: inline-block;background-image: url(../../images/1.jpg); background-size: 20px;width: 20px;height: 20px;line-height: 20px;">1</span>删除<span style="display: inline-block;background-image: url(../../images/1.jpg); background-size: 30px;width: 30px;height: 30px;line-height: 30px;">1</span>
+	</li>
+</ul>
+ <p>使用vertical-aling:middle;对比</p>
+<ul>
+	<li style="list-style-type: none;line-height: 40px;font-size: 20px;">
+		<span style="display: inline-block;background-image: url(../../images/1.jpg); background-size: 20px;width: 20px;height: 20px;vertical-align: middle;">1</span>删除<span style="display: inline-block;background-image: url(../../images/1.jpg); background-size: 30px;width: 30px;height: 30px;vertical-align: middle;">1</span>
+	</li>
+</ul>
+
+<p>元素为内联元素自动居中对齐</p>
+<ul>
+	<li style="list-style-type: none;line-height: 40px;">
+		<span style="background-image: url(../../images/1.jpg); background-size: 20px;width: 20px;height: 20px;">1</span>删除
+	</li>
+</ul>
+
+<div style="outline: 1px solid red;">
+	<span style="display: inline-block;width: 20px;height:20px;background-color: red;overflow: hidden;">1</span>删除
+</div>
+<div style="outline: 1px solid red;">
+	<span style="display: inline-block;width: 20px;height:20px;background-color: red;"></span>删除
+</div>
+
+<p class="p">基线是内联元素最后一行的基线</p>
+<div style="outline: 1px solid red;">
+	<span style="display: inline-block;width: 20px;height:20px;background-color: red;">高度</span>删除
+</div>
+
+<p>基线就是其margin低边缘</p>
+<div style="outline: 1px solid red;">
+	<span style="display: inline-block;width: 20px;height:20px;background-color: red;"></span>删除
+</div>
+
+<p class="p">内外同时设置</p>
+<div style="outline: 1px solid red;line-height: 40px;">
+	<span style="display: inline-block;width: 20px;height:20px;background-color: red;line-height: 20px;">1</span><span>删除</span>
+</div>
+
+<p class="p">内部设置</p>
+<p style="outline: 1px solid red; ">
+	<span style="background-color: red;display: inline-block;width: 40px;height: 40px;line-height: 40px;">1</span>删除
+</p>
+
+<p class="p">外部设置</p>
+<p style="outline: 1px solid red; line-height: 40px;">
+	<span style="background-color: red;display: inline-block;width: 40px;height: 40px;">1</span>删除
+</p>
+
+<script type="text/javascript">
+	var p2 = document.querySelector('.p2')
+	var more = document.querySelector('.more')
+	console.log(more)
+	more.onclick = function(e) {
+		var fontSize =window.getComputedStyle(p2)['font-size']
+		p2.style.fontSize = parseInt(fontSize) +  5 + 'px';
+	}
+</script>
+</body>
+</html>

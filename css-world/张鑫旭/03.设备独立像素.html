@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0">
+	<style type="text/css">
+		body {
+			margin: 0;
+		}
+		.box1 {
+			width:  7.5rem; /* * 50 = 375*/ 
+			height: 7.5rem;
+			background-color: red;
+		}
+		.border_1px-1 {
+			height: 10px;
+         	border-bottom: 1px solid #000;
+         	background-color: #fff;
+      	}
+      	@media only screen and (-webkit-min-device-pixel-ratio:2){
+      		html {
+      			color: red;
+      		}
+			.border_1px-1 {
+                border: none;
+             	border-width: 1px 0;
+             	/*border-style: solid;*/
+                -webkit-border-image: url(./images/zza/1.jpg) 2 0 stretch;
+                border-image: url(./images/zza/1.jpg) 2 0 stretch;
+            }
+            .border_1px-2 {
+			    background-image:linear-gradient(180deg, red, red 50%, transparent 50%),
+			    linear-gradient(270deg, red, red 50%, transparent 50%),
+			    linear-gradient(0deg, red, red 50%, transparent 50%),
+			    linear-gradient(90deg, red, red 50%, transparent 50%);
+			    background-size: 100% 1px,1px 100% ,100% 1px, 1px 100%;
+			    background-position: top, right top,  bottom, left top;
+			    background-repeat: no-repeat; 
+			    padding: 10px;
+			
+            } 
+            .border_1px-3 {
+            	height: 10px;
+            	margin-top: 10px;
+            	background-color: #fff;
+                -webkit-box-shadow: 0 1px 1px -1px red;
+                box-shadow: 0 1px 1px -1px red;
+            } 
+            .border_1px-5-1 {
+            	height:1px;
+            	margin-top: 20px;
+            	margin-bottom: 20px;
+    			background: #000;
+                -webkit-transform: scaleY(0.5);
+                -webkit-transform-origin:0 0;
+                /*overflow: hidden; */
+            }
+            .border_1px-5-1::after{
+    			content:'';
+    			position: absolute;
+    			top: 20px;
+    			width:100%;
+    			border-bottom:1px solid #000;
+                /*transform: scaleY(0.5);*/
+			}
+			.border_1px-5-2 {
+				position: relative;
+				height: 1px;
+			}
+			.border_1px-5-2::after {
+			    content: '';
+			    width: 200%;
+			    height: 100%;
+			    position: absolute;
+			    top: 0;
+			    left: 0;
+			    /*border: 1px solid #bfbfbf;*/
+			    background-color: red;
+			    border-radius: 4px;
+			    -webkit-transform: scale(0.5);
+			    transform: scale(0.5);
+			    -webkit-transform-origin: top left;
+			}
+		}
+	</style>
+</head>
+<body>
+	<div style="height: 10px;background-color: #096;"></div>
+	<div class="box1"></div>
+
+	<hr>
+	<!-- 
+	1.border-image  需要准备图片
+	2.background + 渐变 无法实现圆角
+	3.text-shadow
+	4.viewport + rem
+	5.transform: scale(0.5)
+	 -->
+	<div class="border_1px-1"></div>
+	<div class="border_1px-2"></div>
+	<div class="border_1px-3"></div>
+	<div class="border_1px-4"></div>
+	<div class="border_1px-5-1"></div>
+	<div class="border_1px-5-2"></div>
+
+<!-- 
+	1.英寸
+	2.分辨率  箱数
+	3.PPI 每英寸包括的像素数
+	4.DPI 即每英寸包括的点数 打印机每英寸可以打印的点数
+	5.设备独立像素  逻辑像素
+	6.设备像素比
+	7.布局视口 视觉视口 理想视口
+	8.移动端适配
+	9.获取浏览器大小
+	10.1px问题
+	11.rem + vw  1vw=3.75px
+	12.横屏检测 orientation
+	   orientation: portrait竖屏 | landscape横屏
+	13.图片模糊
+	   媒体查询 image-set srcset js拼接 svg
+ -->
+ <script type="text/javascript">
+ 	// 以iphone6为例
+ 	console.log(document.documentElement.clientWidth) //980
+ 	console.log(window.innerWidth) //980
+ 	console.log(window.screen.width) //375
+
+ 	// 设置viewport之后
+ 	console.log(document.documentElement.clientWidth) //375
+ 	console.log(window.innerWidth) //375
+ 	console.log(window.screen.width) //375
+ 	console.log(window.devicePixelRatio)
+
+
+ 	var width = document.documentElement.clientWidth;
+ 	document.documentElement.style.fontSize = 100 / 750 * width + 'px';
+ 	console.log(document.querySelector('html').style.fontSize)
+ </script>
+</body>
+</html>

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.test1 {
+			font-size: 16px;
+			line-height: 0;
+			border: 1px solid #ccc;
+			background-color: #eee;
+			margin-top: 20px;
+		}
+		.test2 {
+			font-size: 0;
+			line-height: 16px;
+			border: 1px solid #ccc;
+			background-color: #eee;
+			margin-top: 20px;
+		}
+		.box2 {
+			position: relative;
+			font-family: simsun;
+			font-size: 80px;
+			line-height: 120px;
+			background-color: yellow;
+		}
+		.box2:after {
+			content: '';
+			position: absolute;
+			left: 0;
+			top: 0;
+			width: 10px;
+			height: 20px;
+			background-color: red;
+		}
+		.box2 span {
+			background-color: white;
+		}
+
+		.box3 {
+		    display: inline-block;
+		    font-family: simsun;
+		    font-size: 24px;
+		    background-color: yellow;
+		}
+		.box3 > span {
+		    outline: 1px solid red;
+		}
+		.box3 > span:first-child:after {
+		    content: "\A";
+		    white-space: pre;
+		}
+		.box3-1 {
+		    line-height: 2;
+		}
+		.box3-2 {
+		    line-height: 1;
+		}
+		.box3-3 {
+		    line-height: .5;
+		}
+
+		.box4 {
+			/*height: 256px;*/
+			line-height: 256px;
+			background-color: #096;
+		}
+		.box4 img {
+			vertical-align: middle;
+			vertical-align: bottom;
+		}
+	</style>
+</head>
+<body>
+<!-- 内联元素高度之本 
+	11.内联元素的高度之本line-height  一个div中包含几个文字, div的高度由line-hieght决定,
+	计算行框盒子高度的基础高度
+ 	2.利用宋体, 将em-box显示出来
+ 		em-box等于font-size
+	   	半行距 = 行距 / 2 = line-height - em-box  = line-height - font-size
+	   	内容区域受font-family和font-size的影响
+	   	em-box只受font-size的影响
+	   	内容区域高于em-box
+	   	当使用宋体的时候, em-box和内容区域等同
+	3.行高不支持负值, 但是行距不能为负值
+	4.对于纯文本元素, line-height可以决定高度, 
+	但是与替换元素混合的时候, 需要值足够大才行
+ -->
+ 	<div class="box1 test1">我的高度是?</div>
+	<div class="box1 test2">我的高度是?</div>
+
+ 	<div class="box box2">
+ 		<span>sphinx</span><span>中国</span>
+	</div>
+	<span style="font-size: 80px;background-color: #eee;font-family: simsun">sphinx</span>
+
+
+	<br>
+	<div class="box box3 box3-1">
+	    <span>第1行</span><br><span>第2行</span>
+	</div>
+	<div class="box box3 box3-2">
+	    <span>第1行</span><br><span>第2行</span>
+	</div>
+	<div class="box box3 box3-3">
+	    <span>第1行</span><br><span>第2行</span>
+	</div>
+
+	<div class="box4">
+		x<img src="../../images/1.jpg" height="128">
+	</div>
+</body>
+</html>

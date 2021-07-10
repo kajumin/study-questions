@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			#box {
+				
+				width: 100px;
+				height: 100px;
+				background-color: red;
+				opacity: 0.2;/*标准*/
+				filter:alpha(opacity=30);/*ie中支持*/
+			}
+		/*清除浮动*/
+		/* 1.标准下：*/
+		.clearfix :: after {
+			content".";
+			display: block;
+			height: 0;
+			visibility: hidden;
+			clear: both;
+		}
+		/*2.ie6,7,8*/
+		.clearfix {
+			*zoom: 1;
+		}
+		 #box2 {
+        	width: 300px;
+        	height: 50px;
+        	/* background: linear-gradient(渐变的起始位置， 起始颜色， 结束颜色)； */
+        	background: linear-gradient(top, red, green);
+        	background: -webkit-linear-gradient(top, red, green);
+        	background: -moz-linear-gradient(top, red, green);
+        	/* 因为背景渐变 兼容性问题很严重， 必须在前面添加浏览器的私有前缀 */
+        	margin: 100px auto;
+		
+        }
+       
+        #box3 {
+        	width: 400px;
+        	height: 100px;
+        	margin: 0 auto;
+        	 /* background:-webkit-linear-gradient(渐变的起始位置， 颜色 位置， 颜色 位置....)； */
+        	background: -webkit-linear-gradient(top, red 0%, green 20%, blue 80%);
+        	background: -moz-linear-gradient(left, red 0%, green 50%, skyblue 80%,  hotpink 100%);
+        	/*0%代表从零位置开始，后面的百分数代表的是终点*/
+        }
+		/*=========浏览器前缀===============*/
+		/*浏览器前缀	浏览器
+		-webkit-	Google Chrome, Safari, Android Browser
+		-moz-	    Firefox
+		-o-	        Opera
+		-ms-	    Internet Explorer, Edge*/
+		</style>
+	</head>
+	<body>
+		<div id="box">你好</div>
+		<div id="box2"></div>
+		<div id="box3"></div>
+	</body>
+	<script>
+		//===1.背景半透明===================
+		//标准下：opacity: 0.2;
+		//非标准下：filter:alpha(opacity=30);
+		//====2.清除浮动====================
+		/*清除浮动*/
+		/* 1.标准下：*/
+//		.clearfix :: after {
+//			content".";
+//			display: block;
+//			height: 0;
+//			visibility: hidden;
+//			clear: both;
+//		}
+//		/*2.ie6,7,8*/
+//		.clearfix {
+//			*zoom: 1;
+//		}
+		
+	</script>
+</html>

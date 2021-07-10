@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.box1 {
+			width: 412px;
+			height: 412px;
+			background: url(../../images/zza/1.jpg) top center/200px 300px no-repeat, url(../../images/1.jpg) bottom center/200px 300px no-repeat;
+			background-size: 200px 300px;
+			background-blend-mode: screen;
+			background-blend-mode: darken;
+			background-blend-mode: lighten;
+		}
+		.box2 {
+			width: 412px;
+			height: 412px;
+			background: url(../../images/zza/1.jpg) top center/200px 300px no-repeat, url(../../images/1.jpg) bottom center/200px 300px no-repeat, red;
+			/*多背景时, 背景色不能写在前面*/
+			/*background: #f00 url(../../images/zza/1.jpg) top center/200px 300px no-repeat;*/
+			background-size: 200px 300px;
+			background-blend-mode: screen;
+			background-blend-mode: darken;
+			background-blend-mode: lighten;
+		}
+	</style>
+</head>
+<body>
+	<!-- 
+	1. background-blend-mode本身就带有隔离特性，也就是一个元素应用background-blend-mode背景混合模式，最终的效果只会受当前元素的背景图像和背景颜色影响，不会受视觉上处于当前区域其他任意元素影响。
+	
+	2. 应用background-blend-mode属性后，不仅各个图像之间要进行混合，同时还要和背景色进行混合。 -->
+<div class="box1"></div>
+<div class="box2"></div>
+<div style="width: 300px;height: 200px;background-color: red;"></div>
+</body>
+</html>

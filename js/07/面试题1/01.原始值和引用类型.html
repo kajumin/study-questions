@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<script type="text/javascript">
+	/*
+		原始值: undefined null number string boolean symbol
+		引用类型: object
+		(1)原始值存储在栈中, 大小固定, 由js引擎分配内存空间
+		(2)引用类型值存储在堆中, 大小不固定, 由操作系统申请
+
+		null不指向任何地址 设置为null垃圾回收时会被回收
+		number: 64位(8个字节)
+		string: unicode编码, 字母和标点对应一个字节, 
+		        汉字对应两个字节, 字符串一旦创建不可以改变,只能替换
+		boolean: 占用一位 true false
+		undefined 没有赋值的变量的默认值
+
+		引用类型存储在堆中, 存储在变量处的值是一个指针, 指向存储对象的内存地址
+		所占空间由组成引用类型的原始值决定
+
+		(1)引用类型传递参数: 引用赋值一份给参数
+		(2)按复制赋值类存储复合值arr.slice() arr.conccat() Array.form() 扩展运算符
+		(3)Object.create()
+
+	*/
+</script>
+<script type="text/javascript">
+	var arr = [1,2,3]
+	var newArr  = arr.slice()
+	console.log(arr === newArr) //false
+
+	var obj = { name: 'bang' , msg: { age: 20} }
+	var newObj = Object.create(obj)
+	newObj.name = 'joycechu'
+	newObj.msg.age = 18
+	console.log(obj) //bang
+	console.log(newObj) //bang
+	console.log(obj.name) //bang
+	console.log(newObj.name) //joycechu
+
+	function A () {
+		this.age = '1'
+	}
+	A.prototype.show = function() {
+		console.log('i am A')
+	}
+	// var obj = Object.create(A.prototype)
+	// console.log(obj)
+	// Object.create = function(pro) {
+	// 	var funName = pro.constructor.name
+	// 	var tempObj = new Function('function ' + funName + '() {}')
+	// 	// console.log(tempObj)
+	// 	tempObj.prototype = pro
+	// 	return new tempObj()
+	// }
+	// var obj = Object.create(A.prototype)
+	// console.log(obj)  //A {}
+	// console.log({}) //字面量对象
+	
+	// 传递数组
+	var obj2 = Object.create(["a", "b", "c"])
+	console.log(obj2) // Array {}
+
+	var obj3 = Object.create({name:'bang',age:20})
+	console.log(obj3) //{}
+	// 深克隆
+	// 浅克隆
+	console.log({name:'bang'}.constructor.name)
+	console.log([1].constructor.name)
+
+	// 循环引用出错的例子
+	var a = {name: 'bang'}
+	var b = {name: 'joycechu'}
+	a.child = b
+	b.parent = a
+	console.log(a)
+	console.log(b)
+	// console.log(JSON.stringify(a)) //Converting circular structure to JSON
+
+	// 内存泄露的例子
+	var leakObj  = null
+	// setInterval(function testMemory() {
+	// 	// console.log(123)
+	// 	var originLeakObj = leakObj
+	// 	var unused = function () {
+	// 		if(originLeakObj) {
+	// 			console.log('ok')
+	// 		}
+	// 	}
+	// 	leakObj = {
+	// 		leakStr: new Array(1000).join('*'),
+	// 		leakMethod: function(){
+	// 			console.log('leak')
+	// 		}
+	// 	}
+	// }, 100)
+	// 10的时候明显  使用memory监控
+	// 连续五次都在增长 就要排除内存泄露
+
+
+	function testMemory () {
+		// console.log(123)
+		var originLeakObj = leakObj
+		var unused = function () {
+			if(originLeakObj) {
+				console.log('ok')
+			}
+		}
+		leakObj = {
+			leakStr: new Array(1000).join('*'),
+			leakMethod: function(){
+				console.log('leak')
+			}
+		}
+	}
+	testMemory()
+</script>
+</body>
+</html>

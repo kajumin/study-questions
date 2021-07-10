@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<!-- 
+	1.await让出线程, 执行其他, 后续代码当做微任务下一次执行
+	2.即使指定回调函数时, 状态已经改变为resolved, .then方法依然被异步调用
+	3.穿透到最后  .then()的参数不是函数, 会被解析为then(null)
+	4.async函数return的promise状态开始是pending
+	5.Promise.resolve(1) 跟Promise.resolve(Promise.resolve(1))一样是直接当做微任务就执行
+	6.resolve状态改变之后, 再更改状态无效
+	 -->
+ <script type="text/javascript">
+
+	// async function async1() {
+	//     console.log( '1')
+	//     await async2()
+	//     console.log( '2')
+	// }
+	// async function async2() {
+	//     console.log( '3')
+	// }
+	// setTimeout( function() {
+	//     console.log( '4')
+	// }, 0)
+	// async1();  
+	// new Promise( function( resolve ) {
+	//     console.log( '5')
+	//     resolve();
+	// } ).then( function() {
+	//     console.log( '6')
+	//  } )
+	// console.log( '7')
+	// 1 3 5 7 2 6 4
+
+	// setTimeout(function(){
+	//     console.log(1);   
+	//     Promise.resolve().then(function(){
+	//         console.log(2);
+	//     });
+	// }, 0);
+	// setTimeout(function (){
+	//     console.log(3);
+	// },0);
+	// Promise.resolve().then(function (){
+	//     console.log(4);
+	// });
+	// console.log(5);
+	// // 5 4 1 2 3
+
+
+	// 传递的并非是一个函数, 它实际上会将其解释为 then(null)，这就会导致前一个 Promise 的结果会穿透下面。
+	// Promise.resolve(1)
+	//   .then('123')
+	//   .then(Promise.resolve(3))
+	//   .then(res=> {
+	//   	console.log(res)
+	// })
+	//输出结果：1
+
+	// const promise1 = () => Promise.resolve('resolved')
+	// function fn1 () {
+	// 	promise1().then(res => console.log(res, "fn1"))
+	// 	console.log(1)
+	// }
+	// async function fn2 () {
+	// 	console.log(2)
+	// 	console.log(await promise1(), 'fn2');
+	// 	console.log(3)
+	// }
+	// fn1()
+	// fn2()
+	// 1 2 resolved fn1  resolved fn2 3
+
+	// async function getData () {
+	// 	return await Promise.resolve('1')
+	// }
+	// const data = getData()
+	// console.log(data) 
+	// data.then(res => {
+	// 	console.log(data) 
+	// 	console.log(res)
+	// }) 
+	// Promise{<pending>}
+	// Promise {<resolved>: "1"} 
+	// 1
+	// async function getData () {
+	// 	await Promise.resolve('1')
+	// }
+	// const data = getData()
+	// console.log(data) 
+	// data.then(res => {
+	// 	console.log(data) 
+	// 	console.log(res)
+	// }) 
+	// Promise{<pending>}
+	// Promise {<resolved>: undefined} 
+	// undefined
+
+	// const p1 = Promise.resolve(Promise.resolve(1))
+	// function fun1 () {
+	// 	Promise.resolve(Promise.resolve(1))
+	// 	.then(res => {
+	// 		console.log(res)
+	// 		return res
+	// 	})
+	// 	.then(res => console.log('fun1', res))
+		
+	// 	Promise.resolve()
+	// 	.then(res=>{
+	// 		console.log(3)
+	// 	})
+
+	// }
+	// async function fun2 () {
+	// 	const res = await p1;
+	// 	console.log(res) //1
+	// 	console.log(4)
+	// 	console.log('fun2', await res)
+	// }
+	// fun1()
+	// fun2()
+	// //fun1 end end 1 3 1 4 fun1 1 fun2 1 fun2 end
+
+
+	// const firt = () => (new Promise((resolve, reject) => {
+	// 	console.log(3)
+	// 	let p = new Promise((resolve, reject) => {
+	// 		console.log(7)
+	// 		setTimeout(() => {
+	// 			console.log(5)
+	// 			resolve(6)
+	// 		}, 0)
+	// 		resolve(1)
+	// 	})
+	// 	resolve(2)
+	// 	p.then((arg) => {
+	// 		console.log(arg)
+	// 	})
+	// }))
+	// firt().then(arg => {
+	// 	console.log(arg)
+	// })
+	// console.log(4)
+	// 3 7 4 1 2 5
+
+	// async function async1 () {
+	// 	console.log(1)
+	// 	const result = await async2()
+	// 	// console.log(result) //undefined
+	// 	console.log(2)
+	// 	new Promise((resolve, reject) => {
+	// 		console.log(10)
+	// 		resolve()
+	// 	})
+	// 	.then(() => {
+	// 		console.log(11)
+	// 	})
+	// }
+	// async function async2 () {
+	// 	console.log(3)
+	// }
+	// async1()
+	// new Promise(function(resolve, reject) {
+	// 	console.log(5)
+	// 	resolve()
+	// 	console.log(6) //也会执行
+	// })
+	// .then(res => {
+	// 	console.log(7)
+	// })
+	// .then(() => {
+	// 	console.log(8)
+	// })
+	// console.log(9)
+	//135692(10)7(11)84
+
+</script>
+</body>
+</html>

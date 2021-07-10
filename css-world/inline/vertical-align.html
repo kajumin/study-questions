@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">	
+		.p {
+			border-bottom: 3px solid #ccc;
+		}
+		.box1 {
+			line-height: 32px;
+		}
+		.box2-1,
+		.box2-2 {
+			box-sizing: border-box;
+			border: 1px solid red;
+			line-height: 32px;
+		}
+		.box2-2 span {
+			/*border: 1px solid red;*/
+			/*font-size 越大基线越往下*/
+			/*font-size 不同导致幽灵节点和span的基线不一致*/
+			font-size: 24px;
+		}
+		.box2-3 {
+			box-sizing: border-box;
+			border: 1px solid red;
+			line-height: 32px;
+		}
+		.box2-3 span {
+			font-size: 24px;
+			vertical-align: top;
+		}
+		.box2-4 {
+			box-sizing: border-box;
+			border: 1px solid red;
+			line-height: 32px;
+			font-size: 24px;
+		}
+		
+		.box3-1 {
+			border: 1px solid red;
+			height: 128px;
+		}
+		.box3-2 {
+			border: 1px solid red;
+			height: 128px;
+			line-height: 128px;
+		}
+		.box3 img{
+			height: 96px;
+			vertical-align: middle;
+		}
+		.box4-1,
+		.box4-2,
+		.box4-3 {
+			border: 1px solid red;
+		}
+		.box4-1 .cell-1 {
+			height: 128px;
+			display: table-cell;	
+		}
+		.box4-1 .cell-1 img {
+			height: 96px;
+			vertical-align: middle;
+		}
+		.box4-2 .cell-2 {
+			height: 128px;
+			display: table-cell;
+			vertical-align: middle;
+		}
+		.box4-2 .cell-2 img {
+			height: 96px;
+		}
+		.box4-3 .cell-3 {
+			height: 128px;
+			display: table-cell;
+			vertical-align: middle;
+		}
+	</style>
+</head>
+<body>
+	<!-- 
+		线类: baseline top middle bottom
+		文本类: text-top text-bottom
+		上标签: sub super
+		数值百分比类: 20 2em 20%
+	-->
+	<!-- 
+		正值向上  负值向下 line-height百分比相对于line-height
+		
+		图标对齐案例中可以是用百分比或者数值
+		一般line-height是规定的所以使用数值就好了
+
+		vertical-align作用前提: 内联元素和table-cell
+	-->
+<!-- 
+	1. 高度等于line-height
+	2. 高度不等于line-height
+	  因为vertical-align起了作用  35px  font-size越大基线越下 
+	  font-size不同导致幽灵节点和span的基线不一致
+	  解决办法: vertical-align: top;
+	  font-size都设置成一样
+	3.图片行高不够导致的无法居中对齐  幽灵空白节点起来作用
+	  解决办法: 行高设置高一点
+	4.table-cell 垂直居中对齐
+	  table-cell元素设置vertical-align垂直对齐的是子元素, 其写在table-cell元素自身上
+	5.图片下间隙问题 五种方法 float block font-size line-height vertical-align: top;
+	使用font-size, line-height必须是相对单位
+-->
+<p class="p">line-height等于高度</p>
+<div class="box1"><span>文字</span></div>
+
+<p class="p">span标签font-size不等于外部div, 导致高度不等于行高, 因为有幽灵空白节点</p>
+<div class="box2-1">
+	<span>文字</span>
+</div>
+<div class="box2-2">
+	x<span>文字</span>
+</div>
+
+<p>解决办法: (1)vertical-align: top;(2)设置div的font-size 让幽灵空白节点和span标签font-size一致</p>
+<div class="box2-3">
+	x<span>文字</span>
+</div>
+<div class="box2-4">
+	x<span>文字</span>
+</div>
+
+
+<!-- 2 居中对齐 vertical-align: middle; -->
+<p>无效 因为幽灵节点高度不够</p>
+<div class="box3 box3-1">
+	<span>x</span><img src="../../images/1.jpg">
+</div>
+<p>line-height: 128px;</p>
+<div class="box3 box3-2">
+	<span>x</span><img src="../../images/1.jpg">
+</div>
+
+<!-- 3 多行对齐: table-cell vertical-align: middle-->
+<h3>垂直居中对齐table-cell vertical-align: middle</h3>
+<p>无效 vertical-align应该设置在table-cell元素中</p>
+<div class="box4-1">
+    <p class="cell cell-1">
+    	<img src="../../images/1.jpg">
+    </p>
+</div>
+<div class="box4-2">
+    <p class="cell cell-2">
+    	<img src="../../images/1.jpg">
+    </p>
+</div>
+<p>块级一样可以</p>
+<div class="box4-3">
+    <div class="cell cell-3">
+    	<div>
+    		<p>pppppppppppppppppppp</p>
+    		<p>pppppppppppppppppppp</p>
+    	</div>
+    </div>
+</div>
+<script type="text/javascript">
+	var box22 = document.querySelector('.box2-2')
+	
+	console.log(window.getComputedStyle(box22).fontSize)
+	console.log(window.getComputedStyle(box22).lineHeight)
+	// 128px 16px  112px
+
+	var p = document.querySelector('.box3-2 p')
+	var img = document.querySelector('.box3-1 img')
+
+	// console.log(window.getComputedStyle(p).getPropertyValue('vertical-align'))
+	console.log(window.getComputedStyle(p).verticalAlign)
+	console.log(window.getComputedStyle(img).verticalAlign)
+	// baseline  middle
+
+</script>
+</body>
+</html>

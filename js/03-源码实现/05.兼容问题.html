@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<style type="text/css">
+		.box1 {
+			width: 100px;
+			height: 100px;
+			background-color: #096;
+		}
+	</style>
+</head>
+<body>
+<div style="height: 5000px;background-color: red;">
+	<div class="box1" id="div">
+		<a href="www.baidu.com" class="a" id="a">链接</a>
+	</div>
+	
+</div>
+<script type="text/javascript" src="common.js"></script>
+<script type="text/javascript">
+	/*
+	1.注册事件
+	2.移除事件
+	3.阻止默认行为
+	4.阻止冒泡
+	5.获取事件对象
+	6.获取滚动条位置
+	7.获取鼠标坐标
+	8.获取可视窗口大小
+	addEventListener  //IE9+  attachEvent
+	this //IE9+  指向绑定事件对象
+	e都可以
+	e.target  //IE9+ srcElement
+	e.preventDefault  e.stopPropagation  //IE9+  returnValue = false  cancelBubble = true
+	e.pageY //IE9+  //body.scrollTop + clientTop
+	window.innerWidth //IE9+  documentElement.clientWidth
+	ele.textContent //IE9+
+	
+
+	9.对象冒充
+	10.异步同步加载js文件, 非阻塞加载模式, 并发
+	   阻塞加载模式
+	11.拖拉
+	12.图片原始尺寸大小
+	13.阻止表单提交
+	14.十进制转为十六进制 num.toString(16)
+	   0x(16) 0(8)
+	   随机产生颜色
+	15.转为deg rad
+	16.sort
+	17.计算时间差
+	18.千分位分隔
+	19.是否为质数
+	20.出现最多的字符串, 并统计次数 chartAt for in 
+	*/
+</script>
+<script type="text/javascript">
+	// 1-8
+	// var a = document.querySelector('.a')
+	// console.log(a)
+	// var div = document.querySelector('.box1')
+	// addEvent(a, 'click', function(e) {
+	// 	console.log(getTarget(e))
+	// 	stopPropagation(e)
+	// 	preventDefault(e)
+	// })
+	// addEvent(div, 'click', function(e) {
+	// 	console.log('box1 click')
+	// 	console.log(getMousePosition(e))
+	// })
+
+	// console.log(getWindow())
+	// console.log(getPosition())
+	// // 设置文本
+	// setInnerText(a, 'aaaaa')
+
+	// 测试IE低版本
+	// var a = document.querySelector('.a') //IE8+
+	// console.log(a)
+	var a = document.getElementById('a')
+	var div = document.getElementById('div')
+	console.log(div.firstElementChild)
+	console.log(div.children)
+	// a.innerText = '11111' //IE6+
+	// a.textContent = '11111' //IE9+
+
+	
+	// div.addEventListener('click', function(e) { //IE9
+	// 	console.log(e)
+	// })
+	addEvent(div, 'click', function(e) {
+		console.log('box1 click')
+		// console.log(getMousePosition(e))
+		// console.log(window.getComputedStyle(this)['width'])
+		console.log(div.currentStyle['width'])
+		console.log(document.documentElement.scrollTop)// IE chrome ff有值
+		console.log(document.body.scrollTop) //ff没值
+
+		console.log(e.pageY) //IE9
+		console.log(getMousePosition(e))
+	})
+	addEvent(a, 'click', function(e) {
+		// console.log(e) //IE都可以
+		
+		// console.log(e.target) //IE9+
+		console.log(getTarget(e))
+		// e.preventDefault() //IE9+
+		preventDefault(e)
+		// e.stopPropagation() //IE9+
+		stopPropagation(e)
+		
+	})
+
+	console.log(window.innerWidth) //IE9+
+	console.log(getWindow())
+</script>
+</body>
+</html>

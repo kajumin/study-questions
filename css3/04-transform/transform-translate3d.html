@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		body {
+			perspective: 1000px;
+		}
+		.box {
+			width: 100px;
+			height: 100px;
+			margin-bottom: 20px;
+			background-color: red;
+			transition: transform 1s;
+			transform-origin: center top; 
+		}
+		.box1:hover {
+			/*只有一个值*/
+			transform: translate3d(100px);
+		}
+		.box2:hover {
+			transform: translate3d(0, 100px, 0);
+		}
+		.box3:hover {
+			transform: translate3d(50px, 0, 50px);
+		}
+	</style>
+</head>
+<body>
+	<!-- 
+		3.没有视距没有效果 正值变大
+
+	 -->
+	<p>transform: translate3d(100px)</p>
+<div class="box box1">中国</div>
+	<p>transform: translate3d(-30deg)</p>
+<div class="box box2">中国</div>
+	<p>transform: translate3d(30deg, -30deg)</p>
+<div class="box box3">中国</div>
+</body>
+</html>

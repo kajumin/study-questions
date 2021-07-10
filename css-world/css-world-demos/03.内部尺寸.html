@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.box1-1 {
+			width: 160px;
+		}
+		.box1-2 {
+			width: 160px;
+		}
+		.box1-3 {
+			width: 160px;
+			background-color: #eee;
+			text-align: center;
+		}
+		.box1-3 .content {
+			display: inline-block;
+			text-align: left;
+		}
+		.box2 {
+			/*width: 0;*/
+			background-color: #eee;
+		}
+		.box2 .content {
+			display: inline-block;
+		}
+
+
+		.ao,
+		.tu {
+		  display: inline-block;
+		  width: 0;
+		  font-size: 14px;
+		  line-height: 18px;
+		  margin: 35px;
+		  color: #000;
+		}
+		.ao:before,
+		.tu:before {
+		  outline: 2px solid #cd0000;
+		  font-family: Consolas, Monaco, monospace;
+		}
+		.ao:before {
+		  content: "love你love";
+		}
+		.tu {
+		  direction: rtl;
+		}
+		.tu:before {
+		  content: "我love你";
+		}
+
+
+		.box3 {
+			width: 200px;
+		}
+		.box3 .son {
+			display: inline-block;
+			white-space: nowrap;
+		}
+		.container {
+			width: 1000px;
+			margin: 0 auto;
+			overflow: hidden;
+		}
+		.box4 {
+			display: inline-block;
+			width: 3000px;
+		}
+		.box4 img {
+			float: left;
+			width: 200px;
+			height: 200px;
+		}
+		@keyframes move {
+			0% {
+				transform: translate(0px);
+			}
+			100% {
+				transform: translate(-1400px);
+			}
+		}
+		ul {
+			margin: 0;
+			padding: 0;
+		}
+		.wrap {
+		  width: 300px; height: 200px;
+		  position: relative;
+		  overflow: hidden;
+		}
+		.wrap > ul {
+		  position: absolute;
+		  white-space: nowrap;
+		}
+		.wrap li {
+		  display: inline-block;
+		}
+		.wrap li img {
+		  	width: 256px;
+    		height: 192px;
+		}
+	</style>
+</head>
+<body>
+<!-- 
+	3.内部尺寸和流体特性
+	(1)包裹性   包裹和自适应性 不超过包含块
+	(2)首选最小宽度
+	(3)最大宽度 等同于包裹性设置white-space:nowrap;声明后的宽度
+	   最大宽度的场景可以使用很大宽度(width: 2000px) 
+-->
+<!-- 
+	1.button会换行  input-button不会换行
+	  文字少居中显示, 超过一行的时候居左显示
+	2.首选最小宽度
+	  东亚文字为每个汉字的宽度
+	  西方文字由特定的连续的英文字符单元
+	  案例: 凹凸
+ -->
+<div class="box1-1">
+	<button>按钮</button>
+	<button>按钮按钮按钮按钮按钮按钮按钮按钮按钮按钮按钮按钮按钮按钮按钮按钮按钮按钮按钮按钮按钮按钮</button>
+</div>
+<div class="box1-2">
+	<input type="button" name="" value="按钮">
+	<input type="button" name="" value="按钮按钮按钮按钮按钮按钮按钮按钮按钮按钮按钮按钮按钮按钮按钮按钮按钮按钮按钮按钮按钮按钮">
+</div>
+
+<div class="box1-3">
+	<div class="content">文字内容</div>
+	<div class="content">文字内容-文字内容-文字内容-文字内容-文字内容</div>
+</div>
+<div class="box2">
+	<div class="content">文字内容</div>
+	<div class="content">inline-block</div>
+</div>
+
+<span class="ao"></span>
+<span class="tu"></span>
+
+<div class="box3">
+	<div class="son">
+		我是文本<span>我在inline标签内</span><img src="../../images/1.jpg">
+		<br>
+		我是下一行
+		<p>我是一段描述</p>
+	</div>
+</div>
+
+<div class="container">
+	<div class="box4">
+		<img src="./images/zza/1.jpg">
+		<img src="./images/zza/2.jpg">
+		<img src="./images/zza/3.jpg">
+		<img src="./images/zza/4.jpg">
+		<img src="./images/zza/5.jpg">
+		<img src="./images/zza/6.jpg">
+		<img src="./images/zza/7.jpg">
+		<img src="./images/zza/1.jpg">
+		<img src="./images/zza/2.jpg">
+		<img src="./images/zza/3.jpg">
+		<img src="./images/zza/4.jpg">
+		<img src="./images/zza/5.jpg">
+	</div>
+</div>
+
+<div id="wrap" class="wrap">
+  <ul>
+    <li><img src="./images/1.jpg"></li>
+    <li><img src="./images/1.jpg"></li>
+    <li><img src="./images/1.jpg"></li>
+    <li><img src="./images/1.jpg"></li>
+    <li><img src="./images/1.jpg"></li>
+  </ul>
+</div>
+
+<script type="text/javascript" src="./images/iscroll.js"></script>
+<script type="text/javascript">
+	new IScroll('#wrap', {
+	  scrollbars: true,
+	  scrollX: true,
+	  scrollY: false
+	});
+	// 移动端难滑动问题
+	document.querySelector('.wrap').addEventListener('touchmove', function(e){ 
+		e.preventDefault();
+	});
+</script>
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.container + .container{
+			margin-top: 50px;
+		}
+		.float {
+			float: left;
+		}
+
+		.father1 {
+			/*height: 64px;*/
+			border: 1px solid #444;
+		}
+		.father1 p {
+			/*没有效果 与浮动元素重叠的话*/
+			margin-left: -10px;
+		}
+		.float1 img {
+			width: 60px;
+			height: 64px;
+		}
+		.father2 {
+			/*height: 64px;*/
+			border: 1px solid #444;
+		}
+		.float2 img {
+			width: 60px;
+			height: 64px;
+		}
+		.father3 {
+			height: 64px;
+			border: 1px solid #444;
+		}
+		.float3 img {
+			width: 60px;
+			height: 64px;
+		}
+	</style>
+</head>
+<body>
+	<!-- 
+	1.浮动的作用机制:
+		(1)float特性表现是父元素高度塌陷, 为了实现文字环绕
+		(2)行框元素和浮动元素的不可重叠性 导致设置margin-left负值无作用
+
+	1.浮动元素高度塌陷, 行框元素被限制, 是对应上面的作用机制的.
+	2.父元素设置宽度只能解决高度塌陷问题, 无法解决行框元素被限制的问题
+
+		div行框盒子与float元素有重叠  导致行框盒子区域被影响 -->
+
+<div style="width: 300px;" class="container">
+	<div class="father1">
+	 	<div class="float float1">
+	 		<img src="../../images/zza/1.jpg" >
+	 	</div>
+	 	<p>我是一个帅哥我是一个帅哥我是一个帅哥我是一个帅哥我是一个帅哥我是一个帅哥我是一个帅哥我是一个帅哥我是一个帅哥我是一个帅哥</p>
+	 </div>
+</div>
+
+
+<div style="width: 300px;" class="container">
+	<div class="father2">
+	 	<div class="float float3">
+	 		<img src="../../images/zza/1.jpg" >
+	 	</div>
+	 	我是一个帅哥我是一个帅哥我是一个帅哥我是一个帅哥我是一个帅哥我是一个帅哥我是一个帅哥我是一个帅哥我是一个帅哥我是一个帅哥
+	 </div>
+</div>
+<div style="width: 300px;" class="container">
+	<div class="father2">
+	 	<div class="float float3">
+	 		<img src="../../images/zza/1.jpg" >
+	 	</div>
+	 	我是一个帅哥我是一个帅哥我是一个帅哥我是一个帅哥我是一个帅哥我是一个帅哥
+	 </div>
+	 <div>我也是一个帅哥我也是一个帅哥我也是一个帅哥我也是一个帅哥</div>
+</div>
+</body>
+</html>

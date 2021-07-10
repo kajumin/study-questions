@@ -1,0 +1,149 @@
+服务器: 指的就是一台安装的了特定软件的公共计算机
+Apache  ----php
+Nginx    ---反向代理
+IIS         ---ASP.NET
+Tomcat  ---java
+
+monitor==监视器
+安装apache服务
+cd  路径
+d: 盘切换 
+
+httpd -k install  -n "Apache"  安装apache
+httpd -t  测试配置  改一下目录
+
+目标: 建立一个网站  Blog网站
+可以在浏览器上通过一个地址直接访问使用
+用于提供一种特定服务的一系列具备相关行的网页组合的整体
+例如: 博客,门户,电商,在线教育
+
+网页开发技术
+HTML       ---网页内容结构(GUI)图形的界面
+CSS          ---网页外观样式(GUI)图形化的界面
+JavaScript ---编程语言( 可以调用浏览器提供的API )
+Web APIS ---网页交互(界面功能)
+Jquery      ---便捷手段(糖果而已,不是必要的)
+
+编程能力/编程思想/解决问题的思路
+我要做什么(我要得到什么)   ,   我目前有什么(我能拿到什么)
+
+还要学什么:
+(1) 搭建web服务器  提供网站服务的机器
+(2) HTTP   通讯协议
+(3) 服务端开发  动态网页技术
+(4) 数据库操作  服务端存储数据方式
+(5) AJAX   浏览器与服务端的数据交互方式
+
+启动apache    占80端口
+
+127.0.0.1  没有ip地址  本地回环地址
+
+防火墙: 禁用apache两个服务   系统->防火墙->高级设置
+
+ip地址==域名   DNS
+
+端口号有65536(0--65535)
+
+netstat  -n  查看活动的端口
+
+443  服务Https
+
+https(协议)://zce.me:80(host)/schools/students(路径)?id1&&name=ze(从问号开始到#号=>参数)#photo(#号开始锚点值)
+
+配置Apache:=================================================
+httpf.conf文件下:
+Listen 80  监听端口
+DocumentRoot "d:/php/www/"   根目录
+{
+ctrl+r  刷新
+forbidden  因为所有目录(根目录)禁止全部访问了   188行
+需要打开一个允许访问   205行   加 allow form all 
+}
+默认文档:  DirectoryIndex index.php index.php3 index.html index.htm
+目录浏览(没有默认文档时显示):  260行 Options Indexes FollowSymLinks   删除Indexes
+虚拟主机(想要两个网站): 
+(1) 解除配置(解除注释)
+ 改httpd.conf  下468行注释,
+(2) 配置文件
+改如下(httpd-vhosts.conf文件)
+# *监听绑定在当前电脑上任意IP的80端口
+<VirtualHost *:80>
+    #没有作用  出现错误联系
+    ServerAdmin webmaster@dummy-host.example.com
+    # d:/www
+    DocumentRoot "c:/Apache2/docs/dummy-host.example.com"    (1) 路径
+    #ServerName主机名   多个虚拟主机需要配置  site0.io                    (2)  域名
+    ServerName dummy-host.example.com
+    # 别名
+    ServerAlias www.dummy-host.example.com
+    ErrorLog "logs/dummy-host.example.com-error.log"
+    CustomLog "logs/dummy-host.example.com-access.log" common
+</VirtualHost>
+
+<VirtualHost *:80>
+    ServerAdmin webmaster@dummy-host2.example.com
+    DocumentRoot "c:/Apache2/docs/dummy-host2.example.com"
+    ServerName dummy-host2.example.com
+    ErrorLog "logs/dummy-host2.example.com-error.log"
+    CustomLog "logs/dummy-host2.example.com-access.log" common
+</VirtualHost> 
+(3) hosts下添加
+127.0.0.1   site.io
++ 想要虚拟主机必须允许访问
+<Directory />
+Options Indexes FollowSymLinks
+AllowOverride all
+Allow from 127.0.0.1
+Allow from All
+</>
+
+php:
+(0) php解压包
+(1)配置php: LoadModule php5_module "c:/wamp/bin/php/php5.3.10/php5apache2_2.dll"     --httpf.conf文件下127行
+注意: 文件夹名有空格   路径需要用双引号引起来
+php不是根据后缀名  而是根据MINE Type
+(2)AddType application/x-httpd-php .php    需要加这行到  httpf.conf  387行
+
+配置md模块(php_mbstring.dll)     php扩展
+安装目录下复制php.ini-development为扩展名php.ini
+(1) 加这句extension_dir = "c:/wamp/bin/php/php5.3.10/ext/"   到extension_dir下面
+(2) extension=php_mbstring.dll 解锁
+(3)Loaded Configuration File: C:\wamp\bin\apache\Apache2.2.21\bin\php.ini   phpinfo()函数查看
+默认加载在c:/windows/php.ini  指定需要在apache配置文件添加
+PHPIniDir  "c:/wamp/bin/php"  到php模块下
+
+*R读 E执行 P结果 L循环
+在php目录下 php -a   
+<?php echo "hello" ?>  ctrl+z执行
+
+php.in 中display_errors = On   开发on  生产off
+(1) 上传单个文件大小 upload_max_filesize=2M   在php.in中
+post_max_size = 80M  请求体的显示
+
+
+mysql:
+mysqli是格外扩展  php.in文件里967行
+
+
+
+=========================
+中文乱码
+修改MySQL的配置文件my.ini(windows系统下)，位置在安装目录下。
+1.在[client]下追加：
+default-character-set=utf8
+2.在[mysqld]下追加：
+character-set-server=utf8
+3.在[mysql]下追加：
+default-character-set=utf8
+========================
+phpmyadmin禁止访问了
+c:\wamp\alias\phpmyadmin.con
+
+<Directory "c:/wamp/apps/phpmyadmin3.4.5/">
+        Options Indexes FollowSymLinks MultiViews
+        AllowOverride all
+        Order Deny,Allow
+        Allow from all
+</Directory>
+
+

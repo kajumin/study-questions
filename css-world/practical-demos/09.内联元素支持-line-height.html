@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style>
+		.box1-1 {
+			border: 1px solid #333;
+			line-height: 96px;
+			background-color: red;
+		}
+		.box1-1 span {
+			line-height: 30px;
+		}
+		.box1-2 {
+			border: 1px solid #333;
+			line-height: 20px;
+			background-color: red;
+		}
+		.box1-2 span {
+			line-height: 96px;
+		}
+		.box2 {
+			background-color: #eee;
+		}
+		.box2 span {
+			padding: 15px;
+			background-color: #096;
+			line-height: 80px;
+		}
+		.box3  {
+			background-color: #eee;
+		}
+		.box3 span {
+			display: inline-block;
+			line-height: 80px;
+			background-color: #096;
+		}
+	</style>
+</head>
+<body>
+	<!-- 
+	1.大值特征 内外line-height: 96/20px;
+	2.padding不增加内联元素的尺寸大小
+	3.inline-block;支持inline-height
+	 -->
+<div class="box1-1">
+	<span>中国</span>
+</div>
+<div class="box1-2">
+	<span>中国</span>
+</div>
+
+<div class="box2">
+	x<span>12346</span>
+</div>
+
+<div class="box3">
+	x<span>12346</span>
+</div>
+</body>
+</html>

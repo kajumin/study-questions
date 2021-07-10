@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		body {
+			position: relative;
+			margin: 0;
+			background-color: #aaa;
+		}
+		body.active {
+			background-color: #999;
+		}
+		.box1 {
+			position: absolute;
+			width: 100px;
+			height: 100px;
+			background-color: red;
+		}
+	</style>
+</head>
+<body>
+<div class="box1"></div>
+<script type="text/javascript">
+	// 拖拉
+	var box1 = document.querySelector('.box1')
+	var body = document.querySelector('body')
+	box1.onmousedown = function(e) {
+		body.classList.add('active')
+		var diffX = e.pageX - box1.offsetLeft;
+		var diffY = e.pageY - box1.offsetTop;
+		console.log(diffX, diffY)
+		box1.onmousemove = function(e) {
+			var x = e.pageX - diffX
+			var y = e.pageY - diffY
+			box1.style.left = x + 'px'
+			box1.style.top = y + 'px'
+		}
+		box1.onmouseup = function() {
+			body.classList.remove('active')
+			box1.onmousemove = null
+			box1.onmouseup = null
+		}
+		
+	}
+	
+</script>
+</body>
+</html>

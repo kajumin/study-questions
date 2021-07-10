@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		body {
+			margin: 0;
+		}
+		.box1 {
+			width: 400px;
+			height: 200px;
+			margin: 100px auto 0;
+			background-color: pink;
+		}
+	</style>
+</head>
+<body>
+<div class="box1"></div>
+<script type="text/javascript">
+	var box1 = document.querySelector('.box1')
+	box1.onmouseenter = function (e) {
+		var pageX = e.pageX
+		var offsetLeft = box1.offsetLeft
+		var w = parseInt(getComputedStyle(box1)['width']);
+		var h = parseInt(getComputedStyle(box1)['height']);
+		console.log(pageX)
+		console.log(offsetLeft)
+		var x = (e.pageX - this.offsetLeft - (w / 2)) * (w > h ? (h / w) : 1);
+        console.log(x)
+        // 获取x值
+        var y = (e.pageY - this.offsetTop - (h / 2)) * (h > w ? (w / h) : 1);
+        console.log(y)
+        // 获取y值
+        var direction = Math.round((((Math.atan2(y, x) * (180 / Math.PI)) + 180) / 90) + 3) % 4; //direction的值为“0,1,2,3”分别对应着“上，右，下，左”
+        // 将点的坐标对应的弧度值换算成角度度数值
+        var dirName = new Array('上方','右侧','下方','左侧');
+        if(e.type == 'mouseenter'){
+            this.innerHTML = dirName[direction]+'进入';
+        }else{
+            this.innerHTML = dirName[direction]+'离开';
+        }
+		
+	}
+</script>
+</body>
+</html>

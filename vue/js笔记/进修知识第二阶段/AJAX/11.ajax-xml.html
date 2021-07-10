@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>ajax 请求 XML 格式的数据</title>
+</head>
+<body>
+<script>
+	
+	var xhr = new XMLHttpRequest()
+	xhr.open('GET','http://localhost/ajax/xml.php')
+	xhr.send()
+	xhr.onreadystatechange =  function() {
+		
+		console.log(this.readyState)
+		if(this.readyState!==4) return
+		
+		console.log(this)
+	// this.responseXML  专门用于获取服务器返回XML数据
+	// 操作就是通过dom的方式
+	// 但是需要服务器响应头中的Content-Type 必须是application/xml
+		console.log(this.responseXML.documentElement.children[0].innerHTML)
+		console.log(this.responseXML.documentElement.getElementsByTagName('name')[0].innerHTML)
+	}
+</script>
+</body>
+</html>

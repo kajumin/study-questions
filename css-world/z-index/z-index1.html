@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style>
+	  .box1 {  
+	    position: relative;  
+	    width: 100px;  
+	    height: 100px;  
+	  }  
+	  .box1  p {  
+	    position: absolute;  
+	    width: 100px;  
+	    height: 100px; 
+	  }  
+	  .box1 .a {  
+	    background-color: blue;  
+	    z-index: 1;  
+	  }  
+	  .box1 .b {  
+	    background-color: green;  
+	    z-index: 2;  
+	    top: 20px;  
+	    left: 20px;  
+	  }  
+	  .box1 .c {  
+	    background-color: red;  
+	    top: -20px;  
+	    left: 40px;
+	    z-index: 3;   
+	  }
+
+
+	 .box2 {
+	    width: 100px;
+	    height: 100px;
+	    position: relative;
+	  }
+	  .box2-1 {
+	  	background-color: #096;
+	    z-index: 2;
+	    /*a b*/
+	  }
+	  .box2-2 {
+	    z-index: 1;
+	    /*z-index: 2;*/
+	    top: -20px;
+	    background-color: #0fc;
+	    /*c */
+	  }
+	  .box2-1 p, .box2-2 p {
+	    position: absolute;
+	    font-size: 20px;
+	    width: 100px;
+	    height: 100px;
+	  }
+	  .box2-1 .a {
+	    background-color: blue;
+	    z-index: 200;
+	  }
+	  .box2-1 .b {
+	    background-color: green;
+	    top: 20px;
+	    left: 20px;
+	    z-index: 200;
+	  }
+	  .box2-2 .c {
+	    background-color: red;
+	    top: -20px;
+	    left: 40px;
+	    z-index: 9999;
+	  }
+
+	  .box3 {
+	    position: relative;
+	    /*z-index: auto;*/
+	    z-index: 0;
+	  }
+	  .box3 .child1 {
+	    width: 200px;
+	    height: 100px;
+	    background: green;
+	    position: absolute;
+	    top: 0;
+	    left: 0;
+	    z-index: 2;
+	  }
+	  .box3 .child2 {
+	    width: 100px;
+	    height: 200px;
+	    background: red;
+	    position: absolute;
+	    top: 0;
+	    left: 0;
+	    z-index: 1;
+	  }
+
+	  .box4 {
+	  	/*display: flex;*/
+	  	/*配合子元素z-index不为auto可以让子形成层叠上下文*/
+	  }
+	  .box4 .parent {
+	    width: 200px;
+	    height: 100px;
+	    background: green;
+	    /* 虽然设置了z-index，但是没有设置position，z-index无效，
+	    .parent还是普通元素，没有产生层叠上下文 */
+	    /*position: absolute;*/
+	    z-index: 1;
+	  }
+	  .box4 .child {
+	    width: 100px;
+	    height: 200px;
+	    background: red;
+	    position: relative;
+	    top: -10px;
+	    left: -10px;
+	    z-index: -1;
+	  }
+	</style>
+</head>
+<body>  
+	<!-- 
+	1.box1并没有z-index  所以层叠上下文还是html  z-index谁大谁上
+	2.div2-1形成层叠上下文 而已div2-1大于div2-2  所有c在ab的后面
+	3.z-index: auto;+ position 并没有产生层叠上下文, 父元素层叠水平相同, 后来者居上 
+	  z-index:0 +position会产生.box3 .child1产生的层叠上下文级别高
+	4.在层叠顺序规则中，z-index负值的.child会被普通的block块级元素.parent覆盖
+	 z-index正值的话会在上
+	 	-->
+
+<!-- 1 -->
+ <!--  <div class="box1">  
+    <p class="a">a</p>  
+    <p class="b">b</p>  
+  </div> 
+  <div class="box1">  
+    <p class="c">c</p>  
+  </div>  --> 
+
+<!-- 2 因为box2-2的层叠上下文水平比box2-1低
+	   只需要b的层叠水平等于a的层叠水平就b在上了(后来者居上)
+       如果box2-2和box2-1层叠上下文级别一样高 则后来居上 且其子元素也是居上的-->
+ <!--  <div class="box2 box2-1">  
+    <p class="a">a</p>  
+    <p class="b">b</p>  
+  </div> 
+  <div class="box2 box2-2">  
+    <p class="c">c</p>  
+  </div>  --> 
+
+<!-- 3 定位元素+auto不会产生层叠上下文  父元素后来者居上-->
+<!--   <div class="box3">
+    <div class="child1">child1</div>
+  </div>
+  <div class="box3">
+    <div class="child2">child2</div>
+  </div>
+ -->
+
+<!-- 4 -->
+  <!-- <div class="box4">
+    <div class="parent">
+      parent<div class="child">child</div>
+    </div>
+
+  </div> -->
+
+
+</body>
+</html>

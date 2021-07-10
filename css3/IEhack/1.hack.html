@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <style>
+        body {
+            border: 1px solid red;
+        }
+        .box1 {
+            background-color: #ccc;
+        }
+        .box1 .son {
+            float: left;
+            width: 100px;
+            height: 100px;
+            margin-left: 10px;
+            margin-right: 10px;
+            background-color: red;
+            background-color: green\0; /*IE11*/
+            /* IE89 */
+            background-color: yellow\9; 
+            /* IE6、7识别 */
+            /* *background-color: pink; */
+            /* IE6识别 */
+            /* _background-color: #1e0bd1;  */
+        }
+         /* IE9+ 把ie8和ie9区分开来*/
+        @media all and (min-width: 0) {
+            .box1 .son {
+                /* background-color: rosybrown\9;*/
+            }
+        }
+        
+    </style>
+    
+</head>
+<body>
+    <!-- 
+        1. * IE6 7
+           _ IE6
+
+
+     -->
+    <div class="box1">
+        <div class="son">12</div>
+        <div class="son">12</div>
+        <div class="son">12</div>
+    </div>
+    <script>
+        // 小于等于ie9
+        var isIE = document.all && !window.atob;
+        console.log(isIE);
+        
+    </script>
+</body>
+</html>

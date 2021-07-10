@@ -1,0 +1,309 @@
+      SQL(Structured Query Language)是结构化查询语言的缩写，用来访问和操作数据库系统。SQL语句既可以查询数据库中的数据，也可以添加、更新和删除数据库中的数据，还可以对数据库进行管理和维护操作。不同的数据库，都支持SQL
+
+int	 整型	4字节整数类型，范围约+/-21亿
+bigint	 长整型	8字节整数类型，范围约+/-922亿亿
+real	 浮点型	4字节浮点数，范围约+/-1038
+double      浮点型	8字节浮点数，范围约+/-10308
+decimal(M,N  高精度由用户指定精度的小数，例如，DECIMAL(20,10)表示一共20位，其中小数10位，通常用于财务计算
+char(N)	 定长字符串	存储指定长度的字符串，例如，CHAR(100)总是存储100个字符的字符串
+varchar(N)	 变长字符串	存储可变长度的字符串，例如，VARCHAR(100)可以存储0~100个字符的字符串
+boolean	 布尔类型	存储True或者False
+data	 日期类型	存储日期，例如，2018-06-22
+time	 时间类型	存储时间，例如，12:20:59
+datetime	 日期和时间类型	存储日期+时间，例如，2018-06-22 12:20:59
+
+
+mysql是一个编程语言
+mysql -uroot -p
+===================变量=========================================
+1.系统变量
+show variables [like 'pattern'];
+select @@autocommit(变量名)
+局部修改     set 变量名 = 值  set autocommit = 0
+全局修改     set global autocommit = 值 || set @@global.autocommit = 值
+                  auto_increment_inrement
+修改全局在当前连接下是不会改变,需要下次才会改变.如果想要立刻得到, 就修改局部修改
+2.会话变量
+    set @name = 'bang';
+使用专用赋值符号  =会当作比较符
+    set @name := 'bang';
+允许数据从表中取出存储到变量中  必须一行
+  (1)select @变量1 := 字段1 , @变量2 := 字段2 from table limit 1
+  (2)只赋值,不看结果, select 字段1,字段2 ...from 数据源 where into @变量1,变量2, ...
+3.局部变量
+   begin end语句快之间
+   (1)declare声明的才是局部变量
+   (2)declare在begin  和 end之间 (函数/函数/触发器)
+   (3)声明语法: declare 变量名 数据类型[属性];
+
+====================流程结构
+============================== if
+if语句
+1.用在select查询当中  if(条件,为真结果,为假结果)
+   select * ,if(age > 20 , '符合' , '不符合' ) as judge from student
+2.复杂的语句块中 
+if条件表达式 then  
+       满足条件要执行的语句
+End if;
+3.复合语法:代码的判断有两面性,两面都有对应的代码执行
+if  条件表达式  then
+     满足条件要执行的语句
+else 
+     不满足条件要执行的语句
+     if  条件表达式  then
+          满足条件要执行的语句
+     End if;
+End if;
+==================== 循环
+while循环: 在大型的代码块中使用
+使用语法
+while 条件  do 
+     要循环执行的代码
+End while
+
+结构标识符 : 为某些特定的结构进行命名,然后为的是在某些地方使用名字
+标识名字:while 条件 do
+    循环体
+    if 条件判断  then
+       循环控制
+      Iterate/Leave 标识名字
+End while[标识名字]
+Iterate: 迭代  重新开始循环(continue)
+Leave : 离开,整个循环终止(break)
+=====================内置函数=======================================
+系统函数和自定义函数
+Char_length(arg1)  判断字符串的字符数                    
+Lenght(arg1)          判断字符串的字节数(与字符集)
+                 select CHAR_LENGTH('你好中国'),LENGTH('你好中国'); // 4 12  utf-8
+Concat(arg1,arg2,...)    连接字符串
+                 select CONCAT('你好','中国');
+Instr(arg1,arg2)          判断是否存在  返回位置  不存在返回0
+                 select INSTR('你好中国','中国');  //3
+Lcase() 全部小写
+                 select LCASE('aBcD')
+Left()   从左侧开始截取字符串到指定位置
+                 select LEFT('你好中国',2),LEFT('abcd',2)  //你好   ab
+Ltrim()  去除左边对应的空格
+            select ltrim(' abcd  '); //abcd
+Mid( )   从中间指定位置开始截取,如果不指定截取长度  默认到最后
+            select mid('abcd',2),mid('abcd',2,2) //bcd  bc
+select substring('joycechu',4,2) -- ce 从joycechu截取第2个位置开始的1字符
+
+
+now();  返回当前时间  日期  时间
+curdate();   返回当前日期
+curtime();   返回当前时间 
+                 select now(),curdate(),curtime(); //2019-12-22 14:04:40    2019-12-22   14:04:40  
+datediff();  判断两个日期之间的天数差距  参数日期是字符串   第一个参数比较大
+                 select datediff('2017-9-1','2016-9-1');  //365
+date_add();  日期, interval , 时间数字(type) 进行时间的增加, type(date)
+                 select date_add('2000-10-10',interval 10 day) //2000-10-20
+                 select date_add('2000-10-10',interval 10 year) //2010-10-10
+unix-timestamp()  时间搓
+                 select unix_timestamp();  //1576995029
+from_unix(1234564564564);  转换为时间搓
+                  select from_unixtime(1234556456); //2009-02-14 04:20:56
+
+=================数学函数
+abs()    绝对值
+ceiling()   向上
+floor()    向下
+pow()   多少次方
+rand()   随机数
+round()  四舍五入
+select abs(-12),ceiling(1.1),floor(1.1),pow(2,3),rand()*10,round(1.4);  
+//12  2  1  8  2.124654654684   1
+==================其他函数
+md5();  加密
+version();   版本好
+database();  数据库
+uuid();         唯一id
+select uuid(),version(),database(),md5(123);
+
+
+==================自定义函数
+delimiter     新符号   修改临时语句结束符
+delimiter ;   修改回语句结束符 
+create function  fn(形参) returns  返回值类型
+begin 
+     return  返回值数据;  //数据必须与结构中定义的返回值类型一致  
+end 语句结束符
+简单函数:
+create function my_func1(int_1 int,int_2 int) returns int 
+       return int_1 +int_2;
+
+查看函数
+查看function状态,查看所有函数
+show function status -- 查看所有函数
+show create function my_func1 -- 查看函数
+drop function my_func1
+
+*自定义函数是属于用户级别的,只有当前客户端对应的数据库中能使用
+自定义函数,通常是为了多行代码集合到一起解决一个问题
+函数内不用使用select  select 字段 into @变量    -- 唯一可用
+
+案例: 流程结构案例  从1开始,直到用户输入的值求和,5的倍数不要
+create function my_sum(end_value int) returns int
+begin
+    declare  res int default 0;
+    declare  i    int  default 1;
+    mywhile: while i <= end_value  do
+	 if i % 5 = 0 then
+          set i = i + 1;
+          iterate mywhile;
+    end if;
+    set  res = res  + i;
+    set  i = i + 1;
+    end while;
+    return res;
+end
+select my_sum(10);  -- 执行
+
+===========变量作用域
+局部作用域
+1.declare   在结构体内使用(函数/存储过程/触发器)
+2.会话作用域  当前用户档次连接有效  只要在本连接中,任何地方都可以使用(跨数据库也可以)
+set @name = 'bang';
+3.全局作用域  所有客户端所有连接都有效
+set  global  变量名 = 值;
+set  @@global.变量名 = 值;
+通常,在使用不会使用到全局变量
+
+
+==========================存储过程======================================
+第一次编译后再次调用不需要编译  -- 性能高效  针对sql编程
+create procedure  过程名字 (参数列表)
+begin
+      过程体
+end
+
+show procedure status   -- 查看存储过程状态
+show procedure status like 'my%'; 
+show create procedure my_pro1;  -- 查看存储过程
+drop procedure my_pro1;
+简单实例:
+create procedure  my_pro1()
+begin
+   declare  i int default 1;
+   -- declare sum  int  default 0;   -- 局部变量
+   set @sum  = 0;
+   while i < 100  do
+       set @sum = @sum + i;
+       set i = i + 1;
+   end while;
+   -- 显示结果
+   select @sum;
+end 
+call  my_pro1();
+
+======存储过程的参数
+存储过程也允许提高参数(形参和实参) ,  和函数一样需要指定类型  
+区别:  存储过程对参数有要求  自己的参数分类
+in: 表示参数从外部传入到里面使用 , 可以是直接数据也可以是保存数据的变量
+out: 变量从过程里面把数据存储到变量中,交给外部使用,传入的必须是变量,传入的变量有数据会被情况
+inout : 变量可以从外部传入到过程内部使用,同时内部操作之后,又可以将数据返回给外部
+参数语法:  过程类型 变量名  数据类型  in  int_1 int
+
+set @n1 = 1;
+set @n2 = 2;
+set @n3 = 3;
+create procedure my_pro2(in int_1 int,out int_2 int,inout int_3 int)
+begin 
+      select int_1,int_2,int_3;
+      set int_1 = 10;
+      set int_2 = 100;
+      set int_3 = 1000;
+      select int_1,int_2,int_3;
+    
+      set @n1 = 'a';
+      set @n2 = 'b';
+      set @n3 = 'c';
+      select @n1,@n2,@n3;  -- a b c
+end
+
+call my_pro2(@n1,@n2,@n3);
+
+
+==========================触发器trigger================================
+触发器是一种特殊类型的存储过程,触发器主要是通过事件进行触发而被执行的,二存储过程可以通过存储过程名字而被直接调用
+1.可以写入数据表前,强制检验或转换数据
+2.触发器发生错误时,异动的结果会被撤销
+3.部分数据库管理系统可以针对数据定义语言 使用触发器 称为DDL触发器
+
+优点: 级联更改(一表改变 ,多变改变)
+缺点:
+1.影响数据库的结构,同时增加维护复杂程度
+2.造成数据在程序层面不可控 (php层)
+
+create trigger 触发器名字 触发时机 触发事件 on 表 for each row
+begin
+
+end
+触发对象是 on 表 for each row 触发器绑定实质是表中的所有行
+行中数据发生改变,每行总会有两种状态,数据操作前和操作后
+before
+after
+
+触发事件: 对应的事件增删改
+insert  
+update 
+delete
+一张表中 ,每一个触发时机绑定的事件对应的触发器类型只能有一个  最多六个触发器
+show triggers 
+drop trigger after_order_insert_t
+create trigger after_insert_order_t after insert on my_orders for each row
+begin
+    update my_goods set inv = inv -new.good_num where id = new.good_id;
+end 
+
+create trigger b_i_o_t  before insert on my_orders for each row
+begin
+      select inv from my_goods where id = new.good_id into @inv;
+      if @inv < new.good_num  then
+              insert into  xxx values('xxxx');
+      end  if;
+end
+
+-- 当库房不及订单数量时
+create trigger b_i_o_t  before insert on my_orders for each row
+begin
+      select inv from my_goods where id = new.good_id into @inv;
+      if @inv < new.good_num  then
+              insert into  xxx values('xxxx');
+      end  if;
+end
+
+
+new  old   代表数据  通过关键字.字段获取   old.id
+insert     没有old 
+delete    没有new
+
+实用用例:
+1.  为某个字段添加内容
+UPDATE `message`.`goods` SET `zhaiyao` =  CONCAT(`zhaiyao`,"多样颜色选择 提供的意外保护 延长保修")   WHERE id <= 3;
+
+实战:
+explo
+select id from tb use index(primary) where name='b' limit 1   获取namee='b'最小的id
+
+不需要的行   limit进行限制
+不需要的列   不用select *
+2.使用统计数据
+3.分解成多个简单的查询
+4.批量处理
+select t2.* from (select a from tb t where t.b=12 order by c limit 1000,10) t1,tb t2 where t1.a=t2.a
+离线翻页 select  * from tb where id > 10000 limit 10
+select * from tab where id+1=100;  不好 全表扫描
+select * from tab where id =1000-1;
+select * from tab where form_unixtime(addtime) = '2017-05-11 00:00:00'  不好
+select * from tab where  addtime =unix_timestamp( '2017-05-11 00:00:00')
+
+
+安全管理:
+1.数据备份和还原  文件备份 整库备份    单表备份   增量备份(百度百科)
+文件备份 innoDB和myIsam有区别
+innoDB需要ibdata1文件  不适合文件备份
+2.用户权限管理
+3.外键
+4.视图
+5.事务安全

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style>
+		.box1 {
+			width: 150px;
+			height: 100px;
+			padding: 20px;
+			background-color: yellowgreen;
+		}
+		.box1 .son {
+			width: 100px;
+			height: 80px;
+			border-radius: 8px;
+			background-color: green;
+		}
+		.box2 {
+			position: relative;
+			width: 100px;
+			height: 80px;
+			border-radius: 8px;
+			background-color: green;
+		}
+		.box2:after {
+			content: '';
+			position: absolute;
+			left: -20px;
+			top: -20px;
+			z-index: -1;
+			width: 190px;
+			height: 140px;
+			background-color: yellowgreen;
+		}
+		.box3 {
+			width: 100px;
+			height: 80px;
+			border-radius: 8px;
+			outline: 20px solid yellowgreen;
+			box-shadow: 0 0 0 3.34px yellowgreen;
+			background-color: green;
+		}
+	</style>
+</head>
+<body>
+<div class="box1">
+	<div class="son"></div>
+</div>
+<div class="box2"></div>
+<br>
+<br>
+<br>
+<div class="box3"></div>
+</body>
+</html>

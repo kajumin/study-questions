@@ -1,0 +1,268 @@
+       API（Application Programming Interface,应用程序编程接口）是一些预先定义的函数，
+目的是提供应用程序与开发人员基于某软件或硬件得以访问一组例程的能力，而又无需访问源码，
+或理解内部工作机制的细节
+
+web API：浏览器提供的一套操作浏览器功能和页面元素的API(BOM和DOM)
+此处的Web API特指浏览器提供的API(一组方法)，Web API在后面的课程中有其它含义
+
+ECMAScript：JavaScript的核心，描述了语言的基本语法和数据类型，ECMAScript是一套标准，定义了一种语言的标准与具体实现无关
+
+BOM(浏览器对象模型 Browser Object Model)：通过BOM可以操作浏览器窗口，比如：弹出框、控制浏览器跳转、获取分辨率等 
+DOM(文档对象模型 Document Object Model)：DOM可以把HTML看做是文档树，通过DOM提供的API可以对树上的节点进行操作
+文档：一个网页可以称为文档
+节点：网页中的所有内容都是节点 (标签、属性、文本、注释等)
+元素：网页中的标签
+属性：标签的属性
+获取元素：
+	getElementById()
+	getElementsByTagName()
+	getElementsByName()
+	getElementsByClassName()
+	querySelector()
+	querySelectorAll()
+
+属性：href、title、id、src、className、innerHTML和innerText(直接显示标签) textContent(与innerText相比原封不动输出)
+转译符：
+"		&quot;
+'		&apos;
+&		&amp;
+<		&lt;   // less than  小于
+>		&gt;   // greater than  大于
+空格	                &nbsp;
+?		&copy;
+
+表单属性：
+表单获取:  document.forms["myForm"].password  获取某个input 
+value        用于大部分表单元素的内容获取(option除外)  ele.value   或者ele.value.length
+type         可以获取input标签的类型(输入框或复选框等)  ele.type
+disabled   禁用属性  false | true   可以让按钮点击不到
+checked   复选框选中属性   if(checked)判断是否被选中  ele.checked 返回boolean值
+selected   下拉菜单选中属性   
+                 ele.selectedIndex   ele.options[ele.selectedIndex].value   ele.options[ele.selectedIndex].text
+var index = this.selectedIndex;  console.log(this.options[index].text) console.log(this.options[index].value)
+getAttribute() 获取标签行内属性
+setAttribute() 设置标签行内属性
+removeAttribute() 移除标签行内属性
+==============================DOM===============================
+                               document       元素                  属性           节点          注释
+nodeName            #document       大写标签名        属性名        #text        #comment
+nodeType              9                       1                         2                3              8
+nodeValue             null                   null                  属性值         文本          注释文本
+textContent           具体内容
+
+1.innerHTML  outerHTML
+2.getAttributtNode('name');
+
+获取元素: 
+document.getElementById()
+document.getElementsByTagName()
+document.getElementsByClassName()
+document.getElementsByName
+document.querySelector()
+document.querySelectorAll()
+
+
+创建元素的三种方式：document.write()  ele.innerHTML   document.createElement()
+创建文本节点　document.createTextNode()；
+document.createAttribute('class')   attribute.value = "box1"  setAttributeNode(attribute)
+节点访问：
+ele.parentNode(父节点只有一个)  parentElement   效果一样
+ele.childNodes获取子节点   
+ele.firstChild 
+ele.lastChild
+ele.nextSibling
+ele.previousSibling
+while(ele=ele.nextSibling) 的意思
+
+元素访问：
+ele.children  获取子元素   ***** children[0]
+ele.firstElementChild
+ele.lastElementChild
+ele.nextElementSibling  
+ele.previousElementSibling
+
+创建元素的三种方式：document.write()    ele.innerHTML     document.createElement()
+document.createElement("div")
+ele.appendChild(p/div)  上树  只允许在一个元素中上树  不能在document或者body上
+ele.removeChild(ele)     下树
+2.
+   box.insertBefore(h2,h3);  //h2是新的  h3为已有的  
+3.替换节点    replaceChild()
+   box.replaceChild(h4,h3)  //h4是新的  h3是已有的
+   p.replaceChild(text2,p.childNodes[0])   p是p标签  text2是文本节点  p.childNodes[0]也是节点
+4.复制节点    cloneNode()  克隆  true是保留原有的  false不保留原有的
+   var newbtn = btn.cloneNode(true);//true代表把它的子节点也一起复制   box.appendChild(newbtn);
+5.删除节点    removeChild()
+=====================jquery中   
+父选子  append()  prepend()    insertBefore()  insertAfter()   after()  before()
+子选父  appendTo  prependTo
+(10) // wrap 让某个元素的外层多一层元素                    // $("p").wrap("<div></div>");
+      // wrapAll 将所有匹配到的元素的外层多一层元素    // $("p").wrapAll("<div></div>")
+      // unwrap 将匹配到的元素去掉一层父元素              // $("#p1").unwrap();
+(11) 替换成指定元素  $("p").replaceWith("<div>123</div>");
+       $("<div>321</div>").replaceAll($("p"));
+(12)empty 表示清空后代，但是自己还在        // $("#box").empty();
+      remove 表示自杀，自己和后代都没有了   // $("#box").remove();
+      使用clone 复制box                                 // $("#box").after($("#box").clone());
+
+$(this).siblings('.body')    //获取指定子元素
+============================browser object model=======================
+window对象 访问window成员可以省略
+alert
+comfirm('')    返回布尔值
+prompt("请输入你的名字", "bang")      返回输入的值  第二个是默认值
+onload   onunload  事件
+setTimeout   setInterval
+clearTimeout   clearInterval
+new Date("2019-9-6 0:0:0")  可以返回一个指定时间
+
+======================screen
+	console.log(window.navigator)  //
+	console.log(window.navigator.userAgent)  //indexOf('chrome')
+
+	console.log(window.screen.width)  //height  768    //页面高度才625
+                console.log(window.screen.availWidth)  height  728  
+
+                      
+视口:  document.documentElement.clientWidth   || window.innerWidth  1366 height 625
+	
+===========location   document.location同样可以获取
+console.log(window.location.href)            //url
+console.log(window.location.protocol)     //协议http:  https:
+console.log(window.location.pathname)  //路径 learn/199
+console.log(window.location.search)    //query  ?name=bang  ?号及之后
+console.log(window.location.hash)      //哈希     #home及之后hash
+location.host  域名或者ip
+
+location.href="www.baidu.com";   可以输出地址
+location.assign("www.baidu.com")   跟href一样
+location.replace("www.baidu.com")   替换掉  但是不记录history
+location.reload(true)  强制从服务器获取页面  false的话有缓存就拿缓存   ctrl+f5也可以强制刷新
+
+
+==================history
+window.history属性指向 History 对象，它表示当前窗口的浏览历史。
+history.length：当前窗口访问过的网址数量（包括当前网页）
+history.state：History 堆栈最上层的状态值（详见下文）通常是undefined
+
+history.pushState(state, title, url)方法用于在历史中添加一条记录。
+state 传入对象 通常设置null   var currentState = history.state; //获取 
+title   新页面的标题 ,浏览器会忽略  所以填''
+url     新页面的地址
+pushState()方法不会触发页面刷新，只是导致 History 对象发生变化，地址栏会有反应。
+
+history.replaceState()方法用来修改 History 对象的当前记录，其他都与pushState()方法一模一样。
+
+window.onpopstate = function (event) {
+  	console.log('location: ' + document.location); //地址
+  	console.log('state: ' + JSON.stringify(event.state)); //null
+};
+// history.go()   //0刷新当前页面
+// history.back()
+// history.forward()
+
+
+
+=================
+效率测试：
+	var d1 = +new Date();//前面
+	var d2 = +new Date();//最后
+	console.log( d2 - d1 );//最后
+
+=====重绘和重排 
+重绘就是重新绘制（repaint）
+重排就是重新排列（reflow）
+重排一定会触发重绘, 重绘不一定引起回流重排
+=====引起重排
+(1)添加删除可见dom元素
+(2)元素的几何位置发生变化
+(3)元素的尺寸发生变化
+(4)内容发生变化  替换img  文本
+(5)resize   浏览器窗口发生变化
+(6)页面一开始渲染的时候
+(7)margin
+
+
+(4)计算offsetWidth和offsetHeight
+(5)style属性改变
+(6)input 输入内容改变
+=====重绘
+(1)发生外观的变化，没有改变布局
+   color  background-color
+(2)通过 visibility: hidden 隐藏一个 DOM 节点-只触发重绘，因为没有几何变化
+======优化
+(1)console和js分离，然后把重排改变的样式集中写，这样可以把他们放在渲染队列
+(2) 读写分离
+(3) 避免同步布局事件  读取样式
+(4 )复杂动画  使用绝对定位让其脱离文档流
+(5) 使用cssText   修改css的class
+(6)css硬件加速(GPU加速)
+=====批量修改dom
+(5)隐藏元素, 修改, 重新显示   产生两个回流(显示和隐藏)
+(6)使用documentFragment创建文档片段, 加入原来的DOM中。
+(7)拷贝到一个脱离文档的节点中, 修改节点后再替换原始的元素
+
+====强制刷新styles
+1.offsetTop, offsetLeft, offsetWidth, offsetHeight
+2.getComputedStyle(), 或者 IE的 currentStyle
+2.scrollTop, scrollLeft, scrollWidth, scrollHeight
+4.clientTop, clientLeft, clientWidth, clientHeight
+
+减少使用它们, 如果要使用, 将值保存起来
+
+部分渲染树（或者整个渲染树）需要重新分析并且节点尺寸需要重新计算。这被称为重排。注意这里至少会有一次重排-初始化页面布局。
+由于节点的几何属性发生改变或者由于样式发生改变，例如改变元素背景色时，屏幕上的部分内容需要更新。这样的更新被称为重绘。
+
+什么情况会触发重排和重绘
+操作DOM ( 添加、删除、更新)
+通过 display: none;隐藏一个 DOM 节点-触发重排和重绘
+移动或者给页面中的 DOM 节点添加动画
+添加一个样式表，调整样式属性
+用户行为，例如调整窗口大小，改变字号，或者滚动。
+
+内存泄露: 申请的内存没有及时回收掉，被泄漏了
+(1)意外的全局变量
+(2)遗忘的定时器
+(3)使用不当的闭包
+(4)遗漏的 DOM 元素
+(5)网络回调
+
+框架+业务架构
+业务架构:
+从需求出发划分
+需要做的事情不能多不能少
+看了需求,先出模块
+
+具体业务模块
+支持模块  底层库(组件库)  二具模块  页面共用css
+先立项评审 ->  选型技术框架  ->  进行ui评审 ->
+公共css
+
+代码风格标准
+性能标准
+工作流程标准
+文档层次-人工监督-自动化
+window.performance
+window.onload
+
+工具链流程
+1.初始化项目
+2.构建和调试
+3.测试(单元测试,集成测试你
+4.提交git
+
+大纲:
+js  函数  异步编程  设计模式
+
+
+
+
+
+
+
+
+
+
+
+
+

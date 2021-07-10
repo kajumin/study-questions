@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.vertical {
+			height: 200px;
+			overflow: hidden;
+		}
+		.horizontal {
+			overflow: hidden;
+		}
+		.scroller_vertical,
+		.scroller_horizontal {	
+			border-radius: 2.5px;
+			background-color: rgba(0,0,0,.35);
+			-webkit-transition: opacity .5s;
+			        transition: opacity .5s;
+			position: absolute;
+			opacity: 0;
+		}
+		.scroller_vertical {
+			width: 5px;
+			right: 0;
+		}
+		.scroller_horizontal {
+			height: 5px;
+			bottom: 0;
+		}
+		.container1 {
+			width: 500px;
+			height: 300px;
+			margin-bottom: 20px;
+		}
+		.container1 .son {
+			height: 1000px;
+			background: linear-gradient(to bottom, #eee, #adc);
+			background-size: 100% 100px;
+		}
+		.container2 {
+			width: 500px;
+			height: 300px;
+			margin-bottom: 20px;
+		}
+		.container2 .son {
+			width: 1000px;
+			height: 300px;
+			background: linear-gradient(to right, #eee, #adc);
+			background-size: 100px 100px;
+		}
+
+		.container3 {
+			width: 500px;
+			height: 300px;
+			margin-bottom: 20px;
+		}
+		.container3 .son {
+			width: 1000px;
+			height: 1000px;
+			background: linear-gradient(to right, #eee, #adc);
+			background-size: 100px 100%;
+		}
+	</style>
+</head>
+<body>
+	<p>垂直滚动</p>
+	<div class="container1 vertical">
+		<div class="son"></div>
+	</div>
+	<p>水平滚动</p>
+	<div class="container2 horizontal">
+		<div class="son"></div>
+	</div>
+	<p>水平垂直</p>
+	<div class="container3 horizontal">
+		<div class="son">
+			<div>12346512346578979461346798456</div>
+		</div>
+	</div>
+	<p>隐藏滚动条</p>
+	<div class="container2 container4 horizontal">
+		<div class="son"></div>
+	</div>
+<script type="text/javascript" src="../assets/js/simpScroller.js"></script>
+<script type="text/javascript">
+	// https://github.com/zhangxinxu/simpScroller
+
+	// 垂直滚动保证子元素高度大于父元素高度 不需要设置overflow
+	// 水平滚动保证子元素宽度大于父元素宽度 子元素需要height 不需要设置overflow
+	// simpScroller(container, options);
+	// container表示需要滚动的容器, 如果垂直滚动，要定高
+	/* 
+	{
+	    verticalScroll: true,    // 默认垂直滚动
+	    horizontalScroll: false, //水平滚动，默认false，不水平滚动
+	    hideScrollBar: false,    // 是否隐藏滚动条
+	    onScroll: function(e) {   // 滚动时候的回调支持一个参数，为event对象
+
+	    }   
+	} 
+	开源的著名的大的滚动插件不同，这里自定义滚动条的定位就是CSS2.1中的top/left属性，而不是3D animation. 元素的滚动就是元素本身的scroll滚动。
+	*/
+	var container1 = document.querySelector('.container1')
+	simpScroller(container1, {
+		verticalScroll: true
+	})
+
+	var container2 = document.querySelector('.container2')
+	simpScroller(container2, {
+		verticalScroll: false,
+		horizontalScroll: true
+	})
+
+	var container3 = document.querySelector('.container3')
+	simpScroller(container3, {
+		verticalScroll: true,
+		horizontalScroll: true
+	})
+	var container4 = document.querySelector('.container4')
+	simpScroller(container4, {
+		verticalScroll: false,
+		horizontalScroll: true,
+		hideScrollBar: true,
+		onScroll: function() {
+			console.log('隐藏滚动条')
+		}
+	})
+
+
+</script>
+</body>
+</html>

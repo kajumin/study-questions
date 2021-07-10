@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<script type="text/javascript">
+	// console.log(1)
+ //    async function as1(){
+ //    	console.log(2)
+ //        setTimeout( ()=>{
+ //            console.log('as1 执行完毕')
+ //        },1000)
+ //    }
+ //    as1()
+ //    console.log('end')
+
+
+    async function as1(){
+        try {
+            console.time("start"); 
+            let result2  = await as2();
+            let result3  = await as3();
+            console.log(result2) // 10 
+            console.log(result3) // 333 
+            console.timeEnd('start') //约等于两个setTimeout时间相加
+        } catch (e) {
+            console.log(e)
+        }
+    }
+    
+    async function as2(){
+        return new Promise( resolve =>{
+            setTimeout( ()=>{
+                resolve(10);
+            }, 1000)
+        })
+        // return 1111;
+    }
+    
+    async function as3(){
+        return new Promise( resolve =>{
+            setTimeout( ()=>{
+                resolve(333)
+            }, 1000)
+        })
+    }
+    as1()
+</script>
+</body>
+</html>

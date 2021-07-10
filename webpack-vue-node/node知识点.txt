@@ -1,0 +1,568 @@
+=================express
+1.提供简洁路由定义的方式
+2.对http请求参数进行了简化
+3.对模板引擎的支持程度高
+4.中间件处理http请求
+
+app.use((req, res, next))  请求都经过该中间件
+中间件应用:  是否登录 网址不存在维护404  错误处理中间件(四个参数): 异步需要手动触发
+promisify  异步需要手动触发错误
+express.Router()
+express.static()
+模板引擎  app.locals.users定义模板全局变量
+
+=================学习node博客知识
+在javascript中的顶层对象是window，而在node中的顶层对象是global
+在node中定义的变量属于模块范围, 不是global对象
+
+模块: Node中模块分为两类：一类是Node提供的模块，称为核心模块；另一类是用户编写的模块，称为文件模块
+核心模块部分在Node源代码的编译过程中，编译进了二进制执行文件。在Node进程启动时，部分核心模块就被直接加载进内存中，所以这部分核心模块引入时，文件定位和编译执行这两个步骤可以省略掉，并且在路径分析中优先判断，所以它的加载速度是最快的
+文件模块则是在运行时动态加载，需要完整的路径分析、文件定位、编译执行过程，速度比核心模块慢
+
+缓存加载:  Node对引入过的模块都会进行缓存，以减少二次引入时的开销。不同的地方在于，浏览器仅仅缓存文件，而Node缓存的是编译和执行之后的对象
+不论是核心模块还是文件模块，require()方法对相同模块的二次加载都一律采用缓存优先的方式，这是第一优先级的。不同之处在于核心模块的缓存检查先于文件模块的缓存检查
+
+标识符分析: 
+1、如果参数字符串以“/”开头，则表示加载的是一个位于绝对路径的模块文件。比如，require('/home/marco/foo.js')将加载/home/marco/foo.js
+2、如果参数字符串以“./”开头，则表示加载的是一个位于相对路径（跟当前执行脚本的位置相比）的模块文件。比如，require('./circle')将加载当前脚本同一目录的circle.js
+3、如果参数字符串不以“./“或”/“开头，则表示加载的是一个默认提供的核心模块（位于Node的系统安装目录中），或者一个位于各级node_modules目录的已安装模块（全局安装或局部安装）
+
+
+文件扩展名分析: 
+.js、.json、.node的次序补足扩展名，依次尝试
+在尝试的过程中，需要调用fs模块同步阻塞式地判断文件是否存在。因为Node是单线程的，所以这里是一个会引起性能问题的地方。小诀窍是：如果是.node和.json文件，在传递给require()的标识符中带上扩展名，会加快一点速度。另一个诀窍是：同步配合缓存，可以大幅度缓解Node单线程中阻塞式调用的缺陷
+先执行main指定文件, 再index作为默认文件名, 依次查找index.js index.json index.node
+
+【目录分析和包】
+　　在分析标识符的过程中，require()通过分析文件扩展名之后，可能没有查找到对应文件，但却得到一个目录，这在引入自定义模块和逐个模块路径进行查找时经常会出现，此时Node会将目录当做一个包来处理
+　　在这个过程中，Node对CommonJS包规范进行了一定程度的支持。首先，Node在当前目录下查找package.json(CommonJS包规范定义的包描述文件)，通过JSON.parse()解析出包描述对象，从中取出main属性指定的文件名进行定位。如果文件名缺少扩展名，将会进入扩展名分析的步骤
+　　而如果main属性指定的文件名错误，或者压根没有package.json文件，Node会将index当做默认文件名，然后依次查找index.js、index.json、index.node
+　　如果在目录分析的过程中没有定位成功任何文件，则自定义模块进入下一个模块路径进行查找。如果模块路径数组都被遍历完毕，依然没有查找到目标文件，则会抛出查找失败的异常
+
+// var find = require('.find');
+//(1) 当前路径下find.js被执行  js json node依次执行
+//(2) find2文件夹下的package.json文件所指最先被执行 
+//(3) find3文件夹下的index.js被执行   不是find3.js
+//(4) find4.js不会执行  找不到而报错
+
+ // var find = require('find'); 
+ // (1)node_modules中find文件夹下package.json中main所指index2.js
+ // (2)index作为默认文件名, 依次查找index.js index.json index.node
+ // (3)依次上一级中node_modules下find文件夹下package.json中main所指文件
+
+模块对象Module，该对象保存了当前模块相关的一些信息    //console.log(module)
+exports 指向 module.exports
+
+模块编译: 
+      编译和执行是模块实现的最后一个阶段。定位到具体的文件后，Node会新建一个模块对象，然后根据路径载入并编译。对于不同的文件扩展名，其载入方法也有所不同，具体如下所示
+　　js文件  —  通过fs模块同步读取文件后编译执行
+　　node文件  —  这是用C/C++编写的扩展文件，通过dlopen()方法加载最后编译生成的文件
+　　json文件  —  通过fs模块同步读取文件后，用JSON.parse()解析返回结果
+　　其余扩展名文件 — 它们都被当做.js文件载入
+　　每一个编译成功的模块都会将其文件路径作为索引缓存在Module._cache对象上，以提高二次引入的性能
+
+每个模块都存在的变量: 
+module  filename   dirname   exports属性  require方法
+
+在编译的过程中，Node对获取的JavaScript文件内容进行了头尾包装。在头部添加了(function(exports, require, module, filename, dirname) {\n，在尾部添加了\n});
+      这样每个模块文件之间都进行了作用域隔离。包装之后的代码会通过vm原生模块的runInThisContext()方法执行(类似eval，只是具有明确上下文，不污染全局)，返回一个具体的function对象。最后，将当前模块对象的exports属性、require()方法、module(模块对象自身)，以及在文件定位中得到的完整文件路径和文件目录作为参数传递给这个function()执行
+　　这就是这些变量并没有定义在每个模块文件中却存在的原因。在执行之后，模块的exports属性被返回给了调用方。exports属性上的任何方法和属性都可以被外部调用到，但是模块中的其余变量或属性则不可直接被调用
+　　至此，require、exports、module的流程已经完整，这就是Node对CommonJS模块规范的实现
+==================
+events模块
+==================
+commonJS模块化: 
+模块引用: var math = require('math');
+模块定义: exports.xxx
+模块标识:  小驼峰命名的字符串，或者以.、./开头的相对路径，或者绝对路径  可以没有后缀名
+
+=====================
+二进制buffer
+fs模块
+path模块
+stream 数据流
+DNS域名
+URL 
+querystring
+net 
+http
+
+crypto加密
+process进程
+
+前端自动化: 生成项目结构和合并文件
+路由
+爬虫
+
+express框架
+
+
+
+
+querystring:
+(1) querystring.parse()        //一个URL查询字符串(str)解析成一个键值对的集合
+(2) querystring.stringify()   //querystring.parse()方法的逆向操作
+================path模块
+path.dirname(p)                  //返回路径p所在的目录  
+path.basename(p[, ext])      //返回路径最后一个部分  参数ext为需要截掉的后缀内容　
+path.extname(p)                 //返回文件扩展名 
+path.join(path1 [, path2])　//将多个路径结合在一起，并转换为规范化路径　
+
+path.resolve([from ...], to)   //从源地址 from 到目的地址 to 的绝对路径 类似于执行shell命令
+path.relative(from, to)        //获取从 from 到 to 的相对路径，可以看作 path.resolve 的相反实现
+
+path.isAbsolute(path)        //是否是绝对路径
+
+===============nodemon工具
+nodemon                  //自动执行index.js
+nodemon  filename   //执行具体文件
+rs                              //在nodemon开启时执行
+
+====================pug模块引擎
+pug index.pug           //编译
+pug index.pug -w      //自动编译
+pug index.html -P       //非压缩版   默认是压缩版
+pug index.pug -o a        //编译到指定目录
+pug xx.pug  xx/xx.html     //重命名
+pug href   //批量编译href目录下的所有文件
+pug知道哪些标签是自闭合的
+doctype html   //html5文档
+pug index.pug -O data.json  //指定数据
+
+====================ejs模板引擎
+特点: 保留了前端浏览器js的特点  依然基于作用域和原型链
+nodeJS 应用场景:  (1) I/O密集型   (2) CPU密集型
+(1) 异步I/O
+(2) 事件驱动
+(3) 回调函数
+(4) 单线程
+
+HTML5定制了Web Workers的标准，Web Workers能够创建工作线程来进行计算，以解决JavaScript大计算阻塞UI渲染的问题。工作线程为了不阻塞主线程，通过消息传递的方式来传递运行结果，这也使得工作线程不能访问到主线程中的UI
+
+
+
+JS 是单线程执行的，指的是一个进程里只有一个主线程。所有代码都在主线程中执行
+进程是CPU资源分配的最小单位；线程是CPU调度的最小单位. 
+一个进程由一个或多个线程组成 . 一个进程的内存空间是共享的，每个线程都可以使用
+====多进程和多线程
+多进程：在同一个时间里，同一个计算机系统中如果允许两个或两个以上的进程处于运行状态。
+多线程：程序中包含多个执行流，即在一个程序中可以同时运行多个不同的线程来执行不同的任务，也就是说允许单个程序创建多个并行执行的线程来完成各自的任务。
+=====执行和运行
+执行依赖于平台环境   如浏览器或node等 , JavaScript 在不同环境下的执行机制可能并不相同
+Event Loop 就是 JavaScript 的一种执行方式
+运行呢，是指JavaScript 的解析引擎。这是统一的
+
+============事件循环
+JavaScript 有一个主线程 main thread，和 调用栈 call-stack 也称之为执行栈。所有的任务都会放到调用栈中等待主线程来执行。
+同步任务 和 异步任务
+
+同步任务指的是，在主线程上排队执行的任务，只有前一个任务执行完毕，才能执行后一个任务；
+异步任务指的是，不进入主线程、而进入"任务队列"（task queue）的任务，只有等主线程任务执行完毕，"任务队列"开始通知主线程，请求执行任务，该任务才会进入主线程执行。
+
+宏任务 和 微任务
+MacroTask 包括   setTimeout  setInterval   setImmediate   整体代码script   I/O 操作、UI 渲染等
+MicroTask 包括： Process.nextTick、Promise.then catch finally  MutationObserver
+microtask微任务   macrotask  宏任务队列可以有多个，微任务队列只有一个。
+============浏览器常驻线程:    
+(1)GUI 渲染线程
+    1.主要负责页面的渲染，解析 HTML、CSS，构建 DOM 树，布局和绘制等。
+    2.当界面需要重绘或者由于某种操作引发回流时，将执行该线程。
+    3.该线程与 JS 引擎线程互斥，当执行 JS 引擎线程时，GUI 渲染会被挂起，当任务队列空闲时，JS 引擎才会去执行 GUI 渲染。
+(2) JavaScript 引擎线程
+   1. 该线程当然是主要负责处理 JavaScript 脚本，执行代码。
+   2. 也是主要负责执行准备好待执行的事件，即定时器计数结束，或者异步请求成功并正确返回时，将依次进入任务队列，等待 JS 引擎线程的执行。
+   3. 当然，该线程与 GUI 渲染线程互斥，当 JS 引擎线程执行 JavaScript 脚本时间过长，将导致页面渲染的阻塞。
+(3) 定时触发器线程
+   1.负责执行异步定时器一类的函数的线程，如： setTimeout，setInterval。
+   2.主线程依次执行代码时，遇到定时器，会将定时器交给该线程处理，当计数完毕后，事件触发线程会将计数完毕后的事件加入到任务队列的尾部，等待 JS 引擎线程执行。
+(4) 事件触发线程
+    1.主要负责将准备好的事件交给 JS 引擎线程执行。
+     比如 setTimeout 定时器计数结束， ajax 等异步请求成功并触发回调函数，或者用户触发点击事件时，该线程会将整装待发的事件依次加入到任务队列的队尾，等待 JS 引擎线程的执行。
+(5) 异步http 请求线程
+   1.负责执行异步请求一类的函数的线程，如： Promise，axios，ajax 等。
+   2.主线程依次执行代码时，遇到异步请求，会将函数交给该线程处理，当监听到状态码变更，如果有回调函数，事件触发线程会将回调函数加入到任务队列的队尾，等待 JS 引擎线程执行。
+
+常见的 macro-task 比如：setTimeout、setInterval、 setImmediate、script（整体代码）、 I/O 操作、UI 渲染等。
+常见的 micro-task 比如: process.nextTick、new Promise().then(回调)、MutationObserver(html5 新特性) 等。
+
+在JavaScript中，异步任务被分为两种，一种宏任务（MacroTask）也叫Task，一种叫微任务（MicroTask）
+全局script属于宏任务, 当某个宏任务执行完后, 会查看是否有微任务队列。如果有，先执行微任务队列中的所有任务，如果没有，会读取宏任务队列中排在最前的任务，执行宏任务的过程中，遇到微任务，依次加入微任务队列。栈空后，再次读取微任务队列里的任务，依次类推,  直到宏任务和微任务队列都为空
+
+Node.js 的运行机制如下:
+(1)V8 引擎解析 JavaScript 脚本。
+(2)解析后的代码，调用 Node API。
+(3)libuv 库负责 Node API 的执行。它将不同的任务分配给不同的线程，形成一个 Event Loop（事件循环），以异步的方式将任务的执行结果返回给 V8 引擎。
+(4)V8 引擎再将结果返回给用户。
+
+process.nextTick  所有异步任务里面最快执行的
+追加在本轮循环的异步任务    process.nextTick和Promise.then
+追加在次轮循环的异步任务    setTimeout、setInterval、setImmediate的回调函数
+ 
+timer =>pending callbacks => prepare  => poll  => check => close callbacks
+======事件循环的顺序
+外部输入数据–> 轮询阶段(poll) –> 检查阶段(check)–>关闭事件回调阶段(close callbacks) –> 定时器检测阶段(timer)–> I/O 事件回调阶段(I/O callbacks) –> 闲置阶段(idle, prepare) –> 轮询阶段(poll)
+
+process.nextTick()  每个阶段结束后执行,有自己的队列, 并且优先于其他 microtask 执行。
+===============重要阶段timer  poll  checked
+(1) timer
+   timers 阶段会执行 setTimeout 和 setInterval 回调，并且是由 poll 阶段控制的。
+  同样，在 Node 中定时器指定的时间也不是准确时间，只能是尽快执行。
+(2) poll
+poll 是一个至关重要的阶段，这一阶段中，系统会做两件事情
+1.回到 timer 阶段执行回调
+2.执行 I/O 回调
+并且在进入该阶段时如果没有设定了 timer 的话，会发生以下两件事情
+   如果 poll 队列不为空，会遍历回调队列并同步执行，直到队列为空或者达到系统限制
+   如果 poll 队列为空时，会有两件事发生
+         如果有 setImmediate 回调需要执行，poll 阶段会停止并且进入到 check 阶段执行回调
+         如果没有 setImmediate 回调需要执行，会等待回调被加入到队列中并立即执行回调，这里同样会有个超时时间设置防止一直等待下去
+(3)check 阶段
+   check 阶段的执行顺序在 poll 阶段之后。
+   setImmediate()的回调会被加入 check 队列中
+==============与浏览器不同
+timers 阶段有几个 setTimeout/setInterval 都会依次执行
+==============setImmediate   setTimeout
+setImmediate   设计在 poll 阶段完成时执行，即 check 阶段；
+setTimeout       设计在 poll 阶段为空闲时，且设定时间到达后执行，但它在 timer 阶段执行
+setTimeout优先于setImmediate执行(总体上看)
+
+当二者在异步 i/o callback 内部调用时，总是先执行 setImmediate，再执行 setTimeout
+如果在I / O周期内安排了任何计时器，则setImmediate()将始终在任何计时器之前执行，而与存在多少计时器无关。
+
+准备花费时间大于1ms, setTimeout先执行   否则反之 
+===============microtask执行时机
+在事件循环的各个阶段之间执行,   一个阶段执行完毕，就会去执行 microtask 队列的任务。
+
+浏览器环境下，microtask的任务队列是每个macrotask执行完之后执行。而在Node.js中，microtask会在事件循环的各个阶段之间执行，也就是一个阶段执行完毕，就会去执行microtask队列的任务
+
+=============node知识点
+Node.js 所有的异步 I/O 操作在完成时都会发送一个事件到事件队列。
+
+跨域资源共享(CORS)
+package.json  配置信息 
+package.lock.json  详细信息
+-S    运行 || 生产依赖     save-dev
+-D   开发依赖
+cnpm 
+cnpm i typings -g   
+typings init  初始化
+nodemon -D
+path.resolve('./')  运行js目录
+====JSON 文件
+通过 fs.readFileSync() 加载
+通过 JSON.parse() 解析
+========加载大文件
+require 成功后会缓存文件
+大量使用会导致大量数据驻留在内存中，导致 GC 频分和内存泄露
+=======exports
+exports 是 module 的属性，默认情况是空对象
+require 一个模块实际得到的是该模块的 exports 属性
+exports.xxx 导出具有多个属性的对象
+module.exports = xxx 导出一个对象
+========filename  dirname
+console.log('__dirname:', __dirname); 
+// 文件夹 __dirname: D:\计算机\HTML5 CSS3  JS\CSS3\面试题及补充知识\js\04
+console.log('__filename:', __filename); 
+// 文件 __filename: D:\计算机\HTML5 CSS3  JS\CSS3\面试题及补充知识\js\04\05.js
+
+==========console  占位符
+%s   字符串
+%d   数字
+%j    json
+===========process
+// 获取平台信息
+process.arch // x64
+process.platform // darwin
+// 获取内存使用情况
+process.memoryUsage();
+// 获取命令行参数
+process.argv
+===========nextTick
+process.nextTick 方法允许你把一个回调放在下一次时间轮询队列的头上，这意味着可以用来延迟执行，结果是比 setTimeout 更有效率。
+===========buffer
+`data:${mime(image/jpg)};${encoding(base64)},${base64Data(readFile.toString(base64))}`;
+// Buffer -> String         var str = data.toString('utf-8');
+// String -> Buffer         var bf = Buffer.from(data, 'utf-8');
+
+===========流
+流是基于事件的 API，用于管理和处理数据。
+流是能够读写的
+是基于事件实现的一个实例
+===========限制负载大小
+app.use(express.json({ limit: '300kb' })); 
+
+===========express中间件  很多个函数处理一个请求路由  错误处理 配置 用户信息  地理定位
+body-parser	解析 URL 编码 和 JSON POST 请求的 body 数据
+csurf	                在会话中添加 token，防御 CSRF 攻击(跨站请求伪造)   跨站点脚本(XSS)攻击
+express-session	简单的会话处理，使用 stores 扩展来吧会话信息写入到数据库或文件中
+cookie-parser	从 HTTP 头部信息中解析 cookies，结果放在 req.cookies
+morgan	                日志格式化
+cookie-session	使用 cookies 来支持简单会话
+compression	压缩服务器响应
+connect-timeout	请求允许超时
+errorhandler	Connect 中使用的默认错误处理
+method-override	映射新的 HTTP 动词到请求变量中的 _method
+response-time	跟踪响应时间
+serve-favicon	发送网站图标
+serve-index	目录列表
+whost	                允许路由匹配子域名
+
+==================jwt   跨域验证的两种方式: (1)持久化session   (2) jwt  
+1.服务器认证以后，生成一个 JSON 对象，发回给用户
+2.用户与服务端通信的时候，都要发回这个 JSON 对象，服务器完全只靠这个对象认定用户身份
+3.防止篡改会加上签名
+=================url模块
+url.parse(urlStr,queryString,ArraysisHost)    //urlStr(url)  queryString(true(对象)false(字符串))
+url.resolve(from,to)  以一种 Web 浏览器解析超链接的方式把一个目标 URL 解析成相对于一个基础 URL。
+==================fs模块
+fs.open(path, flags[, mode], callback)  打开文件
+fs.stat(path[, options], callback)    文件信息
+fs.appendFile(path, data[, options], callback)   新建文件
+fs.writeFile(file, data[, options], callback)   写入文件
+fs.read()   读取文件
+fs.rename(oldPath, newPath, callback)
+fs.close(fd, callback)
+fs.unlink(path, callback)
+fs.watchFile(filename[, options], listener)
+fs.unwatchFile(filename[, listener])
+fs.createReadStream(path[, options])
+fs.createWriteStream(path[, options])
+fs.mkdir(path[, options], callback)
+fs.readdir(path[, options], callback)
+fs.rmdir(path, callback)
+=====================path模块
+path.basename  返回尾缀    basename('/foo/bar/baz/asdf/quux.html');    //quux.html
+path.dirname(path)   返回目录名  dirname('/foo/bar/baz/asdf/quux.html');    ///foo/bar/baz/asdf
+path.extname(path)  返回拓展名   extname('/foo/bar/baz/asdf/quux.html');    //html
+path.format(pathObject):  从对象返回路径字符串  path.format({root: '/ignored',dir: '/home/user/dir',base: 'file.txt });
+path.isAbsolute(path):判断是不是绝对路径
+path.join()     使用平台特定的分隔符把全部给定的path片段连接到一起  path.join('/foo', 'bar', 'baz/asdf', 'quux', '..');
+parse(path)      解析path为路径对象(pathObject)
+relative(from, to)  返回从from到to的相对路径
+resolve([...paths])  将路径或路径片段的序列解析为一个绝对路径
+================node  手动实现静态文件读取
+fs   path  http  url   mime(外加)
+http.createServer(function(req,res))  创建服务器并监听
+on('request',(req,res)= {})  //监听
+获取文件名      url.parse(req.url).pathname
+获取文件路径   realPath = path.join(__dirname + '/public' + pathname);
+获取文件扩展名:  mime.getType(realPath)
+fs.readFile(realPath,(err,data)=>{
+res.writeHead(200, {    //设置响应头
+       'content-type': type
+		})
+        res.end(result);
+})
+=======处理get请求参数
+url.parse(req.url,true).query;   //{name:"bang"}
+=======处理post请求参数
+on data on end
+postParams += params;  //最终 username=bang&password=123
+const querystring  =  require('querystring')                        
+querystring.parse(postParams); //{name:"bang",password:123}
+==========method  
+const method = req.method.toLowerCase();
+const pathname = url.parse(req.url).pathname;  //请求地址  
+//之后就可以做路由
+
+============express
+app = express()   创建服务器
+=================get请求
+app.get('/',(req,res,nex){})   //接收请求
+app.get('/user/:id')   //动态路由参数  req.params.id接收
+app.get('/login?goods1=0001&goods2=0002')  //req.query.goods 获取数据
+===========post请求 application/x-www-form-urlencoded  multipart/form-data
+enctype属性一般设置为“application/x-www-form-urlencoded”，如果设置成multipart/form-data，则多用于文件上传
+res.send()   返回数据
+res.redirect('/login')
+app.use((req,res,next)=>{})  //中间件
+res.status(500).send()   设置返回状态
+const home = express.Router();  //路由
+req.query   //获取get请求参数
+const bodyParser = require('body-parser');   //处理post请求数据
+          app.use(bodyParser.json())
+          app.use(bodyparser.urlencoded({ extend: false }))
+req.params   //获取请求数据(/index/:id/:name/:age)  req.params.id
+app.use('/static', express.static(path.join(__dirname, 'public')));  //静态资源
+app.locals.users    //模板引擎全局资源
+app.engine('art', require('express-art-template'))
+app.set('views',path.join(__dirname,'views'))
+app.set('view engine','art')
+
+===========博客项目 express + ejs + mysql
+node   123456  账号密码
+npm i -g  express-generator  //全局安装
+express -e blog
+============数据库
+const mysql = require('mysql')
+const conn = mysql.createConnection({root: 'localhost',user:'root',port:'3306',password:'123456',database:'blog'})
+conn.connect()
+===使用
+var mysql = require('mysql');
+var conn = require('./../database');
+var sql = conn.
+conn.query(sql,function(err,rows,feild)=>{})
+
+============cookie
+domain  域名
+name=value
+Expires    指定过期的时间
+maxAge  过多久过期
+secure   :true  https才有效
+path    哪个路由下可以使用
+httpOnly   js脚本等不能获取cookie 防止 XSS 攻击的产生
+singed：表示是否签名cookie, 设为true 会对这个 cookie 签名，这样就需要用 res.signedCookies 而不是 res.cookies 访问它。被篡改的签名 cookie 会被服务器拒绝，并且 cookie 值会重置为它的原始值。
+
+=========session
+store      session储存实例
+secret     用它来对session cookie签名，防止篡改
+req.session.cookie.maxAge=1000;     重新设置过期时间
+
+req.session.destroy(function(err){
+     
+})
+============ejs
+<%- include('./public/aside.ejs') %>//导入其他视图  <%- include('./public/aside.ejs')%>
+<% if() {  }%>
+<%= message %>
+============formidable使用
+var form = new formidable.IncomingForm();
+form.parse(req , function(err , fields , files){}   //简单文件域
+
+
+var form = new formidable.IncomingForm();
+form.uploadDir  = path.resolve(__dirname , "../uploads");  //设置上传文件夹
+form.keepExtensions = true;   //保留拓展名
+form.parse(req , function(err , fields , files){
+var pathname = url.parse(files.avatar.path).pathname.match(/\/(upload_.+)$/)[1];  //提炼出刚刚上传的图片的文件名
+}
+
+
+
+===========================面试题
+1.什么是node.js?我们在哪里使用它?
+Nodejs是服务器端的一门技术。它是基于Google V8引擎而开发的。用来开发可扩展的服务端程序。
+
+2.为什么要使用node js?
+nodejs会让我们的编程工作变得简单，它主要包含如下几点几个好处：
+　　① 执行快速。
+　　② 永远不会阻滞。
+　　③ JavaScript是通用的编程语言。
+　　④ 异步处理机制。
+　　⑤ 避免并行所带来的问题。
+3.nodejs有哪些特点?   非阻塞I/O、事件驱动机制   单线程
+node.js是单线程的，但是有很高的可扩展性，使用JavaScript作为主流编程语言。使用的是异步处理机制和事件驱动。处理高效。
+
+4. SetTmmediate和setTimeout 区别在哪里?
+Setimmediate就是马上执行的意思。Settimeout，时间参数传为0，也想获得同样的功能。只不过前者要快一些
+
+5.为什么node.js是单线程
+Nodejs使用的是单线程没错，但是通过异步处理的方式，可以处理大量的数据吞吐量，从而有更好的性能和扩可扩展性
+。
+6.什么叫做回调地狱?
+回调地狱是由嵌套的回调函数导致的。这样的机制会导致有些函数无法到达，并且很难维护。
+
+7.什么是回调函数?
+回调函数是指用一个函数作为参数传入另一个函数，这个函数会被在某个时机调用。
+
+8.解释一下repl的作用?
+Read evaluate print loop，用于测试，调试和实验用。
+
+9.如何阻止回调地狱?
+有三种方法，对每个错误都要处理到，保证代码的贯通，程序代码模块化。
+
+10. API函数的类型有哪些?  阻塞和非阻塞
+一种是阻滞型函数。阻滞型函数会等待操作完成以后再进行下一步。
+另外一种是非阻滞型函数。这种函数使用回调函数来处理当前函数获取的结果。
+
+11.回调函数的第1个参数是什么?
+通常是错误对象。如果这个参数为空，表示没有错误。因为node.js是错误优先api
+
+12.NPM的作用是什么?
+Node package manager，主要有两个功能。
+它是一个网端模块的存储介质。
+它的另一个作用是安装程序依赖和版本管理。
+
+13.解释一下nodejs中chaining.
+Chaining是指从一个数据流到另一个数据流的链接，从而实现多个流操作。
+
+14.什么是streams?解释一下有哪些类型?
+流的概念是不间断的，它可以不间断的从某个地方读取数据，或者向某个地方写入数据。
+有4种类型的流数据。可读，可写。既可读，又可写，转化。
+
+15.什么是globals?
+Global代表的是最上层的命名空间，用来管理所有其他的全局对象。
+Process 是一个全局对象，可以把异步函数转化成异步回调， 它可以在任何地方被访问，它主要是用来返回系统的应用信息和环境信息.
+Buffer， 是用来处理二进制数据的类.
+
+16.为什么统一的风格儿非常重要，有什么工具可以保证这一点?
+统一的风格可以让所有的组成员按照一种规矩来写代码。工具有Standard和eslint.
+
+17.用什么方法来处理没有被处理的异常?
+在应用和node js之间使用domain来处理这样的异常。 异步代码的异常处理，可以捕捉处理try catch无法捕捉的异常
+
+18.Node js是如何支持多处理器平台的?
+Cluster模块是用来支持这方面的。它可以允许多个nodejs工作进程运行在相同的端口上。
+
+19.如何配置开发模式和生产模式的环境?
+首先有一个配置文件，然后通过环境变量参数来获取对应的配置内容。
+
+20.nodejs中跟时间相关的函数有哪些?
+①Set time out，clear time out.
+②Set interval，clear interval.
+③Set immediate，clear immediate.
+④Process.nextTick.
+
+21.解释一下什么是reactor pattern。
+Reactor pattern 主要是非阻滞的i/o操作。提供一个回调函数来关联io操作。io请求完成以后会不会提交给demultiplexer， 这是一个通知接口用来处理并发性的非阻滞的io操作，这个功能是通过查询一个event loop来实现的.
+
+22.lts版本是什么意思?
+至少会被支持18个月。使用的是偶数来标识。这种版本有稳定性和安全性的保证。
+
+23.你为什么需要把express APP和server分开?
+分开以后方便维护以及测试，在测试某个模块的时候，尤其是APP模块的时候，你不需要去对网络方面的连接配置做工作。
+
+24.nexttick和setImmediate的区别是什么?
+　　Next tick会等待当前的event执行完成或者下一轮儿事件循环到达再执行。
+　　Set immediate，会在下一轮的事件循环中，执行回调并且返回当前的循环来做读写操作。
+
+
+1.请介绍一下require的模块加载机制
+1、先计算模块路径
+2、如果模块在缓存里面，取出缓存
+3、加载模块
+4、输出模块的module.exports属性即可
+
+2.webSocket与传统的http有什么优势
+客户端与服务器只需要一个TCP连接，比http长轮询使用更少的连接
+webSocket服务端可以推送数据到客户端
+更轻量的协议头，减少数据传输量
+
+3.https用哪些端口进行通信，这些端口分别有什么用
+443 端口用来验证服务器端和客户端的身份，比如验证证书的合法性
+80  端口用来传输数据（在验证身份合法的情况下，用来数据传输）
+
+4.为什么需要CA机构对证书签名
+如果不签名会存在中间人攻击的风险，签名之后保证了证书里的信息，比如公钥、服务器信息、企业信息等不被篡改，能够验证客户端和服务器端的“合法性”。
+
+5.身份验证过程中会涉及到密钥， 对称加密，非对称加密，摘要的概念，请解释一下
+密钥：密钥是一种参数，它是在明文转换为密文或将密文转换为明文的算法中输入的参数。密钥分为对称密钥与非对称密钥，分别应用在对称加密和非对称加密上。
+
+对称加密：对称加密又叫做私钥加密，即信息的发送方和接收方使用同一个密钥去加密和解密数据。
+
+非对称加密：非对称加密也叫做公钥加密。非对称加密与对称加密相比，其安全性更好。对称加密的通信双方使用相同的密钥，如果一方的密钥遭泄露，那么整个通信就会被破解。而非对称加密使用一对密钥，即公钥和私钥，且二者成对出现。私钥被自己保存，不能对外泄露。公钥指的是公共的密钥，任何人都可以获得该密钥。用公钥或私钥中的任何一个进行加密，用另一个进行解密。
+
+
+6.CommonJS中require/exports和ES6中import/export区别
+CommonJS模块的重要特性是加载时执行，就是脚本代码在require的时候，就会全部执行。一旦出现某个模块被“循环加载”就只输出已经执行的部分，还没有执行的部分是不输出的
+
+ES6模块是动态引用，如果使用import从一个模块加载变量，那些变量不会缓存，而是成为一个指向被加载模块的引用,import/export最终都是编译为require/exports来执行的
+
+7.简述同步和异步的区别，如何避免回调地狱
+　　同步任务调用一旦开始，调用者必须等到方法调用返回后，才能继续后续的行为
+　　异步任务调用一旦开始，方法调用就会立即返回，调用者就可以继续后续的操作。而异步方法通常会在另外一个线程中，整个过程，不会阻碍调用者的工作
+　　避免回调地狱：
+　　1）Promise
+　　2）async/await
+　　3）generator
+　　4）事件发布/监听模式

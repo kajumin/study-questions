@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<div class="box" id="box">
+		<p>p段落1</p>
+		<p>p段落2</p>
+		<p>p段落3</p>
+	</div>
+	<ul id="ul">
+		<li>1</li>
+		<li>2</li>
+		<li>3</li>
+	</ul>
+	<!-- 
+	1. 占位符: %o  %s %d %c(样式)
+	2. dir     更好地查看dom结构  dir(dom)
+	3. warn    警告信息
+	4. table   [{},{}]展示表格
+	5. assert  断言false才显示 assert(arr.length === 4)
+	6. count   执行次数的计数器 count('odds')
+	7. time    跟踪时间time('start') timeEnd('start')
+	8. group   输出组合到一起  groupEnd
+	9. $_      检索最后一个结果的值  后续可以引用
+	10. clear()  清楚控制台和内存
+	11. inspect  查看元素inspect($('#box'))[0]
+	12. monitorEvents($('#box'),'click') //监控事件 追踪box的click事件
+	13. getEventListeners(box)  返回一个对象数组，其中包含绑定到该元素的所有事件
+	 -->
+<script type="text/javascript">
+	// 常见的占位符 %o (这是字母o，不是0)，它接受对象，%s 接受字符串，%d 表示小数或整数。
+	console.log('I like %s but I do not like %s.', 'bang', 'joycechu');
+	console.log('I am a %cbutton', 'color: white; background-color: orange; padding: 2px 5px; border-radius: 2px')
+
+	// console.dir(element)  给出了更加方便查看 DOM 结构的输出：
+	var box = document.querySelector('.box')
+	console.dir(box)
+
+	// console.warn() 警告
+
+	// console.table() 旨在以一种比仅仅转出原始对象数组更整洁的方式显示表格数据。
+	console.table([{id:1, name: 'bang', age: 18}, {id:2, name: 'joycechu', age: 20}])
+
+	// console.assert()
+	// console.assert([] == true)
+	// var arr = [1, 2, 3];
+	// console.assert(arr.length === 4);
+
+	// console.count() //
+
+	// document.body.contentEditable=true  可编辑
+
+	// console.time() 是一个用于跟踪操作时间的专用函数，它是跟踪 JavaScript执行时间的好方法。
+	console.time('start')
+	console.timeEnd('start') //start: 0.052001953125ms
+
+	// console.group()  输出的组合
+	// this is the global scope
+	let number = 1;
+	console.group('OutsideLoop');
+	console.log(number);
+	console.group('Loop');
+	for (let i = 0; i < 5; i++) {
+	  number = i + number;
+	  console.log(number);
+	}
+	console.groupEnd();
+	console.log(number);
+	console.groupEnd();
+	console.log('All done now');
+
+	// $_引用   检索最后一个结果的值
+	// clear()  清楚控制台和内存
+
+	// inspect($('#box'))  //找到该元素
+	// inspect($(‘a’)[3])  //第四个元素
+
+	// monitorEvents($('#box'),'click') //监控事件  追踪box的click事件
+
+	// console.log(getEventListeners(box)) 
+	// console.log(getEventListeners($('#box'))) 
+	// 返回一个对象数组，其中包含绑定到该元素的所有事件
+
+	box.addEventListener('click', function (e) {
+		// console.log(e)
+	})
+</script>
+</body>
+</html>

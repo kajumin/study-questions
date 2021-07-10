@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<script type="text/javascript">
+	/* 
+	 freeze seal
+	 不同: freeze不可以修改属性值, seal可以修改属性值
+	 相同: 都不可以添加和删除
+
+	 freeze: 浅冻结, 只冻结一层, 对象的属性值是对象, 可以进行添加, 删除, 修改
+	*/ 
+	var obj = {
+		name: 'bang',
+		age: 20,
+		msg: {
+			love: 'lyt'
+		}
+	}
+	Object.freeze(obj)
+	obj.age = 22
+	obj.msg.love = 'joycechu'
+	obj.msg.age = 18
+	delete obj.msg.age
+	console.log(obj)
+
+	"use strict"
+	function deepFreeze(object) {
+	    let propNames = Object.getOwnPropertyNames(object);
+	    console.log(propNames)
+	    for(let name of propNames) {
+	        let value = object[name];
+	        object[name] = typeof value === "object" ?
+	            deepFreeze(value) : value;
+	    }
+	    return Object.freeze(object);
+	}
+	let person = {
+	    name: "Leonardo",
+	    profession: {
+	        name: "developer"
+	    }
+	};
+	deepFreeze(person);
+	// person.profession.name  = "doctor"; //严格模式报错
+	// TypeError: Cannot assign to read only property 'name' of object
+	console.log(person)
+
+	function deepFreeze2(object) {
+		// console.log(object)
+		for(var key in object) {
+			if(object.hasOwnProperty(key)) {
+				var value = object[key];
+				object[key] = typeof value === 'object' ? deepFreeze2(value) : value
+			}
+			
+		}
+		return Object.freeze(object)
+	}
+	deepFreeze2(person);
+	person.profession.name  = "doctor"; //严格模式报错
+</script>
+</body>
+</html>

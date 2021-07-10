@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.details-1 summary {
+		    width: -moz-fit-content;
+		    width: fit-content;
+		    direction: rtl;
+		}
+		.details-1 ::-webkit-details-marker {
+		    direction: ltr;
+		    color: gray;
+		    margin-left: .5ch;
+		}
+		.details-1 ::-moz-list-bullet {
+		    direction: ltr;
+		    color: gray;
+		    margin-left: .5ch;
+		}
+
+		/* 隐藏默认三角 */
+		.details-2 ::-webkit-details-marker {
+		    display: none;
+		}
+		.details-2 ::-moz-list-bullet {
+		    font-size: 0;
+		}
+		.details-2 summary {
+			position: relative;
+			display: inline-block;
+		}
+		.details-2 summary::after {
+			content: '';
+			position: absolute;
+			top: 5px;
+			right: -21px;
+			width: 0;
+			height: 0;
+			border-width: 6px 8px;
+			border-style: solid;
+			border-color: transparent transparent transparent red; 
+			transition: transform .5s;
+			transform-origin: center;
+		}
+		.details-2:not([open]) summary::after {
+			top: 10px;
+			right: -19px;
+		    transform: rotate(90deg);    
+		}
+		/* 自定义的三角 */
+		.details-3 summary::after {
+		    content: '';
+		    position: absolute;
+		    width: 1em; 
+		    height: 1em;
+		    margin: .2em 0 0 .5ch;
+		    background: url(https://www.zhangxinxu.com/study/201801/arrow-on.svg) no-repeat;
+		    background-size: 100% 100%;
+		    transition: transform .2s;
+		}
+		.details-3:not([open]) summary::after {
+		    margin-top: .25em;
+		    transform: rotate(90deg);    
+		}
+		/* 隐藏默认三角 */
+		.details-3 ::-webkit-details-marker {
+		    display: none;
+		}
+		.details-3 ::-moz-list-bullet {
+		    font-size: 0;
+		}
+
+		.details-4 ::-webkit-details-marker {
+		   font-size: 24px;
+		}
+		.details-4 ::-moz-list-bullet {
+		    font-size: 24px;
+		}
+	</style>
+</head>
+<body>
+	<!-- 
+	1. 改变颜色
+	2. 自定义三角(子写) 隐藏三角 
+	3. 自定义三角(案例) 隐藏三角
+	4. font-size改变大小
+
+	 -->
+<details class="details-1">
+    <summary>这是摘要1</summary>
+    <content>这里具体描述，标签相对随意，例如这里使用的&lt;p&gt;标签。</content>
+    <p>这里具体描述，标签相对随意，例如这里使用的&lt;p&gt;标签。</p>
+</details>
+
+<details open="" class="details-2">
+    <summary>这是摘要1</summary>
+    <content>这里具体描述，标签相对随意，例如这里使用的&lt;p&gt;标签。</content>
+    <p>这里具体描述，标签相对随意，例如这里使用的&lt;p&gt;标签。</p>
+</details>
+
+<details open="" class="details-3">
+    <summary>这是摘要1</summary>
+    <content>这里具体描述，标签相对随意，例如这里使用的&lt;p&gt;标签。</content>
+    <p>这里具体描述，标签相对随意，例如这里使用的&lt;p&gt;标签。</p>
+</details>
+
+<details open="" class="details-4">
+    <summary>这是摘要1</summary>
+    <content>这里具体描述，标签相对随意，例如这里使用的&lt;p&gt;标签。</content>
+    <p>这里具体描述，标签相对随意，例如这里使用的&lt;p&gt;标签。</p>
+</details>
+</body>
+</html>

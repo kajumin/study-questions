@@ -1,0 +1,592 @@
+======================兼容问题
+chrome  firefox  ie9  ie
+======桌面端工具
+1. ietester         //模拟软件
+2. 仿真机          //ie9浏览器上有
+3. virtualbox虚拟机软件  + ievms虚拟机
+======通用处理兼容性问题
+1   hack    http://browserhacks.com   主要针对IE   
+2.  prefixer处理      自动加前缀
+     html5shiv.js      说明：  解决ie9以下浏览器对html5新增标签的不识别，并导致CSS不起作用的问题。
+     respond.min.js  说明：  让不支持css3 Media Query的浏览器包括IE6-IE8等其他浏览器支持查询。
+     picturefill.js       处理ie9不能识别piture标签的
+     modernizr.js      对个别元素的特性检测   然后再使用类名  防御性编程
+=======移动端工具
+genymotion   
+===========browser  没有gulp自动化好用
+browser-sync  start --server  --files './'
+
+
+
+=============预处理语言less
+1.变量  作用域 字符串插值  当做选择器  变量代表的字符串变量  media  变量值是变量  映射
+2.嵌套  & +&  &:hover  div > &
+3.运算
+4.控制
+5.extend
+6.mixins
+7.内置函数
+============变量  不用再使用前声明(惰性加载)
+1.基本使用@width: 300px; 使用width: @width;
+2.变量作用域 .box1 { @width: 100px; }
+3.字符串插值 @property: color; @{property}: red;  url("@{url}/1.jpg");
+4.当做选择器 @{color} { color: red; }
+5.content: @@var;  @var所代表的字符串是一个变量
+6.media query @query: ~"(max-width: 360px)";  使用 @media screen and @query {}
+7.@color: red; @bg: @color; 
+8.映射 colors{primary: #cd0000; secondary: #adc;} 使用.colors[primary];
+
+============混入mixins  将xxx的规则集复制到引用的规则集中
+1.基本使用 .width { width: 100px;} 使用.width;
+2.没有输出 .width() { width: 100px;} 使用.width; 不需要() 
+3.命名空间 使用.width > color
+4.!important 使用.width!important;
+5.带参数 .width(@width) { width: @width; } 使用.width(200px);
+  使用时可以具体指定参数名字 .width(@width: 20px);
+6.参数默认值 .width(@width: 20px) {width: @width;}
+7.arguments  使用.shadow(1px, 1px, 1px, #000);
+8.rest参数 
+	...(0-N个参数) 
+	()(没有参数) 
+	@a: 1(0-1)
+	@a: 1; ...(0-N) 
+	@a, ...(1-N)
+9.模式匹配
+  .mixin(dark, @color: red){} 使用.mixin(dark, #000);
+  .mixin(@_, @color: red){} 使用.mixin(dark, #000); //都调用
+10.条件编译 when()
+   when not()
+   when (), () 或
+   when () and () 与
+
+==============loop循环
+.columns(@n, @i: 1) when (@i =< @n) {
+    .columns(@n, (@i + 1));
+}
+.columns(4)
+=============父选择
+&:hover //hover样式
+& + & 
+& > &
+&  &  后代
+&&  连接
+&-btn  连接
+div > &  添加父元素
+
+==============merge合并
+box-shadow+: inset 0 0 10px #555;   // +是用逗号分隔的
+transform+_: scale(2);    //+_是用空格分隔的
+
+===============extend 复制选择器名 到 被引用的选择器上(css代码会更少)
+// 参数all, 包含嵌套中的
+&:extend(.b);      //结果: .b, .a {}
+.a:extend(.b) {}    //结果: .b, .a {}
+.a:extend(.b span) {}    //结果: .b span, a {}
+.a:extend(.b all)  //b中所有的嵌套都会在a中有(如: a span)
+===========@规则
+具有冒泡特性
+.component {
+  width: 300px;
+  @media (min-width: 768px) {   //还是作用在.component身上
+            background-image: @theme-color1;
+  }
+===========运算 + - * /
+@incompatible-units: 2 + 5px - 3cm; // 结果是 4px  加减转化
+@base: 2cm * 3mm; // 结果是 6cm  乘除不转换
+background-color: #112244 + #111; // 结果是 #223355
+==========calc特例
+@var: 50vh/2;
+width: calc(50% + (@var - 20px));  // 结果是 calc(50% + (25vh - 20px))
+=============转译
+@min768: ~"(min-width: 768px)";
+.element {
+  @media @min768 {
+    font-size: 1.2rem;
+  }
+}
+// 简写
+@min768: (min-width: 768px);
+.element {
+  @media @min768 {
+    font-size: 1.2rem;
+  }
+}
+(2)width: ~'@{n}px';   //
+============杂项函数
+color('#eee')  -> #eee
+image-size('../images/1.jpg') -> 256px 128px
+convert(9s, 'ms');
+unit()  //删除或者更改标注的单位  unit(5px)  unit(5px, cm)
+get-unit()  //获取单位
+svg-gradient(to right, red, green 30%, blue);
+===============字符串函数
+escape()    //对输入字符串中的特殊字符应用URL编码 escape('a=1') -> a%3D1
+e   //css转义   e('max-width: 360px');  -> max-width: 360px
+%  //格式化字符串
+replace(string, pattern, replacement, flags) 
+           replace("One + one = 4", "one", "2", "gi");  -> "2 + 2 = 4";
+           replace("Hello, Mars?", "Mars\?", "Earth!");  -> "Hello, Earth!";
+================列表函数
+length(@list);  -> 3
+extract(@list, 3) -> pink
+=================math函数
+==============color
+rgb  rgba   argb  hsl hsla  hsv  hsva
+ceil
+floor
+round 四舍五入
+percentage(0.5) -> 50%
+sqrt 开方  sqrt(25cm) -> 5cm
+abs  绝对值
+min  最小值min(3px, 1px, 5px, 10px)
+max
+
+=============类型函数
+isnumber  返回布尔值
+isstring     返回布尔值
+iscolor  iscolor(#eee)
+iskeyword
+isurl   isurl(url(..))  -> true
+ispixel
+isem
+ispercentage
+isunit(11px, px);  // true
+isruleset(@rules);   // true   @rules: {}
+==============常用内置函数
+lighten(#000, 25%)
+darken(#ccc, 10%)
+fadein(rgba(120,120,120, 0.5), 10%); //0.6 加深
+fadeout(rgba(120,120,120, 0.5), 10%); //0.4  变浅
+fade(rgb(120, 120, 120), 10%); //0.1   到多少
+mix(rgba(0,0,0,1.0), rgba(255,255,255,1), 50%); //gray (128, 128, 128, 1.0)  //最小值再%号
+average(#fff, #000); //gray (128, 128, 128)        //平均数
+
+====================颜色定义
+argb(rgba(90, 23, 148, 0.5));  -> #805a1794
+hsl(90, 100%, 50%)  -> #80ff00
+hsl(90, 100%, 50%, 0.5)  -> rgba(128, 255, 0, 0.5)
+hsv(90, 100%, 50%) -> #408000
+hsva(90, 100%, 50%, 0.5) -> rgba(64, 128, 0, 0.5)
+
+hue //获取hue值   hue(hsl(90, 100%, 50%))  -> 90
+saturation //获取saturation
+lightness(hsl(90, 100%, 50%))   //获取light值
+
+hsvhue  hsvsatation hsvvalue
+red
+green
+blue
+alpha
+===================颜色操作
+saturate(hsl(90, 80%, 50%), 20%)  ->  #80ff00 // hsl(90, 100%, 50%)  增加饱和度
+desaturate 降低饱和度
+darken 降低亮度
+lighten  增加亮度
+fadein   增加alpha
+fadeout 降低alpha
+fade    设置alpha
+spin     沿任一方向旋转颜色的色调角度
+mix      混合颜色
+tint      把颜色和白色按不同比例混合
+shade  把颜色和黑色按不同比例混合
+greyscale   从HSL颜色空间中的颜色中移除所有饱和度
+
+=================颜色混合函数
+multiply    颜色变深
+screen      颜色更亮
+average    计算两种颜色的平均值
+=============导入
+import './css/variables.less'
+import './css/variables.'  //可以省略
+============if
+if((2 > 1), 0, 3px);   //成立则是0  否则是 3px
+============boolean
+color: if(boolean(luma(@bg) > 50%), #ccc, #eee);   //#ccc   #eee
+=============replace
+replace(~"bar-1", '1', '2');   //bar-2
+=============length
+@list: "banana", "tomato", "potato", "peach";
+n: length(@list);   //4
+=================extract
+@list: 750px,640px,440px;
+value: extract(@list, 3);   //440px
+=================range
+range(10px, 30px, 10);  //start end step
+
+=====================less-domes
+linear-gradient(angle | to side or corner, <color-stop>)
+angle: 0deg(to top) 90deg(to left) 180deg(to bottom) 270(to right)
+<color-stop>: color [length | percentage]
+
+========================scss  文件命名以_开头
+(1) Sass 是以“.sass”后缀为扩展名，而 SCSS 是以“.scss”后缀为扩展名
+(2) 语法书写方式不同，Sass 是以严格的缩进式语法规则来书写，不带大括号({})和分号(;)，而 SCSS 的语法书写和我们的 CSS 语法书写方式非常类似
+tag:  所有在 CSS 中正常工作的代码也能在 SCSS 中正常工作
+
+
+1.变量 (variables)  变量作用域   数据类型: 数字  字符串  颜色  布尔值  空值  数组 map
+2.嵌套 (nested rules)  父级选择器  属性嵌套 占位符选择器(不会编译到css文件中)
+3.运算
+4.控制语句
+5.extend
+6.混合 (mixins)
+7.内置函数  自定义函数
+通过 sass-convert 命令行工具转换成另一种格式
+
+1.变量   $width: 200px;   中划线分隔
+数据类型
+   数字，1, 2, 13, 10px
+   字符串，有引号字符串与无引号字符串，"foo", 'bar', baz
+   颜色，blue, #04a3f9, rgba(255,0,0,0.5)
+   布尔型，true, false
+   空值，null
+   数组(list)  
+         用空格或逗号作分隔符，1.5em 1em 0 2em, Helvetica, Arial, sans-serif
+         nth($list, 3)  返回指定位置的值
+         join($list1, $list2, $separator:auto)  合并列表 comma(逗号) space(空格)
+         append 
+         index($list, $value)  返回索引
+         length($list)  返回长度
+         list-separator($list)  返回分隔符comma space  少于两个总是space
+          zip($lists…)   将多个列表按照以相同索引值为一组，重新组成一个新的多维度列表
+         @each
+         
+   maps, 相当于 JavaScript 的 object，(key1: value1, key2: value2)
+
+
+2.css功能扩展
+   (1)嵌套规则  .box1 { .son { } }
+   (2)父选择器  & + & 
+   (3)属性嵌套  font: { weight: bold; size: 24px;}
+   (4)占位符选择器 %sfqy-basic(不会编译到css文件)   使用@extend %sfqy-basic;
+
+
+3.运算 (+ - * / %)  (< > <= >=) (==  != )
+        \被视为除法运算
+        1.如果值，或值的一部分，是变量或者函数的返回值  $width / 2   ||  #{$fs}/#{$lh};(不视为除法)
+        2.如果值被圆括号包裹   (500px/2)
+        3.如果值是算数表达式的一部分  round(1.5)/2
+   (4)颜色运算 apacify($color, 0.3) 增加  transparentize($color, 0.2)
+   (5)字符串运算
+   (6)布尔运算
+   (7)数组运算
+   (8)圆括号() 调整运算顺序
+   (9)函数   hsl(0,100%, 50%)
+   (10)插值语句  #{ $border }
+
+4.控制指令
+   (1)if          if($condition, $if-true, $if-false)   类似于三元运算符
+   (2)@if       当@if 的表达式返回值不是 false 或者 null 时  可以使用@else if
+   (3)@for     @for $i from 1 through 3 { .item-#{$i} { width: 2em * $i; }
+                    @for $i from 1 to 3 { }
+   (4)@each  $var in <list>, $var可以是任意变量, list为数组
+        多个值@each $animal, $color, $cursor in (puma, black, default) {}
+   (5)@while   $i = 6; @while $i > 0 { $i: $i -2;}
+
+    @debug  11em + 22em;
+
+5.@extend
+  (1)@extend  将一个选择器下的所有样式继承给另一个选择器
+  (2) 其他使用到 .error 的样式也会同样继承给 .seriousError 如.error.active  ->  .seriousError.active
+  (3) @extend a:hover;  延伸复杂选择器
+  (4)多重延伸  @extend: .error;  @extend: .attention;
+  (5)继续延伸 a延伸b  b延伸c时,  c会延伸到a   -> a,b,c {}  b,c {}   c{}
+  (6)选择器列 a延伸b  b会得到a的(&:hover)
+  (7)合并选择器列  如果没有包含相同的选择器，将生成两个新选择器
+  (8) @extend-Only 选择器  专门用来被extend的
+       #context a%extreme
+       #conent a%extreme  .notice{@extend %extreme}  -> #conent a.notice
+  (9)@extend .notice !optional; 不生成新的选择器 没有也不会报错
+  (10) 在指令中延伸(如@media中)
+
+6.混入指令@mixin xxx {}
+  (1)定义混入代码  @mixin large-text {}   @mixins简写 = 
+  (2)引用混入样式  @include large-text;   可以在最外层引用 @include a;  @include 简写+
+  (3)参数  默认参数
+  (4)关键词参数   在使用时, 指定参数作用的哪个参数变量 （$x: 1px, $y: 2px）
+  (5)参数变量  @mixin box-shadow($shadows...) { box-shadow: $shadow;}   多个shadow
+      引用时使用  @include colors($values...)
+  (6)向混合样式中导入内容  
+      @include xx {  #logo {} }
+      @include xx {  color: #fff; }
+       接收@content;
+
+7.函数  自定义函数与mixin类似
+   (1)定义   @function grid-width($n) { @return 200px; }
+   (2)使用   grid-width(5);
+
+
+其他: 
+(1)注释  单行 //   多行 /**/
+(2)@import导入文件
+   @import 'foo.scss'  @import  'foo'
+   允许多个导入  @import  'base', 'common';
+   嵌套@import  在选择器中使用
+   失效的导入: 
+   (1).css
+   (2)http://
+   (3)url()
+   (4)@import包含媒体查询
+(3)@media嵌套  自动and
+    可以使用变量 变量，函数，以及运算符, 代替条件的名称或者值：
+
+(4)输出格式
+    (1):nested   默认的输出方法
+    (2):expanded  手写的样式
+    (3):compact   每条 CSS 规则只占一行
+    (4):compressed 删除所有无意义的空格、空白行、以及注释  颜色代码使用最小的#xxx
+
+===============数值运算类
+ceil()
+floor()
+round();  四舍五入
+abs(-10px);
+max(num1, num2, N)
+min()
+percentage(0.2); 转为百分比
+random() 0-1    
+random(10) 1-10的意思
+comparable($num1, $num2);  是否可以比较
+=================字符串类
+quote()       添加双引号
+unquote()   去除双引号
+unique-id()  唯一的id  单次编译唯一
+
+to-upper-case()
+to-lower-case()
+
+str-index($string, $substing); 找索引
+str-insert($str, $inset, $index); 在字符串的 $index 位置插入内容为 $insert 的子字符串
+str-length($string)
+str-slice($string, $start, $end: -1)
+
+=================颜色操作类
+darken($color, $amount)  0%-100%
+lighten($color, $amount)  0%-100%
+
+color-adjust($color, [$red], [$green], [$blue], [$hue], [$saturation], [$lightness], [$alpha])
+给定颜色相应的色彩值做加减运算
+change-color($color, [$red], [$green], [$blue], [$hue], [$saturation], [$lightness], [$alpha]) 
+传入的参数将直接替换原来的值
+
+blue()  green()  red()
+hue()  色调 saturation() 饱和度  lightness() 亮度
+alpha($color)  返回透明度
+
+saturate 饱和度提高 desaturate 降低  grayscale($color)  饱和度为0
+opacify   降低透明度  transparentize  提升
+
+invert()  反色
+complement()  补色
+mix($color1, $color2, N) 混色
+
+hsl()  hsla  返回给定的值
+rgb   rgba($color, $alpha)  rgba($red, $green, $blue, $alpha)
+
+==================列表操作 map操作
+length($list)
+append($list, $val, $separator:auto)
+index($list, $value)
+join($list1, $list2, $separator:auto)
+list-separator($list)
+nth($list, $n)
+zip($lists...)
+
+map-get
+map-keys
+map-values
+map-merge
+
+==================选择符操作类
+selector-append($selectors…)
+selector-nest($selectors…)
+selector-parse($selector)
+selector-replace($selector, $original, $replacement)
+selector-unify
+simple-selectors($selector)  拆分
+
+=================一般工具
+call($name, $args…)
+function-exists($name)  函数是否存在
+mixin-exists($name)   mixins是否存在
+typeof    返回类型
+unit        返回单位(复合单位) 有计算时: em*px  em*px/cm*rem
+unitness  是否带单位
+
+global-variable-exists($name) 变量是否全局定义
+variable-exists($name)  是否存在变量
+
+if($condition, $if-true, $if-false)；  除了null false 其他类型都是true
+
+==================预处理框架:
+sass  compass  
+less   lesshat/EST(百度出的)
+提供现成的mixin   封装常用功能
+============est
+npm install -g   less-plugin-est        //安装
+lessc est.less  >  est.css --est --js                //js编译注入  less版本大于3
+lessc  styles.less --est --js --autoprefix      //加浏览器前缀 需要安装插件 npm i -g less-plugin-autoprefix
+.global-normalize();
+.global-reset();
+
+===============================css工程化: postcss  
+组织  优化  构建   维护  
+PostCss        css变成css    加前缀   模块化  兼容性  本身只有解析能力  200多个插件(特性)  
+预处理语言   不是css语言变成css   less -> css
+
+npm i -g postcss-cli             //安装
+   
+postcss 文件路径   -o  目的文件路径  //执行postcss命令
+postcss ./src/precss.css -o ./dist/precss.css  //编译带有precss语法的
+========postcss插件   cssnext   precss
+npm i -D  autoprefixer          //自动添加浏览器前缀
+npm i -D  cssnano                //css压缩
+npm i -D  postcss-cssnext     //有独立的语法系统   使用css新特性
+npm i -D  precss                   //更想预处理语言   变量\条件if\mixin extend\循环\import\属性引用等
+
+
+npm i -D  postcss-import      //css模块引入插件
+npm i -D  apply                     //规则   不被推荐使用
+css-mqpacker                        //媒体查询合并为一个
+node-pixrem                         //让 IE8 ⽀持 rem 单位
+postcss-pseudoelement         //将伪元素的 :: 转换为 : ( IE8 不不⽀支持 ::)
+
+依赖于.browserslistrc文件中配置
+defaults
+not IE 11
+not IE_Mob 11
+maintained node versions
+> 10%
+last 2 versions
+iOS 7
+since 2015
+
+
+=====precss
+$变量   条件if  循环   mixin extend   import   属性值引入
+$main-color: red;
+.box {
+	@if 3 > 5 {
+		width: 100px;	
+	}@else {	
+			width: 200px;
+	}
+	color: $main-color;
+}
+@for $i from 1 to 3{
+	.b-$i {
+		width: $(i)px;
+	}
+}
+=============gulp-postcss使用
+    var plugins = [
+        autoprefixer(),
+        cssnano(),
+        precss
+    ];   //使用内部配置信息的形式
+    return gulp.src('./src/precss.css')
+        .pipe(postcss(plugins))
+        .pipe(gulp.dest('./dist'));
+
+(2) postcss中引入外部postcss.config.js中的配置信息
+return gulp.src('./src/precss.css')
+        .pipe(postcss())
+        .pipe(gulp.dest('./dist'));
+
+gulp css   gulp newcss
+=============webpack中postcss
+webpack  ./webpack.main.js  ./dist/build.js   //作用编译less/precss  导出css文件  使用module处理类名方法  
+
+总结: 
+css-loader   将css变成js
+style-loader 将js插入到head中
+extract-text-plugin 将css中js中提取出来文件
+css module    解决样式冲突的问题
+use: [{
+	loader: 'css-loader',
+	options: {
+		modules: true
+	}
+}
+less-loader sass-loader 各类预处理器  less-loader最新6.0 需要webpack4.0  还要安装less
+postcss-loader  //postcss处理   use: ['style-loader','css-loader','postcss-loader'] 依赖于postcss.config.js
+
+npm i  css-loader  style-loader -D
+1.样式冲突  (加前缀\)
+test: /\.css$/,
+use: ['style-loader',{
+	loader: 'css-loader',
+	options: {
+		modules: true  //改类名
+	}
+}]
+
+
+npm i -D  extract-text-webpack-plugin   @3.0.0 对应webpack3.6.0
+const ExtractTextPlugin = require('extract-text-webpack-plugin');  //插件产出css文件
+{test: /\.css$/,
+use: ExtractTextPlugin.extract({
+	fallback: 'style-loader',
+	use: {
+		loader: 'css-loader',
+			options: {
+
+				modules: true
+			}
+	}
+})
+}
+{
+	test: /\.less$/,
+	// use: ['style-loader','css-loader','less-loader']
+	use: ExtractTextPlugin.extract({
+		fallback: 'style-loader',
+		use: [{
+			loader: 'css-loader',
+			options: {
+
+				modules: true
+			}
+		},'less-loader']
+	})
+}
+,
+plugins: [
+	new ExtractTextPlugin('webpack.main.css')
+]
+
+
+
+<!-- css工程化面试题
+		css模块化的问题
+		  1.less sass等css预处理器
+		  2.postcss插件  autoprefixer    postcss-import  cssnano
+		  3.webpack处理css (css-loader, style-loader)
+
+		postcss可以做什么 (本身只能解析)
+		  1.取决于插件
+		  2.autoprefixer cssnext precss 等兼容性处理
+		  3.import 模块合并
+		  4.cssnano压缩文件
+		  5.语言检查  兼容性检查
+		 
+		 css modules是做什么的, 如何使用
+		  1.解决类名冲突的问题
+		  2.使用postcss  或者webpack构建工具
+		  3.在html模板中使用编译过程产生的类名
+
+		 为什么使用js来引用 加载css
+		  1.js作为入口  管理资源有天然优势
+		  2.将组件的结构 样式 行为封装到一起,增强内聚
+		  3.可以做更多处理(webpack)  
+	 -->
+
+
+vue中使用css
+(1) css-loader options: { module:true }     随机选择器   css modules
+(2) :class="$style.demo"  script标签设置module模式 需要两步处理(改变类名)
+    css modules
+
+(2) 随机属性  script标签scoped
+   <div abcdefg>
+   div[abcdefg]

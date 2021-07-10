@@ -1,0 +1,398 @@
+1.前端工程
+2.webpack 
+3.vue  vue-router  vuex  axios
+
+配置开发时的前端工程
+实现一个简单的todo应用
+优化配置达到上线标准
+
+价值:
+搭建前端工程
+网络优化
+api定制
+nodejs层
+
+npm init -y
+===================.vue文件
+npm i -D  webpack@3 
+npm i vue(2)
+npm i -D  vue-loader@14  vue-template-compiler(2)  css-loader@0
+
+/*
+可以处理.vue文件,  里面的css也是可以处理的, 不需要style-loader
+*/
+==================.css文件
+style-loader@0 
+ /*
+处理import  './index.css'
+*/
+================== 图片文件
+npm i -D file-loader@0  url-loader@0
+publicPath处理静态文件路径问题
+
+<img src="assets/images/1.jpg">   //无效的   必须写明相对路径
+===================预处理器
+npm i -D stylus-loader@3   stylus(0)
+index.styl
+test: /\.styl/
+lang="stylus"  scoped
+
+==================解决不同平台设置环境变量不一样
+npm i -D  cross-env
+cross-env NODE_ENV=production  
+// 定义环境变量值, 不定义项目中获取不到
+new webpack.DefinePlugin({
+	'process.env': {
+		NODE_ENV: isDEV ? '"development"' : '"production"'
+	}
+})
+
+===================webpack-dev-server
+npm i -D webpack-dev-server@2
+// 版本错误Webpack has been initialised using a configuration object that does not match the API schema.
+config.devtool = '#cheap-module-eval-source-map'
+
+{
+    port: '8080',
+    host: '0.0.0.0',  //便于手机访问
+    overlay: {
+      	errors: true  //编译时错误显示到网页上
+    },
+    historyApiFallback: true,  //路由映射到index.html
+    open: 'http://127.0.0.1:8080',  //每次都打开一个网页  true
+    hot: true, //只渲染一个组件  要加插件new webpack.HotModuleReplacementPlugin()
+    inline: true
+}
+
+new webpack.HotModuleReplacementPlugin(),
+new webpack.NoEmitOnErrorsPlugin() //不需要的信息展示
+===================html-webpack-plugin
+npm i -D html-webpack-plugin@3
+HtmlWebpackPlugin({ template: './index.html' })
+/*
+启动不了注意 publicPath  和 path之间的关系
+*/
+====================postcss-loader
+npm i -D postcss-loader@3  后处理css文件
+npm i -D autoprefixer@8  
+{
+   loader: 'post-loader',
+   options: {
+	sourceMap: true
+   }
+}
+package.json 文件
+"browserslist": [
+    "last 2 version",
+    "> 5%"
+  ]
+====================babel
+npm i -D babel-loader@7  babel-core(6)  ||   babel-loader(8)  @babel/core(7)
+npm i -D babel-preset-env(1)
+
+======================vue-jsx
+npm i -D babel-plugin-transform-vue-jsx
+npm i -D babel-plugin-syntax-jsx(不安装编译时会报错)  babel-helper-vue-jsx-merge-props
+
+====================开始项目
+npm i -D  extract-text-webpack-plugin(3)
+css使用contentHash:8
+js生产环境使用chunkhash  开发环境使用hash
+开发环境使用js命名为bundle.[hash:8].js   需要配合ejs | html生成  不能有publicPath
+============类库代码优化及hash
+new webpack.optimize.CommonsChunkPlugin({
+	name: 'vendor'  //vue等类库单独打包
+}),
+new webpack.optimize.CommonsChunkPlugin({
+	name: 'runtime'  //webpack.runtime  用于缓存, 加入模块时, 后面的模块id也会发生变化, 
+                                             导致浏览器缓存用不了
+})
+====================结束项目
+特点: 
+(1)技术点讲解比较多
+webpack4.0 
+git checkout -b webpack4
+
+多安装:
+webpack-cli(4)
+重新安装:
+webpack@4 
+webpack-dev-server(3) 
+file-loader(6)
+html-webpack-plugin@4  或者web-webpack-plugin   html-webpack-plugin
+mini-css-extract-plugin | extract-text-webpack-plugin@next   extract-text-webpack-plugin           
+uglifyjs-webpack-plugin                   webpack.optimize.UglifyJsPlugin
+====使用
+splitChunks                                      webpack.optimize.CommonsChunkPlugin
+自动设置process.env.NODE_ENV到不同环境，不需要DefinePlugin
+
+webpack-mer ge(5)
+
+报错: url-loader  option 添加上esModule: false 处理图片为[object Module]
+=======修改配置
+mode: process.env.NODE_ENV
+
+// 同级目录
+optimization: { 
+	splitChunks: { 
+		chunks: 'all' 
+	},
+	runtimeChunk: true,
+	minimizer: {
+
+	}
+},
+
+new ExtractTextWebpackPlugin({
+	filename: 'styles.[md5:contenthash:hex:8].css'
+})
+
+(1) 版本变化
+(2) 配置变化  module(区分开发环境和线上环境)  
+                   webpack.optimize.CommonsChunkPlugin =>  optimization.splitChunks: { name: 'common' }
+                   extract-text-webpack-plugin         => mini-css-extract-plugin
+                   webpack.optimize.UglifyJsPlugin   =>  
+                   const UglifyJSPlugin = require('uglifyjs-webpack-plugin');  optimization.minimizer: [new UglifyJSPlugin({})]
+(3)插件变化
+
+目录结构变化: 很重要  src  > views  > layout | todo 
+webpack.config.base.js => build 文件下 webpack.config.base.js 并修改
+webpack.config.client.js
+
+npm i webpack-merge(4)   //安装webpack-merge
+===================
+(1)业务逻辑
+(2)数据  线上数据库
+(3)
+=======================vue-loader配置
+vue-loader.config.js
+{
+   extractCSS: !isDEV,
+   cssModules: { localIdentName:  '[path]-[name]-[hash:base64:5]', camelCase: true }, camelCase (class(-)转换为驼峰)
+          :class="$style.className" module class-name : { color: red }   结果是类名不一样
+
+          导入css文件使用cssModules
+          设置 loader: 'css-loader', options: { module: true, localIdentName:  '[path]-[name]-[hash:base64:5]' }
+          import className from './assets/styles.styl'   使用id={ className.footer }
+
+   hotReload: true,  //开发环境为true  不需要设置
+   options: { 'docs': docs }   //自定义模块   require.resolve('./doc-loader'),  
+   preLoader: { },  //提前使用的加载器
+   postLoader: { } //之后使用的加载器
+}
+npm i -D  vue-style-loader   //热模块替换css
+npm i -D  rimraf   //删除打包文件夹   rimraf dist  
+
+
+==========================elist
+npm i -D eslint@5   eslint-config-standard@12 eslint-plugin-standard eslint-plugin-promise 
+               eslint-plugin-import eslint-plugin-node
+npm i -D eslint-plugin-html   //处理.vue文件
+npm i -D eslint-plugin-vue@6  eslint-plugin-vue-libs
+
+npm i -D babel-eslint  eslint-loader@2 //配置eslint-loader
+{
+   test: /\.(vue|js|jsx)$/,
+   loader: 'eslint-loader',
+   enforce: 'pre',
+   exclude: /node_modules/
+},
+
+安装vsc插件   editorConfig for vs code
+.editorconfig  配置文件
+
+========================husky  需要先初始化git项目
+npm i -D husky@0     // .git项目初始化好  版本不同 配置不同
+  "precommit": "npm run lint", //commit之前执行lint
+
+==================================router
+npm i  vue-router
+npm i  babel-preset-stage-1   //...map语法   presets: ["env", "stage-1"]
+babel-plugin-syntax-dynamic-import@6.18.0    // 路由懒加载使用  "plugins": ["syntax-dynamic-import"]
+
+eslint-plugin-vue-libs@4.0.0
+
+historyApiFallback: //路由刷新时 不返回404页面  开发时
+
+
+    "html-webpack-plugin": "^3.2.0",    //生成index.html
+    "vue-style-loader": "^4.1.2",  //根style-loader一样
+    "webpack-cli": "^3.3.12",
+
+=================坑点
+0.vue-loader 15.9.2    15.x以上需要在webpack.config.js中声明并挂载VueLoaderPlugin
+1.css-loader  1.0.0版本
+2.html-webpack-plugin     3.2.0版本
+3.webpack                        3.12.0版本
+4.webpack-dev-server       2.11.5版本   否则配置项就有出问题
+   
+5.babel配置
+ babel-loader@7.1.5
+ babel-core@6.26.3
+ babel-preset-env@1.7.0
+ babel-plugin-transform-vue-jsx@3.7.0
+ 
+ babel-helper-vue-jsx-merge-props@2.0.3  babel-plugin-transform-vue-jsx@3.7.0依赖于它
+ babel-plugin-syntax-jsx@6.18.0  不明确依赖版本
+
+6. url-loader@4.0.0 src="[object object]"   需要设置url-loader:  esModule: false
+
+=======================css单独分离打包
+config.output.filename = '[name].[chunkhash:8].js'
+config.module.rules.push({
+	test: /\.styl$/,
+	use: ExtractTextWebpackPlugin.extract({
+		fallback: 'style-loader',
+		use: [
+		'css-loader',
+		{ 
+			loader: 'postcss-loader', 
+			options: { sourceMap: true }
+		},
+		'stylus-loader']
+	})
+})
+{
+	test: /\.vue$/,
+	loader: 'vue-loader',
+	options: {
+		extractCSS: isDEV ? false : true
+	}
+},
+===添加插件
+new ExtractTextWebpackPlugin('styles.[contentHash:8].css'),
+
+========================类库代码及hash优化
+config.entry = {
+	app: path.join(__dirname, 'src/main.js'),
+	vendor: ['vue']
+}
+====插件
+new webpack.optimize.CommonsChunkPlugin({
+	name: 'vendor'
+}),
+new webpack.optimize.CommonsChunkPlugin({
+	name: 'runtime'
+}) 
+// app.js中的打包到新的文件中 hash变化了   浏览器长缓存就失效了
+
+
+
+============项目大改变
+webpack-merge@4.2.2
+vue-style-loader@4.1.2    //热加载css
+rimraf@3.0.2     package.json 中 "clean": "rimraf dist",
+
+1.webpack.config.base.js
+2.webpack.config.client.js
+
+======cssModules
+cssModules: {
+		localIdentName: '[path]-[name]-[hash:base64:5]',
+		camelCase: true,  //类名  驼峰的方法
+},
+:class="$style.mainHeader"    .main-header{ }
+===引用css文件的时候module方式
+loader: 'css-loader',
+options: { module: true, localIdentName: '[path]-[name]-[hash:base64:5]' }
+===导入时
+import className from '../assets/styles/global.styl'
+
+============elist
+eslint-plugin-standard@4.0.1
+eslint-plugin-promise@4.2.1
+eslint-config-standard@14.1.1
+eslint@7.3.0
+eslint-plugin-import@2.21.2
+eslint-plugin-html@6.0.2
+eslint-plugin-node@11.1.0
+eslint-plugin-vue@6.2.2
+====
+babel-eslint@10.1.0   //配合下面功能
+eslint-loader@4.0.2   //保存文件的时候自动检测
+
+"off" 或 0 - 关闭规则
+"warn" 或 1 - 开启规则，使用警告级别的错误：warn (不会导致程序退出)
+"error" 或 2 - 开启规则，使用错误级别的错误：error (当被触发的时候，程序会退出)
+======.editconfig文件
+需要vsc插件才可以
+
+===git提交规范   必须先git init 在安装包
+husky@0.14.3  指定版本
+
+"precommit":  "npm run lint",
+====保存时自动检测
+{
+	test: /\.(vue|js|jsx)$/,
+	loader: 'eslint-loader',
+	exclude: /node_nodules/,
+	enforce: 'pre' // 预处理
+},
+
+
+===============webpack4升级
+npm i -D webpack@^3.0.0
+npm uninstall webpack  webpack-dev-server webpack-merge  file-loader html-webpack-plugin babel-loader
+          extract-text-webpack-plugin   eslint-loader   stylus-loader  vue-loader
+npm i  -D extract-text-webpack-plugin@next 
+npm i -D webpack webpack-dev-server webpack-merge webpack-cli
+
+===加配置
+mode: process.env.NODE_ENV || 'production'   //development production
+new webpack.optimize.CommonsChunkPlugin 不能用了
+new webpack.NoEmitOnErrorsPlugin(),   不能用了
+vender: ['vue']   不需要了
+==改成
+optimzation: {
+     splitChunks: {
+          chunks: 'all'
+     } ,
+     runtimeChunk: true  
+} 
+
+==============vue学习
+1.vue实例  属性和方法watch  $on  $emit  $once
+2.生命周期
+3.属性绑定 class style
+4.计算属性computed 和 监听器watch(immediate, deep:true )
+5.内置指令 v-model
+6.组件
+  (1)组件(声明 挂载 使用)  命名 props传递  父子通信
+  (2)Vue.extend()
+  (3)v-model
+  (4)slot
+  (5)privide   inject
+  (6)render
+  (7)监听子组件生命周期   beforeMounted执行完后执行子组件生命周期
+=========vue-router  vuex
+
+
+=========tabs组件
+大问题: panes更新少一步
+
+=======项目后端服务开发node.js+ koa2.x + APICloud
+npm i sha1@1.1.1                //APIClound需要
+npm i koa-body@4.2.0         //处理请求体
+npm i koa-session                //解决登录
+npm i koa2-cors@2.0.6        //跨域问题
+npm i koa-static@5.0.0        //静态资源
+npm i koa-connect-history-api-fallback@0.3.1   //打包后路由刷新问题
+=============通过https://www.apicloud.com/创建云数据库
+开发api  获取  添加  修改  删除 删除已完成
+路由: user  api
+包含内容: 错误处理   跨域  session 静态资源 
+const userRouter = new Router({ prefix: '/user' })
+userRouter.post('login')
+
+
+========七牛  (上传cdn文件)   40410@qq.com   ym9812
+npm i  -D qiniu@7.3.2   //使用七牛
+
+注意: 打包时要使用cdn地址  publicPath: cdnConfig.host
+
+http-server -c-1  开启http服务器
+
+=======与项目对接
+请求封装 model  使用错误处理
+vuex 对接
+=======

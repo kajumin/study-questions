@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<style>
+		body {
+			padding: 0;
+			margin: 0;
+		}
+		.container {
+			overflow: hidden;
+		}
+		.column-left,
+		.column-right {
+			float: left;
+			width: 49.99%;
+			margin-bottom: -9999px;
+		    /*padding-bottom: 9999px;*/
+		    /**padding-bottom: 9999px;*/
+		    /*_padding-bottom: 9999px;*/
+		    border-bottom: 9999px solid transparent;
+		    *border-bottom: 9999px solid transparent;
+		}
+		.column-left {
+		    background-color: #34538b;
+		}
+		.column-right {
+		    background-color: #cd0000;
+		}
+
+	</style>
+</head>
+<body>
+	<!-- 
+	margin负值: 子元素定位到容器之外, 锚点定位
+  	border:  兼容性好, 最多三栏, 不支持百分比宽度, 至少有一栏定宽
+  	table-cell:  ie8以上  不考虑兼容推荐使用
+   	-->
+	<div class="container">
+		<div id="colLeft" class="column-left">
+		    <h4>正方观点</h4>
+		    <p>观点1</p>
+		</div>
+		<div id="colRight" class="column-right">
+		    <h4>反方观点</h4>
+		    <p>观点1</p>
+		</div>
+	</div>
+<p>
+	<input type="button" id="leftMore" value="更多正方观点">
+	<input type="button" id="rightMore" value="更多反方观点">
+</p>
+<script type="text/javascript">
+	var $ = function (id) {
+	    return document.getElementById(id);
+	};
+	// 分栏元素
+	var colLeft = $('colLeft'), colRight = $('colRight');
+	// 按钮元素
+	var leftMore = $('leftMore'), rightMore = $('rightMore');
+	// 序号
+	var indexLeft = 1, indexRight = 0;
+	if (colLeft && colRight && leftMore && rightMore) {
+	    leftMore.onclick = function () {
+	        indexLeft = indexLeft + 1;
+	        colLeft.insertAdjacentHTML('beforeend', '<p>观点'+ indexLeft +'</p>');
+	    };
+	    rightMore.onclick = function () {
+	        indexRight = indexRight + 1;
+	        colRight.insertAdjacentHTML('beforeend', '<p>观点'+ indexRight +'</p>');
+	    };
+	}
+</script>
+</body>
+</html>

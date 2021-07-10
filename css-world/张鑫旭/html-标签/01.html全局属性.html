@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		c-e::part(active) { 
+   		 	color: deepskyblue; 
+		}
+		c-e::part(textspan) { 
+    		font-size: 20px; 
+		}
+	</style>
+</head>
+<body>
+<!-- 
+HTML全局属性: 指的是在所有html元素上都能使用的属性。(id class)
+有些HTML属性只能用在特定的元素上, 比方说href属性, 多出现在<a>元素、<link>元素上
+
+id     id
+class  类名
+style  样式
+title  标题
+hidden  display:none   ie11+
+data  开发人员自己设置的各种自定义属 ele.getAttribute | ele.dataset.key
+      js中  ele.dataset.key  驼峰命名法获取
+      css中 .mm[data-name='无版权']{ }
+      兼容性 ie11
+dir   文档水平流向, ltr |rtl |auto 使用在布局中,自己的对话框和好友的不一样
+tabindex
+        如果属性值是负值，表示当前元素可以被focus，但是不能使用键盘访问到。
+		如果属性值是0，表示可以被focus，按照DOM先后位置顺序被键盘访问。
+		如果属性值是正值，则表示可以被focus，同时有优先的键盘访问属性。
+
+draggable   是否可以被拖拽 true | false
+contenteditable: 元素处于内容可编辑状态。 true false events caret
+accesskey: 指定访问当前元素的快捷键  但是各个浏览器的组合键不一样 alt+ key
+lang    主要使用在html元素上全局设置一下
+translate   表示是否允许浏览器对当前元素进行翻译
+spellcheck  拼音检测 英文使用
+
+autocapitalize 没有作用   不支持
+contentmenu  废弃
+dropzone    抛弃了
+inputmode   用于contenteditable普通元素, 效果不好
+is      可以用来指定标准HTML元素的行为表现类似于注册过的自定义内置元素。
+item    国内为数不多的相关领域的介绍
+port        属性是跟着Shadow DOM开发走的
+exportparts 属性也是跟着Shadow DOM树走的
+slot        属性性也是用在Shadow DOM开发中的。
+-->
+</body>
+
+<div class="box1" style="height: 1000px;background-color: #eee;">
+	<div contenteditable="true">中国</div>
+
+</div>
+<div class="box2" style="height: 1000px;background-color: green;">
+	<input type="text" name="" accesskey="/">
+
+	<template id="c-e-template">
+  		<p part="textspan active">文字颜色是深天空蓝！</p>
+  		<p part="textspan">文字颜色是麻瓜黑！</p>
+	</template>
+	<c-e></c-e>
+</div>
+
+<script>
+	let template = document.getElementById('c-e-template');
+	globalThis.customElements.define('c-e', class extends HTMLElement {
+  		constructor() {
+    	super();
+    	this.attachShadow({ mode: "open" });
+    	this.shadowRoot.appendChild(template.content);
+  	}
+});
+</script>
+</html>

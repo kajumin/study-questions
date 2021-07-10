@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.clearfix:after {
+			content: '';
+			display: block;
+			clear: both;
+		}
+		.container1 {
+			width: 80%;
+			max-width: 1000px;
+			min-width: 640px;
+			margin: 0 auto;
+			display: block;
+		}
+		.container1 div {
+			float: left;
+			width: 33.3333%;
+			height: 100px;
+		}
+		.container1 div:nth-child(1) {
+			background-color: red;
+		}.container1 div:nth-child(2) {
+			background-color: pink;
+		}.container1 div:nth-child(3) {
+			background-color: green;
+		}
+		.container2 {
+			width: 80%;
+			max-width: 1000px;
+			min-width: 640px;
+			margin: 0 auto;
+			display: flex;
+		}
+		.container2 div {
+			flex: 1;
+			height: 100px;
+		}
+		.container2 div:nth-child(1) {
+			background-color: red;
+		}.container2 div:nth-child(2) {
+			background-color: pink;
+			flex: 2;
+		}.container2 div:nth-child(3) {
+			background-color: green;
+		}
+		.container3 {
+			width: 80%;
+			max-width: 1000px;
+			min-width: 640px;
+			height: 100px;
+			margin: 0 auto;
+			display: flex;
+		}
+		.container3 div:nth-child(1) {
+			width: 200px;
+			background-color: red;
+		}.container3 div:nth-child(2) {
+			width: 100px;
+			background-color: pink;
+		}.container3 div:nth-child(3) {
+			background-color: green;
+			flex: 1;
+		}
+	</style>
+</head>
+<body>
+<p>传统布局三等份</p>
+<div class="container1 clearfix">
+	<div></div>
+	<div></div>
+	<div></div>
+</div>
+<p>伸缩布局三等份</p>
+<div class="container2">
+	<div></div>
+	<div></div>
+	<div></div>
+</div>
+<p>三等份--固定宽度</p>
+<div class="container3">
+	<div></div>
+	<div></div>
+	<div></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<!-- 
+1.!与!! 逻辑非操作 两次逻辑非操作
+2.~与~~ 按位取反(按位取反 反码 补码) Math.floor的效果
+3.&与&& 按位与(判断奇偶数) 逻辑与
+4.|与|| 按位或 逻辑或
+5.==与=== 宽松相等 严格相等
+6.^ 按位异或运算符 相同(11 00)为0
+7.数值表示法 1e+21 小数点前大于21位 
+  转为十进制: parseInt()
+  转为其他进制: toString(x)
+8.0B 0X 0O
+9.sort concat.apply push.apply 
+	length  delete数组会变为空值empty
+	toString.call
+  create(null) JSON.parse(stringify())
+10.虚值 0 -0 NaN '' false  undefined null
+11.原码 反码 补码
+   正数: 原码 反码 补码一样
+   负数: 反码(符号位不变) 补码: 反码的基础上+1
+ -->
+<script type="text/javascript">
+	// 逻辑非操作 两次逻辑非操作
+	console.log(!'abc')
+	
+	// 按位取反 Math.floor效果
+	console.log(~5) //-6
+	console.log(~~5) //5
+
+	// +: 变量转换为数字
+	console.log(+{}) //NaN
+	console.log(+[]) //0
+	console.log(+'-1') //-1
+
+	const isOdd = num => !!(num & 1);
+	console.log(isOdd(2))
+	console.log(isOdd(3))
+
+	console.log(1 | 6)
+	console.log('abc' && 1 && ' ' && 'abc')
+	console.log(false || 0 || '' || 'abc')
+
+	console.log(null == undefined)
+	console.log('11' == 11)
+
+	// 按位异或 相同(11 00)为0
+	console.log(0 ^ 0)
+	console.log(6 ^ 6)
+	var a = 10
+	var b = 20
+	a = a ^ b
+	b = a ^ b
+	a = a ^ b
+	console.log(a, b)
+
+	console.log('数值表示法: ')
+	console.log(1e5)
+	console.log(1e20)
+	console.log(Number(17900).toExponential(1))// 小数位数
+
+	console.log('自动转为科学计数法: ')
+	console.log(parseInt(1000000000000000000000000, 10)) //1
+	console.log(100000000000000000000) // 7 * 3
+	console.log(1000000000000000000000) // 7 * 3
+
+	// 小数点前大于21位则自动为科学计数法 3e9
+	console.log(100000000000000000000.1234)
+	console.log(1.9000000000000)
+
+	// 默认情况下，JavaScript 内部会自动将八进制、十六进制、二进制转为十进制再进行运算。从十进制转其他进制请查阅toString方法，从其他进制转十进制请查阅parseInt方法，从其他进制转其他进制请先转为十进制再转为其他方法
+	console.log((12).toString(2))
+	console.log((12).toString(8))
+	console.log((12).toString(16))
+
+	console.log(parseInt((12).toString(16), 16)) //12
+
+	var arr2 = [1,2,3,4,5]
+	delete arr2[0]
+	console.log(arr2) //5
+	console.log(arr2.length) //5
+</script>
+</body>
+</html>

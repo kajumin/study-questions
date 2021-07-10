@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script type="text/javascript">
+		console.log(document.querySelector('h1')) //null
+		addEventListener('DOMContentLoaded', function() {
+			console.log('DOMContentLoaded')
+		})
+	</script>
+	<link rel="stylesheet" type="text/css" href="1.css">
+	<link rel="stylesheet" type="text/css" href="bootstrap.css">
+</head>
+<body>
+	<!--
+	css:  
+	由于js可能会操作之前的dom节点和样式, 因此浏览器会维护html中css和js的关系, 所以css会在后面的js执行前加载执行完毕,
+	所以css加载会阻塞后面的js执行
+
+	 -->
+	<h1 class="box1 text-primary">红色</h1>
+	<script type="text/javascript" src="http://www.baidu.com/1.js"></script>
+	<script type="text/javascript" src="http://www.douban.com/1.js"></script>
+	<script type="text/javascript">
+		document.querySelector('.box1').innerHTML = '蓝色'
+	</script>
+	<script type="text/javascript" src="1.js"></script>
+<!-- <script type="text/javascript">
+	console.log(window.getComputedStyle(document.querySelector('h1')).getPropertyValue('color'))
+</script> -->
+	<div class="box2">中国</div>
+	<script type="text/javascript" defer>
+		document.querySelector('.box3').innerHTML = '人民2'
+	</script>
+	<div class="box3">人民</div>
+</body>
+</html>

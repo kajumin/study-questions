@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.box {
+			width: 100px;
+			height: 100px;
+			background-color: red;
+		}
+		.box1 {
+			animation: translate 2s linear 1s;
+			/* name duration timing-function delay */
+
+			/* animation-fill-mode: forwards;  */
+			/* 停止在100% */
+			/* animation-fill-mode: backwards; 
+			/* 先到0% */
+			animation-iteration-count: 2;
+			animation-direction: alternate;
+			animation-fill-mode: both; /* 都有 */
+		}
+		.box1:hover {
+			animation-play-state: paused;
+		}
+		@keyframes translate {
+			100% {
+				transform: translate(100px);
+			}
+		}
+		.box2 {
+			animation: move 2s;
+			animation-timing-function: steps(4); 
+		}
+		@keyframes move {
+			100% {
+				transform: translate(100px);
+			}
+			
+		}
+	
+	</style>
+</head>
+<body>
+<!-- 
+animation: name duration timing-function delay
+           iteration-count direction fill-mode play-state
+timing-function: steps() linear ease-out
+	1.各种值
+	2.steps步进函数
+ --> 
+ <div class="box box1">中国</div>
+ <div class="box box2">中国</div>>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		body {
+			margin: 0;
+		}
+		.fixed {
+			position: fixed;
+			left: 0;
+			right: 0;
+			top: 0;
+			bottom: 0;
+			font-size: 0;
+			white-space: nowrap;
+			text-align: center;
+			background-color: rgba(0,0,0,.6);
+		}
+		.fixed:after {
+			content: '';
+			display: inline-block;
+			height: 100%;
+			vertical-align: middle;
+		}
+		.form {
+			display: inline-block;
+			padding: 35px 50px;
+			border-radius: 10px;
+			vertical-align: middle;
+			text-align: left;
+			white-space: normal;
+			font-size: 16px;
+			background-color: #f1f1f1;
+		}
+		.form label {
+			display: inline-block;
+			width: 60px;
+			margin-right: 10px;
+			text-align: right;
+		}
+	</style>
+</head>
+<body>
+	<!-- 
+	fixed: 固定定位, 包含块是根元素/html元素
+	 -->
+<div class="fixed">
+	<div class="form">
+		<p><label for="username">用户名: </label><input type="text" name="username" id="username"></p>
+		<p><label for="pwd">密码: </label><input type="password" name="pwd" id="pwd"></p>
+	</div>
+</div>
+</body>
+</html>

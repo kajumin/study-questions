@@ -1,0 +1,238 @@
+css加载不会阻塞dom树解析
+css加载会阻塞dom树渲染
+css加载会阻塞js语句的执行
+
+1.如果页面中同时存在css和js，并且存在js在css后面，则DOMContentLoaded事件会在css加载完后才执行。
+2.其他情况下，DOMContentLoaded都不会等待css加载，并且DOMContentLoaded事件也不会等待图片、视频等其他资源加载。
+
+1.使用CDN(因为CDN会根据你的网络状况，替你挑选最近的一个具有缓存内容的节点为你提供资源，因此可以减少加载时间)
+2.对css进行压缩
+3.合理的使用缓存(设置cache-control,expires,以及E-tag都是不错的，不过要注意一个问题，就是文件更新后，你要避免缓存而带来的影响。其中一个解决防范是在文件名字后面加一个版本号)
+4.减少http请求数，将多个css文件合并，或者是干脆直接写成内联样式(内联样式的一个缺点就是不能缓存)
+
+1.HTML解析文件，生成DOM Tree，解析CSS文件生成CSSOM Tree
+2.将Dom Tree和CSSOM Tree结合，生成Render Tree(渲染树)
+3.根据Render Tree渲染绘制，将像素渲染到屏幕上。
+
+
+十种居中的方式:
+单行行内元素  水平text-align:center   垂直line-height = height
+
+定宽高
+absolute  +   负margin
+absolute  +   calc    left: calc(50%-50px)
+absolute  +   margin  auto   bottom  top  left  right
+
+居中元素不定宽高
+absolute + transform
+lineheight  + display: inline-block;
+writing-mode
+table
+css-table  父 text-align  table-cell  vertical-align   子inline-block
+               或者 父 text align  table        子table-cell  vertical-align
+flex       justify-content   align-items
+grid      align-self  justify-self
+伪元素    高大尚
+
+display: table-cell;  *display: inline-block;(ie6/7兼容)  width:2000px; *width:auto;(宽度保证)
+1.不能与absolute float同用
+2.margin  padding都不能有效
+3.父table-row  子table-cell
+4.ie不支持table-cell    margin-bottom:-100px; *padding-bottom:110px;
+   
+PC端有兼容性要求，宽高固定，推荐absolute + 负margin   transform    ie9+
+PC端有兼容要求，    宽高不固定，推荐css-table
+PC端无兼容性要求， 推荐flex
+移动端推荐使用flex
+
+document.documentElement.style.fontSize = document.documentElement.clientWidth / 750 + 'px';
+html{  
+    font-size: 10vw;    //不如上面那种
+}
+
+1.white-space，控制空白字符的显示，同时还能控制是否自动换行。它有五个值：normal | nowrap | pre | pre-wrap | pre-line
+  normal   nowrap  pre-line   空格合并
+  nowrap   pre   不会自动换行
+  
+  pre           保留空格和换行   不会自动换行
+  pre-wrap  保留空格和换行   还会自动换行
+  pre-line    忽略空格   换行符可以  还会自动换行
+2.word-break，控制长单词如何被拆分换行。它有三个值：normal | break-all |  keep-all 
+   break-all   所有长单词碰到边界一律拆分换行
+   keep-all    长单词一律不拆分换行   空格可以换行
+3.word-wrap（overflow-wrap）控制长度超过一行的单词是否被拆分换行，是word-break的补充，它有两个值：normal | break-word     只有当一个单词一整行都显示不下时，才会拆分换行该单词
+
+z-index   定位元素才有效果
+1.z-index: auto; +position 没有产生层叠上下文   z-index: 0;+position会产生层叠上下文
+2.在DOM结构中后面的覆盖前面的  如果层叠上下文相等  后来者居上
+3.定位元素  z-index自动生效  默认auto;  覆盖在inline  block float元素之上
+
+层叠顺序由元素的层叠上下文   层叠等级共同决定 
+1.普通元素的层叠等级优先由其所在的层叠上下文决定。
+2.层叠等级的比较只有在同一个层叠上下文元素中才有意义。不同层叠上下文中比较层叠等级是没有意义的
+
+准则: 
+"谁大谁上"   z-index: 数值大;
+"后来者居上"   层叠上下文相同时  父z-index: 0;
+内联元素的层叠水平比块状元素高       这个很有用   想覆盖块级元素就设置成inline-block
+
+层叠上下文background | border  => 负z-index => block块级元素 => float  => inline-block | inline  
+=> z-index:auto | 0 | 不依赖于z-index => z-index: 正数
+css3层叠规则:
+1.父flex  才能产生层叠上下文  |  z-index  + 定位元素 
+2.opcity 会产生层叠上下文
+3.transform  也会产生层叠上下文
+4.mix-blend-mode  也会   ie不支持这个属性
+5.filter  也会
+6.will-change  也会
+
+
+css性能提高
+1.内联首屏关键css  14.6kb以内   critical css案例
+2.配合异步加载css   load.css处理兼容
+  <link rel="preload" href="mystyles.css" as="style" onload="this.rel='stylesheet'">
+3.压缩css文件 
+4.去除无用的css   uncss库
+
+1.有选择地使用选择器
+2.减少使用昂贵的属性 box-shadow  border-radius  filter  :nth-child
+3.优化重排和重绘  当FPS为60时，用户使用网站时才会感到流畅  16.67ms内完成每次渲染相关的所有操作
+3.1减少重排   flex重排优于inline-block和float
+(1)改变font-size  font-family
+(2)改变元素的内外边距
+(3)通过js改变csss类
+(4)通过js获取dom元素的位置相关属性  width height left
+(5)css伪类激活
+(6)滚动滚动条或者改变窗口大小
+3.2避免不必要的重绘    滚动时禁止hover事件
+当元素的外观（如color，background，visibility等属性）发生改变时，会触发重绘
+4.不要使用@import   导致浏览器没法并行下载css
+
+css3新特性
+1.tansition: css属性  花费时间  效果曲线(ease)  延迟时间(0);
+   transition：width,.5s,ease,.2s
+
+2.animation: 动画名称 花费时间 运动曲线(ease) 动画延迟(0)  播放次数(1) 是否反向播放(normal) 是否暂停动画
+animation-fill-mode : none | forwards(结束状态) | backwards(开始状态) | both;
+
+3.transform 2d | 3d
+   transform-origin: 0px;
+
+4.选择器
+p~ul  前面有p的ul元素
+^ 开头  &结尾  *任意    属性选择器
+:root  :empty  :target  
+:enabled(input)  :disabled(input) 
+:checked  :not(selector)  ::selection
+
+5.阴影box-shadow: 水平  垂直  模糊距离 阴影尺寸 阴影颜色 阴影开始方向(outset inset)
+
+6. url  图像边界向内偏移  图像边界的宽度(默认框的宽度)
+    border-image: url("../images/border.jpg");  //url
+    border-image-slice: 30;            //图像边界向内偏移
+    border-image-repeat: round;   //铺满方式
+    border-image-outset: 0;          //用于指定在边框外部绘制偏移的量
+    border-image-width:               //图像边界的宽度(默认框的宽度)
+
+7.边框圆角
+   border-radius: n1,n2,n3,n4/n1,n2,n3,n4;
+   /*n1-n4四个值的顺序是：左上角，右上角，右下角，左下角。*/
+
+8.背景 
+   background-clip:  默认背景从边框开始绘制(border-box)  padding-box  content-box
+   background-origin  指定background-position开始的位置  border-box padding-box content-box
+   background-position: 10px 10px;
+   background-size  背景大小
+
+9.反射 box-reflect: 方向(above below right left)  偏移量 遮罩图片
+   -webkit-box-reflect: right 10px;  偏移10px  相当于间隔
+   -webkit-box-reflect: below 0 linear-gradient(transparent, white);  渐变效果
+   -webkit-box-reflect: below 0 url(shou.png);
+
+10.word-break: normal;    默认换行  keep-all  只能在半角空格或者连字符处换行  break-all 单词内换行
+                                        break-word 在长单词或者地址内部换行（但是会另起一行）
+    word-wrap: break-word;  允许长单词或者url地址内部换行(不另起一行)  对word-break的补充 没有使用断字点换行 
+
+超出省略号:
+div
+{
+    width:200px; 
+    border:1px solid #000000;
+    overflow: hidden;
+    white-space: nowrap; 
+    text-overflow: ellipsis;
+}
+//  overflow  text-overflow  display: -webkit-box;   -webkit-line-clamp:2;  -webkit-box-orient: vertical;
+line-height: 30px;  height: 60px;
+div
+{
+    width:400px;
+    margin:0 auto;
+    border:1px solid #ccc;
+    overflow : hidden;
+    text-overflow: ellipsis;
+    padding:0 10px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    line-height: 30px;
+    height: 60px;
+}
+
+11.text-shadow: 水平阴影，垂直阴影，模糊的距离，以及阴影的颜色。
+
+12.颜色 rgba  hsla
+
+13.渐变
+
+14.滤镜 filter
+opcity  blur grayscale 
+ sepia  saturate hue-rotate  invert   brightness  contrast  drop-shadow
+<p>黑白色filter: grayscale(100%)</p>
+<img src="test.jpg" style="filter: grayscale(100%);"/>
+<p>褐色filter:sepia(1)</p>
+<img src="test.jpg" style="filter:sepia(1);"/>
+<p>饱和度saturate(2)</p>
+<img src="test.jpg" style="filter:saturate(2);"/>
+<p>色相旋转hue-rotate(90deg)</p>
+<img src="test.jpg" style="filter:hue-rotate(90deg);"/>
+<p>反色filter:invert(1)</p>
+<img src="test.jpg" style="filter:invert(1);"/>
+<p>透明度opacity(.5)</p>
+<img src="test.jpg" style="filter:opacity(.5);"/>
+<p>亮度brightness(.5)</p>
+<img src="test.jpg" style="filter:brightness(.5);"/>
+<p>对比度contrast(2)</p>
+<img src="test.jpg" style="filter:contrast(2);"/>
+<p>模糊blur(3px)</p>
+<img src="test.jpg" style="filter:blur(3px);"/>
+<p>阴影drop-shadow(5px 5px 5px #000)</p>
+<img src="test.jpg" style="filter:drop-shadow(5px 5px 5px #000);"/>
+
+15.flex
+
+16.grid
+17.多列布局
+columns    column-rule    column-gap
+-webkit-column: 3 500px;
+-webkit-column-gap:50px; 
+.newspaper
+{
+    column-count: 3;
+    -webkit-column-count: 3;
+    -moz-column-count: 3;
+    column-rule:2px solid #000;
+    -webkit-column-rule:2px solid #000;
+    -mox-column-rule:2px solid #000;
+}    
+
+
+18.box-sizing  
+    content-box |  border-box
+
+19.媒体查询
+   @media screen and (min-width: 300px) {}
+   @media screen and (max-width: 300px) {}
+20.混合模式
+   background-blend-mode
+   mix-blend-mode

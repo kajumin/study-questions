@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.box {
+			width: 300px;
+			height: 100px;
+			margin: 0 auto;
+			border: 1px solid red;
+			display: flex;
+		}
+		.item {
+			width: 40px;
+			height: 40px;
+			border: 1px solid pink;
+			font-size: 24px;
+			line-height: 40px;
+			text-align: center;
+		}
+		.flex1 {
+			/*默认*/
+			justify-content: flex-start;
+		}
+		.flex2 {
+			justify-content: flex-end;
+		}
+		.flex3 {
+			justify-content: center;
+		}
+		.flex4 {
+			justify-content: space-between;
+		}
+		.flex5 {
+			justify-content: space-around;
+		}
+	
+	</style>
+</head>
+<body>
+	<!-- 
+	区分flex-direction
+	12345 justify-content: flex-end; 右边
+	54321 flex-direction: row-reverse; 右边
+
+	 -->
+<div class="box flex1">
+	<div class="item">1</div>
+	<div class="item">2</div>
+	<div class="item">3</div>
+	<div class="item">4</div>
+	<div class="item">5</div>
+</div>
+<div class="box flex2">
+	<div class="item">1</div>
+	<div class="item">2</div>
+	<div class="item">3</div>
+	<div class="item">4</div>
+	<div class="item">5</div>
+</div>
+<div class="box flex3">
+	<div class="item">1</div>
+	<div class="item">2</div>
+	<div class="item">3</div>
+	<div class="item">4</div>
+	<div class="item">5</div>
+</div>
+<div class="box flex4">
+	<div class="item">1</div>
+	<div class="item">2</div>
+	<div class="item">3</div>
+	<div class="item">4</div>
+	<div class="item">5</div>
+</div>
+<div class="box flex5">
+	<div class="item">1</div>
+	<div class="item">2</div>
+	<div class="item">3</div>
+	<div class="item">4</div>
+	<div class="item">5</div>
+</div>
+
+</body>
+</html>

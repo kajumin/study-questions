@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<script type="text/javascript">
+	// 只继承原型
+	// function Shape(){
+
+	// }
+	// Shape.prototype.name = 'shape';
+	// Shape.prototype.toString = function(){
+	// 	var result = [];
+	// 	// console.log(this.constructor)
+	// 	// console.log(this.constructor.uber)
+	// 	if(this.constructor.uber) {
+	// 		result[result.length] = this.constructor.uber.toString();
+	// 	}
+	// 	result[result.length] = this.name;
+	// 	return result.join(', ');
+	// }
+	// function TwoDShape() {
+
+	// }
+	// var F = function(){}
+	// F.prototype = Shape.prototype;
+	// TwoDShape.prototype = new F();
+	// TwoDShape.prototype.constructor = TwoDShape;
+	// TwoDShape.uber = Shape.prototype;
+	// TwoDShape.prototype.name = '2d shape';
+
+
+
+	// function Triangle(width,height) {
+	// 	this.width = width;
+	// 	this.height = height;
+	// }
+	// var F = function(){};
+	// F.prototype = TwoDShape.prototype;
+	// Triangle.prototype = new F();
+	// Triangle.prototype.constructor = Triangle;
+	// Triangle.uber = TwoDShape.prototype;
+	// Triangle.prototype.name = 'triangle';
+	// Triangle.prototype.getArea = function(){
+	// 	return this.width * this.height;
+	// }
+
+	// var triangle = new Triangle(5,10);
+	// console.log(triangle)
+	// console.log(triangle.getArea())
+	// console.log(triangle.toString()) //shape 2d shape triangle
+
+	// var twodshape = new TwoDShape();
+	// console.log(twodshape.toString()) //shape 2d shape
+
+	// var shape = new Shape();
+	// console.log(shape.toString()) //shape
+
+	function extend(Child,Parent) {
+		var F = function(){}
+		F.prototype = Parent.prototype;
+		Child.prototype = new F();
+		Child.prototype.constructor = Child;
+		Child.uber = Parent.prototype;
+	}
+	function Shape(){
+
+	}
+	Shape.prototype.name = 'shape';
+	Shape.prototype.toString = function(){
+		var result = [];
+		// console.log(this.constructor)
+		// console.log(this.constructor.uber)
+		if(this.constructor.uber) {
+			result[result.length] = this.constructor.uber.toString();
+		}
+		result[result.length] = this.name;
+		return result.join(', ');
+	}
+	function TwoDShape() {
+
+	}
+	extend(TwoDShape,Shape);
+	TwoDShape.prototype.name = '2d shape';
+
+
+
+	function Triangle(width,height) {
+		this.width = width;
+		this.height = height;
+	}
+	extend(Triangle,TwoDShape);
+	Triangle.prototype.name = 'triangle';
+	Triangle.prototype.getArea = function(){
+		return this.width * this.height;
+	}
+
+	var triangle = new Triangle(5,10);
+	console.log(triangle)
+	console.log(triangle.getArea())
+	console.log(triangle.toString()) //shape 2d shape triangle
+
+	var twodshape = new TwoDShape();
+	console.log(twodshape.toString()) //shape 2d shape
+
+	var shape = new Shape();
+	console.log(shape.toString()) //shape
+
+	
+	
+</script>
+</body>
+</html>

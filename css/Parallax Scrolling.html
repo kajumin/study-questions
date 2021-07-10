@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<div class="home" id="home">
+    <div class="tim-content qqpc">
+        <div class="title" v-bind:style="{'position':titlePositon,'background-color': titleColor,'border-bottom':titleBorder }">
+            <ul>
+                <li class="logoLink">11</li>
+                <li class="item">首页</li>
+                <li class="item">下载</li>
+                <li class="item">动态</li>
+            </ul>
+            
+        </div>
+        <div class="circle"></div>
+    </div>
+    <div class="content-item">内容1</div>
+    <div class="activebg fisrtbg" id="pic1" v-bind:style="{'background-position-x':positionX,'background-position-y': positionY1+'px' }"></div>
+    <div class="content-item">内容2</div>
+    <div class="activebg secondbg" id="pic2" v-bind:style="{'background-position-x':positionX,'background-position-y': positionY2+'px' }"></div>
+    <div class="content-item">内容3</div>
+    <div class="activebg thirdbg" id="pic3" v-bind:style="{'background-position-x':positionX,'background-position-y': positionY3+'px' }"></div>
+    <div class="content-item">内容4</div>
+    <div class="foot">foot</div>
+</div>
+<script type="text/javascript" src="../js/03-vue/vue.min.js"></script>
+<script type="text/javascript">
+	new Vue({
+		el:"#home",
+		data:{
+			positionY1: 0,
+			positionY2: 0,
+			positionY3: 0,
+			ratio: 0.05,
+			titlePositon: '',
+			titleColor: '',
+			titleBorder: '',
+			positionX: 0 
+
+		},
+		mounted(){
+			window.onload = () => {
+		        let pic1 = document.getElementById("pic1");
+		        let pic2 = document.getElementById("pic2");
+		        let pic3 = document.getElementById("pic3");
+		        this.positionY1 = this.Y1 = pic1.offsetTop * this.ratio;
+		        this.positionY2 = this.Y2 = pic2.offsetTop * this.ratio;
+		        this.positionY3 = this.Y3 = pic3.offsetTop * this.ratio;
+		    };
+			window.addEventListener("scroll", this.handleScroll);
+		},
+		methods:{
+			handleScroll() {
+		    let scrollTop =window.pageYOffset ||document.documentElement.scrollTop ||document.body.scrollTop;
+		    console.log(scrollTop);
+			    if (scrollTop > 900) {
+			        this.titlePositon = "fixed";
+			        this.titleColor = "#fff";
+			        this.titleBorder = "1px solid #e5e5e5";
+			    } else {
+			        this.titlePositon = "static";
+			        this.titleColor = "transparent";
+			        this.titleBorder = "0";
+			    }
+			}
+		}
+	})
+</script>	
+</body>
+</html>

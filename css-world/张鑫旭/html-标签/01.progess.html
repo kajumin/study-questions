@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<style type="text/css">
+		progress {
+			display: inline-block;
+		    width: 160px;
+		    height: 20px;
+		    border: 1px solid #0064B4;  
+		    background-color:#e6e6e6;
+		    color: #0064B4; /*IE10*/
+		}
+		progress ie {
+		    display: block;
+		    height: 100%;
+		    background: #0064B4;
+		}
+		progress::-moz-progress-bar { background: #0064B4; }
+		progress::-webkit-progress-bar { background: #e6e6e6; }
+		progress::-webkit-progress-value  { background: #0064B4; }
+
+		progress {
+    		border-radius: 1em; /*圆角效果*/
+    		overflow: hidden;
+		}
+
+		/*有人反馈IE浏览器下有个黑色边框线框，可以使用下面代码去除：
+		.ui-progress::-ms-fill {
+   			 border: none;
+		}*/
+	</style>
+</head>
+<body>
+	<!-- 
+	兼容性: ie10
+	属性: max value position labels
+	max 缺省则0-1, max="100" 则0-100
+	value  有值则是确定的长度
+	labels 只读属性 label标签
+	-->
+<progress value="0.2">o(︶︿︶)o</progress>
+
+<progress id="progress" value="0.3">o(︶︿︶)o</progress>
+<label for="progress"></label>
+
+<!-- 兼容ie6-ie9 -->
+<progress max="100" value="20"><ie style="width:20%;"></ie></progress>
+<script type="text/javascript">
+	// labels属性
+	var progress = document.getElementById('progress');
+	// position是只读属性，顾名思意，当前进度的位置，就是value / max的值。如果进度条不确定，则值为-1
+	// labels也是只读属性，得到的是指向该progress元素的label元素们
+	console.log(progress.position);
+	console.log(progress.labels);
+	// console.log(progress.labels[0]);
+
+	// progress以及自定义的ie元素，ie6~8都是不认识的, 打补丁
+	if (typeof window.screenX !== "number") {
+    	document.createElement("progress");	
+    	document.createElement("ie");	
+	}
+</script>
+</body>
+</html>

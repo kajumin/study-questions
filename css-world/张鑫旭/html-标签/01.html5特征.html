@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		input:required {
+			border-color: #f40;
+		}
+		input:valid {
+			border-color: green;
+		}
+		input:invalid {
+			border-color: red;
+		}
+		input[type=submit]:optional {
+			border-color: pink;
+		}
+		input[type=number]:focus:in-range { 
+			outline: 2px solid green; 
+		}
+		input[type=number]:focus:out-of-range { 
+			outline: 2px solid #f00; 
+		}
+		input[type=number]:out-of-range { 
+			outline: 2px solid #f00; 
+		}
+		
+	</style>
+</head>
+<body>
+<!-- 
+	<applet>, <acronym>, <frame>, <noframes>, <strike>, <big>, 以及<blink>
+		<font>
+	(1) <!DOCTYPE html>  老版为xhtml  XHTML严格文档模型
+	浏览器如果不知道doctype，就会很简单的以标准模式对包含的标签进行渲染
+    (2)link script无需type
+    (3)引号还是不引号  都可以
+    (4)新标签 header footer nav aside article  hgroup
+    (5)audio  vedio  contros preload
+    (6)mark 高亮
+    (7)data-*    ele.dataset[key]
+    (8)output  显示部分计算
+    (9)progress meter
+    (10):required :optional  :invalid :valid :in-range  :out-of-range
+        :placeholder
+    (11)本地存储localStorage sessionStorage
+	
+	2. 图形元素 figure > figcaption
+	3. small小字 
+	6. contenteditable可编辑, 更有利于存储
+	7. input-email 内置表单验证
+-->
+<!-- 
+:required 和 :optional，指表单元素内容是可选的还是必填的
+:valid 和 :invalid 表示填入的数据是有效的还是无效的，例如email类型的input框就需要是有效的邮箱格式
+:in-range 和 :out-of-range， 这适用于range类型的input控件，当其有min或是max范围限制的时候 
+-->
+<figure>
+    <img src="../images/zza/1.jpg" alt="About image" height="200" />
+    <figcaption>
+        <p>This is an image of something interesting. </p>
+    </figcaption>
+</figure>
+<form>
+	<p>:required<input type="text" name="" required></p>
+	<p>:out-of-range<input type="number" name="" min="0" max="10" value="1"></p>
+	
+	<p>:invalid<input type="email" name="" required></p>
+	<p>:invalid<input type="tel" name="" pattern="\d{11}"></p>
+	<input type="submit" name="" value="提交">
+</form>
+</body>
+</html>

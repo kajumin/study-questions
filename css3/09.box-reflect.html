@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.reflect-bottom-p {
+		    padding-bottom: 400px;
+		}      
+		.reflect-bottom {
+		    -webkit-box-reflect: below;
+		}  
+		/*.reflect-above-p {
+		    padding-bottom: 400px;
+		}  */    
+		.reflect-above {
+		    -webkit-box-reflect: above;
+		}  
+
+		     
+		.reflect-right-translate {
+		    -webkit-box-reflect: right 20px;
+		} 
+
+		.reflect-bottom-img {
+            -webkit-box-reflect: below 0 url("../images/80.png");
+		}  
+	</style>
+</head>
+<body>
+<p>下倒影</p>
+<div class="reflect-bottom-p"><img src="../images/circle-r.png" class="reflect-bottom"></div>
+
+<p>上倒影</p>
+<div class="reflect-above-p"><img src="../images/circle-r.png" class="reflect-above"></div>
+
+<p>右倒影</p>
+<div><img src="../images/circle-r.png" class="reflect-right-translate"></div>
+
+<p>下倒影（png图片）</p>
+<p class="reflect-bottom-p"><img src="../images/lyt/12.jpg" class="reflect-bottom-img"></p>
+</body>
+</html>

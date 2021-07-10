@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8"> 
+	<title></title> 
+	<style> 
+	.box {
+		width: 200px;
+		height: 200px;
+		background-color: #eee;
+		border: 2px solid red; 
+		margin-bottom: 30px;
+	}
+	.box1-1 {
+	    /*左上 右上 右下 左下*/
+	    border-radius: 10px;
+	}
+	.box1-2 {
+	    border-radius: 50%;
+	}
+	.box2 {
+		/*左上右下 右上左下*/
+	    border-radius: 50% 20%;
+	}
+	.box3 {
+		/*左上 右上左下 右下*/
+	    border-radius: 5px 20px 10px;
+	}
+	.box4 {
+		/*左上 右上 右下 左下*/
+	    border-radius: 5px 20px 10px 30px;
+	}
+	.box5 {
+		/* 水平方向 / 垂直方向*/
+	    border-radius: 10px / 40px;
+	}
+	.box6 {
+		/* top-right */
+	    border-top-right-radius: 40px;
+	    border-top-left-radius: 40px;
+	    border-bottom-left-radius: 20px;
+	    border-bottom-right-radius: 20px;
+	}
+	</style>
+	</head>
+<body>
+	<!-- 
+	border-radius: 边框圆角 左上开始
+	1.
+	(1) 一个值: 四个角都一样
+	(2) 百分比
+	2.两个值
+	3.三个值
+	4.四个值
+	5.水平/垂直
+	6.设置各个方向的值
+	 -->
+	<div class="box box1-1"></div>
+	<div class="box box1-2"></div>
+	<div class="box box2"></div>
+	<div class="box box3"></div>
+	<div class="box box4"></div>
+	<div class="box box5"></div>
+	<div class="box box6"></div>
+</body>
+</html>

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		a {
+			text-decoration: none;
+		}
+		.details-4 summary a {
+    		color: inherit;
+		}
+		.details-4 summary {
+		    -webkit-user-select: none;
+		    -moz-user-select: none;
+		    -ms-user-select: none;
+		    user-select: none;
+		    outline: 0;
+		}
+
+		.details-5 summary a {
+    		color: inherit;
+		}
+		.details-5 summary {
+		    -webkit-user-select: none;
+		    -moz-user-select: none;
+		    -ms-user-select: none;
+		    user-select: none;
+		    outline: 0;
+		}
+		summary[focus] {
+			outline: 5px auto -webkit-focus-ring-color;
+		}
+	</style>
+</head>
+<body><a href="#">中国</a>
+<details class="details-4">
+    <summary tabindex="-1"><a href="javascript:" onClick="this.parentNode.click();">这是摘要1</a></summary>
+    <content>这里具体描述，标签相对随意，例如这里使用的&lt;p&gt;标签。</content>
+    <p>这里具体描述，标签相对随意，例如这里使用的&lt;p&gt;标签。</p>
+</details>
+
+<details class="details-5">
+    <summary>这是摘要1</summary>
+    <content>这里具体描述，标签相对随意，例如这里使用的&lt;p&gt;标签。</content>
+    <p>这里具体描述，标签相对随意，例如这里使用的&lt;p&gt;标签。</p>
+</details>
+
+<p>focusin focusout focus blur</p>
+<div class="parent">
+    <input type="text" class="input" />
+</div>
+<div class="log"></div>
+<form name="form">
+  <input type="text" name="name" value="Your name">
+  <input type="text" name="surname" value="Your surname">
+</form>
+<script type="text/javascript" src="../js/jquery-3.4.1.min.js"></script>
+<script type="text/javascript">
+
+	window.addEventListener('keydown', function () {    
+		console.log(1)
+	    window.isKeyEvent = true;
+	    setTimeout(function () {
+	        window.isKeyEvent = false;
+	    }, 100);    
+	});
+
+	document.addEventListener('focusin', function (event) {
+		console.log(2)
+	    var target = event.target;
+	    if (target && target.tagName.toLowerCase() == 'summary' && window.isKeyEvent == true) {
+	        target.setAttribute('focus', '');
+	    }
+	});
+	document.addEventListener('focusout', function (event) {
+		console.log(3)
+	    var eleFocusAll = document.querySelectorAll('summary[focus]');
+	    [].slice.call(eleFocusAll).forEach(function (summary) {
+	        summary.removeAttribute('focus');
+	    });
+	});
+
+	function log(str){
+	 $('.log').append($('<div/>').text(str));
+	}
+	 
+	$('.parent')
+	    .focusin(function(){log('div focusin');})
+	    .focusout(function(){log('div focusout');})
+	    .focus(function(){log('div focus');})
+	    .blur(function(){log('div blur');});
+	$('.input')
+	    .focusin(function(){log('input focusin');})
+	    .focusout(function(){log('input focusout');})
+	    .focus(function(){log('input focus');})
+	    .blur(function(){log('input blur');});
+
+	function addColor(){
+	  	this.style.background="red";
+	}
+	var form = document.forms['form'];
+	if (form.addEventListener) { 
+		// 非IE浏览器
+		console.log(1)
+	  	form.addEventListener('focus', addColor, true);
+	}else {  
+		// IE
+		console.log(2)
+	  	form.onfocusin = addColor
+	}
+</script>
+</body>
+</html>

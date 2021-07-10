@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		body {
+			margin: 0;
+		}
+		.box1 {
+			line-height: 50px;
+			background-color: #eee;
+		}
+
+		.box2-1 {
+			height: 300px;
+			line-height: 300px;
+			text-align: center;
+			border: 1px solid red;
+		}
+		.box2-1 > .content {
+			display: inline-block;
+			vertical-align: middle;
+			line-height: 20px;
+		}
+		.box2-2 {
+			height: 300px;
+			line-height: 300px;
+			text-align: center;
+			border: 1px solid red;
+		}
+		.box2-2 > img {
+			vertical-align: middle;
+		}
+	</style>
+</head>
+<body>
+<!-- 02.2.元素垂直居中
+	line-height可以让单行文本居中, 也可以让多行元素或者替换居中
+    单行直接设置line-height
+    多行文本或者替换元素居中  多行需要设置inline-block
+ -->
+<div class="box1">中国</div>
+
+<div class="box2-1">
+	x<div class="content">
+		<p>123456</p>
+		<p>123456</p>
+		<p>123456</p>
+	</div>
+</div>
+<div class="box2-2">
+	<img src="../../images/1.jpg">
+</div>
+</body>
+</html>

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<script type="text/javascript">
+	// 箭头函数想要返回对象 必须使用()  否则undefined
+	var user = { name: 'bang', age:20 }
+	var fn = (user) => ({ name: user.name, age: user.age })
+	console.log(fn(user))
+	// 箭头函数没有原型对象
+	console.log(fn.__proto__) //是一个函数  所以没有prototype
+	console.log(fn.__proto__ instanceof Object) //true
+	console.log(fn.__proto__.__proto__)//Object.prototype
+</script>
+</body>
+</html>

@@ -1,0 +1,18 @@
+vscode  安装使用国内镜像源  stable之前的地址替换为vscode.cdn.azure.cn
+
+nvm 会遇到一些问题  nvm use 的问题   需要解决 .nodejs文件
+       npm config set registry https://registry.npm.taobao.org  淘宝
+       npm config set registry https://registry.npmjs.org/   还原
+
+vue-devtools  版本不要最新的  使用yarn install  yarn build
+
+nvm install 14.15.2   //node版本
+npm i -g @vue/cli
+npm i -g http-server   //http服务器
+npm i -g browser-aync   //http服务器 + 自动刷新浏览器
+npm i -g rimraf
+npm i -g yarn
+虚拟机 密码YImi1122
+npm i -g nodemon 用于接口调用开发
+npm i -g webpack@4 
+npm i -g webpack-cli@4

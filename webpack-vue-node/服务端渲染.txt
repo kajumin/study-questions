@@ -1,0 +1,106 @@
+style-loader          //有dom操作  服务端node渲染执行不了
+vue-style-loader   //适用于服务端渲染
+
+基本配置由webpack.config.practice.js而来
+target: 'node'
+devtool: 'source-map',
+externals: Object.keys(require('../package.json').dependencies),  //不打包   没有必要打包
+entry: path.join(__dirname, '../client/server-entry.js'),
+output: {
+   libraryTarget: 'commonjs2',
+   filename: 'server-entry.js',
+   path: path.join(__dirname, '../server-build')
+},
+new webpack.DefinePlugin({
+	'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
+	'process.env.VUE_ENV': '"server"'
+}),
+new VueServerRenderer()   = require('vue-server-renderer/server-plugin')
+
+npm i -D vue-style-loader(4)
+npm i vue-server-renderer(2.6.12)  //跟vue是一个版本的
+//重要插件 vue-server-renderer   生成一个json文件   没有js文件输出
+
+====================修改webpack.config.client.js
+添加一个插件VueClientPlugin = require('vue-server-renderer/client-plugin')
+用于生成vue-ssr-client-manifest.json文件
+====================
+npm i koa(2.2.0)  koa-router(10)
+npm i axios(0)
+
+npm i -D memory-fs(0)
+跟fs一样 但有扩展
+不把文件写入磁盘上面, 在内存里面,  这个很容易报错
+
+npm i ejs(3)
+用于服务端生成html文件
+=======================
+服务端返回的html中js引用开始是bundle.xxxx.js, 导致不能使用
+对于dev开启的服务js等链接地址bundle.xxxx.js
+通过publicPath: 'http://127.0.0.1:8080/'
+就可以访问到资源
+
+===========favicon.ico处理   
+npm i koa-send(5)   //用于返回资源文件   send('')
+
+==================webpack.config.server.js
+在服务端并没有修改太多配置, 只是修改了文件输出到内存中, 通过memory-fs插件
+==============================下半部分
+npm i -D nodemon(2)     //重启node服务,  并编写nodemon.json配置文件
+"dev:server": "nodemon server/server.js",
+npm i -D concurrently(5)   //同时执行两个命令行 concurrently \"npm run dev\"   \"npm run dev:server\"
+
+npm i -D vue-meta  //meta头信息
+先处理客户端渲染:
+(1) main.js 让vue使用vue-meta插件
+(2) 各个页面中 metaInfo: {titile: 'app page'}
+(3) 添加client-entry文件
+(4) 更改入口 webpack.config.client.js   webpack.config.base.js
+处理服务端渲染:
+执行rendererToString之后
+const { title } = context.meta.inject()
+title.text()  //可以获取到 <title>todo page 页面</title>
+
+===============正式上线服务端渲染
+srr.js文件      处理正式环境中的服务端渲染
+static.js文件  处理静态资源
+更改打包path为 path: path.join(__dirname, '../public')  同时要修改package.json和.gitignore中dist替换public
+==========
+
+客户端渲染过程:
+1.访问客户端渲染的网站。
+2.服务器返回一个包含了引入资源语句和 <div id="app"></div> 的 HTML 文件。
+3.客户端通过 HTTP 向服务器请求资源，当必要的资源都加载完毕后，执行 new Vue() 开始实例化并渲染页面。
+服务端渲染过程:
+1.访问服务端渲染的网站。
+2.服务器会查看当前路由组件需要哪些资源文件，然后将这些文件的内容填充到 HTML 文件。如果有 asyncData() 函数，就会执行3.它进行数据预取并填充到 HTML 文件里，最后返回这个 HTML 页面。
+4.当客户端接收到这个 HTML 页面时，可以马上就开始渲染页面。与此同时，页面也会加载资源，当必要的资源都加载完毕后，开始执行 new Vue() 开始实例化并接管页面。
+
+这样做的好处是什么？是更快的内容到达时间 (time-to-content)。
+
+小结:  不管是客户端渲染还是服务端渲染，都需要等待客户端执行 new Vue() 之后，用户才能进行交互操作。但服务端渲染的网站能让用户更快的看见页面。
+
+================
+(1) entry-client构建后的client Bundle打包文件是vue-ssr-client-manifest.json，entry-server构建后的server Bundle打包文件是vue-ssr-server-bundle.json
+(2) server.js文件将客户端打包文件vue-ssr-client-manifest.json、服务器端打包文件vue-ssr-server-bundle.json和HTML模板混合，渲染成HTML
+总结: 
+纯前端渲染
+服务端渲染  webapck  serverCompiler.watch  每次文件有改变的时候都生成一个新的vue-ssr-server-bundle.json, 传递给renderer, 进行
+当有请求进来的时候, 就可以拿到新的bundle以及新的路径, 然后渲染返回html页面
+VueServerRenderer.createBundleRenderer需要传入bundle和vue-ssr-client-manifest.json
+
+通过vue-ssr-client-manifest.json拿到js等静态资源路径引用地址, renderToString之后, 可以通过context.renderStyles()
+contextScripts()方法拿到style和script, 和appString
+
+
+正式环境比较简单: 
+vue-ssr-server-bundle.json
+vue-ssr-client-manifest.json
+静态资源处理 开发环境时使用dev产出的静态文件,   正式环境则需要处理, 使用build出来的静态文件
+static.js
+
+
+通过webpack在node服务端进行编译打包工作, 不输出js文件, 得到一个vue-ssr-server-bundle.json, 
+再通过请求获取到开发时生成的vue-ssr-client-bundle.json, 调用VueServerRenderer.createBundleRenderer,
+得到一个对象, 里面有renderToString, renderToStream方法, 传入context进入renderToString, 就可以得到对应的dom,
+context.renderStyles, context.renderScripts, 获取到style标签和script标签, 再通过模板引擎ejs返回服务端渲染好的页面.

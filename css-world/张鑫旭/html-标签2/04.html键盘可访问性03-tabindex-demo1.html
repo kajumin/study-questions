@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		body {
+			margin: 0;
+		}
+		ul {
+			list-style-type: none;
+			margin: 0;
+			padding: 0;
+		}
+		a {
+			text-decoration: none;
+			color: #333;
+		}
+		.item > li {
+			position: relative;
+			float: left;
+			padding: 5px 12px;
+			line-height: 30px;
+		}
+		.item > li:hover .sub-item,
+		.item > li:focus .sub-item {
+			display: block;
+		}
+		.item > li > a {
+			border-right: 2px solid #096;
+		}
+		.sub-item {
+			position: absolute;
+			display: none;
+			white-space: nowrap;
+		}
+		.sub-item > li {
+
+		}
+		.mark {
+			position: absolute;
+			top: 0;
+			left: 0;
+			bottom: 0;
+			right: 0;
+			display: none;
+			background-color: rgba(0,0,0,0.5);
+		}
+		.model {
+			display: none;
+			position: absolute;
+			left: 0;
+			right: 0;
+			top: 0;
+			bottom: 0;
+			margin: auto;
+			width: 300px;
+			height: 300px;
+			background-color: #fff;
+			z-index: 1;
+			outline: none;
+		}
+		/*.addtabindex:focus {
+			outline: 1px -webkit-focus-ring-color auto; 
+		}*/
+	</style>
+</head>
+<body>
+	<!-- 
+	1. hover <div>显示下拉键盘支持
+		给下拉按钮添加tabindex="0"
+		:focus {}显示下拉
+	2. 对网站模块进行自定义的键盘支持
+	   通过键盘事件, 临时加上tabindex
+	3. 临时改变页面索引起始位置
+		弹窗元素设置tabindex-1, 同时设置outline:none; 
+		显示的时候通过js focus一下, 
+		然后tab的时候就是访问里面的元素
+	-->
+<div>
+	<ul class="item">
+		<li tabindex="0"><a href="#" tabindex="-1">导航1</a>
+			<ul class="sub-item">
+				<li>导航栏1</li>
+				<li>导航栏2</li>
+				<li>导航栏3</li>
+			</ul>
+		</li>
+		<li tabindex="0"><a href="#" tabindex="-1">导航2</a>
+			<ul class="sub-item">
+				<li>导航栏1</li>
+				<li>导航栏2</li>
+				<li>导航栏3</li>
+			</ul>
+		</li>
+	</ul>
+</div>
+<span class="addtabindex">添加tabindex键盘j键</span>
+<p><button class="btn">显示弹窗</button></p>
+<div class="model" tabindex="-1">
+	<input type="text" name="">
+	<input type="text" name="">
+</div>
+<div class="mark"></div>
+<script type="text/javascript">
+	var lis = document.querySelectorAll('.item > li')
+	console.log(lis)
+	for(var i = 0; i < lis.length; i ++) {
+		lis[i].onclick = function() {
+			console.log(this)
+			this.querySelector('.sub-item').style.display = 'block'
+		}
+	}
+	var addtabindex = document.querySelector('.addtabindex')
+	window.onkeypress = function(e) {
+		console.log('key', e.keyCode)
+		if (e.keyCode === 106) {
+			addtabindex.setAttribute('tabindex', '-1')
+			addtabindex.focus()
+		}
+	}
+
+	var btn = document.querySelector('.btn')
+	var mark = document.querySelector('.mark')
+	var model = document.querySelector('.model')
+	btn.onclick = function () {
+		mark.style.display = 'block';
+		model.style.display = 'block'
+	}
+	mark.onclick = function () {
+		mark.style.display = 'none';
+		model.style.display = 'none'
+	}
+</script>
+</body>
+</html>

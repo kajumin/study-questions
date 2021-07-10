@@ -1,0 +1,95 @@
+======================基础流程
+git init //初始化git仓库    Initialized empty Git repository  初始化了一个空的仓库  多出.git文件夹
+git status //查看文件状态  On branch master分支   nocommits没有提交 untracked files
+git add 文件列表(.)  //追踪文件
+git commint -m 提交信息  //向仓库提交代码
+git log  //查看提交的历史记录  commit提交id  Author提交人姓名邮箱  Date提交时间
+
+=======================撤销
+git checkout 文件名       //将暂存区的文件覆盖工作目录中的文件  依然管理
+git rm --cached 文件名  //将文件从暂存区中删除
+git reset --hard 提交id    //将提交记录中覆盖暂存区和工作目录
+
+git restore 文件名  //工作区删除的文件可以恢复  删除后的文件也应该add, 才会被删除 
+
+=======================分支  当前目录中代码的一个副本
+主分支:  第一个向git仓库提交更新记录时自动产生一个分支  保持稳定性
+开发分支:  作为开发分支, 基于master分支创建   
+功能分支:  基于开发分区创建的  功能开发完成后可以删除
+git branch  //查看分支   绿色星号则为当前
+git branch  分支名   //创建分支
+git checkout 分支名 //切换分支   (应该提交之后再切换) 从开发分支到主分支, 文件应该减少
+git merge 来源分支  //合并分支   开发分支能修改主分支的文件
+git branch -d 分支名称 //删除分支  分支没有合并 不能删除   强制删除(-D)
+git checkout -b aaa  //创建并切换
+git checkout -b aaa master  //创建并切换, 基于master分支
+
+切换分支 不提交
+git stash   暂时存起来, add的文件会看不到, 然后就可以切换分支了(看不到)
+git stash pop  将暂存的取出来, 然后可以看到文件
+================================注意
+(1)开发分支  可以修改主分支的代码  只要add再commit
+(2)添加了origin_ssh远程仓库别名
+
+=======================远程仓库
+github: 多人共享一个仓库, 开发人员在本地开发
+多人开发的流程 :  A(产品经理)  B(开发人员)
+A: 本地创建仓库, 创建远程仓库, 
+B: 克隆远程仓库到本地进行开发, 将本地仓库中开发的内容推送到远程仓库
+最后:  A将远程仓库中的最新内容拉取到本地
+
+程序员A做的事情: 
+本地:  git init add commit
+远程:  new repository
+推送到远程仓库:
+(1)git push 远程仓库地址  分支名称   //登录账号密码就可以了
+git remote add origin_ssh git@github.com:kajumin/git-test.git   //设置ssh别名
+git remote remove origin_ssh  //删除远程仓库别名
+
+程序员B做到事情:
+(1)git clone   远程仓库地址  //替换国内镜像github.com.cnpmjs.org || git.sdut.me/
+(2)git add commit 之后  A在setting->manage access邀请, B在消息栏中接受(拿到权限), 自己电脑操作要删除凭证
+(3)git push -u origin master //B把A设置的别名也拿到了
+-u //记住推送地址和分支, 下次推送输入git push即可
+
+ git push -u origin_ssh dev //提交开发分支
+
+远程仓库版本高于本地, 需要拉取远程最新版本
+冲突:
+(1)两个人同时修改了同一个文件的同一个地方, 后推送的推送不了
+    a修改推送到远程, b再修改, 没有pull拉取最新的版本, B推送不了
+    pull, 然后文件就会有变化, 删除不必要的, 然后add commit 推送push
+(2)审核通过了才能推送,  fork到自己远程仓库, clone(自己的)修改好推送到远程仓库(自己的), 
+     然后提交给程序员A, pull request, 填写一些信息, 发给A, 
+     A程序员点击进去commit ->  files-change(查看)  -> merge pull request(确定合并)
+
+============SSH 免登陆  
+公钥在远程仓库中, 私钥在本地文件中
+ssh-keygen生成秘钥
+id_rsa  私钥   C:\Users\kajumin\.ssh     rsa非对称加密的意思
+id_rsa_pub  私钥  添加到settings -> ssh中
+git remote add origin_ssh git@github.com:kajumin/git-test.git   //设置ssh别名
+git remote remove origin_ssh    //删除远程仓库别名
+git push -u origin_ssh 分支名称  //推送远程仓库, 不需要密码
+==============忽略清单
+.gitignore 
+===
+node_modules
+test.html
+
+====================
+其他命令:
+vi  文件名
+git rm 文件名
+
+=====================husky
+npm i -D husky@4  lint-staged(10) @commitlint/cli(12) @commitlint/config-conventional(12)
+husky版本不能太高, 配置无效, 可以考虑删除.git -> hooks
+
+====================配置git  一次性的, 不需要经常配置
+--global是全局设置, 可以为项目单独设置
+git config --global user.name kajumin   设置修改git提交人姓名
+git config --global user.email 404107262@qq.com   设置修改git提交人邮箱
+git config --list || -l  查看配置信息  直接操作配置文件C:\Users\kajumin
+
+

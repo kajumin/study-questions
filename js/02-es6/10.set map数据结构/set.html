@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<script type="text/javascript">
+	// 同值相等  NaN和NaN 0和-0都是同一个 特殊
+	var set2 = new Set([NaN, NaN, 1, '1', 0, -0])
+	console.log(set2) //NaN 1 '1' 0
+	var set = new Set([1,2,3,4,5])
+	console.log(set)
+
+	// 遍历for of forEach
+	// set.forEach((s, index)=> {
+	// 	console.log(s, index)
+	// })
+	// for(var s of set) {
+	// 	console.log(s)
+	// }
+</script>
+</body>
+</html>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.box {
+			position: relative;
+			width: 100px;
+			height: 100px;
+			margin-top: 30px;
+			padding: 15px;
+			border: 15px solid #096;
+			background-color: #eee;
+		}
+		.box1-1 > .son {
+			position: absolute;
+			/*width:100%;相对于padding-box 位置从content-box开始*/
+			width: 100%;
+			height: 100%;
+			padding: 15px;
+			box-sizing: border-box;
+			background-color: red;
+
+		}
+		.box1-2 > .son {
+			position: absolute;
+			left: 0;
+			right: 0;
+			top: 0;
+			bottom: 0;
+			/* 格式化宽度相对padding-box 具有流动性 */
+			padding: 15px;
+			background-color: red;
+		}
+		.box1-3 > .son {
+			position: absolute;
+			/* padding-box */
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			padding: 15px;
+			box-sizing: border-box;
+			background-color: red;
+		}
+		.box2-1 > .son {
+			position: absolute;
+			width: 100%;
+			height: 100%;
+			margin-top: 15px;
+			background-color: red;
+
+		}
+		.box2-2 > .son {
+			position: absolute;
+			left: 0;
+			right: 0;
+			top: 0;
+			bottom: 0;
+			margin: 15px;
+			background-color: red;
+
+		}
+
+		.box3 .son {
+			/*width: 50px;*/
+			height: 50px;
+			background-color: red;
+			position: absolute;
+			left: 10px;
+			right: 10px;
+			margin: 0 10px;
+		}
+	</style>
+</head>
+<body>
+<!-- 
+absolute流体特性  left right  top bottom对立方向同时设置时
+流体自适应特性从ie7就开始了, 
+
+1.使用格式化宽度 vs 使用 100%  对于子元素padding问题 解决办法border-box
+2.使用格式化宽度 vs 使用 100%  对于子元素margin问题  无能为力
+3.当一个定位元素, 其对立定位方向属性同时具有定位数值的时候, 流体特性就发生了.
+-->
+
+ <div class="box box1-1">
+ 	<div class="son"></div>
+ </div>
+ <div class="box box1-2">
+ 	<div class="son"></div>
+ </div>  
+ <div class="box box1-3">
+ 	<div class="son"></div>
+ </div> 
+
+ <div class="box box2-1">
+ 	<div class="son"></div>
+ </div> 
+ <div class="box box2-2">
+ 	<div class="son"></div>
+ </div>
+
+ <div class="box box3">
+ 	<div class="son"></div>
+ </div>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<script>
+// =============================================================================
+	// 封装者
+	function ajax(method,url,params,onDone){
+		method = method.toUpperCase();
+		var data = null
+		// 将object 类型的参数转换为key1=value1&key2=value2
+		if(typeof params === 'object') {
+			var temparr = [];
+			for(var key in params){
+				var value = params[key]
+				temparr.push(key + '=' + value)
+			}
+			// temparr =>['key1=value1','key2=value2']
+			params = temparr.join('&')
+		}
+		console.log(params)
+		var xhr = new XMLHttpRequest()
+		if(method === 'GET'){
+			url +='?'+ params;
+		}
+		xhr.open(method,url)
+		// 注意open要在setRequestHeader之前
+		if(method === 'POST'){
+			xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+			data = params
+		}
+
+		
+		xhr.send(data)
+		// var result;
+		// 不应该在封装的函数中主观的使用返回数据
+		xhr.onreadystatechange = function() {
+			if(this.readyState !== 4) return
+				// result = this.responseText
+			// console.log(this.responseText)
+			// 无法在内部包含的函数通过return返回结果
+			// return this.responseText
+			onDone(this.responseText)
+			
+		}
+		// return result  还是不可以因为onreadystatechange是异步函数
+	}
+// =============================================================================
+	// 调用者
+	// var onDone = function(res){
+	// 	console.log(res)
+	// } 
+	// ajax('GET','http://localhost/ajax/time.php','id=1',onDone)
+	ajax('GET','http://localhost/ajax/time.php','id=1',function(res){
+		console.log(res)
+	})
+	
+	// ajax('GET','http://localhost/ajax/time.php',{id:1})
+	// ajax('POST','http://localhost/ajax/add.php',{key1:'value1',key2:'value2'})
+</script>
+</body>
+</html>

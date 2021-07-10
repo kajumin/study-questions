@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
+    <script>
+        //通过window.screen.width获取屏幕的宽度
+        var offWidth = window.screen.width / 30; //这里用宽度/30表示1rem取得的px
+        console.log(window.screen.width)
+        console.log(window.screen.width)
+        console.log(offWidth)
+        document.getElementsByTagName("html")[0].style.fontSize = offWidth + 'px'; //把rem的值复制给顶级标签html的font-size
+    </script>
+    <style>
+        /*偷个懒就直接全局初始化了*/
+
+        * {
+            padding: 0;
+            margin: 0;
+        }
+        /* 布局需求,上下都间隔*/
+        div {
+            margin: 0.833333333rem 0;
+        }
+        /* 去处a标签的下划线*/
+        a {
+            text-decoration: none;
+        }
+
+        .one {
+            width: 30rem;
+            /*100/720*30*/
+            height: 4.166666667rem;
+            /*图片宽750,高100*/
+            background: url("../images/lyt/1.jpg");
+            background-size: contain;
+        }
+
+        .two {
+            width: 30rem;
+            /*400/720*30*/
+            height: 16.6666667rem;
+            /*图片宽750,高400*/
+            background: url("../images/lyt/1.jpg");
+            background-size: contain;
+        }
+
+        .three {
+            width: 30rem;
+            height: 5.875rem;
+            /*图片宽750,高141*/
+            background: url("../images/lyt/1.jpg");
+            background-size: contain;
+        }
+
+        .four {
+            width: 28.33333333rem;
+            height: 13.16666667rem;
+            /*图片宽750,高316*/
+            background: url("../images/lyt/1.jpg") no-repeat;
+            background-size: contain;
+            margin-left: 0.833333333rem;
+            position: relative;
+        }
+
+        span {
+            position: absolute;
+            display: block;
+            width: 8.33333333rem;
+            height: 2rem;
+            line-height: 2rem;
+            text-align: center;
+            background: #fff;
+            right: 0.833333333rem;
+            bottom: 0.833333333rem;
+            font-size: 0.95833333rem;
+            color: red;
+            cursor: pointer;
+        }
+
+        .five {
+            width: 28.33333333rem;
+            height: 13.16666667rem;
+            /*图片宽750,高316*/
+            background: url("../images/lyt/1.jpg") no-repeat;
+            background-size: contain;
+            margin-left: 0.833333333rem;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="one"></div>
+    <div class="two"></div>
+    <div class="three"></div>
+    <div class="four">
+        <a href=""><span>25元起</span></a>
+    </div>
+    <div class="five"></div>
+</body>
+
+</html>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1.0">
+	<style type="text/css">
+		input {
+			-webkit-appearance: none;
+			caret-color: #096;
+			line-height: 30px;
+		}
+		* {
+          -webkit-tap-highlight-color: transparent;
+      	}
+      	body {
+            -webkit-overflow-scrolling: touch;
+        }
+
+  	</style>
+</head>
+<body>
+<!-- 
+光标颜色 点击背景 表单内置样式 outline 禁止选中文字 placeholder
+
+ios: input自动大写  input获取焦点变大
+
+功能: 打电话 写邮件 发短信 跳转到地图
+
+(1)光标颜色 input光标默认跟字体颜色一样
+caret-color: auto; 
+
+(2)光标高度: input域的光标高度与行高line-height相同 测试不会  使用padding上下撑开
+
+(3)IOS下，input获取焦点时会放大，meta设置user-scalable=no，可取消放大效果
+
+(4)自动大写: autocapitalize="off" 关闭ios用户自动大写开头字母
+
+(5)圆角: IOS下，input域只显示底边框时，会出现两个底部底边圆角效果，设置border-radius:0即可
+
+(6)自动保存: input域默认会开启自动保存功能，可以使用autocomplete="off"属性将其关闭
+
+(7)轮廓outline android浏览器下，input域处于焦点状态时，默认会有一圈淡黄色的轮廓outline效果
+
+(8)点击背景色: 在移动端，点击可点击元素时，android下会出现淡蓝色背景，IOS下会出现灰色背景
+ -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+
+(9)清除表单内置样式
+appearance: -webkit-appearance: none;
+
+(10)禁止选择文字: -webkit-user-select：none; 
+
+(11)禁止文字缩放: * {-webkit-text-size-adjust:100%;}
+
+(12)【文本渲染】
+使用text-rendering:optimizeLegibility属性，可以让浏览器在绘制文本时将着重考虑易读性，而不是渲染速度和几何精度.它会使字间距和连字有效
+text-rendering: optimizeLegibility;
+
+(13)
+文本平滑显示:-webkit-font-smoothing属性可以用来控制字体的像素显示是否平滑
+
+none 关闭抗锯齿，字体边缘犀利。
+antialiased 字体像素级平滑，在深色背景上会让文字看起来更细了
+subpixel-antialiased 字体亚像素级平滑，主要为了在非视网膜设备下更好的显示
+body { -webkit-font-smoothing: antialiased; }
+
+(14)placeholder颜色:  ::placeholder {color: #fff;}
+
+(15)【清除按钮圆角】
+input,button{
+  -webkit-appearance:none;
+  border-radius:0;}
+
+(16) 
+【滚动回弹】
+-webkit-overflow-scrolling 属性控制元素在移动设备上是否使用滚动回弹效果
+
+(17)1倍行高
+　　设置line-height:1，即行高为1时，有的页面会出现文字显示不全的情况，所以行高设置一定要大于1
+
+识别规则: 
+打电话 发短信 跳转到地图 写邮件 禁止识别
+
+
+【添加到主屏幕】
+在IOS下，在head元素底部，使用下列代码可以实现添加到主屏幕的功能
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-title" content="Weather PWA">
+<link rel="apple-touch-icon" href="images/icons/icon-152x152.png">
+ -->
+ <p>
+ 	<input type="text" name="" class="username">
+ </p>
+ <p>
+ 	<input type="number" name="" class="tel">
+ </p>
+ <p><button>按钮</button><a href="#">连接</a></p>
+ <a href="tel:0755-10086">打电话给:0755-10086</a>
+ <a href="sms:10086">发短信给: 10086</a>
+ <a href="iosamap://viewMap?sourceApplication=yukapril&poiname=国宏宾馆&lat=39.905592&lon=116.33604&dev=0">高德地图</a>
+<a href="androidamap://viewMap?sourceApplication=yukapril&poiname=国宏宾馆&lat=39.905592&lon=116.33604&dev=0">高德</a>
+
+ <div style="height: 10000px;background-color: red;"></div>
+</body>
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title></title>
+  <style>
+    body {
+      margin: 0;
+    }
+    .container {
+      width: 800px;
+      height: 400px;
+      background-color: #f1f1f1;
+      margin: 0 auto;
+    }
+    ul {
+      padding-left: 0;
+    }
+    li {
+      list-style-type: none;
+    }
+    .nav {
+      padding-left: 0;
+    }
+    .nav > li {
+      float: left;
+      margin: 0 10px;
+    }
+    .nav > li > ul {
+      position: absolute;
+      margin-top: 10px;
+      border-top: 1px solid #adc;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <ul class="nav">
+      <li>
+        <a href="#">首页</a>
+        <ul>
+          <li>首页</li>
+          <li>首页</li>
+          <li>首页</li>
+          <li>首页</li>
+        </ul>
+      </li>
+      <li>
+        <a href="#">新品</a>
+        <ul>
+          <li>新品</li>
+          <li>新品</li>
+          <li>新品</li>
+        </ul>
+      </li>
+      <li>
+        <a href="#">关于</a>
+        <ul>
+          <li>关于我们</li>
+          <li>关于我们</li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+  <script src="./jquery-3.4.1.min.js"></script>
+  <script>
+    $('.nav > li').hover(function() {
+      console.log('hover');
+      // $(this).children('ul').slideDown()
+      $(this).children('ul').stop().slideDown()
+    }, function() {
+      // console.log('hide');
+      $(this).children('ul').stop().slideUp()
+    }
+    )
+    
+  </script>
+</body>
+</html>

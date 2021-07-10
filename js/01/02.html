@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<div id="div1">中国</div>
+<script type="text/javascript">
+	// 原型和原型链
+	// Object.prototype.toString.call('123') [Object String]
+	// 1.如何准确的判断一个变量是数组类型  arr  instanceof  Array
+	// 2.写一个原型链继承的例子  Personal.prototype = new Main();                        
+	//       Personal.prototype.constructor=Personal 
+	// 3.描述new一个对象的过程
+	// (1)创建一个新对象
+	// (2)this指向这个新对象
+	// (3)执行代码,通常是给this赋值
+	// (4)放回this对象
+	// 4.zepto(或者其他框架)源码中如何使用原型链
+	function Foo(name,age) {
+		this.name = name;
+		this.age = age;
+		this.class = 'class-1';
+		// return this  默认返回this
+	}
+	Foo.prototype.sayName = function() {
+		alert(this.name);
+	}
+	var f = new Foo('zhangsan',20);
+	// var f1 = new Foo('list',22) //创建多个对象
+	console.log(f instanceof Foo) //true  是否构造函数
+	console.log(f)
+
+	function fn1 () {
+		console.log('123')
+	}
+	var arr = [1,2,3];
+	console.log(fn1 instanceof Function)
+	console.log(arr instanceof Array)
+
+
+	// 原型规则一和实例
+	// 1.所有引用类型都具有对象特性,即可以自由扩展属性(null除外)
+	// 2.所有引用类型都有一个__proto__对象(隐式原型)   
+	// 3.所有函数都有一个prototype属性(显示原型)
+	// 4.函数(实例)的隐式原型 等于 该函数(实例)的构造函数的显示原型  指向相同
+	// 5.当试图得到一个对象的某个属性, 如果这个对象本身没有这个属性,那么会去它的__proto__(即它的构造函数的prototype中找)
+	console.log(fn1.__proto__)
+	console.log(fn1.prototype)
+	var obj = {};
+	console.log(f.__proto__ === Foo.prototype)  //true
+	console.log(obj.prototype)  //true
+
+	f.printName = function() {
+		alert(this.name)
+	}
+
+	// 原型规则二和实例
+	for( var o in f) {
+		// 原型链中的属性也会被遍历
+		if(f.hasOwnProperty(o)) {
+			// 去除原型链中的属性
+			console.log(o)
+		}
+		
+	}
+
+	// f.sayName();
+	// f.printName();
+	console.log(f.toString()); //[Object Object]  f.__proto__.__proto__(隐式原型)中找
+	// f.__proto__ === Foo.prototype
+	// f.__proto__.__proto__ === Object.prototype
+	console.log(f.__proto__ === Foo.prototype)
+	console.log(Foo.prototype.__proto__ === Object.prototype)
+	console.log(fn1.__proto__  === Function.prototype)  //true
+	console.log(Function.prototype.__proto__  === Object.prototype)  //true
+
+	console.log(f instanceof Foo)
+	console.log(f instanceof Object) //同样是true
+	// instanceof判断逻辑: f的__proto__一层层往上找 能否找到Foo.prototype
+
+
+	// 2.原型继承实例
+	function Elem(id) {
+	 	this.elem = document.getElementById(id);
+	}
+	Elem.prototype.html = function(val) {
+	 	var elem = this.elem;
+	 	if(val) {
+	 		elem.innerHTML = val;
+	 		return this; //链式操作 
+	 	}else {
+	 		return elem.innerHTML;
+	 	}
+	} 
+	Elem.prototype.on = function(type,fn) {
+	 	var elem = this.elem;
+	 	// console.log(elem)
+	 	elem.addEventListener(type, fn);
+	 	return this;
+	}
+	var div1 = new Elem('div1');
+	 
+	div1.html('<p>广州</p>').on('click',function(){
+	 	console.log('div1被点击了')
+	}).html('<p>上海</p>');
+
+
+	function Main(country) {
+		this.country = country;
+	}
+	Main.prototype.sayhello = function() {
+		console.log('Main hello');
+	}
+	function Personal(name) {
+		this.name = name;
+	}
+	Personal.prototype = new Main();
+	Personal.prototype.constructor = Personal ;
+	Personal.prototype.sayhello = function() {
+		console.log('Personal hello');
+	}
+	var main = new Main('china');
+	var personal = new Personal('bang');
+	main.sayhello();
+	personal.sayhello();
+	console.log(main)
+	console.log(personal)
+	console.log(personal.__proto__)   //main  跟main一样  Personal原型链上写其他方法后就不一样
+	console.log(Personal.prototype)       //main  跟main一样
+	console.log(personal.__proto__ === Personal.prototype)   //true
+	console.log(personal.__proto__.__proto__  === Main.prototype)   //true
+	console.log(personal instanceof Personal)   //true
+	console.log(personal instanceof Main)  //true
+	console.log(Object.getPrototypeOf(personal))  //true
+</script>
+</body>
+</html>

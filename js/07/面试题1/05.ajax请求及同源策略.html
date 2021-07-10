@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<!-- 
+1.用户访问一个网站的大致过程是什么?
+  (1) 域名解析  浏览器缓存  操作系统缓存 路由器缓存 本地host文件缓存 dns服务器(域名服务器中)
+  (2) 三次握手
+  (3) http请求
+  (4) 返回响应
+  (5) 浏览器解析html生成dom树 图片 js css等链接会再次请求
+      css生成cssom树
+  (6) dom树和cssom树 生成渲染树, 
+  (7) 根据渲染树计算布局, 计算每个节点的几何信息, 将各个节点颜色绘制到屏幕上
+2.ajax是什么? Asynchronous Javascript And XML 异步js和xml(数据格式的定义), 
+   用于异步请求数据, 在不刷新网页的情况下更新页面数据,提高用户体验. 
+  传统使用form表单会刷新页面
+3.同步和异步的区别
+  同步: 发送一个请求, 等待返回, 然后再发送下一个请求
+  异步: 发送一个请求, 不等待返回, 随时可以再发送下一个请求
+4.如何解决跨域问题?
+  浏览器的同源策略  协议 域名 端口号
+  (1) cors 跨域资源共享
+  (2) node.js请求代理  webpack代理请求原理
+  (3) nginx反向代理
+5.ajax的优缺点?
+  优点: 
+  1. 在不刷新页面的情况下维持与服务器通信
+  2. 异步的方式与服务器通信, 不打断用户的操作
+  3. ajax使得界面和应用的分离, 数据和呈现分离
+  缺点: 
+  1. 干掉了back与history功能, 无法返回前一个页面的页面状态
+  2. ajax带来安全威胁, 暴露更多的数据和服务器逻辑
+  3. 对搜索引擎支持较弱
+
+
+问题:
+1.一个页面ajax请求越多越好吗?
+  浏览器对于异步请求是有并发数限制, 如果同一时刻请求过多, 就会排队阻塞, 等上一个请求完成后才能进行下一个, 影响用户体验.
+2.ajax请求原生的api有那些? 核心属性?
+  new XMLHttpRequest()
+  open(method, url, async) 建立一个与服务器特定端口的连接, 与服务器建立三次握手, 握手完成后可以发送请求
+  send(data) 开始发送数据
+  setRequestHeader(key, value)设置请求头的信息
+  onreadystatechange 回调函数 状态改变就触发
+     readyState 五个状态:
+     0: new之后  初始化, xhr对象还没有完成初始化 
+     1: open之后 载入, 开始发送请求 进行三次握手 完成后可以发送请求数据
+     2. send之后 载入完成, 请求发送完成 
+     3. 解析     开始读取服务器的响应
+     4. 完成     读取服务器响应结束 
+ -->
+ <script type="text/javascript">
+ 	var xhr = new XMLHttpRequest()
+ 	console.log(xhr.readyState) //0
+ 	xhr.open('GET', 'http://localhost:3000/axios')
+ 	console.log(xhr.readyState) //1 进行三次握手
+ 	xhr.onreadystatechange = function() {
+ 		// readystate 只能接收到 2 3 4
+ 		// 2三次握手完成
+ 		// 3开始读取服务端的数据流
+ 		// 4服务端的数据流读取完
+ 		console.log(xhr.readyState) //2 3 4
+ 		// console.log(xhr.status) // 200
+ 	}
+  new Promise(resolve => {
+    setTimeout(() => {
+       resolve('p1')
+     }, 100)
+  })
+  .then(res => {
+    console.log(res)
+  })
+  .then(res => {
+    console.log(res)
+  })
+ 	xhr.onerror = function () {
+ 		console.log(xhr)
+ 	}
+ 	xhr.send(null)
+ 	console.log(xhr.readyState) //1
+
+ 	/*
+ 	(1)
+	res.setHeader("Access-Control-Allow-Origin", "*")
+	res.setHeader("Access-Control-Allow-Methods", "POST, GET")
+	(2)node代理
+	devServer: {
+		proxy: {
+			'/api': {
+				target: 'http://localhost:3000',
+				changeOrigin: true,
+				secure:false, //设置支持https代理
+			}
+		}
+	}
+	(3)jsonp 只能发送get请求
+	(4)nginx反向代理
+	   nginx.conf => server => location模块
+	(5)iframe跨域解决
+	(6)h5的postMessage新特性
+	   iframe
+ 	*/
+ </script>
+</body>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<script type="text/javascript">
+	// 参数默认值
+	// y = y || 'word'
+	// 缺点: 当y为假时, 失效
+	// 处理: 
+	// if (typeof y === undefined) {
+	// 	y = 'word'
+	// }
+
+	// 与结构赋值同用
+	function m1({ x = 0,y = 0 } = { }) {
+		console.log([x, y])
+	}
+	function m2({ x, y } = { }) {
+		console.log([x, y])
+	}
+	m1() // [0, 0]
+	m2() // [undefined, undefined]
+
+	// 触发默认值 undefined  null不可以
+	function fn (x = 5, y = 6) {
+		console.log(x, y)
+	}
+	fn(undefined, null) // 5 null
+	// 默认参数的位置一般写在最后
+
+	// length属性  参数的个数  rest不算 默认参数后面的也不算
+	function fn2 (a, b, c = 0, d, ...rest) {
+		console.log(fn2.length)
+	}
+	fn2(1, 2, 3, 4, 5, 6) //2
+
+	// 作用域
+	// 有默认参数的时候, 会形成单独作用域, 函数体内的不会影响该作用域(而是获取全局的)
+
+	// 参数不可省略
+	// function fn3 (x = no()) {}
+
+	// rest参数之后不能有参数
+
+	// 严格模式 函数内部指定为严格默认
+	// 使用了默认值, 解构赋值, 扩展运算符 就不能指定为严格模式
+	// 解决办法: (1) 全局严格模式   (2) 立即执行函数
+
+	// function fn4 (a = 0, b = 1) {
+	// 	// "use strict"
+	// }
+	// fn4()
+	// 不能少参数
+	function fn4 ({a, b}) {
+		// "use strict"
+	}
+	fn4({a: 1, b: 2})
+
+	// .name属性
+	// Function构造函数体出来的name= anonymous
+	// bind出来的加上bound前缀
+	function fn5 () {
+
+	}
+	var fn6 = fn5.bind(null)
+	console.log(fn6.name) //bound f5
+
+	function Fn() {
+
+	}
+	console.log((new Function()).name)  //anonymous
+
+
+</script>
+</body>
+</html>

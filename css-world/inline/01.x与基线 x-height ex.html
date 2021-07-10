@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.icon-arrow {
+		    display: inline-block;
+		    width: 20px;
+		    height: 1ex;
+		    background: url(https://demo.cssworld.cn/images/5/arrow.png) no-repeat center;
+		}
+	</style>
+</head>
+<body>
+<!--
+1.x与css中的基线 
+2.x与css中x-height: 小写字母的高度 
+上行线高度
+大写字母高度
+中线 median
+基线  baseline
+下行线高度
+
+x-height  基线和中线之间的距离  高度
+vertical-align: middle; 不是中间的意思, 基线往上1/2 x-height高度  x交叉点的位置, 位于中线和基线中间
+    但是基本上所有字体, x的位置都是偏下一点儿的, 所以是近视居中
+
+3.字母x与css中的ex
+(1)ex = x-height高度  可以用来图标与文字中间位置对齐 案例图标居中对齐
+
+ -->
+<p>zhangxinxu<i class="icon-arrow"></i></p>
+<p>张鑫旭<i class="icon-arrow"></i></p>
+</body>
+</html>

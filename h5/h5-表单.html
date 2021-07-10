@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<!-- 类型: color range search url email range number date -->
+	<!-- 属性: required autofocus autocomplete parttern multiple
+			   min max list step form
+	 -->
+	<!-- 元素datalist keygen output -->
+<form id="form1">
+	<input type="text" name="uname" required autofocus autocomplete pattern="\d{10}">
+	<select multiple>
+		<option value="JAVA">java</option>
+		<option value="PHP">php</option>
+		<option value="PYTHON">python</option>
+	</select>
+	<input type="range" name="score" min="0" max="100" value="50">
+	<input type="range" name="score" min="0" max="10" value="20">
+	<input type="search" name="" list="options">
+	<datalist id="options">
+		<option label="java" value="JAVA">java</option>
+		<option label="php" value="PHP">php</option>
+		<option label="python" value="PYTHON">python</option>
+	</datalist>
+	<input type="submit" name="submit" value="提交"> 
+</form>
+<input type="search" name="search" form="form1">
+
+<p>progress</p>
+<progress value="50"></progress>
+<p>meter</p>
+<meter max="100" min="0" high="90" low="60" value="50"></meter>
+<meter max="100" min="0" high="90" low="60" value="70"></meter>
+<meter max="100" min="0" high="90" low="60" value="95"></meter>
+</body>
+</html>

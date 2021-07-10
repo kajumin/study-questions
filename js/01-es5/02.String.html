@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<div>&#9825</div>
+	<div>&#1</div>
+
+<script>
+	console.log('---------String():')
+	console.log('String(0):', String(0))
+	console.log('String(-0):', String(-0))
+	console.log('String(-123):', String(-123))
+	console.log('String(123):', String(123))
+	console.log('String(Infinity):', String(Infinity))
+	console.log('String(-Infinity):', String(-Infinity))
+	console.log('String(NaN):', String(NaN))
+
+	console.log('String(undefined):', String(undefined))
+	console.log('String(null):', String(null))
+	console.log('String({}):', String({}))
+	console.log('String([]):', String([]))
+	console.log('String([1,2]):', String([1,2]))
+
+	console.log('-------------toString():')
+	var a;
+	a = 0
+	console.log(a.toString())
+	a = -0
+	console.log(a.toString())
+	a = -123
+	console.log(a.toString())
+	a = 123
+	console.log(a.toString())
+	a = Infinity
+	console.log(a.toString())
+	a = -Infinity
+	console.log(a.toString())
+	a = NaN
+	console.log(a.toString())
+	a = Number.MAX_VALUE
+	console.log(a.toString())
+
+	// 下面两个报错
+	// console.log('undefined.toString():', (undefined).toString())
+	// console.log('null.toString():', (null).toString())
+	
+	console.log('[].toString():', [].toString()) //''
+	console.log('[1,2].toString():', [1,2].toString()) //'1,2'
+	console.log('{}.toString():', {}.toString()) //'[object Object]'
+
+	//[1] + 1
+	console.log([1] + 1); //一个是字符串 字符串拼接
+	console.log([[1]] + 1); //一个是字符串 字符串拼接
+	console.log([1,2] + 1); //一个是字符串 字符串拼接 '1,21'
+
+	console.log([1] - 1); //减法  转为number
+	console.log([[1]] - 1); //减法  转为number
+
+
+</script>
+</body>
+</html>

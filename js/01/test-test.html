@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<div>
+	<p>1</p>
+	<p>2</p>
+	<p>3</p>
+	<p>4</p>
+	<p>5</p>
+</div>
+<script type="text/javascript">
+	for(var i = 0; i < 5;i ++) {
+		setTimeout(function () {
+			console.log(i)
+		}, 0)
+	}
+	for(var i = 0; i < 5;i ++) {
+		setTimeout((function (i) {
+			return function() {
+				console.log(i)
+			}
+		})(i), 0);
+	}
+	for(var i = 0; i < 5;i ++) {
+		(function(i){
+			setTimeout(function () {
+				console.log(i)
+			}, 0)
+		})(i)
+	}
+	for(let i = 0; i < 5;i ++) {
+		setTimeout(function () {
+			console.log(i)
+		}, 0)
+	}
+
+	ps = document.querySelectorAll('p');
+	// for(var i = 0;i < ps.length;i ++) {
+	// 	ps[i].onclick = function() {
+	// 		console.log(i)
+	// 	}
+	// }
+	// for(var i = 0;i < ps.length;i ++) {
+	// 	(function(i){
+	// 		ps[i].onclick = function() {
+	// 			console.log(i)
+	// 		}
+	// 	})(i)
+	// }
+	for(var i = 0;i < ps.length;i ++) {
+		
+		ps[i].onclick = (function(i) {
+			return function() {
+				console.log(i)
+			}
+		})(i)
+		
+	}
+</script>
+</body>
+</html>

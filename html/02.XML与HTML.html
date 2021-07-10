@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title></title>
+  <style>
+    .box1 {
+      width: 100px;
+      height: 100px;
+      background-color:red;
+    }
+  </style>
+</head>
+<body>
+  <!-- 
+    不闭合
+    不严格区分大小写
+    属性不带引号
+    空格合并
+   -->
+  <p class=box1 ID="box1">
+  <p>123   123</p>
+
+  <script>
+    console.log(123);
+
+    try {//Internet Explorer
+      xmlDoc = new ActiveXObject("Microsoft.XMLDOM");
+      console.log(xmlDoc);
+    } catch(e) {
+        try { //Firefox, Mozilla, Opera, etc.
+          xmlDoc=document.implementation.createDocument("","",null);
+          console.log(xmlDoc);
+          try { 
+            xmlDoc.async=false;
+            xmlDoc.load("./02.XML.xml");
+            document.write("xmlDoc is loaded, ready for use");
+          }
+          catch(e) {
+            alert(e.message)
+          }
+        } catch(e) {
+          alert(e.message)
+        } 
+    }
+   
+  </script>
+</body>
+</html> 

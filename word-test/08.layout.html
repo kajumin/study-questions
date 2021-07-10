@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title></title>
+    <style>
+      .box1 {
+        width: 1000px;
+        height: 400px;
+        margin: 0 auto;
+      }
+      .box1 .son-par {
+        overflow: hidden;
+        margin-right: -40px;
+      }
+      .box1 .son {
+        float: left;
+        width: 480px;
+        height: 200px;
+        margin-bottom: 20px;
+        margin-right: 40px;
+        background-color: #eee;
+      }
+      .box1 .son-son {
+        display: table-cell;
+        vertical-align: middle;
+        height: 200px;
+      }
+      .box1 img {
+        float: left;
+        margin-top: 50px;
+        margin-right: 20px;
+      }
+      .box1 .son-content {
+        display: table-cell;
+        *display: inline-block;
+        vertical-align: middle;
+        width: 3000px;
+        height: 200px;
+        margin-left: 20px;     
+      }
+      .box1 .son-r {
+        float: right;
+        margin-top: 50px;
+        margin-left: 20px;
+      }
+      p {
+        margin: 0;
+      }
+      .box2 {
+        width: 200px;
+        height: 200px;
+        background-color: #eee;
+      }
+      .box2 .son {
+        display: table-cell;
+        *display: inline-block;
+        width: 30000px;
+        height: 200px;
+        vertical-align: middle;
+        text-align: center;
+      }
+      .box2 .son-son {
+        background-color: hotpink;
+      }
+
+
+      .box3 {
+        width: 1000px;
+        height: 400px;
+        margin: 0 auto;
+      }
+      .box3 .son-par {
+        overflow: hidden;
+        margin-right: -40px;
+      }
+      .box3 .son {
+        float: left;
+        width: 480px;
+        height: 200px;
+        margin-bottom: 20px;
+        margin-right: 40px;
+        background-color: #eee;
+      }
+      .box3 .son-son {
+        display: table-cell;
+        vertical-align: middle;
+        height: 200px;
+      }
+      .box3 img {
+        float: left;
+        margin-top: 50px;
+        margin-right: 20px;
+      }
+      .box3 .son-content {
+        /* 形成bfc 与浮动分割开来 */
+        overflow: hidden;
+        /* height: 200px; */
+        /* 为了多行居中布局 */
+        /* line-height: 200px;  */
+      }
+      .box3 .son-content-son {
+        /* 多行布局 子元素为inline-block */
+        display: inline-block;
+        vertical-align: middle; 
+        line-height: 20px; 
+      }
+      .box3 .son-r {
+        float: right;
+        margin-top: 50px;
+        margin-left: 20px;
+      }
+
+
+      .ib-center,
+      .ib-center-l {
+        height: 100%;
+        text-align: center;
+        white-space: nowrap;
+      }
+      .ib-center-l {
+        text-align: left;
+      }
+      .ib-center:after,
+      .ib-center-l:after {
+        content: '';
+        display: inline-block;
+        height: 100%;
+        vertical-align: middle;
+      }
+      .ib-center > .ib-center-box,
+      .ib-center-l > .ib-center-box {
+        display: inline-block;
+        vertical-align: middle;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- table-cell布局 -->
+    <div class="box1">
+      <div class="son-par">
+        <div class="son">
+          <img src="./assets/images/login-bg.png" alt="" width="50" />
+          <div class="son-r">
+            <div>$2000</div>
+            <button>按钮</button>
+          </div>
+          <div class="son-content">
+            <p>飞豹链应用</p>
+            <p>基于基于基于基于基于基于基于基于基于基于基于基于基于基于基于基于基于基于基于基于基于基于基于基于基于基于基于基于基于基于基于基于</p>
+          </div>
+        </div>
+        <div class="son"></div>
+        <div class="son"></div>
+      </div>
+    </div>
+
+    <div class="box2">
+      <div class="son">
+        <div class="son-son">
+          <p>1234679</p>
+          <p>1234679</p>
+          <p>1234679</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="box3">
+      <div class="son-par">
+        <div class="son">
+          <img src="./assets/images/login-bg.png" alt="" width="50" />
+          <div class="son-r">
+            <div>$2000</div>
+            <button>按钮</button>
+          </div>
+          <div class="son-content ib-center-l">
+            <div class="ib-center-box">
+              <p>飞豹链应用</p>
+              <p>基于基于基于基于基于基于基于于基于基于基于基于</p>
+            </div>
+          </div>
+        </div>
+        <div class="son"></div>
+        <div class="son"></div>
+      </div>
+    </div>
+  </body>
+</html>

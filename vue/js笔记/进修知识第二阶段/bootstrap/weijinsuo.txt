@@ -1,0 +1,66 @@
+1.container 
+2.栅格系统   row  col-md(xs/lg/sm)-*(12)
+3.字体图标   https://icomoon.io/             
+4.按钮   不一样的话   把bootstrap原有的粘贴过来改 并改名字
+5.导航栏   与按钮一样     bootstrap导航默认z-index:1000
+6.辅助类型  hidden       需要参考文档  跟导航栏有关
+7.技巧 :  把css保存回去
+8.background  通栏  需要修改item的height  background-repeat  backgroud-potion  size : cover   
+小图用img标签  大图用背景
+9. 媒体对象  media
+10. 标签页
+
+1.hidden-xs  hidden-sm
+特别推荐: 
+2.  tooltip使用
+3.滚动条  
+ul加容器  容器有溢出滚动条的情况
+ul动态设置宽度  根据内容大小决定的  width= sum(li.width)
+3.标签栏
+4.合作伙伴  兄弟选择器
+over-flower:hidden
+position:relative
+center-block
+5.affix  吸顶效果
+6.模态框  from  offset   form-input-lg  form-groud-lg
+7.轮播图向左向右滑  startX  endX
+touchstart
+touchmove
+touchenter
+
+
+ctrl+r   找元素
+less sass styuls预处理css
+//   /*  */
+变量  @mainColor: #e92322;  @width:32px;
+嵌套
+.container{
+  .row{
+  }
+  &:hover 
+  > a
+}
+
+Mixin:
+.roundedCorners(@radius: 5px){  //默认值
+
+}
+//被引用下划线开头
+@import url('_p.less');
+
+函数: lartern  
+
+依赖于node.js
+lessc main.less > main.css
+
+自定义  less文件修改 再编译  ---线上定制
+
+rem  根元素的em==html
+
+
+
+
+
+
+
+

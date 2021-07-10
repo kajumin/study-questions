@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<script>
+	// 去掉重复的数字
+	// [...new Set([1,2,3,5,4,6,8,7,4,5,2])]
+	function passRepeat(arr){
+		var newArr = [];
+		arr.forEach(function(item,index,arr){
+			if(newArr.indexOf(item) === -1){
+				// console.log(newArr.indexOf(item));
+				newArr.push(item);
+			}
+		});
+		console.log(newArr)
+		
+	}
+	function passRepeat2(arr){
+		for(var i = 0; i < arr.length; i++) {
+			for(var j = 0; j < i; j++) {
+				if(arr[i] === arr[j]) {
+					arr.splice(i, 1)
+					i--
+				}
+			}
+		}
+		console.log(arr)
+		
+	}
+	passRepeat([1,2,3,5,4,6,8,7,4,5,2]);
+	passRepeat2([1,2,3,5,4,6,8,7,4,5,2]);
+
+	function num(num) {
+		// function num () {};
+	    console.log(num) //100
+	    var num = 10;
+	    console.log(num) //10
+	}
+	num(100);
+
+
+	function m () {
+    	console.log(a1); // underfined
+    	console.log(a2); // underfined
+    	console.log(b1); // underfined
+    	console.log(b2); // underfined
+    	if(false) {
+        	function b1 (){}; //不会找if里面是函数提升
+        	var a1 = 10;
+    	}
+    	if(true) {
+        	function b2 (){};
+        	var a2 = 10;
+    	}
+    	console.log(a1); // underfined
+    	console.log(a2); // 10
+    	console.log(b1); // underfined
+    	console.log(b2); // function
+	}
+	m();
+	// 生成从0-99
+	// 方法1
+	// var arr100 = [...new Array(100).keys()];
+	// 方法二
+	// var arr100 = Array.from(new Array(100).keys());
+	
+	// 生成从1-100
+	var arr100 = Array.from(new Array(100), function(val, index) {
+		return index + 1
+	});
+	console.log(arr100)
+ 
+
+
+</script>
+</body>
+</html>

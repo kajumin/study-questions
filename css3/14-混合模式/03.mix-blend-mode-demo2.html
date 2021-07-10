@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<style type="text/css">
+		img {
+			width: 200px;
+			height: 300px;
+		}
+		.box {
+			margin-top: 50px;
+			background-color: #0074D9;
+		}
+		.box1 .inner {
+		    width: 256px;
+		    height: 256px;
+		    background: url(../../images/zza/1.jpg) no-repeat;    
+		}
+		.box1 .mode {
+		    position: relative;
+		    left: 150px;
+		    mix-blend-mode: darken;	
+		}
+		.box2 {
+		    background-color: #0074D9;
+		}
+		.box2 .inner {
+		    width: 256px;
+		    height: 256px;
+		    background: url(../../images/zza/1.jpg) no-repeat;   
+		    /*isolation: isolate;*/
+		    /*position: relative;*/
+		    /*z-index: 0; */
+		}
+		.box2 .mode {
+		    position: relative;
+		    left: 150px;
+		    mix-blend-mode: darken;	
+		}
+		
+	</style>
+</head>
+<body>
+<!-- 
+	isolation: isolate;之所以可以阻断混合模式的进行，本质上是因为isolation:isolate创建一个新的层叠上下文(stacking context)。
+
+	创建层叠上下文:
+	1.position + z-index数值
+	2.transform 
+	3.opacity
+	4.filter
+	5.flex
+
+	1.(祖父)背景色  (父)背景图   图片混合
+	2.(祖父)背景色  (父 隔离)背景图  图片混合
+-->
+<div class="box box1">
+	<div class="inner">
+		<img src="../../images/zza/2.jpg" class="mode">
+	</div>
+</div>
+
+<div class="box box2">
+	<div class="inner">
+		<img src="../../images/zza/2.jpg" class="mode">
+	</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<!-- 
+1.栈和队列 使用两个栈实现入队和出队, 入队(push) 出队(pop放入另一个栈, 然后pop出来最后一个)
+2.二进制转换
+3.二分搜索
+-->
+<script type="text/javascript">
+	var inputStack = []
+	var outputStack = []
+	function enqueue(stackInput, item) {
+		return stackInput.push(item)
+	}
+	function dequeue(stackInput, stackOutput) {
+		if(stackOutput.length <= 0) {
+			while(stackInput.length > 0) {
+				var elementOutput = stackInput.pop()
+				stackOutput.push(elementOutput)
+			}
+			// var result = stackOutput.pop()
+			// while(stackOutput.length > 0) {
+			// 	var elementOutput = stackOutput.pop()
+			// 	stackInput.push(elementOutput)
+			// }
+		}
+		return stackOutput.pop()
+		// return result
+	}
+	enqueue(inputStack, 1)
+	enqueue(inputStack, 2)
+	enqueue(inputStack, 3)
+	console.log(dequeue(inputStack, outputStack)) //1
+	console.log(inputStack)
+	console.log(outputStack)
+
+	function toBinary(num) {
+		console.log(num)
+		if(num >= 1) {
+			if(num % 2) {
+				return toBinary((num - 1) / 2) + 1
+			} else {
+				return toBinary(num / 2) + 0 
+			}
+		} else {
+			return ''
+		}
+	}
+
+	console.log(toBinary(3))
+	console.log(toBinary(4))
+	console.log(toBinary(5))
+	console.log(toBinary(11))
+
+	function search(arr, value, leftPosition, rightPosition) {
+		if(leftPosition > rightPosition) return -1
+		var middle = Math.floor((leftPosition + rightPosition)/2)
+		if(arr[middle] === value) {
+			return middle
+		} else if(arr[middle] > value) {
+			return search(arr, value, leftPosition, middle - 1)
+		} else {
+			return search(arr, value, middle + 1, rightPosition)
+		}
+	}
+	var arr = [1,2,3,4,5,6,7,8,9]
+	console.log(search(arr, 2, 0, arr.length - 1))
+</script>
+</body>
+</html>

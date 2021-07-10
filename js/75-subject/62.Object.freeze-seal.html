@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<script type="text/javascript">
+	// freeze seal不同之处
+	/* freeze不可以修改属性值, seal可以修改属性值
+	   都不可以添加和删除
+	*/ 
+
+	// freeze  冻结一个对象  
+	// 不能添加 修改 删除属性 无作用但不报错
+	// 但是属性值是对象 可以进行修改 添加 删除
+	var freeze = Object.freeze({name: 'bang', address: { street: '100 main st'}})
+	freeze.name = 'joycechu'
+	freeze.age = 20
+	delete freeze.name
+	
+	freeze.address.age = 20
+	freeze.address.street = 'main'
+	delete freeze.address.street
+	console.log(freeze)
+
+	// seal 封闭一个对象 可以修改 不能添加和删除
+	const person = { name: 'bang' }
+	Object.seal(person)
+	// 修改有作用
+	person.name = 'joycechu'
+	console.log(person)
+	// 添加 删除无作用
+	person.age = 20
+	delete person.name
+	console.log(person)
+</script>
+</body>
+</html>

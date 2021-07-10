@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.box .counter {
+		  counter-reset: wangxiaoer 2 wangxiaosan 3; 
+		  font-size: 32px; 
+		  font-family: Arial black; 
+		  color: #cd0000; 
+		}
+		.box .counter:before { 
+		  content: counter(wangxiaoer); 
+		}
+		.box .counter:after { 
+		  content: counter(wangxiaosan); 
+		}
+		
+		.box1 .counter {
+		  counter-reset: wangxiaoer 2; 
+		  /*升为3*/
+		  counter-increment: wangxiaoer;
+		  font-size: 32px; 
+		  font-family: Arial black; 
+		  color: #cd0000; 
+		}
+		.box1 .counter:before { 
+			/*升为4*/
+		  counter-increment: wangxiaoer;
+		  content: counter(wangxiaoer); 
+		}
+		.box1 .counter:after { 
+			/*升为5*/
+		  counter-increment: wangxiaoer;
+		  content: counter(wangxiaoer); 
+		}
+
+		.box2 .counter {
+		  counter-reset: wangxiaoer 2;
+		  font-size: 32px; 
+		  font-family: Arial black; 
+		  color: #cd0000; 
+		}
+		.box2 .counter:before,
+		.box2 .counter:after {
+		  display:block;
+		  content: counter(wangxiaoer, lower-roman);  
+		  content: counter(wangxiaoer, disc);
+		  content: counter(wangxiaoer, circle);
+		  content: counter(wangxiaoer, square);
+		  counter-increment: wangxiaoer;
+		}
+	</style>
+</head>
+<body>
+<!-- 
+计算器效果
+counter-reset: wangxiaoer 2; 默认为0   普照源 计算器-重置 默认为0  none  inherit  取消重置和继承
+counter-increment: wangxiaoer 2;  默认值1 普照递增  第二个参数为增减值(数值)  none inherit
+counter(name, style)  输出 counter
+counters  多层时使用
+
+counter(name, style)中style:
+disc | circle | square | decimal | lower-roman | upper-roman
+
+content生成混合特性
+ -->
+<div class="box">
+	<p>我叫王小二，万万没想到，会出现另外一个数字：</p>
+	<p class="counter"></p>
+</div>
+
+
+<div class="box1">
+	<p>多次普照</p>
+	<div class="counter"></div>
+</div>
+<div class="box2">
+	<p>counter(name,style)中style</p>
+	<div class="counter"></div>
+</div>
+
+
+</body>
+</html>

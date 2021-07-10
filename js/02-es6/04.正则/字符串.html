@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<script>
+	// 大于oxffff字符, 认为是两个字符
+	var str2 = '𠮷'
+	console.log(str2.length) //2
+	console.log(str2.charAt(0)) //''
+	console.log(str2.charAt(1)) //''  string类型
+	console.log(str2.charCodeAt(0))
+	console.log(str2.charCodeAt(1))
+	
+	// es6方法 codePointAt String.fromCodePoint
+	console.log(str2.codePointAt(0))
+	console.log(str2.codePointAt(1))
+
+	console.log(String.fromCodePoint(134071))
+
+	// u修饰符识别大于oxFFFF的字符
+	
+	console.log(/^.$/.test(str2)) //false
+	console.log(/^.$/u.test(str2)) //true
+
+	// s修饰符识别换行符 \n \r
+	// var str3 = 'abc\nabc𠮷'
+	var str3 = 'abc\rabc𠮷'
+	console.log(/^abc.abc𠮷$/.test(str3)) //false
+	console.log(/^abc.abc𠮷$/s.test(str3)) //true
+
+</script>
+</body>
+</html>

@@ -1,0 +1,117 @@
+==================================实战书
+=======================webpack@3 webpack-dev-server@2
+npm i -D webpack@3     
+npm i -D webpack-dev-server@2     
+//提供很多服务, 启动一个服务器, 热更换hot, 接口代理api 代理客户端inline, open(第一次打开网页)
+
+//webpack-dev-server版本为了适应webpack@3
+webpack-dev-server --open --config webpack.config.js
+webpack --progress --hide-modules  --config webpack.prod.config.js  //打包
+
+============================处理css并导出
+npm i -D css-loader@0
+npm i -D style-loader@0
+//目前只发现这两个版本可用
+
+npm i -D extract-text-webpack-plugin@3  //导出css文件  版本不能太高
+
+============================处理.vue文件
+npm i  vue(2.6.12)
+npm i  -D vue-loader@12   vue-style-loader   vue-template-compiler(2.6.12)  vue-hot-reload-api
+// vue-loader版本不能太高
+
+npm -i  babel-loader@7  babel-core(6)  调用babel的API进行转码
+babel-preset-es2015/babel-preset-env  转换的源码使用了哪些新的语法特性 es2015(年)  es2016(年) env(最新特性)
+babel-plugin-transform-runtime  babel-runtime 作用是减少赘余代码(辅助函数), 比如继承(变成一句导入语句)
+babel-plugin-transform-runtime依赖于babel-runtime  语句到编译后的代码里
+/*
+babel(babel-core)@6   只能用babel-loader@7
+babel(@babel/core)     babel-loader最新
+
+babel默认只转换新的 JavaScript 语法，比如箭头函数、扩展运算（spread）。
+不转换新的 API，例如Iterator、Generator、Set、Maps、Proxy、Reflect、Symbol、Promise 等全局对象
+
+因为babel编译es6到es5的过程中，babel-plugin-transform-runtime这个插件会自动polyfill es5不支持的特性，这些polyfill包就是在babel-runtime这个包里（core-js 、regenerator等）
+*/
+
+=======================支持图片 字体等文件
+npm i -D file-loader@0
+npm i -D url-loader@0    //loader: 'url-loader?limit=1024'  
+
+
+========================区分环境
+npm i -D webpack-merge(5.4)   //合并webpack配置
+npm i -D html-webpack-plugin@3    //生成html文件
+
+
+npm i -D  cross-env  //指定环境 cross-env NODE_ENV= 'production'  判断process.env.NODE_ENV === 'development'
+
+====================vue-router
+npm i vue-router(3)    //安装vue-router
+
+=====================vuex
+npm i vuex(3)
+/*
+使用...mapState ...mapGetters等语法时  需要安装stage-3(候审阶段)
+npm i -D  babel-preset-stage-3
+*/
+
+=======================深入浅出webpack
+==============es6
+npm babel-loader@7 babel-core@6  babel-preset-env
+/*
+babel-loader必须和babel-core结合使用，babel-core封装了babel-loader需要用到的api
+babel-loader和babel-core的版本需要对应(core需要比loader高一个版本才能用)
+babel-preset-env  转换的源码使用了哪些新的语法特性 es2015(年)  es2016(年) env(最新特性)
+=============
+npm i -D babel-loader(8) @babel/core(7) @babel/preset-env(7)
+=============
+npm i -D babel-loader@7  babel-core(6)  babel-preset-env(1)
+=============
+npm i -D @babel/ployfill    //将es6的api转为es5浏览器可运行的代码(Array.from)
+npm i -D @babel/runtime @babel/plugin-transform-runtime   //按需加载
+*/
+==============sass
+npm i -D sass-loader@7   node-sass@4
+// node-sass版本导致sass-loader版本低
+['style-loader', 'css-loader', 'sass-loader']
+
+https://www.cnblogs.com/wilsunson/p/13716332.html //安装 node-sass失败解决方案
+npm i node-sass@4 --sass_binary_site=https://npm.taobao.org/mirrors/node-sass/
+===============postcss css处理工具, 扩展其支持的特性, 包括下一代css语言, 自动加前缀
+npm i -D postcss-loader@3       //安装postcss-loader
+npm i -D postcss-css-next(3)     //安装postcss插件
+['style-loader', 'css-loader', 'postcss-loader']
+['style-loader', 'css-loader', 'postcss-loader', 'sass-loader']
+
+=================vue
+npm i vue(2.6.12)
+npm i -D  vue-loader@12  vue-template-compiler(2.6.12)
+//组件内文件不能处理 则只用vue-style-loader
+npm i -D  babel-loader  babel-core  babel-preset-env
+npm i -D extract-text-webpack-plugin
+UglifyJsPlugin
+===============单个单页面
+npm i -D  web-webpack-plugin   //生成html文件   比html-webpack-plugin好用
+/*
+var { WebPlugin } = require('web-webpack-plugin')
+new WebPlugin({ template: './template.html', filename: 'index.html' })
+*/
+app?_inline   //内嵌代码
+_dist  生成环境
+_dev  开发环境
+_ie     ie浏览器才引入
+==============多个单页面
+npm i -D  web-webpack-plugin   //生成html文件   比html-webpack-plugin好用
+
+/*
+var { AutoWebPlugin } = require('web-webpack-plugin');
+*/
+
+
+==================
+publicPath:    用于给生成的静态资源路径添加前缀,  会在打包生成的html文件里面引用资源路径中添加前缀。
+
+
+==========报错
+(1) renderer.renderToString错误

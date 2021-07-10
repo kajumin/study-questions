@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.box1 {
+			background-color: #f1f1f1;
+		}
+		@media screen and (orientation: portrait) {
+			.box1 {
+				background-color: #096;
+			}
+		}
+		@media screen and (orientation: landscape) {
+			.box1 {
+				background-color: #0fc;
+			}
+		}
+	</style>
+</head>
+<body>
+	<div class="box1">广州</div>
+<script type="text/javascript">
+	var box1 = document.querySelector('.box1')
+	window.addEventListener('resize', function() {
+		console.log('resize')
+		if(window.orientation === 0 || window.orientation === 180) {
+			box1.innerHTML = '深圳'
+			console.log('竖屏')
+		} else if(window.orientation === 90 || window.orientation === -90) {
+			box1.innerHTML = '广州'
+			console.log('横屏')
+		}
+	})
+</script>
+</body>
+</html>

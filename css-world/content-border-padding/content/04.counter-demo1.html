@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.counter1 {
+		  counter-reset: wangxiaoer 0;
+		  counter-increment: wangxiaoer;
+		  font-size: 32px; 
+		  font-family: Arial black; 
+		  color: #cd0000; 
+		}
+		.counter1:before,
+		.counter1:after { 
+		  content: counter(wangxiaoer);
+		  
+		}
+		.counter2 {
+		  counter-reset: wangxiaoer 0;
+		  font-size: 32px; 
+		  font-family: Arial black; 
+		  color: #cd0000; 
+		}
+		.counter2:before,
+		.counter2:after { 
+		  content: counter(wangxiaoer);
+		  counter-increment: wangxiaoer;
+		}
+	
+	</style>
+</head>
+<body>
+	<!-- 
+	1.父普照  叠加一次
+	2.子普照  会叠加两次
+	 -->
+<div class="counter1"></div>
+<div class="counter2"></div>
+
+</body>
+</html>

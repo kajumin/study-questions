@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            background: #eee;
+        }
+        ul {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        #list {
+            position: relative;
+        }
+        #list li {
+            float: left; 
+            margin: 5px;
+            width: 100px;
+            height: 100px;
+            background: red;
+            font: 50px/100px "宋体";
+            text-align: center;
+            color:#fff;
+        }
+        .selectBox {
+            position: fixed;
+            border: 1px solid #06c0fd;
+            background: rgba(6, 192, 255, .3);
+        }
+    </style>
+</head>
+<body>
+<ul id="list">
+    <!-- <li>1</li>
+    <li>2</li>
+    <li>3</li>
+    <li>4</li>
+    <li>5</li> -->
+</ul> 
+<script>
+class Event {
+    constructor(){
+        this.events = {};
+    }
+    on(event,fn){
+        if(!this.events[event]){
+            this.events[event] = [];
+        }
+        this.events[event].push(fn);
+    }
+    off(event,fn){
+        if(this.events[event]){
+            this.events[event] = this.events[event].filter(item=>item!==fn); 
+        }
+    }
+    dispatch(event,...arg){
+        if(this.events[event]){
+            this.events[event].forEach((item => {
+                item.call(this,...arg);
+            }),this);
+        }
+    }
+}
+class Drag extends Event {
+    constructor(el){
+        super();
+        let move = (e)=>{
+            this.move(e);
+        };
+        this.el = el;
+        this.startMouse = {};
+        this.el.addEventListener("mousedown",(e)=>{
+            this.start(e);
+            document.addEventListener("mousemove",move);
+            document.addEventListener("mouseup",(e)=>{
+                this.end(e);
+                document.removeEventListener("mousemove",move);
+            },{once: true});
+        });
+    }
+    start(e){
+        this.startMouse = {
+            x: e.clientX,
+            y: e.clientY
+        }
+        this.dispatch("dragstart",e);
+    }
+    move(e){
+        let nowMouse = {
+            x: e.clientX,
+            y: e.clientY
+        };
+        let disMouse = {
+            x: nowMouse.x - this.startMouse.x,
+            y: nowMouse.y - this.startMouse.y
+        };
+        this.dispatch("dragmove",e,disMouse,nowMouse);
+    }
+    end(e){
+        this.dispatch("dragend",e);
+    }
+}
+class DragEl extends Drag {
+    constructor(el){
+        super(el);
+        this.startEl = {};
+        this.on("dragstart",()=>{
+            this.startEl = this.getOffset();
+        });
+        this.on("dragmove",(e,dis)=>{
+            let nowOffset = {
+                x: dis.x + this.startEl.x,
+                y: dis.y + this.startEl.y
+            }
+            this.setOffset(nowOffset);
+        });
+    }
+    getOffset(){
+        return {
+            x: parseFloat(getComputedStyle(this.el)["left"]),
+            y: parseFloat(getComputedStyle(this.el)["top"])
+        }
+    }
+    setOffset({x,y}){
+        this.el.style.left = x + "px";
+        this.el.style.top = y + "px";
+    }
+}
+class DragSelect extends Drag {
+    constructor(el){
+        super(el);
+        this.startEl = {};
+        this.select = null;
+        this.on("dragstart",()=>{
+            this.select = document.createElement("div");
+            this.select.className = "selectBox";
+            this.el.appendChild(this.select);
+            this.setStyle({
+                x: this.startMouse.x,
+                y: this.startMouse.y,
+                w: 0,
+                h: 0
+            });
+        });
+        this.on("dragmove",(e,dis,nowMouse)=>{
+            this.setStyle({
+                x: Math.min(this.startMouse.x,nowMouse.x),
+                y: Math.min(this.startMouse.y,nowMouse.y),
+                w: Math.abs(dis.x),
+                h: Math.abs(dis.y)
+            });
+        });
+        this.on("dragend",(e)=>{
+            console.log(111);
+            this.select.remove();
+        });
+    }
+    setStyle({x,y,w,h}){
+        this.select.style.left = x + "px";
+        this.select.style.top = y + "px";
+        this.select.style.width = w + "px";
+        this.select.style.height = h + "px";
+    }
+}
+{
+    let list = document.querySelector("#list");
+    list.innerHTML = [...(".".repeat(10))].map((item,index)=>`<li>${index}</li>`).join("");
+    let lis = [...list.children];
+    lis.forEach(li=>{
+        li.style.left = li.offsetLeft + "px";
+        li.style.top = li.offsetTop + "px";
+        let liDrag = new DragEl(li);
+        liDrag.on("dragstart",(e)=>{
+            e.stopPropagation();
+            e.preventDefault();
+            li.style.background = "green";
+        });
+        liDrag.on("dragend",(e)=>{
+            li.style.background = "red";
+        });
+    });
+    lis.forEach(li=>{
+        li.style.position = "absolute";
+        li.style.margin = "0";
+    });
+    let select = new DragSelect(document.body);
+    select.on("dragstart",(e)=>{
+        e.preventDefault();
+    });
+}
+</script>   
+</body>
+</html>

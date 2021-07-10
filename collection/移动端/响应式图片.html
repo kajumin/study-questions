@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1.0">
+	<style type="text/css">
+		.content img {
+			width: 100%;
+			max-width: 100%;
+			display: block;
+		}
+		.content2 img {
+			max-width: 100%;
+			display: block;
+		}
+		picture img {
+			display: block;
+			width: 100%;
+		}
+		.container1 .col {
+			background-color: red;
+		}
+		
+		.clearfix:before, 
+		.clearfix:after,
+		.row:after,
+		.row:before {
+			display: block;
+			content: '';
+		}
+		.clearfix:after,
+		.row:after {
+			clear: both;
+		}
+		.container2 .col {
+			width: 200px;
+			height: 200px;
+			background-color: pink;
+		}
+		.container3 .col-sm-1 {
+			float: left;
+			width: 50%;
+			height: 200px;
+			background-color: green;
+		}
+		.container3 .col-sm-2 {
+			float: left;
+			width: 50%;
+			height: 200px;
+			background-color: pink;
+		}
+		.container4 .col-sm-1 {
+			float: left;
+			width: 50%;
+			height: 200px;
+			background-color: #adc;
+		}
+		.container4 .col-sm-2 {
+			float: left;
+			width: 50%;
+			height: 200px;
+			background-color: #096;
+		}
+
+		@media screen and (min-width: 576px) {
+			.container1 .col-sm-6 {
+				float: left;
+				width: 50%;
+			}
+			.container2 .col {
+				width: 300px;
+			}
+			.container3 .col-sm-1 {
+				position: relative;
+				left: 50%;
+			}
+			.container3 .col-sm-2 {
+				position: relative;
+				right: 50%;
+			}
+			.container4 .hidden-sm {
+				display: none;
+			}
+		}
+		@media screen and (min-width: 768px) {
+			.container1 .col-sm-6 {
+				float: left;
+				width: 33.3333%;
+			}
+			.container2 .col {
+				width: 400px;
+			}
+		}
+	</style>
+</head>
+<body>
+<!-- 
+(1)响应式设计包括三个要素：弹性布局、媒体查询和弹性图片
+(2)响应模式: 列下沉(屏幕大多列) 基本流体式(固定布局一定程度不再变宽) 交换式(调整顺序) 抽屉式(不够宽时隐藏)
+最简单的响应式图片设置max-width为100%即可
+
+如果提供了高清图，要根据设备大小加载不同的图片，则需要额外的处理。
+1、采用picture元素，IE浏览器、android4.4.4-浏览器不兼容
+<picture>
+  <source media="(min-width:50em)" srcset="img/l.jpg">
+  <source media="(min-width:30em)" srcset="img/m.jpg">
+  <img src="img/s.jpg" alt="#">
+</picture>
+
+2、采用img元素的srcset和sizes属性，IE浏览器、android4.4.4-浏览器不兼容
+<img
+  src="img/480.png"
+  srcset="img/480.png 480w,img/800.png 800w, img/1600.png 1600w"
+  sizes="(min-width:800px) 800px,100vw"
+/>
+
+　3、采用js，根据window的resize事件，修改图片的路径
+function makeImageResponsive(){
+    var width = $(window).width();
+    var img = $('.content img');
+    if(width <=480){
+        img.attr('src','img/480.png');
+    }else if(width <=800){
+        img.attr('src','img/800.png');
+    }else{
+        img.attr('src','img/1600.png');
+    }
+}
+$(window).on('resize load',makeImageResponsive);
+ -->
+
+<!-- 480w以下  1.jpg 
+ 	 800w以下  2.jpg
+ 	 1600w以下 3.jpg 
+ 	 sizes: 媒体查询
+-->
+<div class="content">
+	<img src="../assets/images/HTML5_1.jpg"
+  	srcset="../assets/images/HTML5_1.jpg 480w,../assets/images/HTML5_2.jpg 800w, ../assets/images/HTML5_3.jpg 1600w"
+  	
+	/>
+</div>
+<div class="content2">
+	<img src="../assets/images/HTML5_1.jpg"
+  	srcset="../assets/images/HTML5_1.jpg 480w,../assets/images/HTML5_2.jpg 800w, ../assets/images/HTML5_3.jpg 1600w"
+  	 sizes="(min-width:800px) 1200px, 100w"
+	/>
+</div>
+
+<!-- 从大到小写 比srcset更细致 -->
+<!-- 横屏 media="(orientation:landscape)"-->
+<!-- type="image/svg-xml"格式 srcset="480w"-->
+<!-- webp jpg  webp 2:3 jpg  谷歌 安卓 -->
+<picture>
+<source media="(orientation:landscape)" srcset="../assets/images/zza/2.jpg" >
+<source media="(min-width:600px)" srcset="../assets/images/zza/2.jpg" >
+<source media="(min-width:300px)" srcset="../assets/images/zza/1.jpg" >
+  <img src="../assets/images/zza/3.jpg" alt="#">
+</picture>
+<!-- svg: 可以使用文本创建 -->
+<!-- 矢量图: 根据规则 缩放不会影响绘制 -->
+<!-- 缺点: 色彩丰富多很难 -->
+<!-- logo  图标 -->
+<!-- 绘制工具: 
+	editor.method.ac
+	https//icomoon.io 
+	压缩: iconizr.com
+	png压缩: https://tinypng.com/
+-->
+<!-- 兼容性:  picture不兼容ie
+srcset size: ie不兼容
+svg ie9+
+-->
+<!-- polyfill: 腻子 兼容性问题 
+piturefill.js  IE9+
+
+-->
+
+<!-- 列下沉 -->
+<div class="container container1">
+	<div class="row">
+		<div class="col col-sm-6">1</div>
+		<div class="col col-sm-6">2</div>
+		<div class="col col-sm-6">3</div>
+		<div class="col col-sm-6">4</div>
+		<div class="col col-sm-6">4</div>
+		<div class="col col-sm-6">4</div>
+		<div class="col col-sm-6">4</div>
+		<div class="col col-sm-6">4</div>
+	</div>
+</div>
+
+<!-- 流体式(固定宽度) -->
+<div class="container2">
+	<div class="col"></div>
+</div>
+
+<div class="container3">
+	<div class="row">
+		<div class="col col-sm-1"></div>
+		<div class="col col-sm-2"></div>
+	</div>
+</div>
+
+<div class="container4">
+	<div class="row">
+		<div class="col col-sm-1 hidden-sm"></div>
+		<div class="col col-sm-2"></div>
+	</div>
+</div>
+
+
+<!-- 
+实例: pc端
+<picture>
+	<source srcset="img/ad002-l.jpg" media="(min-width:50em)">
+	<source srcset="img/ad002-m.jpg" media="(min-width:30em)">
+	<img srcset="img/ad002-s.jpg" align="新年红包">
+</picture> 
+-->
+</body>
+</html>

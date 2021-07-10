@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.box {
+			width: 100px;
+			height: 120px;
+			background-color: red;
+			margin-bottom: 20px;
+		}
+		.box1 {
+			/*都可以*/
+			overflow: auto;
+			overflow: scroll;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			/*white-space: nowrap;*/
+			/*对于中文可以*/
+			word-break: keep-all;
+		}
+		.box2 {
+			line-height: 30px;
+			/*溢出隐藏*/
+			overflow: hidden;
+			/*旧版本flex*/
+			display: -webkit-box;
+			/*溢出隐藏3行*/
+			-webkit-line-clamp: 4;
+			/*旧版伸缩流方向为垂直方向*/
+			-webkit-box-orient: vertical;
+			
+		}
+	</style>
+</head>
+<body>
+	<!-- 
+	(1) text-overflow: clip || ellipsis
+	  当文本溢出属性应用于表单元格时，需要设置table-layout:fixed
+	(2)
+	长英文text-overflow属性起作用的前提是overflow(或overflow-y或overflow-x):hidden | auto | scroll
+	长中文text-overflow属性起作用的前提是
+    word-break: keep-all; 或 white-space: nowrap;
+    overflow(或overflow-y或overflow-x):hidden | auto | scroll
+	 -->
+<div class="box box1">中国中国中国中国中国中国中国中国中国中国中国中国中国中国</div>
+<div class="box box2">中国中国中国中国中国中国中国中国中国中国中国中国中国中国</div>
+</body>
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		html, body {
+			margin: 0;
+			height: 100%;
+		}
+		ul {
+			margin: 0;
+			padding: 0;
+		}
+		.container {
+			display: flex;
+			flex-direction: column;
+			height: 100%;
+			background-color: #f1f1f1;
+		}
+		.header {
+			display: flex;
+			align-items: center;
+			height: 64px;
+			background-color: #096;
+		}
+		.wrapper {
+			display: flex;
+			flex-grow: 1;
+			background-color: pink;
+		}
+		.aside {
+			width: 200px;
+			background-color: green;
+		}
+		.right {
+			display: flex;
+			flex-direction: column;
+			flex-grow: 1;
+		}
+		.main {
+			flex-grow: 1;
+			background-color: #ccc;
+		}
+		.footer {
+			height: 50px;
+			background-color: #f1f1f1;
+		}
+
+		.flexUl {
+			display: flex;
+            width: 40%;
+         	line-height: 30px;
+            align-items: center;
+            list-style: none;
+        }
+        .flexUl li {
+        	text-align: center;
+            flex-grow: 1;
+        }
+        .search {
+        	display: flex;
+        	width: 60%;
+        	height: 100%;
+        }
+        .search-input {
+        	align-self: flex-end;
+        	margin-left: 150px;
+        	margin-bottom: 10px;
+        	/*outline-color: -webkit-focus-ring-color;
+    		outline-style: auto;
+   			outline-width: 1px;*/
+        	/*outline: 0;*/
+        	/*outline: 1px solid #ccc;*/
+        }
+        .search-input:focus{
+        	outline-color: yellow;
+        }
+	</style>
+</head>
+<body>
+<div class="container">
+	<div class="header">
+		 	<ul class="flex flexUl">
+            	<li>导航</li>
+            	<li>导航</li>
+            	<li>导航</li>
+            	<li>导航</li>
+            	<li>导航</li>
+        	</ul>
+        	<div class="search">
+        		<input type="text" name="" class="search-input">
+        	</div>
+	</div>
+	<div class="wrapper">
+		<div class="aside"></div>
+		<div class="right">
+			<div class="main"></div>
+			<div class="footer"></div>
+		</div>
+	</div>
+</div>
+</body>
+</html>

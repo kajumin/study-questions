@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style>
+		body {
+			margin: 0;
+		}
+		a {
+			text-decoration: none;
+		}
+		.nav {
+			position: fixed;
+			left: 0;
+			right: 0;
+			height: 50px;
+			line-height: 50px;
+			background-color: #333;
+		}
+		.nav a {
+			padding: 6px 12px;
+			color: #333;
+			background-color: #adc;
+		}
+		h1 {
+			/*overflow: hidden;*/
+		}
+	</style>
+</head>
+<body>
+	<!--
+	锚点定位行为的触发条件：
+	(1)url地址中的锚链和锚点元素对应并有交互行为
+	(2)可focus的锚点元素处于focus状态
+	
+	<a href="#1">
+	name 和 id都可以算锚点元素
+	(1)<a name="1" style="padding-top: 50px;"></a> 
+	(2)<h1><span id="2" style="padding-top: 50px;"></span></h1> 
+	内联元素设置padding-top 空出位置给fixed区域
+	
+	 -->
+<div class="nav">
+	<a href="#1">发展历程</a>
+	<a href="#2">个人经历</a>
+</div>
+
+<div style="height: 600px;background-color: #eee;"></div>
+
+<h1><a name="1" style="padding-top: 50px;">发展历程</a></h1>
+
+<div style="height: 600px;background-color: #eee;"></div>
+
+<h1><span id="2" style="padding-top: 50px;"></span>个人经历</h1>
+
+<div style="height: 600px;background-color: #eee;"></div>
+</body>
+</html>

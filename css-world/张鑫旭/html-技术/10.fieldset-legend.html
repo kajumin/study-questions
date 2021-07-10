@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.fieldset1 {
+    		border: 1px solid #ddd;
+		}
+		.fieldset2 {
+		    border: 0 none;
+		    border-top: 1px solid #ddd;
+		}
+		.fieldset3 legend {
+   			text-align: center;
+   			margin: auto; /*firefox/IE8*/
+		}
+		.fieldset4 {
+		    border: 0 none;
+		    border-top: 1px dashed #ddd;
+		}
+		.fieldset5 {
+		    border:0;
+		    border-top:1px dashed #ccc;
+		}
+		.fieldset5 legend { 
+		    color: #999;
+		    /* for IE */
+		    background-color: #fff;
+		}
+		.box1 {
+			position: relative;
+			text-align: center;
+			overflow: hidden;
+		}
+		.box1:after {
+			content: '';
+			position: absolute;
+			top: 11px;
+			left: 50%;
+			margin-left: 22px;
+			width: 100%;
+			border-top: 1px dashed #999;
+		}
+		.box1:before {
+			content: '';
+			position: absolute;
+			top: 11px;
+			left: -50%;
+			margin-left: -22px;
+			width: 100%;
+			border-top: 1px dashed #999;
+		}
+	</style>
+</head>
+<body>
+<!-- 
+	对无障碍阅读，可访问性等引起重视 
+	html语义化: 代码可读性好以外, SEO有帮助外, 对一些屏幕阅读设备或者其他辅助阅读设备友好
+
+	<legend align="center">标题</legend>居中兼容
+
+	如果是实色边框,无论是solid或者double都可以自如使用,没有兼容性问题,但如果是虚线边框,则要考虑IE浏览器穿透的问题
+-->
+<!-- 
+	使用场合:
+	(1)使用单选框或多选框的提问内容
+	(2)几个输入框使用的是同一个主题
+	不建议使用: 单打独斗的表单控件元素们。
+	
+-->
+<form>
+	<fieldset class="fieldset1">
+		<legend>你有港澳通行证吗？</legend>
+		<input type="radio" id="yes">
+		<label for="yes">有</label>
+		<input type="radio" id="no">
+		<label for="no">没有</label>
+	</fieldset>
+</form>
+
+<form>
+	<fieldset class="fieldset2">
+		<legend>你有港澳通行证吗？</legend>
+		<input type="radio" id="yes">
+		<label for="yes">有</label>
+		<input type="radio" id="no">
+		<label for="no">没有</label>
+	</fieldset>
+</form>
+
+<form>
+	<fieldset class="fieldset3">
+		<legend>你有港澳通行证吗？</legend>
+		<input type="radio" id="yes">
+		<label for="yes">有</label>
+		<input type="radio" id="no">
+		<label for="no">没有</label>
+	</fieldset>
+</form>
+
+<form>
+	<fieldset class="fieldset4">
+		<legend>你有港澳通行证吗？</legend>
+		<input type="radio" id="yes">
+		<label for="yes">有</label>
+		<input type="radio" id="no">
+		<label for="no">没有</label>
+	</fieldset>
+</form>
+
+<fieldset class="fieldset5">
+    <legend align="center">低调的分隔线</legend>
+</fieldset>
+
+<div class="box1">中国</div>
+
+<form>
+	<fieldset>
+		<legend>双十一收货地址</legend>
+		<label for="province">省：</label><select id="province"><option>上海市</option></select>
+
+		<label for="city">省：</label><select id="city"><option>上海市</option></select>
+
+		<label for="district">区：</label><select id="district"><option>浦东新区</option></select>
+
+		<label for="address">详细地址</label>
+		<input type="text" id="address">
+	</fieldset>
+</form>
+</body>
+</html>

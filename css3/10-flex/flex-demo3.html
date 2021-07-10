@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <style>
+        body {
+            margin: 0;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+        }
+        .container .box1 {
+            display: flex;
+        }
+        .container .box1 img {
+            width: 1rem;
+            height: 1rem;
+        }
+        .container .box1 .box1-son {
+            flex: 1;
+            background-color: #adc;
+            margin-left: 0.3rem;
+        }
+        .container .box2 {
+            display: flex;
+            margin-top: 15px;
+        }
+        .container .box2 .box2-son1 {
+            width: 1.5rem;
+            height: 1.5rem;
+            background-color: #adc;
+        }
+        .container .box2 .box2-son2 {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            background-color: #afc;
+        }
+        .container .box2 .box2-son2 .box2-son2-t,
+        .container .box2 .box2-son2 .box2-son2-b {
+            height: 0.7rem;
+            background-color: red;
+        }
+        .container .box3 {
+            display: flex;
+            height: 2rem;
+            margin-top: 15px;
+        }
+        .container .box3 .box3-son1 {
+            flex: 0 1 3.675rem;
+            margin-right: 7.5px;
+            background-color: #adc;
+        }
+        .container .box3 .box3-son2 {
+            flex: 0 1 3.675rem;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-content: space-between;
+            background-color: #f1f1f1;
+        }
+        .container .box3 .box3-son2 .box3-son2-son {
+            flex-basis: 1.7875rem;
+            height: 0.95rem;
+            background-color: red;
+        }
+        .container .box4 {
+            display: flex;
+            justify-content: space-between;
+            height: 3rem;
+            margin-top: 15px;
+        }
+        .container .box4 .box4-son {
+            flex-basis: 2.4rem;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-content: space-between;
+            background-color: red;
+        }
+        .container .box4 .box4-son .box4-son-son {
+            flex-basis: 1.1625rem;
+            height: 0.934rem;
+            background-color: #adc;
+        }
+    
+
+    </style>
+</head>
+<body>
+    <!-- 
+        设置正常值 如15px(设计稿) 对应的应该是7.5px
+
+
+     -->
+    <div class="container">
+        <div class="box1">
+            <img src="../assets/images/1.jpg" alt="美女">
+            <div class="box1-son"></div>
+        </div>
+        <div class="box2">
+            <div class="box2-son1"></div>
+            <div class="box2-son2">
+                <div class="box2-son2-t"></div>
+                <div class="box2-son2-b"></div>
+            </div>
+        </div>
+        <div class="box3">
+            <div class="box3-son1"></div>
+            <div class="box3-son2">
+                <div class="box3-son2-son"></div>
+                <div class="box3-son2-son"></div>
+                <div class="box3-son2-son"></div>
+                <div class="box3-son2-son"></div>
+            </div>
+        </div>
+        <div class="box4">
+            <div class="box4-son"></div>
+            <div class="box4-son"></div>
+            <div class="box4-son">
+                <div class="box4-son-son"></div>
+                <div class="box4-son-son"></div>
+                <div class="box4-son-son"></div>
+                <div class="box4-son-son"></div>
+                <div class="box4-son-son"></div>
+                <div class="box4-son-son"></div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function resize() {
+            var html = document.documentElement
+            var fontSize = 100 / 750 * html.clientWidth
+            html.style.fontSize = fontSize + 'px';
+        }
+        window.onresize = resize
+        resize()
+    </script>
+</body>
+</html>

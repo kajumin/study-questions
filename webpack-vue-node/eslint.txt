@@ -1,0 +1,46 @@
+==================EsLint检查代码格式
+npm i -D eslint eslint-loader eslint-plugin-html eslint-friendly-formatter
+npm i -D eslint-config-standard eslint-plugin-promise eslint-plugin-import  eslint-plugin-node 
+                eslint-plugin-standard
+
+standard style
+eslint-loader:  options.faiOnWarning: 不会编译  options.failOnError  
+devServer: overlay
+rules: { indent: ['error', 4] }
+
+formatter: require('eslint-friendly-formatter') // 指定错误报告的格式规范
+
+====================eslint + standard-config
+(1)文件以空行结尾  eol-last
+(2)缩进方式      no-tabs  no-mixed-spaces-and-tabs
+(3)分号结尾      semi
+(4)字符串引号  quotes
+(5)函数之前  space-before-function-paren
+     块之前空格   space-before-blocks
+     箭头函数之前  arrow-spacing
+(6)行尾空格  no-trailing-spaces   函数没有写内容也会报这个
+(7)间隔多行  no-multiple-empty-lines
+(8)对象尾逗号
+(9)逗号后空格   参数  数组  定时器   comma-spacing
+(10)缩进   indent
+(11)变量声明了没有使用   no-unused-vars
+(12)没有更改使用const    prefer-const
+(13)符号之前(><=?)  space-infix-ops
+(14) "comma-dangle": [2, "always-multilint"], 数组和对象键值对末了一个逗号， never参数：不能带末端的逗号, always参数：必需带末端的逗号，
+    // always-multiline：多行形式必需带逗号，单行形式不能带逗号
+
+// eslint-disable-next-line   下一行不eslint检查
+/* eslint-disable */  整个文件不eslint检查
+
+===============eslint prettier  vetur结合使用
+(1)安装eslint   和  prettier  vetur   项目中安装eslint即可
+(2)配置settings  
+    1.项目配置.vscode -> settings   配置eslint
+     2.全局配置.prettierrc.js  使用prettier插件
+(3)配置package.json  || .eslintrc.js  || .prettierrc.js
+
+==============stylelint
+npm i -D stylelint stylelint-scss stylelint-config-recess-order stylelint-config-standard
+.styleignore  文件夹  与eslint 相同即可
+.stylelintrc.js  配置规则
+

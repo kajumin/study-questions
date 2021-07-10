@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="zh-cn">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <title></title>
+    <style type="text/css">
+    .row > div:nth-child(1) {
+      background-color: red;
+    }.row > div:nth-child(2) {
+      background-color: green;
+    }.row > div:nth-child(3) {
+      background-color: purple;
+    }.row > div:nth-child(4) {
+      background-color: pink;
+    }
+    </style>
+  </head>
+  <body>
+      <!-- 图片 -->
+      <img src="../../assets/images/1.jpg" class="img-fluid" align="response img">
+      <img src="../../assets/images/1.jpg" class="img-thumbnail" align="response img">
+      <img src="../../assets/images/1.jpg" class="img-fluid rounded" align="response img">
+    <div class="clearfix">
+      <img src="../../assets/images/1.jpg" class="rounded float-left" alt="...">
+      <img src="../../assets/images/1.jpg" class="rounded float-right" alt="...">
+    </div>
+
+    <figure class="figure">
+      <img src="../../assets/images/1.jpg" class="figure-img img-fluid rounded" alt="...">
+      <figcaption class="figure-caption text-right">A caption for the above image.</figcaption>
+    </figure>
+
+    <div>
+      <img src="../../assets/images/1.jpg" class="mx-auto d-block" alt="">
+    </div>
+    <div><picture>
+        <source srcset="../../assets/images/1.jpg"  media="(min-width: 800px)" >
+        <source srcset="../../assets/images/1.jpg"  media="(min-width: 600px)">
+        <source srcset="../../assets/images/1.jpg">
+        <img src="../../assets/images/1.jpg" alt="这是当浏览器不支持picture标签时显示的图片">
+      </picture>
+    </div>
+   
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="./js/jquery-3.3.1.slim.min.js"></script>
+    <script src="./js/popper.min.js"></script>
+    <script src="./js/bootstrap.min.js"></script>
+  </body>
+</html>

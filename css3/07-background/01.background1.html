@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		div {
+			margin-top: 20px;
+		}
+		p {
+			padding-bottom: 5px;
+			border-bottom: 2px solid #adc;
+		}
+		.box1 {
+			width: 500px;
+			height: 400px;
+			background-color: #adc;
+			background-image: url("../../images/shou.png");
+			background-repeat: no-repeat;
+		}
+		.box2 {
+			width: 300px;
+			height: 200px;
+			border: 20px solid red;
+			padding: 15px;
+			background-image: url("../../images/1.jpg");
+			background-size: 300px 200px;
+			background-repeat: no-repeat;
+			background-origin: content-box;
+			background-position: 20px;
+		}
+		.box6 {
+			position: relative;
+			width: 300px;
+			height: 200px;
+			background-color: red;
+			background-image: url("./../../images/circle-r.png");
+			background-size: 55px;
+			background-repeat: space; /*  55 * 5  55 * 3 中间间隔*/
+			background-repeat: round; /*  60 * 5  50 * 4 放大或收缩*/
+		}
+		.box6:after {
+			content: '';
+			position: absolute;
+			width: 55px;
+			height: 55px;
+			background-color: red;
+		}
+		.box7 {
+			width: 300px;
+			height: 200px;
+			/*background-color: red;*/
+			background-image: url("./../../images/circle-r.png"), url("./../../images/circle.png");
+			background-size: 55px;
+		}
+		.box3-1 {
+			width: 300px;
+			height: 200px;
+			border: 20px solid red;
+			padding: 15px;
+			background-image: url("../../images/1.jpg");
+			background-size: 300px 200px;
+			background-repeat: no-repeat;
+		}
+		.box3-2 {
+			width: 300px;
+			height: 200px;
+			border: 20px solid red;
+			padding: 15px;
+			background-image: url("../../images/1.jpg");
+			background-size: cover;
+			background-size: contain;
+			background-repeat: no-repeat;
+		}
+		.box4 {
+			width: 300px;
+			height: 200px;
+			border: 20px solid red;
+			padding: 15px;
+			background-image: url("../../images/1.jpg");
+			background-size: 300px 200px;
+			background-clip: border-box;
+			background-clip: padding-box;
+			background-clip: content-box;
+		}
+		.box5 {
+			width: 300px;
+			height: 200px;
+			border: 20px solid red;
+			padding: 15px;
+			background-image: url("../../images/1.jpg");
+			background-size: 300px 200px;
+			background-repeat: no-repeat;
+			background-origin: border-box;
+			background-origin: padding-box; 
+			background-origin: content-box;
+			background-clip: content-box;
+			/* 背景显示 */
+		}
+
+	</style>
+</head>
+<body>
+<!--
+	css3: origin clip size
+	背景图默认border以内 
+background: color image repeat position attachment  size origin clip
+	position   背景图像的位置(相对位置) 10px 百分比 left center right ||  top center bottom
+	size       背景图片的大小 10px cover contain 百分比
+ 	origin:    背景图像的定位区域(图片开始的位置) border-box padding-box(默认) content-box 
+    clip:      背景图像的绘画区域(图片显示的区域) border-box(默认) padding-box content-box
+-->
+<p>color image repeat</p>
+<div class="box1"></div>
+
+<p>position</p>
+<div class="box2"></div>
+
+<p>repeat</p>
+<div class="box6"></div>
+
+<p>image</p>
+<div class="box7"></div>
+
+<p>size</p>
+<div class="box3-1"></div>
+
+<p>size2</p>
+<div class="box3-2"></div>
+
+<p>clip</p>
+<div class="box4"></div>
+
+<p>origin</p>
+<div class="box5"></div>
+
+
+</body>
+</html>

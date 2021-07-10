@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<!-- <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no,maximum-scale=1.0,minimum-scale=1.0"> -->
+</head>
+<body>
+<script type="text/javascript">
+	var clientWidth = document.documentElement.clientWidth
+	var innerWidth = window.innerWidth
+	var screenWidth = window.screen.width
+	var bodyWidth = document.body.clientWidth
+	// 电脑端
+	// console.log('clientWidth', clientWidth) //1366 布局视口
+	// console.log('innerWidth', innerWidth)  //1366  浏览器css像素  
+	// console.log('screenWidth', screenWidth) //1366 设备独立像素
+
+	// 手机端 iphone 6
+	console.log('clientWidth', clientWidth) //980 布局视口
+	console.log('innerWidth', innerWidth)  //981  浏览器css像素  
+	console.log('screenWidth', screenWidth) //375 设备独立像素
+	console.log('bodyWidth', bodyWidth) //375 设备独立像素
+
+	// 手机端 iphone 6  设置了理想视口viewport之后全部为375
+	console.log('clientWidth', clientWidth) //375 布局视口
+	console.log('innerWidth', innerWidth)  //375  浏览器css像素  
+	console.log('screenWidth', screenWidth) //375 设备独立像素
+
+	// 手机端 iphone 678plus
+	console.log('clientWidth', clientWidth) //980 布局视口
+	console.log('innerWidth', innerWidth)  //981  浏览器css像素  
+	console.log('screenWidth', screenWidth) //414 设备独立像素
+</script>
+</body>
+</html>

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<!-- 
+1. 统一IE浏览器和其它浏览器的快捷访问行为; 因为ie是focus行为
+2. 增加单独accesskey属性值对应按键按下的focus行为; key就触发focus
+3. 增加accesskey生效的前置键按下的提示行为，例如window上Alt键提示，Mac下的Alt + control组合提示等; alt有提示功能
+4. 增加shift + '?'(keyCode=191)键的提示行为支持 可以显示全部的快捷键 -->
+<p><button accesskey="1">按钮1</button></p>
+<p><button accesskey="2">按钮2</button></p>
+搜索：<input type="search" accesskey="/">
+<script type="text/javascript" src="../js/accesskey.js"></script>
+</body>
+</html>

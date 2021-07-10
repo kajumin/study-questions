@@ -1,0 +1,95 @@
+侧重点： 
+语义化标签：解析到语义化标签就知道所包含内容类型
+                     代码结构, 有利于seo, 提供用户体验, 有利于团队开发和后期维护 
+css3  calc(100% - 100px) 符号两边需要空格
+开发人员： 垂直水平居中背出来  不能体现的太背出来  有些难的提一下  简单的带过  tranform讲一下  flex带过
+xhtml = html+ xml  用xml的语法来规范html   html5   xhtml更加严格  闭合  根元素
+多个页签的通信，localstorage  使用cookie+setInterval   websocket 监听  
+link import  关联： 
+伪元素 content: '';  display: block; clear: botn; 
+浏览器内核问题
+this指向  谁调用指向谁   
+执行上下文
+ajax XMLHttpRequest  fetch 浏览器自带  
+forEach  try  catch跳出循环  for in
+oop面向对象编程  特点：继承  分装  多态
+垃圾回收机制  计数引用
+js兼容   事件冒泡e.stopPropagation()  e.cancelBubble()
+             e.prevenDefault()   e.returnValue = true
+Number + parseInt
+全局作用域 + 函数作用域  + 块级作用域
+js特点：解析性的脚本语言  弱语言  运行浏览器里   事件驱动   跨平台
+cookie  4kb  session 4m   cookie接口  (1)
+
+知识盲点： 
+浏览器数据库：离线应用election  web SQL  indexDB(不支持sql语句)
+location  navigator  
+操作属性:  getAttribute()  setAttribute()  removeAttribute()
+紧张  自信  随意  体现容易沟通  交流能力 
+
+=====================框架
+1. 自己符合 公司首页(满意)  天眼查  只有vue技术栈的
+2. MVC单向数据流(node中express框架)   MVVM双向数据流vue
+3. 简单小巧, 渐进式框架, 组件化 更丰富的生态系统
+4. key作用:  虚拟dom 生出一个dom树  数据变化时  通过diff对比, 得到patch
+5. Object.defineProperty(obj, key, {})   数组和对象  数组索引和length不能没监测到
+6. 生命周期  八个阶段  created  mounted  beforeDestroy
+7. scoped  样式污染 /deep/修改子组件的样式  通过场景来对应知识点
+8.分装组件流程
+9. public(图片 字体文件) 不会编译打包  assets(会变化的文件)  会进行编译打包
+10. publicPath  静态资源前缀  path输出文件目录
+12. vuex state getters mutations actions  不需要细节
+13. 路由钩子函数
+      beforeEach: 权限控制  全局loading
+      afterEach: 修改文档标题  返回顶部   全局loading
+14.  to进入到哪个路由去 from从哪个路由来 
+        next('') 路由的控制参数  传递参数  跳转指定路由   不传递默认跳转to
+15.  动态路由: 后台管理系统  
+      (1)登录后获取菜单列表   (2)生成配置数组   (3)this.$route.addRoutes(data)  
+      
+16. element-ui熟不熟?  定义组件尺寸size  弹窗初始z-index(zIndex)
+      element-ui: 基础(布局容器 button按钮 色彩 边框 图标)  
+                           form表单(输入框 单选 多选 计数 开关 时间 日期 上传) 表格 
+                            notice提示(警告 加载 消息提示 弹框) 
+                           nav导航  others(卡片 弹出框 dialog 日历) 进度条 头像
+                           
+      ant design
+      比较熟悉 vant  mint-ui 
+17. 项目优化:  
+      cdn  gzip压缩文件  合理使用缓存策略(包括强缓存和协商缓存) 
+      合理使用第三方库(element-ui按需加载  moment改用day)  
+      路由懒加载  懒加载图片 svg图标  webp图片  
+      压缩代码 删除console等
+
+echarts.js 折线图 饼图 散点图 关系图 树图 路径图 地理坐标 k线图  雷达图  包含3d
+直接使用:  通过使用vue插件那样Vue.use, install函数, Vue.prototype.$echarts属性, 值对象, 内部有包含方法
+
+eslint: 
+禁止: console debugger tab 分号  修改const变量 
+需要: 函数定义前空格 变量使用前声明 代码块之前有空格 注释前有空格 
+(1)"no-undef": "error", 　　// 不能有未定义的变量,定义之前必须有var或者let
+(2)"space-before-function-paren": ["error", "never"], // 函数定义时括号前面要不要有空格
+(3)"semi": ["error", "never"],　　　　　　// 禁止分号
+(4)"no-console": "error", 　　　　　　　 // 禁止console  debuger
+(5)"spaced-comment":["error", "always"], 　　　// 注释前必须有空格
+(6)"no-const-assign": "error",  　　　　　　　// 禁止修改const变量
+(7)"no-tabs": "error", 　　　　　　　　　　　  // 禁止使用tab
+"space-before-blocks": ["error", "always"], 　　　　　// 语句块之前必须有空格 如 ) {}
+
+组件编写:
+(1)根据业务需求, 看哪些页面或者功能提取出来分装为组件 
+(2)编写dom结构和样式   
+(3)请求数据 数据通信  
+(4)全局组件 局部组件import导入  手动挂载
+组件的设计遵循以下的两个思路:
+1.高内聚低耦合, 尽可能少的暴露组件的api, 将功能尽量封装在组件内部
+2.组件内部根据业务需求设置了一些组件默认的配置项, 另外再通过不同页面传入不同配置项提高组件的通用性
+
+串联起来知识点: 复习已有知识点
+数据请求
+vue-router
+数据通信
+数据双向绑定
+
+后台管理系统:  6-12月
+web app  3 - 5月

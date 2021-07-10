@@ -1,0 +1,97 @@
+entry  入口  --字符串 数组  对象
+入口决定 webapck 从哪个模块开始生成依赖关系图（构建包），每一个入口文件都对应着一个依赖关系图。
+====
+output 输出结果  可以自定义输出文件的位置和名称:
+path publicPath(文件中引用资源前缀 )  filename   chunkFilename(公共块名)
+[name]  entry中的key   [id] 内部块id  [hash]  [contenthash]  [chunkhash]
+hash  哈希值对应每一次构建（ Compilation ），即每次编译都不同，即使文件内容都没有改变，并且所有的资源都共享这一个哈希值，此时，浏览器缓存就没有用了，可以用在开发环境，生产环境不适用。
+chunkhash 哈希值对应于 webpack 每个入口点，每个入口都有自己的哈希值。如果在某一入口文件创建的关系依赖图上存在文件内容发生了变化，那么相应入口文件的 chunkhash 才会发生变化，适用于生产环境
+contenthash  根据包内容计算出的哈希值，只要包内容不变，contenthash 就不变，适用于生产环境
+hash chunkhash  contenthash 一般和html-webpck-plugin一起使用  clean-webpack-plugin
+打包成库  ---library: ''字符串  libraryTarget: 'var'默认  'umd this commonjs commonjs2 amd'
+
+====
+配置模式 mode -- production   development  none(不做任何优化)
+production  development区别?
+环境process.env.NODE_ENV 
+devTool         dev('evel')
+cache缓存
+output.pathinfo
+performance   性能设置
+
+production 模式下给你更好的用户体验：
+较小的输出包体积
+浏览器中更快的代码执行速度
+忽略开发中的代码
+不公开源代码或文件路径
+易于使用的输出资产
+
+development 模式会给予你最好的开发体验：
+浏览器调试工具
+快速增量编译可加快开发周期
+运行时提供有用的错误消息
+
+cross-env  插件指定环境
+cross-env NODE_ENV=development  webpack --config webpack.config.js
+====
+
+webpack4
+减小编译时间
+打包时间减小了超过 60%
+零配置
+mode entry 为src/index.js
+===
+配置解析策略 resolve
+指定存放第三方模块的绝对路径   默认 node_modules
+ 导入时省略的后缀   extensions: ['.js', '.jsx', '.react.js', '.css', '.json'],
+alias: {  //import导入时别名
+      '@components': path.resolve(`${project}/components`),
+      '@style': path.resolve('asset/style'),
+ },
+第三方库会针对不同环境提供几份代码mainFields: ['browser', 'module', 'main'],  依赖于target
+===
+配置解析和转换文件的策略 module
+通常是配置module.rules中的loader
+(1)指明 webpack 不去解析某些内容，该方式有助于提升 webpack 的构建性能
+ noParse: /jquery/,
+(2) test use(loader  options)   exclude  include
+===配置优化
+最小化包   删除已可用模块  删除空模块  标记模块的加载顺序,使初始包更小  删除死代码  提取公共包
+拆包    拆分node_modules   拆分业务代码  拆分第三方库 
+拆包是对浏览器缓存方式的优化, 缩短首屏加载的时间, 按需加载的方式进一步拆包,减少首屏加载时间
+
+==配置plugin
+html-webpack-plugin：生成 html 文件，并将包添加到 html 中
+webpack-parallel-uglify-plugin：压缩 js（多进程并行处理压缩）
+happypack：多线程loader，用于提升构建速度
+hard-source-webpack-plugin：为模块提供中间缓存步骤，显著提高打包速度
+webpack-merge：合并 webpack 配置
+mini-css-extract-plugin：抽离 css
+optimize-css-assets-webpack-plugin：压缩 css
+add-asset-html-webpack-plugin：将 JavaScript 或 CSS 资产添加到 html-webpack-plugin 生成的 HTML 中
+====devtool
+配置devtool：source map
+配置 webpack 如何生成 Source Map，用来增强调试过程。不同的值会明显影响到构建(build)和重新构建(rebuild)的速度：
+生产环境：默认为 null ，一般不设置（ none ）或 nosources-source-map
+开发环境：默认为 eval ，一般设置为 eval 、 cheap-eval-source-map 、cheap-module-eval-source-map
+
+===性能配置
+performance: {
+    hints: false
+}
+===其他
+wath         webpack-dev-server webpack-dev-middleware 默认是true
+watchOptions  排除监听  监听到变化延迟  轮训
+externals  排除打包  externals: { jquery: 'jQuery' }
+target      指定环境
+cache      缓存  cache: false   true  = {type: 'momary'}
+name       配置的名称，用于加载多个配置：
+
+
+
+1.前端代码为何要进行构建和打包？
+2.module chunk bundle 分别是什么意思，有何区别？
+3.loader 和 plugin 的区别。
+4.webpack 如何实现懒加载？
+5.webpack 常见性能优化方式（开放型题目，自由发挥）
+6.babel-runtime 和 babel-polyfill 的区别。

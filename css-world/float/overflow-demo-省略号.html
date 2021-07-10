@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.ell {
+			width: 100px;
+			height: 100px;
+			background-color: red;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
+		.ell-more {
+			margin-top: 50px;
+			width: 100px;
+			height: 120px;
+			line-height: 30px;
+			background-color: red;
+			display: -webkit-box;
+			-webkit-box-orient: vertical;
+			-webkit-line-clamp: 4;
+			text-overflow: ellipsis;
+			overflow: hidden;
+		}
+		.ell-more2 {
+			/*多行省略号*/
+			position: relative; 
+			width: 100px;
+			height: 105px;
+			text-align: justify;
+			padding-right: 1em;
+			background-color: green;
+			overflow: hidden;	
+		}
+		.ell-more2::before{
+			content: '...';
+			position: absolute;
+			bottom: 0;
+			right: 0;
+		}
+		.ell-more2::after{
+			content: '';
+			position: absolute;
+			width: 1em;
+			height: 1em;
+			right: 0;
+			background-color: green;
+			margin-top: 5px;
+			
+		}
+		.ell-more3 {
+			position: relative;
+			width: 100px;
+			height: 105px;
+			padding-right: 15px;
+			background-color: red;
+			overflow: hidden;
+		}
+		.ell-more3::before {
+			content: '...';
+			position: absolute;
+			right: 0;
+			bottom: 0;
+		}
+		.ell-more3::after {
+			content: '';
+			width: 1em;
+			height: 1em;
+			position: absolute;
+			right: 0;
+			margin-top: 5px;
+			background-color: red;
+		}
+	</style>
+</head>
+<body>
+<div class="ell">中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国</div>
+<div class="ell-more">中国中国中国中国中国中国中国中国中国国中国中国中中</div>
+
+<div class="ell-more2">中国中国中国中国国国中国中国国国国中国中国国中国中国中中</div>
+<div class="ell-more3">中国中国中国中国国国中中国国国中国中国国中国中国中中</div>
+
+</body>
+</html>

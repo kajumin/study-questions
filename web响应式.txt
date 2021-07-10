@@ -1,0 +1,646 @@
+pc桌面端测试: 
+IETester  测试ie版本
+最好使用虚拟机   virtualbox虚拟机软件  VMWare
+内核  ie内核   webkit内核
+
+移动真机测试:  使用node.js中的browser-sync模块功能
+npm i browser-sync -g   //安装
+browser-sync start --server --files "css/*.css, *.html"  //使用   保证是index.html页面打开  不然手动输入
+ipconfig   //查看ip    保证手机和电脑是同一局域网(一般地，都连入一个路由器即可)
+同一局域网判断: 看子网掩码是否一致, 一致看ip和子网掩码中255对应的ip段是否一致, 一致则是同一局域网
+Net View
+
+安卓测试: 
+www.testIn.cn                (云测试)付费的测试网站  相当于外包
+www.genymotion.net    安卓虚拟机
+
+IOS:  几个版本就行了  ios自带虚拟手机
+
+=============tap事件  时间小于150ms  没有滑动过
+1. tap事件  轻击 轻触  （响应速度快）
+2. 移动端也有click事件 （在移动为了区分是滑动还是点击，click点击延时300ms）
+3. 影响用户体验 响应太慢了。
+4. 解决方案：
+4.1 使用tap事件（不是移动端原生事件，通过touch相关事件衍生过来） （zepto.js tap事件）了解其原理
+4.2 使用一个叫： fastclick.js 提供移动端click响应速度的
+Date.now();  //时间戳
+============fastclick.js使用
+document.addEventListener('DOMContentLoaded', function(){
+        /*初始化方法*/
+        FastClick.attach(document.body);
+}, false);
+==============iscroll.js使用
+e.preventDefault();  取消touchmove默认事件
+var myScroll = new IScroll(document.querySelector('.jd_cateLeft'),{
+	scrollX: false,
+	scrollY: true
+});
+
+
+1.vedio.js
+移动端web  适配方案
+屏幕尺寸不一
+1.流式布局    百分百布局  内容向两边填充
+device pixel ratio  像素比
+viewport 虚拟区域  浏览器->  viewport  -> 网页
+/*适配要求：
+            1. 网页宽度必须和浏览器保持一致
+            2. 默认显示的缩放比例和PC端保持（缩放比例1.0）
+            3. 不允许用户自行缩放网页
+            满足这些要求达到了适配，国际上通用的适配方案，标准的移动端适配方案。
+*/
+标准适配方案
+<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=0">
+
+非主流方案(淘宝)
+有2  3倍  屏幕像素比  box-sizing: border-box;
+/*移动端常用布局是非固定像素*/
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    /*点击高亮效果的清除*/
+    tap-highlight-color: transparent; 
+    -webkit-tap-highlight-color: transparent;
+文字样式
+ font-family: "Microsoft YaHei",sans-serif;
+
+input,textarea {
+    border: none;
+    outline: none;
+    /*不允许改变尺寸*/
+    resize: none;
+    /*元素的外观  none没有任何样式*/
+    -webkit-appearance: none;  //button外观
+}
+.clearFix::before,
+.clearFix::after{
+    content: "";
+    display: block;
+    clear: both;
+    visibility: hidden;
+    height: 0;
+    line-height: 0;   
+}
+
+[class^="icon_"],[class*=" icon_"]{
+    background-image: url("../images/sprites.png"); 
+    background-repeat: no-repeat;
+    background-size: 200px 200px;
+}
+
+2.轮播图  加两张
+
+position: fixed   img(block)   input    需要加width: 100%;
+
+touchstart
+touchmove  
+touchend   手指离开屏幕的时候触发
+touchcancel   取消滑动事件 来电 弹消息
+e.changesTouched      改变的触摸点  每个事件都会记录
+e.touches        页面上所有触摸点        离开后无法记录当前的触摸点
+e.targetTouches  当前元素的触摸点集合  离开后无法记录   
+clientX   clientY    基于浏览器窗口(视口)
+pageX    pageY    基于页面(文档)
+screenX  screenY  基于屏幕
+
+
+封装左右滑动    rightCallback && rightCallback.call(this,e);
+
+
+
+========================响应式方案=========================
+<!-- .container容器默认有15px的左右内间距  
+.row 填充父容器的15px的左右内间距   margin-left,margin-right -15px拉伸 -->
+/* +,~选择器 + 紧邻的下一个兄弟元素  ~ 后面所有的兄弟元素 */
+
+@font-face {
+    /*2.申明自己的字体名称*/
+    font-family: 'wjs';
+    /*3.引入字体文件（约束某一段字符代码什么图案）*/
+    src:
+    url(../fonts/MiFie-Web-Font.svg) format('svg'),
+    url(../fonts/MiFie-Web-Font.eot) format('embedded-opentype'),
+    url(../fonts/MiFie-Web-Font.ttf) format('truetype'),
+    url(../fonts/MiFie-Web-Font.woff) format('woff');
+}
+
+$('[data-toggle="tooltip"]').tooltip();
+$(window).width();  获取屏幕宽度
+$(window).on('resize',function () {
+        render();
+        /*通过js主动触发某个事件*/
+    }).trigger('resize');
+
+e.originalEvent.touches[0].clientX;        jq中获取坐标值
+$('.carousel').carousel('next');               轮播图代码移动
+
+轮播图
+pc端
+display: block;
+height: 400px;
+width: 100%;
+background-size: cover;
+background-position: center;
+background-repeat: no-repeat;
+
+移动端
+.m_imgBox {
+     display: block;
+    /*width: 100%;*/
+}
+.m_imgBox  img{
+      display: block;
+      width: 100%;
+}
+
+
+trigger('resize')
+ /*
+     * width()  内容
+     * innerWidth() 内容+内边距
+     * outerWidth() 内容+内边距+边框
+     * outerWidth(true) 内容+内边距+边框+外边距
+* */
+
+====================产品
+/*
+找到P元素，通过P找到父元素，通过父元素找子元素当中类型为P的，然再去找第几个。
+p:first-of-type
+p:last-of-type
+p:nth-of-type(n)
+p:nth-last-of-type(n)
+如果使用的是child;
+p:first-child
+找到P元素,通过P找到父元素，通过父元素找所有的子元素，找第一个元素，匹配判断类型(如果不是无效选择器)
+         */
+/*
+    参数1：x轴的偏移
+    参数2：y轴的偏移
+    参数3：阴影的模糊的
+    参数4：阴影的延伸
+    参数5：阴影的颜色
+    参数6：内阴影
+    */
+====================新闻
+不同屏幕使用媒体查询
+
+====================合作伙伴
+li: inline-block;
+使用流动布局
+
+
+=========滚滚屏
+(1)没有显著的页面移动(只有元素的移动)
+(2)有页面移动的概念
+
+计算calc(50% - 10px);
+
+
+移动端样式初始化: 主要部分
+*,
+*::before,
+*::after {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-webkit-tap-highlight-color: transparent;
+}
+input,textarea {
+    border: none;
+    outline: none;
+    /*不允许改变尺寸*/
+    resize: none;
+    /*元素的外观  none没有任何样式*/
+    -webkit-appearance: none;
+}
+======= 流失布局--jd
+1.流式布局   100%布局  非固定像素
+2.viewport  视觉窗口：viewport,是移动端特有。这是一个虚拟的区域，承载网页的。
+   承载关系：浏览器---->viewport---->网页
+3.适配方案  <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=0">
+4.box-sizing: 100%;   因为流式布局没有固定像素
+5.轻触颜色     -webkit-tap-highlight-color: red;
+6.图片下间隙  (1)vertical-align: middle;  (2)display: block;  (3)font-size: 0px;
+7.触摸事件touch touchstart  touchmove  touchend
+   changedTouches    改变后的触摸点集合
+   targetTouches        当前元素的触发点集合
+   touches                  页面上所有触发点集合
+   clientX clientY         基于浏览器窗口（视口）
+   pageX   pageY        基于页面（视口）
+   screenX screenY      基于屏幕
+8.tap  时间小于150ms  因为移动端click事件延迟300ms
+9.两栏布局  float: left;  overflow: hidden;
+
+eg: 需要设置width: 100%;情况如下:
+input 
+img
+fixed absolute 之后的元素
+
+js部分
+/*1. 自动轮播图且无缝   定时器，过渡*/
+/*2. 点要随着图片的轮播改变  根据索引切换*/
+/*3. 滑动效果  利用touch事件完成*/
+/*4. 滑动结束的时候    如果滑动的距离不超过屏幕的1/3  吸附回去   过渡*/
+/*5. 滑动结束的时候    如果滑动的距离超过屏幕的1/3  切换（上一张，下一张）根据滑动的方向，过渡*/
+banner.offsetWidth
+imagesBox.style.webkitTransition = 'none';
+imagesBox.addEventListener('transitionend',function(){}
+imagesBox.addEventListener('touchstart',function(e){}   //touchmove  //touchend
+e.touches[0].clientX;
+===========响应式布局 -weijunsuo
+1. 媒体查询  @media screen and (max-width: 768px) { }  从小向大写  会覆盖前面的
+2. nornalize不会重置已经一致性的样式   reset会  比如list-style-type:none;
+3. box-shadow: 0 0 1px(越大越模糊) 10px(扩展) hotpink;
+
+/*1.获取轮播图数据    ajax */
+    /*2.根据数据动态渲染  根据当前设备  屏幕宽度判断 */
+    /*2.1 准备数据*/
+    /*2.2 把数据转换成html格式的字符串 （动态创建元素，字符串拼接，模版引擎【artTemplate】*/
+    /*2.3 把字符渲染页面当中*/
+    /*3.测试功能 页面尺寸发生改变重新渲染*/
+    /*4.移动端手势切换  touch*/
+eg: var isMobile = $(window).width() < 768 ? true : false;
+      var pointHtml = template('pointTemplate',{list:data});
+      template('imageTemplate',{list:data,isMobile:isMobile});
+
+================苏宁   rem布局
+
+1.当前rem基准值 = 预设的基准值(100) / 设计稿宽度(750) * 当前设备的宽度(1366)
+ font-size: @baseFontSize / @psdWidth * extract(@adapterDeviceList,@index);
+
+new Swiper('.swiper-container',{
+            autoplay:1000,
+            loop:true,
+            pagination:'.swiper-pagination',
+            autoplayDisableOnInteraction:false
+});
+
+==================================移动端=========================
+meta的viewport只对移动端浏览器有效
+<meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
+设置
+1.当前rem基准值 = 预设的基准值(100) / 设计稿宽度(750) * 当前设备的宽度(1366)
+设置后的结果:  逻辑像素  = css像素   = 理想视口的宽度(sc)  =  布局视口(clientWidth)的宽度
+
+设置rem基准值
+1rem = 布局视口(clientWidth)的 1 / 10
+缺点:  通过js来动态控制根元素font-size的大小, font-size的代码放在样式之前
+
+【IOS9+专用属性】
+"shrink-to-fit=no"
+
+Hammer.js是一个轻量级的JavaScript库, 能让你的网站轻松实现触控事件,它依赖于jQuery,
+用来控制触摸设备上的多点触控特性
+zepto.js插件
+(1.)selector.js  选择器插件
+(2.)fx.js        动画插件
+(3.)touch.js 触摸事件插件
+
+touchstart      touchmove      touchend
+mousedown   mousemove    mouseup
+使用isScroll.js时, 在touchmove事件中加入preventDefault, 可以禁止浏览器滚动屏幕，也不会影响单击事件的触发。
+
+使用postcss插件: 
+postcss-px-to-viewport   //转为vw为单位
+postcss-px2rem    //转为rem为单位
+
+gulp使用方法:  D:\计算机\HTML5 CSS3  JS\CSS3\面试题及补充知识\less-sass\postcss   
+webpack(vue)中使用方法: 只需修改对应的postcss.config.js
+
+
+======================移动端学习
+300ms延迟   因为浏览器无法预知用户行为, 特别是双触, 即使手指离开屏幕也不能判断
+点透问题:  发生在层叠两个元素, 点击时, 上面那个touchstart事件中清除了自身, 
+导致下面那个元素300ms后触发点击事件默认行为
+
+touch事件属性  touches  changeTouches  targetTouches   eventPhase   bubbles    cancelable
+         每个触摸点数组中的元素触摸点的有用信息(clientX pageX screenX target 唯一id值)
+addEventListener(type, fn[, useCapture])  addEventListener(type, fn [, options])  options{ capture, once, passive(顺从)}
+window document body 在touchstart touchmove wheel事件中为默认passive为true   不能阻止默认行为  也是一种优化
+移除removeEventListener(type, fn)  removeEventListener(type, fn, true)不同的  passive:true/false;和前者相同  
+
+1.横竖屏
+2.设备方向
+3.设备移动
+
+关于响应式设计，有渐进增加和优雅降级两个设计原则
+　　渐进增强(progressive enhancement)，是指基本需求得到满足、实现，再根据不同浏览器及不同分辨率设备的特点，利用高级浏览器下的新特性提供更好的体验。比如，圆角、阴影、动画等
+　　优雅降级(graceful degradation)则正好相反，现有功能已经开发完备，但需要向下兼容版本和不支持该功能的浏览器。虽然兼容性方案的体验不如常规方案，但保证了功能可用性
+
+       移动优先的响应式布局采用的是渐进增强原则，制作响应式网站时，先搞定手机版，然后再去为更大设备去设计和开发更复杂的功能。特征是使用min-width匹配页面宽度。从上到下书写样式时，首先考虑的是移动设备的使用场景，默认查询的是最窄的情况，再依次考虑设备屏幕逐渐变宽的情况
+　　由简入繁易，由繁入简难。如果是桌面优先，布局端是桌面端代码，只有在media中，才是手机端代码，加载了多余的桌面端代码。如果是图片文件，则下载的无用资源更多
+　　无论从界面设计还是代码执行效率的角度而言，移动优先都有明显优势
+
+(1)响应式设计包括三个要素：弹性布局、媒体查询和弹性图片
+响应式图片，是指图片能够跟随父容器宽度变化而变化，同时宽度受限于父容器，不可按照图片原始尺寸展现
+最简单的响应式图片: max-width: 100%;
+根据设备大小加载不同的图片:  
+   (1)js和服务端  不方便
+   (2)srcset sizes   从大到小没有响应  因为已经缓存了大图
+   (3)picture  多组适配
+   (4)svg        矢量图   根据规则绘制  文本内容   缩放不会影响图片显示  缺点: 色彩丰富多很难
+
+通用的方法: 
+csshack  某些浏览器(IE)识别的   http://browserhacks.com/
+html5shiv.js  html5新标签 IE6-8  
+respond.js  媒体查询  IE6-8
+picturefill.js   polyfill 腻子  解决兼容性问题  
+modernizr.js  检测html5 css3特性    主动性   防御性编程  html下多class
+https://caniuse.com/    检测css3和html特性是否可以使用
+pie.ntc
+css hack:
+\0 ie8-ie11   区分ie11
+\9 ie11以下  ie89和ie67区分开来
+*+ ie6 7
+_ ie6
+
+选择器hack:
+*html  ie6识别
+选择器后加逗号  ie67识别
+html > body  除了ie6都识别
+
+html hack:
+条件注释
+
+打包发布: 
+(1)合并压缩      手动 自动
+(2)增加版本号
+=====================概念点
+英寸: 一般用英寸描述屏幕的物理大小, 尺寸都是屏幕对角线的长度,  1英寸=2.54厘米
+        屏幕尺寸 =  对角线长度      单位为英寸(2.54厘米)   
+
+像素: 是图像显示的基本单位, 译自英文“pixel”，pix是英语单词picture的常用简写，加上英语单词“元素”element,
+译自英文“pixel”，pix是英语单词picture的常用简写，加上英语单词“元素”element
+
+像素: 为组成一幅图像的全部亮度和色度的最小图像单元。
+从计算机技术的角度来解释，像素是硬件和软件所能控制的最小单位。
+一幅图像通常包含成千上万个像素，每个像素都有自己的颜色信息，它们紧密地组合在一起。
+由于人眼的错觉，这些组合在一起的像素被当成一幅完整的图像。
+
+分辨率: 指一个屏幕具体由多少个像素点组成。  清晰度还和尺寸有关
+  (1)屏幕分辨率 = 物理像素  =  设备像素 (实际具有的像素数目)    一个屏幕具体由多少个像素点组成
+   xxx x  xxx表示设备垂直和水平上具有的像素点数
+
+   (2)图像分辨率   图片含有的像素点个数    同一尺寸的图片，分辨率越高，图片越清晰。
+
+PPI(像素密度):  每英寸包括的像素数。PPI可以用于描述屏幕的清晰度以及一张图片的质量。
+以尺寸为5.8英寸（屏幕对角线长度）、分辨率为1125x2436的iphonex为例：
+ppi = Math.sqrt(1125*1125 + 2436*2436) / 5.8 ，值为 463ppi。
+（屏幕对角线上的像素点 / 对角线的英寸数）(对角线分辨率 / 屏幕尺寸) = 屏幕像素密度
+iphone6  => 326ppi
+
+DPI:  每英寸包括的点数  可以是屏幕像素点 , 图片的像素点  也可以是打印机的墨点  
+        当DPI来描述屏幕和图片时  DPI和PPI等价
+        当使用打印机进行打印时, 描述的是打印点的密度
+
+设备独立像素:  使用chrome浏览器模拟手机型号时显示情况, 都会显示一个尺寸, 这里显示的就是设备独立像素  = 物理像素/dpr
+
+逻辑像素 = css像素  = 实际像素(设备物理分辨率(设备像素) = 设备独立像素 * 像素比(dpr) 
+
+在桌面端，css的1个像素往往都是对应着电脑屏幕的1个物理像素
+//左图表示当用户进行缩小操作时，一个设备像素覆盖了多个CSS像素
+//右图表示当用户进行放大操作时，一个CSS像素覆盖了多个设备像素
+
+dpr(设备像素比): 物理像素和设备独立像素的比值  =  css像素 /  设备独立像素   
+  window.devicePixelRatio来帮助我们获取 dpr
+  @media(-webkit-min-device-pixel-ratio: 2),(min-device-pixel-ratio: 2){ }  //来区分
+
+
+HD: 没有固定的标准，基本上只要宽度为720px的都算是HD
+full HD(全高清): 1920*1080分辨率
+4K: 4k也叫QHD或UHD(超高清)，最小分辨率是3840*2160，
+几百万像素:  指的水平设备像素 * 垂直设备像素的值
+
+
+meta标签: 用来表示的任何元数据信息，它可以告诉浏览器如何解析页面。
+
+https://github.com/kajumin
+
+layout viewport(980px)   布局视口   document.documentElement.clientWidth 
+     pc端就是浏览器的窗口大小(不包含border, margin 滚动条)   移动端大部分默认值980px, 视觉视口也是980px
+     保证了pc的网页都可以在手机上显示, 但是特别小, 可以放大看
+
+visual viewport            视觉视口   window.innerWidth    浏览器可视区域      
+     用户通过屏幕真实看到的区域  视觉视口默认等于浏览器的窗口大小(包括滚动条)
+     当用户对浏览器进行缩放时，不会改变布局视口的大小，所以页面布局是不变的，但是缩放会改变视觉视口的大小。
+     用户将浏览器窗口放大了 200%，这时浏览器窗口中的 CSS像素会随着视觉视口的放大而放大，CSS像素会跨越更多的物理像素。
+ideal viewport             理想视口   window.screen.width   等于设备独立像素   
+      当页面缩放比为100%时,   css像素 = 设备独立像素     理想视口 = 视觉视口 
+
+总得来说:  布局视口会限制你的CSS布局而视觉视口决定用户具体能看到什么.
+
+<meta name="viewport" content="width=device-width,initial-scale=1.0">    设置布局视口、页面缩放
+                        visual viewport宽度(750) =   ideal viewport宽度(375) / 当前缩放值(0.5)
+                        visual viewport宽度(1242) = ideal viewport宽度(414) / 当前缩放值(0.333)
+
+                        当前缩放值(0.5)  =  ideal viewport宽度(375) /   visual viewport宽度(750)
+没有任何设置:          布局视口(980)   视觉视口(988)  理想视口(375)
+设置之后 :               布局视口(375)    视觉视口(375)  理想视口(375)
+设置scale为0.5:       布局视口(750)    视觉视口(750)  理想视口(375)
+
+name= viewpoint      定义布局视口宽度  定义初始缩放比  用户是否可以缩放  最大最小缩放比
+width=device-width  定义布局视口宽度  布局视口取理想视口和视觉视口的最大值   所以initial-scale可以影响布局视口
+                                device-width就等于理想视口的宽度，就相当于让布局视口等于理想视口。
+initial-scale = 理想视口 / 视觉视口   值越小视觉视口越大
+user-scalable=no  用户不允许缩放, 默认yes
+
+这时1css等于1个设备独立像素
+当手机理想视口为400px  设置为width=device-width,initial-scale= 2 
+此时  视觉视口 = 理想视口 / initial-scale   等于200px
+布局视口就取最大值400px, 视觉视口200px
+
+若设置为width-device-width initial-scale=0.5 
+视觉视口 = 理想视口 / initial-scale   等于800px
+布局视口就取最大值800px, 视觉视口800px
+
+
+手机浏览器会把页面放入到一个虚拟的“视口”（viewpoint）中，但viewport又不局限于浏览器可视区域的大小，
+它可能比浏览器的可视区域大，也可能比浏览器的可视区域小。通常这个虚拟的“视口”（viewport）比屏幕宽，
+会把网页挤到一个很小的窗口。
+如果不显示地设置viewport，那么浏览器就会把width默认设置为980。但后果是浏览器出现横向滚动条，
+因为浏览器可视区域的宽度比默认的viewport的宽度小。然后浏览器引进了 viewport 这个 meta tag，
+让网页开发者来控制 viewport 的大小和缩放。
+
+    在桌面上，视口的宽度和浏览器窗口的宽度一致
+　 在手机上，视口与移动端浏览器屏幕宽度不再相关联，而是完全独立的。我们称它为布局视口——CSS布局会根据它来计算，并被它约束
+为了容纳为桌面浏览器设计的网站，移动设备默认的布局视口宽度远大于屏幕的宽度，设置为980px或1024px(也可能是其它值，这个是由设备自己决定的)
+========
+移动端开发:
+在 iOS、 Android和 ReactNative开发中样式单位其实都使用的是设备独立像素。
+移动端单位都是独立像素:  iOS的尺寸单位为 pt， Android的尺寸单位为 dp
+
+web端开发:
+在写 CSS时，我们用到最多的单位是 px，即 CSS像素，当页面缩放比例为 100%时，一个 CSS像素等于一个设备独立像素。
+===============浏览器api
+window.innerWidth(1366)：  获取浏览器视觉视口高度（包括垂直滚动条）。
+window.outerWidth(1366)：  获取浏览器窗口外部的高度, 表示整个浏览器窗口的高度，包括侧边栏、窗口镶边和调正窗口大小的边框
+window.screen.Width(1366)：      获取获屏幕取理想视口高度，这个数值是固定的， 设备的分辨率/设备像素比
+window.screen.availWidth(1366)：浏览器窗口可用的高度。
+document.documentElement.clientWidth(1349)：获取浏览器布局视口高度，包括内边距，但不包括垂直滚动条、边框和外边距。
+document.documentElement.offsetWidth(1349)：包括内边距、滚动条、边框和外边距。
+document.documentElement.scrollWidth(1349)：在不使用滚动条的情况下适合视口中的所有内容所需的最小宽度。测量方式与 clientHeight相同：它包含元素的内边距，但不包括边框，外边距或垂直滚动条。
+
+=========================问题解决
+1.1px问题
+(1) border-image                         使用媒体查询dpr
+(2) background-image                 使用媒体查询dpr
+(3) text-shadow
+(4) 设置viewport    当设备像素比为 3时，我们将页面缩放 1/3倍，这时 1px等于一个真正的屏幕像素
+                            我们可以借助 flexible或 vw、vh来帮助我们进行适配
+(5) 伪类 + transform      使用媒体查询   使用transform: scaleY(0.3)
+
+(6)svg                           借助 PostCSS的 postcss-write-svg 我们能直接使用border-image和background-image创建svg的 1px边框
+
+2.移动端适配方案
+(1)viewport + rem方案
+   布局视口  等于理想视口  等于视觉视口  scale等于1的情况下
+   scale不等于1, 视觉视口会变大, 布局视口等于视觉视口
+
+(2)vm vh方案
+vw(Viewport's width)： 1vw等于视觉视口宽度的 1%
+vh(Viewport's height) :  1vh等于视觉视口高度的 1%
+vmin : vw 和 vh 中的较小值
+vmax : 选取 vw 和 vh 中的较大值
+如果视觉视口为 375px，那么 1vw=3.75px，这时 UI给定一个元素的宽为 75px（设备独立像素），我们只需要将它设置为 75/3.75 = 20vw
+
+vw适配方案缺点: 
+(1). px转换成 vw不一定能完全整除，因此有一定的像素差。
+(2). 比如当容器使用 vw， margin采用 px时，很容易造成整体宽度超过 100vw，从而影响布局效果。当然我们也是可以避免的，例如使用 padding代替 margin，结合 calc()函数使用等
+
+3.iphoneX方案
+方案: 
+<meta name="viewport"  content="viewport-fit=cover">
+viewport-fit是专门为了适配 iPhoneX而诞生的一个属性，它用于限制网页如何在安全区域内进行展示。
+contain: 可视窗口完全包含网页内容
+cover：  网页内容完全覆盖可视窗口
+默认情况下或者设置为 auto 和 contain效果相同。
+
+constant在 iOS<11.2的版本中生效， env在 iOS>=11.2的版本中生效，这意味着我们往往要同时设置他们，将页面限制在安全区域内：
+
+4.横屏适配
+js检测横屏: 
+window.orientation: 获取屏幕旋转方向  0 | 180是竖屏   -90  90是横屏
+
+css检测横屏
+@media screen and (orientation: portrait) { }  //竖屏  
+@media screen and (orientation: landscape) { }  //横屏
+
+CSS像素
+1.在页面不缩放的情况下，1px的CSS像素 == 1设备独立像素  设备独立像素不变
+
+5.图片模糊问题
+我们平时使用的图片大多数都属于位图（ png、jpg...），位图由一个个像素点构成的，每个像素都具有特定的位置和颜色值,
+理论上，位图的每个像素对应在屏幕上使用一个物理像素来渲染，才能达到最佳的显示效果。
+而在 dpr>1的屏幕上，位图的一个像素可能由多个物理像素来渲染，然而这些物理像素点并不能被准确的分配上对应位图像素的颜色，只能取近似值，所以相同的图片在 dpr>1的屏幕上就会模糊:
+
+为了保证图片质量，我们应该尽可能让一个屏幕像素来渲染一个图片像素
+解决方案: 
+针对不同 dpr的屏幕，我们需要展示不同分辨率的图片。
+(1) media查询使用不同的背景图   只适用于背景图
+(2) image-set设置不同的背景图    只适用于背景图
+(3) srcset    浏览器会自动根据像素密度匹配最佳显示图片;  配合sizes使用
+(4) JavaScript拼接图片url  
+例外: 使用svg
+
+高清屏失真:  高清屏上图片的宽高设小一点，这样所需的物理像素就不用那么多了，
+                   屏幕显示图片所需的物理像素越接近图片，图片越高清
+
+矢量图永不失真(格式):  SVG、cdr、ai、SWF、WMF、 EMF、EP、DXF 
+  
+最佳ui尺寸
+750  x   1134   @2x  iphone
+720  x   1136   @2x   红米4x
+640  x   1136   @2x   iphone5
+
+淘宝方案:   在iphone6 : 75px   iphone plus :124.24px
+   var scale = 1 / devicepixelratio;   
+   设置meta  中的initial-scale等于scale    为了保证页面的大小与设计稿保持一致
+   html font-size : clientWidth / 10;
+   设计稿宽度  / 设计稿分辨率 / 10  ( 200 / 750 * 10 = 2.6666666667rem)   (750 / 750 *10 = 10rem) 
+   临界值  1080
+
+vm适配  :
+缺点失去了最大最小宽度的限制
+	
+========网易方案
+它的设计稿应该是基于iphone4或者iphone5来的，所以它的设计稿竖直放时的横向分辨率为640px,
+取一个100px的font-size为参照  
+
+var deviceWidth = document.documentElement.clientWidth;   ||  window.screen.width
+if(deviceWidth > 640) deviceWidth = 640;
+document.documentElement.style.fontSize = deviceWidth / 6.4 + 'px';
+
+//定义一个变量和一个mixin
+@baseFontSize: 75 ;//基于视觉稿横屏尺寸/100得出的基准font-size
+.px2rem(@name, @px){
+    @{name}: @px / @baseFontSize * 1rem;
+}
+//使用示例：
+.container {
+    .px2rem(height, 240);
+}
+//less翻译结果：
+.container {
+    height: 3.2rem;
+}	
+	
+
+对比: 
+==========相同
+1.都能适配所有手机设备,  对于ipad, 网易和淘宝都是跳转到pc端
+2.都需要设置html  font-size
+3.布局时各元素的尺寸值都设计稿标注的尺寸计算出来	
+3.font-size 不用rem   需要额外的font-size做媒体查询
+4.都能用不同尺寸的设计稿
+
+==========不同
+1.淘宝的设计稿是基于750的横向分辨率, 网易的设计稿是基于640的横向分辨率
+2.淘宝需要动态设置viewport  scale
+3.网易的做法  rem值很好计算  淘宝的需要计算器
+
+
+
+vm适配   浏览器可视化的区域
+// vm 
+拍拍贷:  https://m.ppdai.com/   1rem = 20px;
+小红书:  https://www.xiaohongshu.com/    1rem = 50px
+美团:     http://i.meituan.com/                    375px（iPhone6/7/8）、viewport scale 0.5  1rem = 100px(永远)
+		
+		
+================rem
+元素、字体大小能随着屏幕大小变化而变化, 尺寸的大小和屏幕大小成正比
+目标:
+(1) rem单位所代表的尺寸大小和屏幕宽度成正比，也就是设置html元素的font-size和屏幕宽度成正比
+(2) rem单位和px单位很容易进行换算，方便我们按照标注稿写css
+
+移动端的标注稿一般是640px(iphone5)或者750px(iphone6/7/8), 现在750px用的比较多一些，我们假设标注稿是750px的。这里的750px是指设备的实际尺寸，也是UI标注稿的实际尺寸。而我们编码写的px是指css尺寸，是设备无关的尺寸，css尺寸和屏幕实际尺寸不是1比1的映射关系，而是取决于屏幕的像素密度。比如iphoneX是3倍屏，iphone8是2倍屏，但是两个的屏幕css尺寸都是375px。而实际的设备尺寸，iphonex是1125px，iphone8是750px，我们编码过程中只需要设置css尺寸，设备会自动帮我们映射实际的尺寸。我们按照标注稿写完页面之后，页面应该是可以在其他所有尺寸设备上正常自适应地显示的。
+
+无论是设置html的font-size和屏幕宽度成正比，还是换算单位，我们都是以我们的标注稿为参考的。	
+
+rem单位所代表的尺寸大小和屏幕宽度成正比: 
+设置rem单位所代表的尺寸大小和屏幕宽度成正比(有3种方案)
+(1) 媒体查询, 设定每种屏幕对应的font-size
+(2) js设置html的font-size大小
+(3) 使用vw设置，vw也是一个相对单位，100vw等于屏幕宽度
+第一种，需要设置需要每种屏幕都设置对应的font-size, 这些font-size都是根据比例算出来的，比较繁琐，而且还有可能漏掉某些屏幕尺寸，不推荐。第二种用js设置，比较方便，现在大部分网站采用这种方式。第三种通过css的vw来设置，也很方便，而且不用写css，但是兼容性还不是特别好。综合推荐使用第二种。
+		
+单位换算:
+现在我们要使用rem设置元素尺寸和字体大小。有两种思路：
+(1)设置特殊的html的font-size, 使rem和标注稿上px容易换算，通过第二种方法js实现
+(2)通过css预编译或者webpack插件，实时计算 比如，我们将html根元素设置为16px，标注稿上有一个div元素宽度为100px
+$rem: 32rem;      div{  width: 100 / $rem; }		
+
+==============================
+dpr  设备上物理像素和设备独立像素(device-independent pixels (dips))的比例
+
+DIPs指设备独立像素
+
+当你使用<meta name="viewport" content="width=device-width">的时候，会设置视窗布局宽度（不同于视觉区域宽度，不放大显示情况下，两者大小一致，见下图）为320px, 这样一来屏幕物理像素320像素，独立像素也是320像素
+
+在iOS设备，screen.width乘以devicePixelRatio得到的是物理像素值。
+在Android以及Windows Phone设备，screen.width除以devicePixelRatio得到的是设备独立像素(dips)值。
+
+		
+
+
+

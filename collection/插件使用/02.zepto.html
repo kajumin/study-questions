@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1.0">
+	<style type="text/css">
+		.box1 {
+			width: 200px;
+			height: 200px;
+			background-color: red;
+		}
+		.box1 .son {
+			width: 20px;
+			height: 20px;
+			background-color: #096;
+		}
+	</style>
+</head>
+<body>
+	<div class="box1">
+		<div class="son"></div>
+	</div>
+	<div style="height: 10000px;background-color: red;"></div>
+<script type="text/javascript" src="assets/js/zepto.min.js"></script>
+<script type="text/javascript">
+	// touchstart touchmove touchend事件
+
+	// $('.box1').on('touchstart', function (e) {
+	// 	console.log(e)
+	// }).on('touchmove', function (e) {
+	// 	console.log(e)
+	// }).on('touchend', function (e) {
+	// 	console.log(e)
+	// })
+
+	// touchenter touchleave touchcancel
+	// $('.box1 .son').on('touchenter', function (e) {
+	// 	console.log(e)
+	// })
+
+	$('.box1').on('touchmove', function (e) {
+		console.log('禁止默认事件')
+		e.preventDefault();
+	}).on('click', function() {
+		console.log('click')
+	})
+	// zepto中, document body window添加touchestart touchmove事件还是不能阻止默认行为
+	$(document).on('touchmove', function (event) {
+    	event.preventDefault();
+	});
+
+	// 属性
+	// (1)altKey: Alt 键是否处于按下状态
+	// (2)type: 事件的类型
+	// (3)触摸点
+	// 	touches: 当前位于屏幕上的所有手指触摸点的一个列表。
+	// 	targetTouches: 当前元素对象上所有触摸点的列表。
+	// 	changedTouches: 涉及当前事件的触摸点的列表。 (离开屏幕的触摸点也在)
+	// 每个touches都包含: clientX/clientY、 pageX/pageY、 screenX/screenY
+</script>
+</body>
+</html>

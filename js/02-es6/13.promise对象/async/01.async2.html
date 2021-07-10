@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<script type="text/javascript" src="../assets/axios.js"></script>
+<script>
+	async function fun() {
+		let urls = ['http://localhost:3000/getText1','http://localhost:3000/getText2','http://localhost:3000/getText3']
+
+		for(let url of urls) {
+			console.log(1)
+			var result = await axios.get(url)
+			console.log(result)
+		}
+	}	
+	// fun() //继发关系
+
+	async function fun2() {
+		let urls = ['http://localhost:3000/getText1','http://localhost:3000/getText2','http://localhost:3000/getText3']
+		let promises = urls.map((url) => axios.get(url))
+		let result = await Promise.all(promises)
+		console.log(result)
+	}	
+	// fun2() //并发关系
+
+	async function fun3() {
+		let urls = ['http://localhost:3000/getText1','http://localhost:3000/getText2','http://localhost:3000/getText3']
+		let promises = urls.map((url) => axios.get(url))
+		let result = []
+		for(let p of promises) {
+			result.push(await p)
+		}
+		console.log(result)
+	}	
+	// fun3() //并发关系
+
+	async function fun4() {
+		let urls = ['http://localhost:3000/getText1','http://localhost:3000/getText2','http://localhost:3000/getText3']
+		let promises = urls.map(async url => {
+			console.log(1) //先执行
+			const response = await fetch(url) //发请求
+			console.log(response) //
+			return response.text()
+		})
+		console.log(promises)
+		for(let p of promises) {
+			let result = await p
+			console.log(result)
+		}
+	}	
+	fun4() //并发关系
+</script>
+</body>
+</html>

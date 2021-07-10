@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.fixed {
+
+		}
+		.fixed img {
+			position: absolute;
+			/*rect(top right bottom left)*/
+			clip: rect(0px 150px 150px 0px);
+			clip: rect(150px 0px 0px 150px);
+			clip: rect(0px 150px 100px 0px);
+			clip: rect(10px 0px 0px 10px);
+		}
+	</style>
+</head>
+<body>
+<div class="fixed">
+	<img src="../images/1.jpg" height="200" width="200">
+</div>
+<div style="height: 1000px;"></div>
+</body>
+</html>

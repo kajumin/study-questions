@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<!-- 
+length  字符串长度
+chatAt(0) 返回指定下标的字符 没有返回-1
+charCodeAt(0) 返回指定索引字符的unicode编码  a(97) A(65)
+String.fromCharCode()  将一组unicode编码转换为字符串
+
+concat() 返回拼接后的字符串
+indexOf(val, start) 返回指定字符的索引
+lastIndexOf()
+
+codePointAt() 返回指定索引字符的unicode编码
+String.fromCodePoint() 将一组unicode编码转换为字符串
+
+search() //返回子字符串的起始位置
+split() //分隔为数组
+match() //返回匹配信息组成的数组 null ['a', 'aa'](全局方法)
+replace() //替换 有全局方法
+
+slice(start, end) 返回新的截取字符串 不包括结尾
+substr(start, length) 返回新的截取字符串 
+substring(from, to) 返回新的截取字符串  不包括结尾 负值当成0
+
+toLowerCase()
+toUpperCase()
+valueOf()
+trim()
+
+es6:
+includes()
+startsWith()
+endsWith()
+
+repeat()
+padStart()
+padEnd()
+ -->
+ <script type="text/javascript">
+ 	var str = 'abcdefgA'
+ 	console.log(str.charAt(1)) //返回指定索引的字符
+ 	console.log(str.charCodeAt(0)) //返回指定索引的unicode编码
+ 	console.log(str.charCodeAt(7))
+
+	 console.log(str.concat(['abc'], 'def'))
+
+ 	console.log(String.fromCharCode('0x1246', 98, 99, 100))
+ 	console.log(String.fromCharCode(97, 98, 99, 100))
+ 	
+	str = 'abcabc'
+ 	console.log(str.indexOf('c', 4))
+ 	console.log(str.lastIndexOf('c', 1)) //5 -> 返回5 4-2 -> 返回2 1-0 -> 返回-1
+
+ 	console.log(str.slice(-2)) //bc
+ 	console.log(str.slice(2, 3)) //c
+ 	console.log(str.slice(3, 2)) //空 不行
+ 	console.log(str.slice(-3, -2)) //a
+
+ 	console.log(str.substr(3, 1)) //a
+
+ 	console.log(str.substring(3)) //abc
+ 	console.log(str.substring(3, 4)) //a
+ 	console.log('str.substring(3, 4):', str.substring(3, 4)) //a
+ 	console.log('str.substring(-3):', str.substring(-3)) //负数默认为0
+
+ 	var str2 = new String('abcdefg')
+ 	console.log(typeof str2) //object
+ 	console.log(typeof str2.valueOf()) //string
+
+ 	// es6
+ 	console.log(str.startsWith('a'))
+ 	console.log(str.endsWith('g'))
+ 	console.log(str.includes('f'))
+
+ 	console.log(str.repeat(2))
+ 	console.log(str.repeat(0))
+
+ 	console.log(str.padStart(10, 'x'))
+ 	console.log(str.padEnd(10, 'x'))
+ </script>
+</body>
+</html>

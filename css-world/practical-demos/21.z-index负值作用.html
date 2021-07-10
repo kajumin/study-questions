@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		body {
+			background-color: #eee;
+		}
+		.box {
+			width: 100px;
+			height: 100px;
+			margin-bottom: 30px;
+			background-color: red; 
+		}
+		.box1 {
+			position: relative;
+			z-index: -1;
+		}
+		.box2-1 img {
+			width: 100px;
+			height: 100px;
+			position: relative;
+			z-index: -1;
+			left: 50px;
+		}
+		.box2-2 {
+			position: relative;
+			z-index: 0;
+			background-color: red;
+		}
+		.box2-2 img {
+			width: 100px;
+			height: 100px;
+			position: relative;
+			z-index: -1;
+			left: 50px;
+		}
+
+		.box3 {
+			position: relative;
+			z-index: 0;
+		}
+		.box3 img:nth-child(1) {
+			width: 100px;
+			height: 100px;
+			position: relative;
+			left: 50px;
+		}
+		.box3 img:nth-child(2) {
+			width: 100px;
+			height: 100px;
+			position: absolute;
+			top: -10px;
+			left: 0;
+			z-index: -1;
+		}
+		.box4-1 {
+			position: relative;
+			z-index: 0;
+			background-color: transparent;
+		}
+		.box4-1:after {
+			content: '';
+			position: absolute;
+			top: 0;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			background-color: red;
+			z-index: -1;
+		}
+		.box4-1 img:nth-child(1) {
+			width: 100px;
+			height: 100px;
+			position: relative;
+			left: 50px;
+		}
+		.box4-1 img:nth-child(2) {
+			width: 100px;
+			height: 100px;
+			position: absolute;
+			top: -10px;
+			left: 0;
+			z-index: -2;
+		}
+		.par4 {
+			position: relative;
+		}
+		.par4 > img {
+			width: 100px;
+			height: 100px;
+			position: absolute;
+			top: -10px;
+			z-index: -1;
+		}
+		.box4-2 {
+			position: relative;
+			z-index: 0;
+			background-color: red;
+		}
+		.box4-2 img:nth-child(1) {
+			width: 100px;
+			height: 100px;
+			position: relative;
+			left: 50px;
+		}
+		.box4-2 img:nth-child(2) {
+			width: 100px;
+			height: 100px;
+			position: absolute;
+			top: -10px;
+			left: 0;
+			z-index: -2;
+		}
+		.box5 {
+			position: relative;
+			z-index: 0;
+		}
+		.box5:after {
+			content: '';
+			position: absolute;
+			top: 0;
+			width: 50px;
+			height: 50px;
+			background-color: #096;
+			z-index: -1;
+		}
+	</style>
+</head>
+<body>
+<!-- 
+1.可访问性隐藏 普遍性不好
+2.多背景模拟  IE8+
+3.定位在元素后面
+
+--> 
+
+	
+</div>
+</body>
+</html>

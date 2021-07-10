@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<script type="text/javascript">
+	const arr = [1, 2, 3]
+	arr.reduce((p, x) => {
+	  return p.then(() => {
+	    return new Promise(resolve => {
+	      setTimeout(() => {
+	      	console.log(x)
+	      	resolve(x)
+	      }, 1000)
+	    })
+	  })
+	}, Promise.resolve())
+	// 1 2 3
+
+	function loadImg(url) {
+	  	return new Promise((resolve, reject) => {
+		    const img = new Image();
+		    img.onload = function() {
+		      console.log("一张图片加载完成");
+		      resolve(img);
+		    };
+		    img.onerror = function() {
+		    	reject(newError('Could not load image at' + url));
+		    };
+		    img.src = url;
+		});
+	}
+
+
+	const time = (timer) => {
+	  return new Promise(resolve => {
+	    setTimeout(() => {
+	      resolve()
+	    }, timer)
+	  })
+	}
+	const ajax1 = () => time(2000).then(() => {
+	  // console.log(1);
+	  return 1
+	})
+	const ajax2 = () => time(1000).then(() => {
+	  // console.log(2);
+	  return 2
+	})
+	const ajax3 = () => time(1000).then(() => {
+	  // console.log(3);
+	  return 3
+	})
+	function mergePromise (ajaxArray) {
+	  // 在这里写代码
+	  // 存放每个ajax的结果
+	  const data = [];
+	  let promise = Promise.resolve();
+	  ajaxArray.forEach(ajax => {
+	  	// 第一次的then为了用来调用ajax
+	  	// 第二次的then是为了获取ajax的结果 
+	    promise = promise.then(ajax).then(res => {
+	      data.push(res);
+	      return data; // 把每次的结果返回
+	    })
+	    console.log(promise)
+	  })
+
+	  // 最后得到的promise它的值就是data
+	  return promise;
+	}
+	mergePromise([ajax1, ajax2, ajax3]).then(data => {
+	  // console.log("done");
+	  console.log(data); // data 为 [1, 2, 3]
+	});
+	// 要求分别输出 按顺序执行, 并返回结果数组[]
+	// 1
+	// 2
+	// 3
+	// done
+	// [1, 2, 3]
+</script>
+</body>
+</html>

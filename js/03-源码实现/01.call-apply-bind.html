@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<script type="text/javascript">
+	// call apply bind
+	// 1.对于普通函数，绑定this指向, 提前传入一些参数
+	// 2.对于构造函数，要保证原函数的原型对象上的属性不能丢失
+	// Function.prototype.myBind = function(context, ...args) {
+
+	// 	var func = this
+	// 	var fBound = function(...args2) {
+	// 		// console.log(args.concat(args2))		
+	// 		return func.apply(this instanceof fBound ? this : context || window, args.concat(args2))
+	// 		// func.apply(context, args.concat([].slice.call(arguments)))
+	// 	}
+	// 	fBound.prototype = Object.create(this.prototype);//保证原函数的原型对象上的属性不丢失 
+	// 	return fBound
+	// }
+	Function.prototype.myBind = function(context, ...args) {
+
+		var func = this
+		return function F(...args2) {
+			// console.log(args.concat(args2))
+			if(this instanceof F) {
+				return new func(...args, ...args2)
+			} else {
+				return func.apply(context, args.concat(args2))
+			}	
+			// func.apply(context, args.concat([].slice.call(arguments)))
+		} 
+	}
+
+	var obj = { 
+		name: 'bang', 
+		fun(a, b) {
+			console.log(a, b)
+			console.log(this.name)
+		}
+	}
+	function fun(a, b) {
+		console.log(a, b)
+		console.log(this)
+		console.log(this.name)
+	}
+	var f = fun.myBind(obj, 1)
+	f(2)
+
+	var f2 = obj.fun
+	// var f3 = f2.myBind(obj, 11)
+	// f3(22)
+
+	console.log(f2.bind(obj, 11)(33))
+	console.log(f2.bind(obj, 11))
+
+	var F = function() {
+		console.log(this)
+		this.name = 'bang'
+		this.age = 20
+	}
+	F.prototype.sayHello = function() {
+		return 'hello ni hao'
+	}
+	console.log(new (F.myBind(obj, 3, 33)))
+	console.log((new (F.myBind(obj, 3, 33))).sayHello())
+	console.log(typeof new (F.myBind(obj, 3, 33)))
+
+	// 1.利用对象方法的this指向
+	Function.prototype.myCall = function(context, ...args) {
+		var fn = Symbol('fn')
+		context[fn] = this
+		var res = context[fn](...args)
+		delete context[fn]
+		return res
+	}
+
+	Function.prototype.myApply = function(context, args) {
+		var fn = Symbol('fn')
+		context[fn] = this
+		var res = context[fn](...args)
+		delete context[fn]
+		return res
+	}
+
+	fun.myCall(obj, 'call1', 'call2')
+	fun.myApply(obj, ['call3', 'call4'])
+</script>
+</body>
+</html>

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style>
+		.box1 {
+			overflow: hidden;
+			width: 1000px;
+			margin: 0 auto;
+			background-color: #eee;
+		}
+		.box1 .son1 {
+			float: left;
+			width: 50%;
+			padding-bottom: 9999px;
+			margin-bottom: -9999px;
+			background-color: red;
+		}
+		.box1 .son2 {
+			float: left;
+			width: 50%;
+			padding-bottom: 9999px;
+			margin-bottom: -9999px;
+			background-color: #096;
+		}
+
+		.box2 {
+			overflow: hidden;
+			width: 1000px;
+			margin: 0 auto;
+			background-color: #eee;
+		}
+		.box2 .son1 {
+			float: left;
+			width: 50%;
+			border-bottom: 9999px solid transparent;
+			margin-bottom: -9999px;
+			background-color: red;
+		}
+		.box2 .son2 {
+			float: left;
+			width: 50%;
+			border-bottom: 9999px solid #000;
+			margin-bottom: -9999px;
+			background-color: #096;
+		}
+
+		.box3 {
+			width: 800px;
+			border-left: 200px solid #096;
+			margin: 0 auto;
+			background-color: #eee;
+		}
+		.box3 .son1 {
+			float: left;
+			width: 200px;
+			margin-left: -200px;
+		}
+		.box3 .son2 {
+			margin-left: 20px;
+		}
+
+		.box4 {
+			width: 1000px;
+			margin: 0 auto;
+		}
+		.box4 > .son1 {
+			width: 200px;
+			display: table-cell;
+			background-color: #096;
+		}
+		.box4 > .son2 {
+			width: 800px;
+			display: table-cell;
+			background-color: #afc;
+		}
+		.box4 > .son2 div {
+			margin-left: 10px;
+		}
+		.clearfix:after {
+			content: '';
+			display: block;
+			clear: both;
+		}
+		.clearfix {
+			*zoom: 1;
+		}
+	</style>
+</head>
+<body>
+	<!-- 
+	1.margin-bottom: -9999px; 外部尺寸小了9999px; 后面的元素向上移动了
+	  padding-bottom: 9999px; 增加元素高度
+	  overflow: hidden;把多余的色块背景隐藏掉 overflow剪裁border-box内边缘
+	  IE6+
+
+	2.margin-bottom: -9999px; 外部尺寸小了9999px; 后面的元素向上移动了
+	  border-bottom: 9999px; 增加元素高度
+	  overflow: hidden; 把多余的色块背景隐藏掉
+	  IE7+
+
+	3.border 兼容性好
+	  border-left: 200px solid #096;产生左边的背景色
+	  margin-left: -200px; 使得子元素向左移动200px到边框位置
+
+	4.table-cell 兼容性: IE8+
+
+	 -->
+<div class="box1">
+	<div class="son1">
+		<p>margin-padding</p>
+		<p>123456</p>
+		<p>123456</p>
+	</div>
+	<div class="son2">
+		<p>123456</p>
+		<p>123456</p>
+		<p>123456</p>
+	</div>
+</div>
+<br>
+<div class="box2">
+	<div class="son1">
+		<p>margin-border</p>
+		<p>123456</p>
+		<p>123456</p>
+		<p>123456</p>
+		<p>123456</p>
+		<p>123456</p>
+	</div>
+	<div class="son2">
+		<p>123456</p>
+		<p>123456</p>
+		<p>123456</p>
+	</div>
+</div>
+<br>
+<div class="box3 clearfix">
+	<div class="son1">
+		<p>border</p>
+		<p>123456</p>
+		<p>123456</p>
+		<p>123456</p>
+	</div>
+	<div class="son2">
+		<p>border</p>
+		<p>123456</p>
+		<p>123456</p>
+		<p>123456</p>
+		<p>123456</p>
+		<p>123456</p>
+		<p>123456</p>
+	</div>
+</div>
+<br>
+<div class="box4">
+	<div class="son1">
+		<p>table-cell</p>
+		<p>123456</p>
+		<p>123456</p>
+		<p>123456</p>
+	</div>
+	<div class="son2">
+		<div>
+			<p>123456</p>
+			<p>123456</p>
+			<p>123456</p>
+			<p>123456</p>
+			<p>123456</p>
+			<p>123456</p>
+			<p>123456</p>
+		</div>
+	</div>
+</div>
+</body>
+</html>

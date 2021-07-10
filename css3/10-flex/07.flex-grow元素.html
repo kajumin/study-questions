@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.box {
+			width: 300px;
+			height: 300px;
+			margin: 0 auto;
+			border: 1px solid red;
+			display: flex;
+		}
+		.item {
+			width: 40px;
+			height: 40px;
+			border: 1px solid pink;
+			font-size: 24px;
+			line-height: 40px;
+			text-align: center;
+		}
+		.item:nth-child(1) {
+			/*默认  0*/
+			/*flex-grow: 1;*/
+			flex: 1 0 150px;
+		}
+		.item:nth-child(2) {
+			
+		}
+		.item:nth-child(3) {
+			
+		}
+		.item:nth-child(4) {
+			
+		}
+	</style>
+</head>
+<body>
+<div class="box flex1">
+	<div class="item">1</div>
+	<div class="item">2</div>
+	<div class="item">3</div>
+	<div class="item">4</div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<style type="text/css">
+		.father {
+			width: 200px;
+		    border: 1px solid #444;
+		    overflow: hidden;
+		}
+		.father  img {
+			float: left;
+		    width: 64px; 
+		    height: 64px;
+		    margin-right: 10px;
+		    /*padding-right: 10px;*/
+		    /*border-right: 10px solid transparent;*/
+		}
+		.animal {
+			/*设置了会不一样*/
+			overflow: hidden;
+		    /*margin-left: 70px;*/
+		    /*border-left: 10px solid transparent;*/
+		    /*padding-left: 10px;*/
+		}
+
+		.father2 {
+			
+			width: 200px;
+			border: 1px solid #000;
+		}
+		.father2 img {
+			float: left;
+			width: 64px;
+			height: 64px;
+			margin-right: 10px;
+		}
+		.father2 .animal2 {
+			display: table-cell;
+			width: 9999px;
+			/*兼容ie7*/
+			*display: inline-block;
+			*width: auto;
+		}
+	</style>
+</head>
+<body>
+	<!-- 
+		1.使用overflow:hidden;
+		2.使用display: table-cell;
+		左右间隙不推荐margin-left 
+
+		跟float的区别
+	-->
+ <div class="father">
+    <img src="../../images/1.jpg">
+    <div class="animal">
+        小猫1，小猫2，小猫3，小猫4，小猫5，小猫6，小狗1，小狗2，小狗3，小狗4，小狗5，小狗6
+    </div>
+</div> 
+<div class="father2">
+    <img src="../../images/1.jpg">
+    <div class="animal2">
+        小猫1，小猫2，小猫3，小猫4，小猫5，小猫6，小狗1，小狗2，小狗3，小狗4，小狗5，小狗6
+    </div>
+</div> 
+
+</body>
+</html>

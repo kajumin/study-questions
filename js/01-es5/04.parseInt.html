@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<script type="text/javascript">
+	// 解析一个字符串返回指定基数的十进制整数
+	// 第二个参数, 需要转换的字符串的进制
+	console.log(parseInt('100px')) //100
+	console.log(parseInt('0x100')) //256
+	console.log(parseInt('0B100')) //0 识别不了0B为二进制
+
+	console.log(parseInt('100', 2));//4
+	console.log(parseInt('0B100', 2));//0 这样是不行的  直接指定进制就好
+	console.log(parseInt('100', 16));//4
+	console.log(parseInt('100', 16));//4
+
+	console.log(parseInt('17', 8)) //15
+	console.log(parseInt('17', 16)) //23
+	console.log(parseInt(17, 16)) //23 第一个参数不是字符串 转为字符串
+	console.log(parseInt([17], 16)) //23 第一个参数不是字符串 转为字符串
+	console.log(parseInt([[17]], 16)) //23 第一个参数不是字符串 转为字符串
+
+	console.log([1, 2, 3].map(parseInt))
+	// parseInt(1, 0)
+	// parseInt(2, 1)
+	// parseInt(3, 2)
+
+	// toString() 转为其他进制  parseInt()转为十进制
+	console.log((16).toString(16)); //转为十六进制
+	// 16转为2进制  先转为十进制 再转为2进制
+	console.log(parseInt(16).toString(2));
+</script>
+</body>
+</html>

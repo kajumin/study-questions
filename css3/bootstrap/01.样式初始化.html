@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+</head>
+<body>
+	<!--排版: 
+		标题(h1-h6) 页面主题body p .lead 
+		mark del s ins u small strong em b i
+		text-left(文本对齐) text-lowercase(大小写) abbr(缩略语) address(地址)
+		blockquote(引用) 
+		列表 内联列表(list-inline)
+		描述dl->dt dd 水平dl dl-horizontal
+
+		代码:
+		内联代码(code)
+		用户输入(kdb)
+		代码块(pre)
+		变量(var)
+		程序输出(samp)
+	-->
+	<!--  h1-h6 .h1-.h6一样  display不一样
+	   原2em -> 1.5em -> 1.17em -> 1em -> 0.83em -> 0.67em;
+	   36px -> 30px -> 24px -> 18px -> 14px -> 12px;
+		line-height: 1.1;
+		font-weight: 500;
+		margin-top/bottom变为固定值
+		color: #333; 继承body的值
+		
+		small .small副标题
+			font-size: 65%;
+			line-height: 1;
+			color: 777;
+
+	-->
+	<!-- body 原: font-size: 16px; line-height: 1.334;
+	    全局 font-size 设置为 14px，line-height设置为20px 
+	 	body {
+		    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+		    font-size: 14px;
+		    line-height: 20px;
+		    color: #333;
+		    background-color: #fff;
+		　　 margin:0;
+		}
+	-->
+	<!-- p 原: margin: 1em 0;
+	    p {
+    		margin: 0 0 10px;//只有margin-bottom
+		}
+	-->
+	<!-- .head让段落突出显示
+	.lead {
+	    margin-bottom: 20px;
+	    font-size: 16px;
+	    font-weight: 300;
+	    line-height: 1.4;
+	}
+	-->
+	<!-- 
+	1.代码块 pre  pre-scrollable
+	2.变量  var 
+	3.程序输入 samp
+	4.用户输入  input使用kdb包裹
+	5.内联代码 code
+	6.dt   水平dt 
+	7.列表 水平列表 list-inline
+	8.引用样式  blockquote .blockquote-reverse pull-right
+	9.地址 address 每行结尾添加 <br> 可以保留需要的样式
+	10.缩略语
+	11.内联文本 mark del s ins u small
+	   em i 斜体
+	   em 强调
+	   b strong 加粗
+	   strong 重要 着重
+	   <b> 用于高亮单词或短语，不带有任何着重的意味
+	   <i> 标签主要用于发言、技术词汇 分类名称谚语等
+	   	根据HTML5的规范，标题文本使用<h1>-<h6>，强调文本使用<em>
+	   	重要文本使用<strong>，标记高亮文本使用<mark>，其他方面的才使用<b>
+	   	small 旁注
+	   	s 不精确文字 常用于表示价格变动等
+
+	-->
+	<div class="container">
+		<h1>标题一 <small>副标题一</small></h1>
+		<h2>标题二 <small>副标题二</small></h2>
+		<h3>标题三 <small>副标题三</small></h3>
+		<h4>标题四 <small>副标题四</small></h4>
+		<h5>标题五 <small>副标题五</small></h5>
+		<h6>标题六 <small>副标题六</small></h6>
+		<div class="row">
+			<div class="col-sm">col-sm</div>
+			<div class="col-sm">col-sm</div>
+			<div class="col-sm">col-sm</div>
+		</div>
+	</div>
+
+
+<p>一般内容</p>
+<p class="lead">中心内容</p>
+<p>一般内容</p>
+
+
+<p><strong>中</strong><i>国</i><em>人民</em><b>共和国</b> <mark>背景</mark></p>
+<pre class="pre-scrollable"> 
+	<ul class="list-inline">
+	  <li>Lorem ipsum</li>
+	  <li>Phasellus iaculis</li>
+	  <li>Nulla volutpat</li>
+	</ul><ul class="list-inline">
+	  <li>Lorem ipsum</li>
+	  <li>Phasellus iaculis</li>
+	  <li>Nulla volutpat</li>
+	</ul><ul class="list-inline">
+	  <li>Lorem ipsum</li>
+	  <li>Phasellus iaculis</li>
+	  <li>Nulla volutpat</li>
+	</ul><ul class="list-inline">
+	  <li>Lorem ipsum</li>
+	  <li>Phasellus iaculis</li>
+	  <li>Nulla volutpat</li>
+	</ul>
+</pre>
+
+<div>
+    You can use the mark tag to <mark>highlight</mark> text.
+</div>
+<div>
+    <del>This line of text is meant to be treated as deleted text.</del>
+</div>
+<div>
+    <s>This line of text is meant to be treated as no longer accurate.</s>
+</div>
+<div>
+    <ins>This line of text is meant to be treated as an addition to the document.</ins>
+</div>
+<div>
+    <u>This line of text will render as underlined</u>
+</div>
+<div>
+    <small>This line of text is meant to be treated as fine print.</small>
+</div>
+<div>
+    <strong>rendered as bold text</strong>
+</div>
+<div>
+    <em>rendered as italicized text</em>
+</div>
+
+<!-- 缩略语 -->
+<abbr title="attribute">attr</abbr>
+<abbr title="HyperText Markup Language" class="initialism">HTML</abbr>
+
+
+<address>
+  <strong>Twitter, Inc.</strong><br>
+  1355 Market Street, Suite 900<br>
+  San Francisco, CA 94103<br>
+  <abbr title="Phone">P:</abbr> (123) 456-7890
+</address>
+
+<address>
+  <strong>Full Name</strong><br>
+  <a href="mailto:#">first.last@example.com</a>
+</address>
+
+
+<blockquote>
+  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+</blockquote>
+
+<!-- 列表 -->
+<ul class="list-inline">
+  <li>Lorem ipsum</li>
+  <li>Phasellus iaculis</li>
+  <li>Nulla volutpat</li>
+</ul>
+
+<kbd>
+	<input type="text" name="username" value="123456">
+</kbd>
+
+
+</body>
+</html>

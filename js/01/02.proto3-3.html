@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<script type="text/javascript">
+	// var obj2 = {}
+	// Object.defineProperty(obj2, 'name', {
+	// 	value: 'bang'
+	// })
+	// console.log(Object.getOwnPropertyDescriptor(obj2, 'name'))
+	// 原型式继承
+	// 缺点：包含引用类型的属性值始终都会共享相应的值，这点跟原型链继承一样。
+	// function createObj(o) {
+	//     function F(){}
+	//     F.prototype = o;
+	//     return new F();
+	// }
+	// var obj = {
+	// 	names: ['bang','joycehu','kajumin'],
+	// 	sex: '男'
+	// }
+	// var son = createObj(obj)
+	// son.names = ['bang'] //引用类型在子类实例上多出一份
+	// // son.names.push('yijia') //引用类型一改都改
+	// console.log(son) // F {}
+	// var son2 = createObj(obj)
+	// // 父类引用类型一改都改
+	// console.log(son.names === son2.names) //true
+	// console.log(son2.names) // ["bang", "joycehu", "kajumin", "yijia"]
+	// // 基本类型是因为覆盖了 在对象本身
+	// son.sex = '女'
+	// console.log(son.sex === son2.sex) //false
+	// console.log(son2.sex) //男
+
+	// 寄生式继承  
+	// 父类不写方法  而在createObj函数体内写方法
+	// 缺点：跟借用构造函数模式一样，每次创建对象都会创建一遍方法。
+	// function createObj (o) {
+	//     var clone = Object.create(o);
+	//     clone.sayName = function () {
+	//         console.log('hi');
+	//     }
+	//     return clone;
+	// }
+	// var obj = {
+	// 	names : ['bang', 'joycechu', 'kajumin'],
+	// 	sex: '男'
+	// }
+	// var son = createObj(obj)
+	// var son2 = createObj(obj)
+	// son.names.push('yijia')
+	// console.log(son)
+	// console.log(son.names === son2.names) //true
+	// console.log(son.names)
+	// // 基本类型 对象自身属性覆盖了父类属性
+	// son.sex = '女'
+	// console.log(son.sex === son2.sex) //false
+	// console.log(son) //{sex: "女", sayName: ƒ}
+
+
+	//***********************寄生组合继承
+	// 构造函数方法不用改  改的是原型链继承  
+	// function createObj(o) {
+	//     function F(){}
+	//     F.prototype = o;
+	//     return new F();
+	// }
+	// function prototype(child, parent) {
+	// 	var prototype = createObj(parent.prototype)
+	// 	// var prototype = Object.create(prototype)
+	// 	child.prototype = prototype
+	// 	child.prototype.constructor = child
+	// }
+	// prototype(Son, Father)
+	// function Father(name, age) {
+	//  	this.name = name
+	//  	this.age = age
+	//  	this.names = ['1','2','3']
+	// }
+	// Father.prototype.sayhello = function () {
+	// 	return 'hello'
+	// }
+	// function Son(name, age) {
+	// 	Father.call(this, name, age)
+	// }
+	// var son = new Son('bang',18)
+	// var son2 = new Son('joycechu',18)
+	// console.log(son)
+	// console.log(son.sayhello())
+	// // 
+	// son.names.push('4')
+	// // 父类引用类型不会一改都改  构造函数特点
+	// console.log(son.names === son2.names)//false
+
+
+	// 创建一个空实例对象,空对象原型上放父类原型方法. 
+	// 子类原型指向空实例, 
+	// 继承o原型对象的方法和属性
+	// 需要注意o的引用类型属性在F实例对象中共享同一个物理空间（需要避免使用引用类型属性值）
+	// 当然o的方法在F实例对象中共享
+	function objectCreate(o) {
+	  // F类没有实例方法和实例属性
+	  function F() {}
+	  F.prototype = o
+	  // o是F类的原型对象
+	  // 返回F类的实例对象
+	  return new F()
+	}
+
+	// SubClass实现对于SuperClass原型对象的方法和属性的继承
+	function inheritPrototype(SubClass, SuperClass) {
+	  // prototype是一个实例对象
+	  // prototype不是SuperClass的实例对象而是另一个类F类的实例对象
+	  // SuperClass类和objectCreate函数中的F类的原型对象都是SuperClass.prototype
+	  // 这里没有调用SuperClass构造函数
+	  // prototype继承了SuperClass类的原型对象的方法和属性
+	  var prototype = objectCreate(SuperClass.prototype)
+	  // 使prototype实例对象的constructor属性指向SubClass子类
+	  // 使SubClass类的原型对象指向prototype实例对象
+	  // 类似于SubClass.prototype = new SuperClass()
+	  // 只是这里是SubClass.prototype = new F()
+	  // F类本身没有实例方法和实例属性
+	  SubClass.prototype = prototype
+	  // 因为重写SuperClass的原型对象时会修改constructor属性
+	  SubClass.prototype.constructor = SubClass
+
+	  // 上面两个函数等同于下面4行
+	  // var F = function() {};
+	  // F.prototype = SuperClass.prototype;
+	  // SubClass.prototype = new F();
+	  // SubClass.prototype.constructor = SubClass;
+	}
+
+	function Father(name, age) {
+	  this.name = name
+	  this.age = age
+	}
+	Father.prototype.getName = function() {
+	  return this.name
+	}
+	function Son2(name, age, job) {
+	  // 借用构造函数
+	  Father.apply(this, arguments)
+	  this.job = job
+	}
+
+
+	// 寄生组合式继承的写法
+	// 借用构造函数实现构造函数的方法和属性的继承
+	// inheritPrototype函数实现原型对象的方法和属性的继承
+	inheritPrototype(Son2, Father)
+	Son2.prototype.getN = function() {
+	  return this.name
+	}
+	var son1 = new Son2('ziyi2', 28, 'web')
+	var son2 = new Son2('ziyi3', 28, 'hardware')
+	console.log(son1)
+	
+	// console.log(son1)
+	console.log(son2.__proto__.constructor == Son2)
+	console.log(son2.__proto__.__proto__.constructor == Father)
+	console.log(son2.__proto__.__proto__.__proto__.constructor == Object)
+	console.log(son2.__proto__.__proto__.__proto__.__proto__)//null
+	console.log(son1.getName())
+	console.log(son2.getName())
+
+
+</script>
+</body>
+</html>

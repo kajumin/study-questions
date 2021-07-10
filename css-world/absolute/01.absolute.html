@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.box1 {
+			position: relative;
+			width: 200px;
+			height: 150px;
+			padding: 15px;
+			background-color: red;
+		}
+		.box1:after {
+			content: '';
+			position: absolute;
+			left: 0;
+			right: 0;
+			background-color: #096;
+			width: 100%;
+			height: 100%;
+		}
+		.box1 > .son {
+			position: absolute;
+			width: 100%;
+			height: 100%;
+			background-color: #afc;
+		}
+		.box2 {
+			position: relative;
+			width: 1000px;
+			height: 200px;
+			background-color: red;
+			display: table-cell;
+			vertical-align: middle;
+			text-align: center;
+		}
+		.box2 p {
+			position: absolute;
+			left: 50%;
+			top: 50%;
+			transform: translate(-50%, -50%);
+			width: 200px;	
+			/*position: absolute;
+			top: 0;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			width: 200px;
+			margin: auto;*/
+			background-color: #adc;
+		}
+		.box3 {
+			position: relative;
+			width: 300px;
+			height: 300px;
+			padding: 15px;
+			margin: 0 auto;
+			z-index: 1;
+			background-color: #eee;
+		}
+		.box3 > p {
+			position: relative;
+			overflow: hidden;
+			transition: 0.5s;
+			transition-delay: 0.5s;
+		}
+		.box3 > p:after {
+			content: '';
+			position: absolute;
+			left: 0;
+			top: 0;
+			z-index: -1;
+			width: 100%;
+			min-height: 0;
+			/*height: 0%;*/
+			/*transform: scale(0);*/
+			/*transform-origin: left top;*/
+			transition: 1s;
+			background-color: red;
+			/*background-color: rgba(0, 0, 0, 0.1);*/
+		}
+		.box3 > p:hover {
+			color: #fff;
+		}
+		.box3 > p:hover:after {
+			/*height: 100%; 对应 height: 0%;*/
+			height: 100%;
+			min-height: 666px;
+			/*transform: scale(1);*/
+		}
+	</style>
+</head>
+<body>
+<!-- absolute, float的兄弟, 优先级高于float
+    特性: 包裹性  块状化并格式化上下文  破坏性
+其中包含块是不同的
+(1)根元素(html)  => 初始包含块
+(2)position: relative和static是最近的块级容器的content-box形成
+(3)position: fixed;     包含块是初始包含块<html>
+(4)position: absolute;  包含块最近不为static的祖先元素
+   1.内联元素也可以作为包含块
+   2.包含块不是父级块元素, 而是最近的position不为static的祖先元素
+   3.边界是padding-box而不是content-box
+ -->
+
+<!-- 2.具有相对特性的无依赖absolute绝对定位 只需要写absolute; 不需要父元素relative, top left等值 
+适用于静态效果: 如:导航二级菜单的显示和定位
+如果是动态呈现的列表, 还是使用js
+案例: (1)表单提示信息 (2)下拉列表  (3)导航上方的图标
+-->
+
+<!-- 3.absolute与text-align相互作用  幽灵空白节点 
+	   (1) 用于内联元素居中
+	   (2) 返回顶部或者反馈 
+-->
+<!-- 4.absolute和overflow 超出不一定被剪裁
+	   (1) overflow不是定位元素 且overflow 和 absolute之间没有定位元素
+	   (2) overflow属性在relative元素和absolute元素之间
+	   有效剪裁:
+	   (1) 剪裁 overflow属性也是定位元素
+	   (2) 剪裁 relative在overflow和absolute之间
+ -->
+<!-- 5.clip属性  clip: rect(10px 10px 10px 10px)
+	   (1) fixed固定定位的剪裁, 普通元素和绝对定位使用overflow
+	   (2) 最佳的可访问性隐藏
+-->
+
+<!-- 6.absolute的流体特性:ie7以上支持 
+	当一个定位元素, 对立方向同时发生定位的时候, 流体特性就发生了.
+
+	-->
+<!-- 7.absolute的margin: auto;居中  
+	绝对定位的margin:auto; ie8以上才支持
+  -->
+ <div class="box1">
+ 	<div class="son"></div>
+ </div>
+
+ <div class="box2">
+ 	<p>段落</p>
+ </div>
+
+ <div class="box3">
+ 	<p>看中国人</p>
+ </div> 
+</body>
+</html>

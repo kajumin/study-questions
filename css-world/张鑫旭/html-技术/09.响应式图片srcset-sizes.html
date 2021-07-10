@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<meta name="viewport" content="width=device-width,initial-scale=1.0">
+	<style type="text/css">
+		.demo {
+			outline: 1px solid red;
+		}
+		.demo > .image { 
+			margin-bottom: 10px; 
+			max-width: 100%; 
+			float: left; 
+		}
+		.demo > .content { 
+			margin: 0 0 10px 140px; 
+			min-height: 96px; 
+			max-width: 100%; 
+			padding: 5px; 
+			background-color: #eee; 
+			vertical-align: top; 
+			box-sizing: border-box; 
+		}
+		@media screen and (max-width: 360px) {
+	    	.demo > .image { float: none;}
+	    	.demo > .content { margin-left: 0; }
+		}
+	</style>
+</head>
+<body>
+<img src="../assets/images/mm-width-128px.jpg" srcset="../assets/images/mm-width-256px.jpg 2x">
+<!-- 
+设置srcset之后不同屏幕密度加载不同图片
+url图片地址 空格 可选描述符  
+w(宽度) :
+整数宽度=sizes属性给出的资源（source）大小 * 像素密度。该值需配合sizes使用。
+
+x(设备像素比): 优先级高
+这是一个正浮点数，后面紧跟 'x' 符号。该值其实指的就是dpr。若像素密度描述符直接命中的话, 就不考虑sizes和w描述符了
+
+若没有找到更大的，则往剩下的中选最大的
+
+sizes: 可以使用媒体查询(多个): 指定一个值340px, 再指定一个默认值128px
+srcset: *w 的计算通过sizes的值 * 设备像素比 进行选择的 
+ -->
+<!-- 
+srcset="128px.jpg 128w, 256px.jpg 256w, 512px.jpg 512w"
+当<img>元素的宽度规格为128的时候，加载128px.jpg，宽度规格为256的时候，加载256px.jpg， 宽度规格为512的时候，加载512px.jpg
+
+上面的<img>元素设置的sizes属性值(max-width: 360px) 340px, 128px表示当视区宽度不大于360像素时候，图片的宽度限制为340像素；其他情况下，使用128像素。
+
+下面的<img>元素设置的sizes属性值(max-width: 360px) calc(100vw - 20px), 128px表示当视区宽度不大于360像素时候，图片的宽度限制为屏幕宽度减20像素；其他情况下，使用128像素。
+ -->
+<div class="demo">
+	<img class="image" src="../assets/images/mm-width-128px.jpg"
+     srcset="../assets/images/mm-width-128px.jpg 128w, ../assets/images/mm-width-256px.jpg 256w, ../assets/images/mm-width-512px.jpg 512w"
+     sizes="(max-width: 360px) 340px, 128px">
+	<div class="content">当视图宽度不大于360像素的时候，左右布局变成上下布局，同时图片撑满屏幕显示。</div>
+
+	<img class="image" src="mm-width-128px.jpg"
+     srcset="../assets/images/mm-width-128px.jpg 128w, ../assets/images/mm-width-256px.jpg 256w, ../assets/images/mm-width-512px.jpg 512w"
+     sizes="(max-width: 360px) calc(100vw - 20px), 128px">
+	<div class="content">当视图宽度不大于360像素的时候，左右布局变成上下布局，同时图片撑满屏幕显示。</div>
+</div>
+</body>
+</html>

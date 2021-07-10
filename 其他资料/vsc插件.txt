@@ -1,0 +1,27 @@
+(1)chinese language 中文
+(2)open in browser 在浏览器中打开
+(3)live server  开启服务器
+(4)auto rename tag   自动重命名另一个标签名
+(5)auto close tag  自动闭合标签,  .vue文件上可以使用
+(6)rainbow brackets  括号颜色多样
+
+
+(7)prettier   格式化文件
+(8)eslint      eslint规范语法工具
+(9)vetur       vue工具
+
+snippet creator  代码块
+
+random everthing  //int || fullname firstname
+Polacode  变为图片分享
+==================有技巧的插件
+(1)relative path  相对路径  先打开ctrl+shift + p || 右击控制面板  选择relative path 再选文件
+(2)css peek     点击类或者id  按f12 就可以找到   有点慢
+
+ctrl + d  选择相同的
+shift + alt + ↓
+ctrl + ?
+ctrl + enter  下一行
+
+
+插件  ->  开发者工具

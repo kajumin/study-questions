@@ -1,0 +1,14 @@
+<el-container>
+      <!-- 头部 -->
+      <el-header height="60px">
+        <m-header></m-header>
+      </el-header>
+      <!-- 主体部分 -->
+      <el-main>
+        <m-main></m-main>
+      </el-main>
+      <!-- 尾部 -->
+      <el-footer height="60px">
+        <m-footer></m-footer>
+      </el-footer>
+</el-container>

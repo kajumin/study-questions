@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.ul1 {
+			list-style-type: none;
+			padding: 0;
+			margin: 0;
+		}
+		.ul1 li {
+			background-color: green;	
+			line-height: 36px;
+		}
+		.ul1 li a {
+			text-decoration: none;	
+			line-height: 20px;
+			color: #fff;
+			font-size: 14px;
+		}
+		.ul1 li a span:nth-child(1) {
+			background-image: url(https://dss0.bdstatic.com/5aV1bjqh_Q23odCf/static/mantpl/img/news/hot_search/top_1@1x-d1e660cf3b.png);
+			background-size: 100% 100%;
+			display: inline-block;
+   			width: 20px;
+   			height: 20px;
+   			/*line-height: 20px;*/
+   			margin-right: 9px;
+   			text-align: center;
+		}
+		.ul2 {
+			list-style-type: none;
+			padding: 0;
+			margin: 0;
+		}
+		.ul2 li {
+			background-color: green;
+		}
+		.ul2 li a {
+			text-decoration: none;	
+			line-height: 36px;
+			color: #fff;
+			font-size: 14px;
+		}
+		.ul2 li a span:nth-child(1) {
+			background-image: url(https://dss0.bdstatic.com/5aV1bjqh_Q23odCf/static/mantpl/img/news/hot_search/top_1@1x-d1e660cf3b.png);
+			background-size: 100% 100%;
+			display: inline-block;
+   			width: 20px;
+   			height: 20px;
+   			line-height: 20px;
+   			margin-right: 9px;
+   			text-align: center;
+		}
+		.ul2 li a span:nth-child(3) {
+			background-image: url(https://dss0.bdstatic.com/5aV1bjqh_Q23odCf/static/mantpl/img/news/hot_search/mark-icon-3@1x-fdb050afea.png);
+			background-size: 100% 100%;
+			display: inline-block;
+   			width: 40px;
+   			height: 40px;
+   			line-height: 40px;
+   			margin-right: 9px;
+   			text-align: center;
+		}
+		.ul2 li a span:nth-child(3):after {
+			content: '\3000';
+		}
+		.box3-1 {
+			line-height: 50px;
+			font-size: 16px;
+		}
+		.box3-1 img {;
+			width: 30px;
+			height: 30px;
+			vertical-align: middle;
+		}
+		.box3-2 {
+			line-height: 50px;
+			font-size: 16px;
+		}
+		.box3-2 span {
+			display: inline-block;
+			width: 30px;
+			height: 30px;
+			background-image: url(../../images/1.jpg);
+			background-size: 100% 100%;
+			vertical-align: middle;
+		}
+		.box5 {
+			line-height: 50px;
+			font-size: 24px;
+		}
+		.box5 img {
+			display: inline-block;
+			width: 30px;
+			height: 30px;
+			line-height: 30px;
+			/*vertical-align: middle;*/
+		}
+		.box4 {
+			line-height: 50px;
+			font-size: 24px;
+		}
+		.box4 span:nth-child(2) {
+			display: inline-block;
+			width: 30px;
+			height: 30px;
+			/*vertical-align: middle;*/
+			line-height: 30px;
+			background-image: url(../../images/1.jpg);
+			background-size: 100%;
+		}
+		.box4 span:nth-child(3) {
+			display: inline-block;
+			width: 20px;
+			height: 20px;
+			line-height: 20px;
+			background-image: url(../../images/1.jpg);
+			background-size: 100%;
+		}
+		.box4-2 {
+			line-height: 30px;
+			font-size: 24px;
+		}
+		.box4-2 span:nth-child(2) {
+			display: inline-block;
+			width: 30px;
+			height: 30px;
+			background-image: url(../../images/1.jpg);
+			background-size: 100%;
+		}
+	</style>
+</head>
+<body>
+	<!-- 
+		1.利用inline-block基线原理的小图标对齐实例页面 
+	
+	line-block有内容 或者overflow不为visible时, 其基线就是最后一行内联元素的基线,
+	否则就是margin低边缘
+ -->
+<!-- 
+inline-block需要内容时才能让其基线就是最后一行内联元素的基线,
+1.a设置line-height: 30px; span设置line-height: 20px; 即可
+2.li设置line-height: 30px; a设置line-height: 20px;  即可
+ -->
+<ul class="ul1">
+	<li>
+		<a href="#">
+			<span>1</span>
+			<span>男生篡改上百名同学中考志愿</span>
+			<span></span>
+			<span>476万</span>
+		</a>
+	</li>
+</ul>
+
+<!--  -->
+<ul class="ul2">
+	<li>
+		<a href="#">
+			<span>1</span>
+			<span>男生篡改上百名同学中考志愿</span>
+			<span></span>
+			<span>476万</span>
+		</a>
+	</li>
+</ul>
+
+
+<!-- 
+img直接使用vertical-align: middle;只能近似垂直居中 
+文字越大的时候, 对齐效果更不好
+-->
+<div class="box3-1">
+	文字<img src="../../images/1.jpg">x
+</div>
+<!-- 
+背景图标vertical-align: middle; 只能近似垂直居中
+文字越大的时候, 对齐效果更不好
+-->
+<div class="box3-2">
+	文字<span></span>x
+</div>
+
+<!-- 背景图标line-height=图标大小; -->
+<div class="box4">
+	<span>文字</span><span>1</span><span>1</span>
+</div>
+<div class="box4-2">
+	<span>文字</span><span>1</span><span>1</span>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<!-- 
+7. yield*表达式
+   generator函数中调用另一个generator函数, 默认是没有效果的
+
+8. 作为对象方法的generator函数
+   * foo() {} //简写
+   foo function* () {} //等价
+
+9. generator函数中的this
+   function* g() {} 
+   g.prototype.hello = function(){} //有效
+   但是不能当做构造函数使用, g返回的是遍历器对象不是this对象
+   解决方法: call空对象  call generator函数的prototype对象
+
+10. generator与状态机
+   gengerator函数是状态机的最佳结构
+
+11.应用: 
+   (1)异步操作同步化 ajax请求
+   (2)控制流管理
+   (3)部署iterator接口
+   (4)作为数据结构
+
+
+异步编程: 回调函数 事件监听 发布/订阅 promise对象
+异步: 一个任务不是连续完成的, 可以理解成该任务被人分为两段
+同步: 连续执行, 不能插入其他任务
+
+1.协程 多个线程互相协作, 完成异步操作, 协程有点像函数, 又有点像线程
+2.协程的generator实现
+3.generator函数的数据交换和错误处理
+
+4.异步任务的封装
+-->
+<script>
+	var foo = function* () {
+		yield 1
+		yield 2
+		// bar() //没有效果
+		// yield bar() //返回遍历器
+		yield* bar() //有效
+		yield 3
+	}
+	var bar = function* () {
+		yield 11
+		yield 22
+		yield 33
+	}
+	for(var o of foo()) {
+		console.log(o)
+	}
+
+	// 4.
+	
+</script>
+</body>
+</html>

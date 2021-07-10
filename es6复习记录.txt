@@ -1,0 +1,680 @@
+es6  2015年
+======================1. let const
+let
+1.不存在变量提升
+2.暂时性死区
+3.不允许重复声明
+
+为什么需要块级作用域?
+1.内层变量可能覆盖外层变量
+2.循环变量泄露成为全局变量
+
+const: 只读变量, 声明后不能改变(内部变量), 立即初始化
+1.不存在变量提升
+2.暂时性死区
+3.不允许重复声明
+
+变量声明: var function let const import class 
+es5: 顶层对象和全局变量等价的
+es6: 顶层对象和群居变量分离
+es5: 函数只能在函数作用域和顶层作用域中声明, 不能在块级作用域声明
+es6: 允许在块级作用域中声明函数, 函数声明还会提升到块级作用域顶部  (避免在块级作用域中声明函数, 使用函数表达式)
+
+============================2. 解构赋值
+解构赋值: 按照一定的模式从数组和对象中提取值, 然后对变量进行赋值
+数组:  ,(有效跳过) 解构不成功(undefined) 不完全结构 右边不是(报错) 
+
+对象: 
+(1)变量名和属性名不一致 var {a(模式): c(变量)} = {a:1}	
+(2)与数组一样可以嵌套
+(3)默认值 严格等于undefined才会生效
+(4)解构不成功为undefined
+(5)数组参数解构赋值, 也可以默认值
+
+字符串: 转为类似数组的对象   length(使用对象结构)
+数值和布尔值: 转为对象,  toString()方法可以被解构出来
+
+==============================3. 字符串
+字符串: 加强了对unicode的支持, 扩展了字符串对象
+\uxxxx形式表示一个字符, 其中xxxx表示字符的unicode的码点
+限于\u0000-\uffff, 超出必须用2个双字节的形式表达
+ES6: 码点放进大括号, 大括号表示法与四个字节的UTF-16编码等价的   '\u{20BB7}'  = 𠮷
+字符以UTF-16的格式存储, 每个字符固定2个字节, 大于\uffff的字符, 是两个字符
+
+codePointAt(): 类似于charCodeAt() 返回十进制, toString(16)转为16进制
+
+fromCodePoint(): 类似于fromCharCode() 与codePointAt()相反
+
+for of 可以识别大于\uffff的码点
+		
+//第二个参数指定开始搜索的位置
+includes(str)   是否包含  
+startsWith(str) 是否以指定字符开始
+endsWith(str)   是否以指定字符结束
+repeat(num)   重复次数
+
+padStart(5, 'ab')  头部补全
+padEnd(5, 'ab')    尾部补全
+
+模板字符串`${}`
+
+================================5. 数值扩展
+二进制0B(0零b字母)和八进制0O(0零o字母)  
+0x十六进制
+
+转为十进制: 使用Number()
+
+isFinite()  是否为有限数,  不是数值则为false     1/3 -> false
+isNaN()    是否为NaN,  只有NaN才返回true    3/0 -> true
+
+parseInt      行为不变
+parseFloat   行为不变
+
+isInteger() 是否整数 3和3.0都是整数
+
+EPSION 极小的数 误差不大于它则认为正确
+3.000 000 000 000 000 000 4
+(15个0)
+
+isSafeinteger() 2的53次方
+
+Math.trunc()  去掉小数部分
+Math.sign()   判断是正数 负数 还是零 对于非数值(转为数值再判断)
+1(正数) -1(负数) 0(正零) -0(负零)  NaN(其他值, 转为数值再判断)
+
+**指数运算符   es7
+
+===============================6. 函数的扩展
+1.参数的默认值: undefined才会触发 传统方法: 对应布尔值为false就触发
+与解构赋值结合使用
+参数默认值的位置
+函数lenth属性: 除了默认参数的参数个数
+作用域: 参数形成一个单独的作用域
+
+2.rest参数  function(a, b, ...c) {}
+
+3.严格模式: 函数使用默认值 解构赋值 扩展运算符
+        不能显式指定严格模式
+
+4.name属性
+ foo:  函数表达式和函数声明都返回正确的函数名
+ anonymous: Function构造函数
+ bind foo: bind返回的函数
+	
+5.箭头函数
+(1)函数体内的this对象就是定义时所在的对象, 不是使用时所在的对象
+(2)不可以使用arguments对象, 改用rest参数
+(3)不可以当做构造函数, 不能使用new命令
+(4)不可以当做generator函数, 不能使用yield命令
+
+6.绑定this对象 bind apply bind
+
+7.尾调用优化
+尾递归: 阶乘函数 斐波那契数列 curry(柯里化函数)
+递归函数改写
+
+============================7.数组的扩展
+es5:
+indexOf  lastIndexOf  forEach  map  filter some  every  reduce  reduceRight
+
+实用案例: 
+Object.prototype.hasOwnProperty.call(arr, k)  可以检查出空值    [1,,3].hasOwnProperty(1)
+
+es6: 
+扩展运算符 ...
+      替代数组的apply方法(函数传递多值,  max, 合并数组, Date)
+      应用: 合并数组 
+与解构赋值结合   [a, ...list] = [1,2,3,4,5]
+函数的返回值      返回值...展开
+字符串      [...'abcd']   能识别32位的unicode字符
+实现了iterator接口的对象    [...nodeList]
+map set generator函数      [...map.keys()]
+
+Array.from()  返回真正的数组    旧方法:  [].slice.call(arrayLists)  比new Array更统一
+    类似数组的对象(argument NodeList)和可遍历对象(set map)
+
+Array.of(): 将一组值转为数组
+
+实例方法: 
+copyWithin(target, start, end)
+    不是数值转为数值
+    可以是负值, 表示倒数
+target: 开始替换位置
+start: 开始读取位置
+end: 停止读取的位置
+
+find()  findIndex()  找到第一个符合条件的数组成员  [1,2,3].find(x => x === 2)
+fill()   指定值填充一个数组  第二第三个参数可以设置开始结束位置  new Array(3).fill('a', 1, 2)
+
+keys() values() entries(): 返回一个遍历器对象
+使用for of进行遍历输出
+
+includes()   是否包含值 返回布尔值
+
+空位处理: 
+es5: 跳过   有时undefined
+(1)forEach filter every some跳过
+(2)map 跳过, 但是保留
+(3)join toString 空位为undefined, 然后视为空字符串
+es6: 空值为undefined 有时保留
+entries key values find  findIndex 扩展运算符 Array.from
+for of会遍历  copyWithin一起复制
+
+==============================8. 对象的扩展
+属性的简洁写法
+属性名的表达式 
+字面量定义对象es6才能使用表达式
+定义属性的方法: (1)标识符 (2)表达式
+
+对象方法的name属性: 
+bind绑定函数: bound 
+通过构造函数:  anonymous
+对象的方法是一个Symbol值, name返回Symbol值的描述
+
+Object.is(): 同值相等
+与严格相等相比: NaN 和0 -0 的处理不同
+
+Object.assign(浅复制): 将源对象的所有可枚举属性复制到目标对象上
+    Object.assign(target(目标对象), source(源对象))			
+第一个参数: 
+(1)只有一个参数, 直接返回
+(2)参数不是对象, 转为对象
+(3)undefined和null 第一个参数报错 
+    
+
+不是第一个参数:  第二个之忽略 数值布尔值忽略  字符串以数组形式复制到目标对象
+(1)其他类型的值undefined null 数值 布尔值不会产生效果, 也不会报错
+(2)字符串有效   以数组形式复制到目标对象
+
+getOwnPropertyDescriptor(obj, 'a'): 返回该属性的描述对象
+getOwnPropertyDescriptors(obj): 返回该对象的描述对象
+
+对象的属性遍历方法: 
+1. for in 含继承可枚举(不含symbol)
+2. Object.keys 不含继承可枚举(不含symbol)
+3. Object.getOwnPropertyNames 所有属性(含不可枚举, 不含symbol)
+4. Object.getOwnPropertySymbols() 返回所有的symbol属性
+5. Reflect.ownKeys() 返回所有属性(含symbol 含不可枚举)
+
+属性遍历次序规则: 
+(1)数值
+(2)字符串
+(3)symbol属性
+	
+_proto_属性  浏览器部署
+Object.getPrototypeOf(obj)
+Object.setPrototypeOf(obj, proto)
+
+Object.keys()  返回数组
+Object.values()
+Object.entries()
+
+对象扩展运算符:
+let newObj = {...obj}
+
+null传导运算符 ?. 只要有一个返回null和undefined, 就返回undefined
+obj?.prop
+obj?.[prop]
+func?.(..args)
+new C?.(..args)
+
+=====================9. symbol
+Symbol:  防止属性名冲突  原始数据类型
+    toString方法
+
+===================10. set map WeakSet  WeakMap
+set 类似于数组, 但键可以是任何数据, 且值都是唯一的, 
+set本身是一个构造函数, 用来生成set数据结构
+     不会发生隐式转换   严格相等   '5'  != 5
+new Set(array)     参数为一个数组
+
+属性和方法: 
+size                  返回长度
+add(value)        返回set个数
+delete(value)     返回布尔值
+has(value)         返回布尔值
+clear()               没有返回值   清空  
+
+遍历方法: forEach 第二个参数绑定this   set.keys()  set.values()   set.entires()  返回遍历器 
+转为数组且去重  Array.from(new Set([1, 2, 3]))     [...new Set([1, 2, 3]]
+
+数组的map filter方法用于set数据结构   new Set([...set].map(val => val * 2))
+并集  [...a, ...b] 
+交集  new Set( [...a].filter(x>b.has(x)) )
+差集  new Set( [...a].filter(x>!b.has(x)) )
+
+WeakSet 与set类似, 不重复的值的集合
+区别: 
+1.只能是对象, 不能是其他类型的值  symbol不行
+2.弱引用 其他对象不引用该对象了, 就会被销毁
+
+方法:  add  delete has
+
+Map: 类似于对象, 也是键值对的集合, 各种值都可以作键
+属性和方法: 
+size      返回个数
+has()     返回布尔值
+get()     返回值
+set()      返回map本身 链式调用
+delete()  返回布尔值
+clear()
+
+map和set都可以生产map
+
+map的键实际上是和内存地址绑定的, 内存地址不同, 视为两个键
+简单数据类型 只要两个值严格相等, 就视为同一键(NaN也是同一键)
+
+遍历: forEach 第二个参数绑定this  keys  values entries   返回遍历器
+结合数组的map filter方法使用
+
+相互转换: map与数组 map与对象  map与json
+
+WeakMap: 类似于map, 也是键值对的集合, 防止内存泄露
+区别: 
+(1)只接受对象为键, 不能是其他类型的值,  symbol不行
+(2)键名所指的对象不计入垃圾回收机制   弱引用(键名, 键值可以正常访问)
+
+应用:
+(1) 以dom节点为键名, 键值保存数据
+(2) 注册监听事件
+(3) 私有化属性
+======================11. proxy
+拦截层
+new Proxy({}, { set(){},  get(){} })
+
+======================12. Reflect
+
+======================13. promise对象
+
+======================14. iterator接口
+======================15. generator函数
+generator函数 是分段执行的, yield是暂停的标记, next方法可以恢复执行
+
+一种异步编程解决方案, 从语法上说, 可以把它理解成一个状态机, 封装了多个内部状态, 执行generator函数会返回一个遍历器对象,
+除了是状态机, 还是一个遍历器对象生成函数, 返回的遍历器对象可以依次遍历
+generator函数内部的每一个状态
+
+特征: 
+(1)function和函数名之间有一个星号*
+(2)函数体内部使用yield语句定义不同的内部状态
+
+1.yield表达式 暂停的标志, 调用next方法
+return值也会输出
+不能在普通函数中使用
+另一个表达式中加括号
+
+2.与iterator接口的关系
+   使用generator函数作为对象的iterator接口
+3.next方法的参数
+  作为上一次yield语句的返回值, 注入不同的值, 调整函数行为
+
+4.for...of: 可以用来遍历generator函数返回的遍历器对象
+  扩展运算符 Array.from 解构赋值
+
+5.Generator.prototype.throw()
+  函数体外抛出错误, 函数体内捕获
+  函数体内抛出错误, 也可以在函数体外捕获
+  区别于全局throw, 只能catch捕获
+
+6.Generator.prototype.return 
+  可以返回给定的值, 并终止generator函数的遍历
+  不传值为undefined
+  finally依然会执行, 先于return
+
+7. yield*表达式
+   generator函数中调用另一个generator函数, 默认是没有效果的
+
+8. 作为对象方法的generator函数
+   * foo() {} //简写
+   foo function* () {} //等价
+
+9. generator函数中的this
+   function* g() {} 
+   g.prototype.hello = function(){} //有效
+   但是不能当做构造函数使用, g返回的是遍历器对象不是this对象
+   解决方法: call空对象  call generator函数的prototype对象
+
+10. generator与状态机
+   gengerator函数是状态机的最佳结构
+
+11.应用: 
+   (1)异步操作同步化 ajax请求
+   (2)控制流管理
+   (3)部署iterator接口
+   (4)作为数据结构
+======================16. generator函数应用
+异步编程: 回调函数 事件监听 发布/订阅 promise对象
+异步: 一个任务不是连续完成的, 可以理解成该任务被人分为两段
+同步: 连续执行, 不能插入其他任务
+
+1.协程 多个线程互相协作, 完成异步操作, 协程有点像函数, 又有点像线程
+2.协程的generator实现
+3.generator函数的数据交换和错误处理
+
+4.异步任务的封装 01.fetch.js
+======================17. async函数
+async函数就是generator函数的语法糖
+
+对generator的改进:
+1.内置执行器 不需要co模块
+2.更好的语义 async表示函数内有异步操作 await表示紧跟着的表达式需要等待
+3.更广的适用性  co约定, yield后面只能是Thunk函数或者promise对象, await后面可以是任意值
+4.返回值是promise
+
+
+1.返回的promise对象
+return 一个promise对象   成为async函数返回的promise对象结果状态跟return的promise对象的一致
+return语句返回的值, 会成为then回调函数的参数, 状态为成功
+没有return  则为undefined
+throw 2
+throw new Error('error')
+async函数内部抛出的错误会导致返回的promise状态为失败, 抛出的错误信息被catch回调函数接收到
+
+返回的promise对象状态变化, 必须等到所有await后面的promise对象执行完才会发生改变, 除非遇到return语句或者抛出错误
+
+2. await命令 只能用于async函数,  但async函数中可以没有await
+await后面不是一个promise对象, 会立即resolve转为一个promise对象
+await后面的promise状态为rejected, 则reject的参数会被catch回调函数接收到
+注意点:  让出线程
+
+解决方法:
+(1)await放入try catch中
+(2)后面的promise添加catch回调函数处理错误
+
+注意点:
+1. 错误处理try catch
+2. 多个await命令后面的异步操作不是继发关系, 最好让它们同时触发
+   (1)Promise.all方法
+   (2)先调用, 生成promise对象再await
+3.await命令只能在async函数中使用, 普通函数报错
+多个异步继发关系使用: for of
+多个异步并发关系使用: map方法先发请求返回promise对象, 再用promise.all || for of result.push(await p)
+
+应用: 
+按顺序完成异步操作:
+(1)继发关系 for of
+(2)并发关系 map 配合for of 
+
+======================18. class
+callee: 指向拥有这个arguments对象的函数
+caller: 它是函数对象的属性  返回调用它的函数
+
+实例对象属性和原型上属性  称为公有属性
+var 声明的属性 称为私有属性
+static 声明 或者 通过类名声明的属性  称为静态属性
+
+class: 只是语法糖, 它的大部分功能, es5都能做到, 
+新的class写法只是让对象原型的写法更加清晰, 更像面向对象编程的语法而已
+
+typeof Point //function
+Point == Point.prototype.constructor //true
+instanceof 
+
+1.类的所有方法都定义在类的prototype属性上
+Object.assign方法就可以很方便地向类添加多个方法
+Object.assign(Point.prototype, {toString(), toValue()})
+类的内部定义的所有方法都是不可枚举的, 与es5不一致
+
+2. 严格模式: 模块和类默认使用严格模式
+
+3. constructor方法: 通过new命令生成实例对象时自动调用该方法,  一个类必须有constructor方法, 如果没有显式定义, 一个空的constructor方法会被默认添加
+   
+4. class的实例对象
+类必须使用new来调用
+__proto__指向原型, 改变实例的__proto__属性必须谨慎, 这个改变会改变所有class的原始定义, 影响所有实例
+
+5. class的表达式
+var myClass(外部使用) = class me(内部使用, 外部不可以使用) {}
+
+6. 不存在变量提升
+
+7. 私有方法:
+(1)使用命名加以区别, 通过另一个实例方法调用私有方法
+(2)将私有方法移除模块, 因为模块内部的方法都是对外可见的. bar.call(this, baz)
+(3)symbol值的唯一性 bar = Symbol('bar')调用this[bar](baz)  定义: [bar](baz){}
+
+8. 私有属性:
+#x 
+
+9. this指向: 实例方法 原型对象方法 提取出来都会导致this丢失
+类的所有方法内部this, 默认指向类的实例, 提取出来再使用, 可能会造成this指向错误
+(1)构造方法中绑定this
+(2)箭头函数
+(3)proxy
+
+10. name属性:
+class关键字后面的类名
+myPoint.name //Point  都是class关键字后面的类名
+Point.name //Point  都是class关键字后面的类名
+
+11. class的取值函数(getter)和存值函数(setter):
+get set关键字对某个属性设置存值函数和取值函数
+
+12. class的generator函数
+*[Symbol.iterator]() { yield 1 }
+
+13. class的静态方法:
+static classMethod() {}
+父类的静态方法, 通过super也可以调用
+
+14. class的静态属性和实例属性
+静态属性 static myStatic = 'my static'
+
+实例属性: name = 'bang' 可以不写在constructor属性中, 对于已经定义的实例属性, 可以列举出来更加可读性
+重名冲突时, constructor内的优先
+
+15. new.target属性: 通过new调用构造函数会返回new命令所作用的构造函数, 
+不是通过new 命令调用的, 返回undefined
+子继承父类时, new.target返回子类, 根据这个可以写出不能独立使用而必须继承后才能使用的类
+
+======================19. class继承
+class的继承: class可以通过extends关键字实现继承
+  子类必须在contructor方法调用super方法, 否则新建实例时会报错,
+  这是因为子类没有自己的this对象, 而是继承父类的this对象, 然后对其进行加工. 如果不调用super方法, 子类就得不到this对象
+
+es5的继承实质是先创建子类的实例对象this, 然后再调用父类的方法添加到this上面
+
+es6的继承机制完全不同, 实质是先创建父类的实例对象this, 然后再在子类的构造函数修改this
+
+1.Object.getPropertyOf() 用来从子类上获取父类
+  Object.getPrototypeOf(ColorPoint) == Point  //true
+
+2.super关键字: 可以当作函数使用(父类构造函数), 
+  也可以当作对象使用(普通方法指向父类的原型对象, 静态方法指向父类)
+  无法调用父类的实例属性方法
+      (1)new.target指向当前正在执行的函数(子类)
+      (2)super调用父类的方法时,super会绑定子类的this
+      (3)super对某个属性赋值, 这是super就是this, 赋值的属性会添加到子类实例的属性上, 而读取的时候却是读取父类原型对象上的属性
+      (4)super作为对象用在静态方法中, 这时super指向父类, 而不是父类的原型对象
+      (5)由于对象总是继承其他对象, 所以可以在任意一个对象中使用super关键字
+      (6)无法看出super是作为函数使用还是对象使用时会报错
+3.类的prototype属性和__proto__属性
+	B.__proto__ === A
+	B.prototypr__proto__ === A.prototype
+
+	
+4.extends继承的目标: Object 没有任何值 null
+	
+5.子类实例对象的__proto__的__proto__属性指向父类实例的__proto__(父类.prototype)
+	
+6.原生构造函数的继承:
+	Boolean
+	Number
+	String
+	Array
+	Date
+	Function
+	RegExp
+	Error
+	Object
+
+	es6可以做到继承原生构造函数
+
+	
+7.mixin模式的实现
+======================20. mudole模块化
+
+
+es5:
+严格模式  "use strict"
+1.变量必须使用var声明
+2.禁止自定义函数this指向window
+3.函数参数不能重名 必须声明顶层  禁止函数内部遍历调用栈 fn.caller fn.arguments   
+4.对象不能有重名的属性    只读属性赋值   getter赋值  删除不可删除属性
+5.arguments++赋值     arguments.callee
+
+
+
+========map  无序的key不重复的多个键值对的集合体  但键不限于字符串和symbol
+ //1.使用构造函数方式创建一个实例   返回类数组
+ //2.参数是个数组,数组的每一项都是一个数组, 这个数组有两项, 第一项作为键key,第二项作为值value
+ //3.这里的key键可以是任意数据类型的
+new Map([[], [], []])
+set(key,value)
+get(key)
+delete(key)
+has(key)
+clear()
+size 
+遍历: keys  values entires  forEach
+基本数据类型,  严格相等   NaN特殊
+Object与Map不同: 
+(1)键名类型  (2) 原型 (3)迭代器(for of forEach) (4)顺序(按插入顺序返回键名vs 隐式转换保存成字符串的乱序)和长度O(1)vsO(n)
+
+最佳使用: 
+(1)当插入顺序是你解决问题时需要考虑的, 并且需要使用除了string symbol之外的键名
+(2)如果需要遍历键值对（并且需要考虑顺序)  
+(3)Map 在频繁增删键值对的场景下表现更好，性能更高。因此当你需要频繁操作数据的时候也可以优先考虑 Map
+(4)当你需要通正则表达式判断去处理一些业务逻辑时
+
+对象的局限性:
+(1)键名类型只能是string和symbol
+(2)自定义属性容易覆盖原型上的属性和方法 construtor toString
+
+
+==============数组扩展
+1.默认值   默认值是惰性求值的
+2.解构赋值默认值结合使用    undefined可以触发默认值
+3.函数length属性  没有指定默认值的参数个数
+4.作用域   设置了默认值就会有单独的作用域  初始化结束后消失
+5.rest参数替代arguments对象
+6.函数严格模式es5  只要有默认值  解构赋值 扩展运算符 就不能显式定为严格模式
+7..name属性  anonymous   bound
+8.箭头函数  (1)定义时所在的对象  (2)不能作为构造函数  (3)不能使用arguments  (4)不能使用yield命令
+   内部没有自己的this,  指向外部的this
+9.尾调用   最后一步调用函数 return g(x)
+   函数调用会在内存形成一个"调用记录",  又称"调用栈", 保存调用位置和内部变量等信息.   
+尾调用优化   内层函数的调用帧取代外层函数  但内部函数使用到外部函数变量就无法尾调用优化
+尾递归  递归: 函数调用自身称为递归, 如果未调用自身就称为尾递归
+    时间复杂度O(n)   变成O(1)
+柯里化: 将多个参数的函数转换为单个参数
+
+检测是否为数组:
+(1) Object.prototype.toString.call(arr2) === '[object Array]'
+(2) Array.isArray(arr2)
+(3) arr2 instanceof Array
+(4) arr2.__proto__  === Array.prototype
+(5) arr2.constructor  === Array
+
+扩展运算符:  ...   
+主要作用:  合并数组 解构赋值结合  函数返回值 字符串转数组(能识别32位 uncode字符) 函数调用  替代apply 
+                实现了iterator接口都可以转为数组 set map generator
+
+===apply作用
+apply   f.apply(null, args)                                   f(...args)
+Math.max.apply(null, [1,2,3])                              Math.max(...[1,2,3])
+Array.prototype.push.apply(arr1, arr2)                arr1.push(...arr2)
+new (Data.bind.apply(Date, [null, 2015,1,1]))       new Date(...[2015,1,1])
+
+===扩展运算符作用
+去重   NodeList  keys values generator
+=================函数扩展
+默认值 y = y || 'word'   缺点: 传递参数为假时失效   使用if(typeof y === undefined)
+与结构赋值同用   { x = 0,y = 0 } = { }  区别 { x, y } = { }
+触发默认值 undefined  null不可以
+默认参数写在最后   不然不能省略
+length属性  参数的个数  rest不算 默认参数后面的也不算
+作用域 : 有默认参数的时候, 会形成单独作用域, 函数体内的不会影响该作用域(而是获取全局的)
+应用: 参数不可省略 function fn3 (x = no()) {}  no函数抛出异常  throw new Error()
+使用了默认值, 解构赋值, 扩展运算符 就不能指定为严格模式  //解决办法: (1) 全局严格模式   (2) 立即执行函数
+.name属性  // Function构造函数体出来的name= anonymous  // bind出来的加上bound前缀
+箭头函数: 
+// (1)函数体内的this指向定义时所在的对象, 不是使用时所在的对象
+// (2)不能使用new 调用
+// (3)不能使用arguments
+// (4)不能使用yeild
+// (5)apply call bind无效
+
+纯函数是一种输入参数相同, 永远得到相同输出结果的函数
+===========js数据类型
+基本数据类型：number、string、boolean、undefined、null  symbol
+复杂数据类型：Object ( Array, Date, RegExp, Function)
+typeof  可以检测除了null之外的所有基本类型   检测复杂数据类型除了function都是返回object
+
+json对象
+json.parse()      json对象(数组)转换为js对象(数组) 
+json.stringify()  js对象(数组)转为json对象(数组)
+
+Object.create()   以指定对象为原型创建新对象, 为新的对象指定新的属性, 并对属性进行描述
+obj1 = Object.create(obj);    //指定obj为obj1的原型了
+obj1 = Object.create(obj, {  
+        sex : {
+            value : '男',
+            writable : true,  //可修改  writable  configurable enumberable
+            configurable:true, //可删除   
+            enumerable: true  //可枚举   
+        }  
+});
+Object.defineProperties(obj,property,descriptors(get,set))  // 为指定对象定义扩展多个属性
+getOwnPropertyDescriptor(obj, a)
+
+
+indexOf
+lastIndexOf
+forEach
+map
+filter
+
+bind  call 单值  apply 数组
+
+===============let const 
+不能变量提升
+不能重复声明
+形成块级作用域
+
+解构赋值
+模板字符串  ``
+简化对象写反   {name, fn()}
+箭头函数 this指向问题
+扩展运算符  可变参数rest
+形参默认值
+Promise 代表了未来某个将要发生的事件(通常是一个异步操作)
+1、Symbol属性对应的值是唯一的，解决命名冲突问题
+2、Symbol值不能与其他数据进行计算，包括同字符串拼串
+3、for in, for of遍历时不会遍历symbol属性。
+
+iterator是一种接口机制，为各种不同的数据结构提供统一的访问机制
+原生具备iterator接口的数据(可用for of遍历)
+      1、String
+      2、Array
+      3、arguments
+      4、set容器
+      5、map容器
+
+async  真正意义上去解决异步回调的问题，同步流程表达异步操作
+返回的总是Promise对象，可以用then方法进行下一步操作
+
+1. 通过class定义类/实现类的继承
+2. 在类中通过constructor定义构造方法
+3. 通过new来创建类的实例
+4. 通过extends来实现类的继承
+5. 通过super调用父类的构造方法
+6. 重写从父类中继承的一般方法
+安全类:   if(this === window)  return new Person();
+
+====
+Promise.resolve 方法
+无参数 [直接返回一个resolved状态的 Promise 对象]
+普通数据对象 [直接返回一个resolved状态的 Promise 对象]
+一个Promise实例 [直接返回当前实例]
+一个thenable对象(thenable对象指的是具有then方法的对象) [转为 Promise 对象，并立即执行thenable对象的then方法。]

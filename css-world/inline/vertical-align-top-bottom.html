@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.box span {
+			border-bottom: 1px solid red;
+		}
+		.box1 {
+			border: 1px solid red;
+		}
+		.box1 img { 
+			vertical-align: top;
+		}
+		.box1 span {
+			border: 1px solid red; 
+		}
+		.box2 {
+			border: 1px solid red;
+		}
+		.box2 img { 
+			vertical-align: bottom;
+		}
+		.box2 span {
+			border: 1px solid red; 
+		}
+		img {
+			height: 200px;
+		}
+		.box3 {
+			border: 1px solid red;
+		}
+		.box3 img:nth-child(2) {
+			vertical-align: bottom;
+		}
+		.box4 {
+			outline: 1px solid red;
+		}
+		.box4 img {
+			width: 150px;
+			height: 15px;
+			vertical-align: top;
+		}
+		.box5 {
+			height: 200px;
+			outline: 1px solid red;
+		}
+		.box5 span:nth-child(1) {
+			vertical-align: top;
+			background-color: #096;
+		}
+		.box5 span:nth-child(3) {
+			vertical-align: bottom;
+			background-color: #096;
+		}
+		.box5 span:nth-child(4) {
+			background-color: #096;
+		}
+		.box5 img {
+			width: 30px;
+			height: 30px;
+		}
+		.box6 {
+			height: 200px;
+			outline: 1px solid red;
+		}
+		.box6 span:nth-child(1) {
+			
+			background-color: #096;
+		}
+		.box6 span:nth-child(2) {
+			font-size: 30px;
+			background-color: #096;
+		}
+		.box6 span:nth-child(3) {
+			vertical-align: top;
+			background-color: #096;
+		}
+		.box6 span:nth-child(4) {
+			vertical-align: bottom;
+			background-color: #096;
+		}
+		
+		
+	</style>
+</head>
+<body>
+	<!-- 
+		内联元素: 元素顶部和当前行框元素的顶部对齐
+		table-cell: 元素顶padding边缘和表格行的顶部对齐
+
+		1.top基于行框盒子
+		2.bottom基于行框盒子
+
+		baseline/middle和top/bottom是完全不同的两个派别, 前者与字符x打交道, 后者与行框元素打交道
+
+	 -->
+<div class="box">
+	<img src="../../images/1.jpg">
+	<span style="font-size: 24px;">24</span>
+	<span style="font-size: 16px;">16</span>
+	<span style="font-size: 32px;">32</span>
+</div>
+<div class="box1">
+	<img src="../../images/1.jpg">
+	<span style="font-size: 24px;">24</span>
+	<span style="font-size: 16px;">16</span>
+	<span style="font-size: 32px;">32</span>
+</div>
+<div class="box2">
+	<img src="../../images/1.jpg">
+	<span style="font-size: 24px;">24</span>
+	<span style="font-size: 16px;">16</span>
+	<span style="font-size: 32px;">32</span>
+</div>
+
+<div class="box3">
+	<img src="../../images/1.jpg">
+	<img src="../../images/1.jpg">
+</div>
+
+<div class="box4">
+	<span>中国</span>
+	<img src="../../images/1.jpg">
+</div>
+
+<div class="box5">
+	<span>123</span>
+	<img src="../../images/1.jpg">
+	<span>456</span>
+	<span>789</span>
+	<div style="background-color: red;height: 1px;"></div>
+</div>
+
+<div class="box6">
+	<span>123</span>
+	<span>456</span>
+	<span>789</span>
+	<span>456</span>
+	<div style="background-color: red;height: 1px;"></div>
+</div>
+
+</body>
+</html>

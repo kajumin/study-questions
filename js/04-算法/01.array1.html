@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<!-- 
+1.乘积最大的三个数
+2.缺失数 sum - [M * (M + 1) - N * (N - 1)] / 2
+3.数组去重
+4.数组乘积: 给定某无序数组，要求返回新数组 output ，其中 output[i] 为原数组中除了下标为 i 的元素之外的元素乘积，要求以 O(n) 复杂度实现：
+5.数组交集
+
+-->
+
+<script>
+	// 1.给定一个包含整数的无序数组，要求找出乘积最大的三个数
+	var arr = [-20, 5, 6, 7, 9, 11, -5, 12]
+	function computedProduct(unsorted) {
+		var sorted_array = unsorted.sort(function(a, b) {
+			return a - b
+		}),
+		  	product1 = 1,
+			product2 = 1,
+			len = sorted_array.length - 1;
+
+		for(var x = len; x > len - 3; x--) {
+			product1 = product1 * sorted_array[x]
+		}
+		product2 = sorted_array[0] * sorted_array[1] * sorted_array[len]
+
+		if(product1 > product2) return product1
+
+		return product2
+	}
+	console.log(computedProduct(arr))
+
+	// 2.给定某无序数组，其包含了 n 个连续数字中的 n – 1 个，已知上下边界，要求以O(n)的复杂度找出缺失的数字
+	var arr2 = [1, 2, 3, 4, 5, 7, 8, 9]
+	var lower_bound = 1;
+	var upper_bound = 9
+	function findMissNumber(array, min, max) {
+		var sum = 0
+		for(var i = 0; i < array.length; i++) {
+			sum = sum + array[i]
+		}
+		upper_limit_sum = (max * (max + 1)) / 2
+		lower_limit_sum = (min * (min - 1)) / 2
+
+		product = upper_limit_sum - lower_limit_sum
+		console.log(product)
+		return product - sum
+	}
+	console.log(findMissNumber(arr2, lower_bound, upper_bound))
+
+	// 3.数组去重
+	// 给定某无序数组，要求去除数组中的重复数字并且返回新的无重复数组。
+	function uniqueArray(array) {
+		return [...new Set(array)]
+		return Array.from(new Set(array))
+	}
+	console.log(uniqueArray([1,2,4,5,2,5,7,4,2,7]))
+
+	function uniqueArray2(array) {
+		var obj = {};
+		var arr = [];
+		for(var i = 0; i < array.length; i++) {
+			if(!obj.hasOwnProperty(array[i])) {
+				obj[array[i]] = 1;
+				arr.push(array[i])
+			}
+		}
+		return arr
+	}
+	console.log(uniqueArray2([1,2,4,5,2,5,7,4,2,7]))
+
+	function uniqueArray3(array) {
+		for(var i = 0; i < array.length; i++) {
+			for(var j = 0; j < i; j++) {
+				if(array[i] === array[j]) {
+					array.splice(i, 1)
+					i--
+				}
+			}
+		}
+		return array
+	}
+	console.log(uniqueArray3([1,2,4,5,2,5,7,4,2,7]))
+
+	// 数组缺省数
+	function productExceptSelf(array) {
+		var product = 1
+		var size = array.length
+		var output = []
+
+		for(var i = 0; i < size; i++) {
+			output.push(product)
+			product = product * array[i]
+		}
+		console.log(output)
+		product = 1
+		for(var j = size - 1; j > -1; j--) {
+			output[j] = output[j] * product
+			product = product * array[j]
+		}
+		return output
+	}
+	console.log(productExceptSelf([1,2,4,6]))
+
+	function intersection(arr1, arr2) {
+		var obj = {};
+		var resultArr = [];
+
+		arr1.forEach(function(val) {
+			obj[val] = 1 
+		})
+		arr2.forEach(function(val) {
+			if(obj[val] === 1) {
+				resultArr.push(val)
+				obj[val]++
+			}
+		})
+		return resultArr
+	}
+	console.log(intersection([1,2,3,4,5,8],[2,5,7,8,8]))
+</script>
+</body>
+</html>

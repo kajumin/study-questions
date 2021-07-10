@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<script type="text/javascript">
+	// A-Z a-z可以  a-f A-F也可以
+	// var reg1 = /^\#([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$/
+	// console.log(reg1.test('#000'))
+	// console.log(reg1.test('#AEG'))
+	// console.log(reg1.test('#AFAFAF'))
+	// console.log(reg1.test('#AfoDef'))
+	// console.log(reg1.test('#afafaf'))
+
+	// [0-9]可以表示一位数字  不需要[0-9]{1}
+	var reg2 = /^([0-1][0-9]|2[0-3])\:[0-5][0-9]$/
+	console.log(reg2.test('23:59')) //true
+	console.log(reg2.test('2:01')) //false
+	console.log(reg2.test('02:01')) //true
+	console.log(reg2.test('24:01')) //false
+	console.log(reg2.test('02:011')) //false
+	console.log(reg2.test('02:59')) //true
+	console.log(reg2.test('02:60')) //false
+</script> 
+</body>
+</html>

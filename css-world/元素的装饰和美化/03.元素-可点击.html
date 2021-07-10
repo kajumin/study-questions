@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.box {
+			width: 100px;
+			height: 100px;
+			background-color: red;
+			margin-bottom: 20px;
+		}
+		.display {
+			display: none;
+		}
+		.visibility {
+			visibility: hidden;
+		}
+		.opacity {
+			opacity: 0;
+		}
+
+		.index-par {
+			position: relative;
+			height: 100px;
+		}
+		.index {
+			position: absolute;
+			z-index: -1;
+		}
+		.absolute {
+			position: absolute;
+			clip: rect(0 0 0 0);
+		}
+	</style>
+</head>
+<body>
+	<button class="btn">按钮</button>
+	<div class="box display"></div>
+	<div class="box visibility"></div>
+	<div class="box opacity"></div>
+	<div class="index-par"><div class="box index"></div></div>
+	<div class="box absolute"></div>
+<script type="text/javascript">
+	var btn = document.querySelector('.btn');
+	var display = document.querySelector('.display');
+	var visibility = document.querySelector('.visibility');
+	var opacity = document.querySelector('.opacity');
+	var index = document.querySelector('.index');
+	var absolute = document.querySelector('.absolute');
+	btn.onclick = function() {
+		console.log('btn')
+		display.click()
+		visibility.click()
+		opacity.click()
+		index.click()
+		absolute.click()
+	}
+	display.onclick = function() {
+		console.log('display')
+	}
+	visibility.onclick = function() {
+		console.log('visibility')
+	}
+	opacity.onclick = function() {
+		console.log('opacity')
+	}
+	index.onclick = function() {
+		console.log('index')
+	}
+	absolute.onclick = function() {
+		console.log('absolute')
+	}
+</script>
+</body>
+</html>

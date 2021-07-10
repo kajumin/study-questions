@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		:root {
+			--red: red;
+			--green: green;
+		}
+		body {
+			margin: 0;
+			color: var(--color);
+		}
+		.fixed {
+			position: fixed;
+			top: 0;
+			left: 0;
+			right: 0;
+			z-index: 1;
+			height: 30px;
+			background-color: rgba(0,0,0,.5);
+		}
+		.page {
+			margin-top: 50px;
+		}
+		.page .son {
+			height: 1000px;
+			background: linear-gradient(to bottom, green, yellow);
+		}
+		.par {
+			transform: scale(-1);
+		}
+		.box6 div {
+			margin: 10px 0;
+			width: 100px;
+			border: 1px solid red; 
+			text-align: justify;
+			text-align-last: justify;
+		}
+		.red {
+			color: var(--red);
+		}
+		.green {
+			color: var(--green);
+		}
+		.box9 {
+			text-transform: capitalize;
+		}
+	</style>
+</head>
+<body>
+	<!-- 
+	1.fixed父元素使用transfrom导致fiex失效, 没有办法解决, 把fiexd单独提取出来, 不要嵌套
+	2.合理使用变量 $color  @color 
+	  --color: red; var(--color)
+	3.使用mixins归类样式
+	4.1px
+	5.内联首屏关键 CSS 
+	6.文字两端对齐  
+	7.样式的顺序 css中顺序后的优先
+	8.浏览器会从右到左解析 CSS 选择器, 越靠右的选择器越具有唯一性浏览器解析 CSS 属性的效率就越高。  
+	9.每个单词的首字母大写
+	10.单选高亮
+	11.等高布局     
+
+	 -->
+	<div class="par">
+		<div class="fixed"></div>
+	</div>
+	<div class="page">
+		<div class="son">
+			<p>中国人民</p>
+		</div>
+	</div>
+	<div class="box6">
+		<div>姓名</div>
+		<div>手机号码</div>
+		<div>账号</div>
+		<div>密码</div>
+	</div>
+	<div class="red green">red</div>
+	<div class="green red">green</div>
+	<div class="box9">hello world</div>
+	<script type="text/javascript">
+		function capitalize(s) {
+			return s.toLowerCase().replace(/( |^)[a-z]/g, (L) => L.toUpperCase())
+		}
+		console.log(capitalize('hello world'))
+	</script>
+</body>
+</html>

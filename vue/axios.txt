@@ -1,0 +1,424 @@
+接口调用方式:  原生ajax(xmlHttpRequest)  基于jquery的ajax   fetch(浏览器提供)  axios(基于promise)
+传统形式url: scheme://host: port/path?query#fragment 
+scheme    协议 如:https  http  ftp   
+host          域名或ip地址
+port          端口号  http默认80  https默认443
+path         路径  /abc/def
+query       查询参数   uname=list&age=12
+fragment   瞄点  用于定位页面的某个位置
+restful形式的url 
+请求方式:  get查询  post添加  put更新  delete删除
+http:www.hello.com/books    GET            查询全部  books/123  查询123
+http:www.hello.com/books    POST          添加 
+http:www.hello.com/books/123   PUT      更新123
+http:www.hello.com/books/123    delete  删除123
+3.异步效果 
+(1)定时器   (2)ajax    (3)事件回调函数
+ajax  get        req.query
+ajax  post      req.body
+
+4.promise是异步编程的一种解决方案, 从语法上说, Promist的一个对象, 从它可以获取异步操作的消息
+好处: 
+(1)可以避免多次异步回调嵌套问题(回调地狱)
+(2)Promise对象提供简介的api, 使得控制异步操作更加容易
+
+.then参数中函数返回值
+(1)返回Promise对象   返回的该实例对象会调用下一个then
+(2)返回普通值            返回的普通值会直接传递给下一个then  通过参数可以获取
+
+Promise常用api
+实例方法.then()正确回调信息   .catch()异常信息   .finally()
+静态方法: Promise.all()   Promise.race()
+all       并发处理多个异步任务   全部完成才能得到结果  返回数组结果
+race    并发处理多个异步任务   其结果状态由第一个完成的promise的状态决定
+
+5.fetch: 号称是ajax的替代品，它的API是基于Promise设计的，旧版本的浏览器不支持Promise，需要使用polyfill es6-promise
+
+特点: 基于promise  需要.then两次才能获得数据return res.text()
+fetch(url,options(method body headers))   两个参数(地址, 配置对象)
+(1)method  get post  put delete  
+(2)body: 'name=bang&age=18'   |  JSON.stringify({}) 
+(3)headers: "Content-Type": "application/x-www-form-urlencoded"  |  "application/json"   
+.then(res=>{
+	return res.text();  |   return res.json(); //返回json数据也可以先不转换
+}).then(res=>{
+	console.log(res)  //需要两步才能获取数据
+})
+=============请求参数与后台接收
+get   delete 请求参数 (1)url方式?id=123  (2)restful方式 /123     后台接收req.query.id    |   req.params.id  
+        
+post  put  请求参数(1)body: 'name=bang&age=18',  (2)json字符串格式JSON.stringify({name:"kajumin",age:20})
+                接收req.body.name 
+
+post请求  x-www-form-urlencoded格式
+{
+	method: 'post',
+	body: 'name=bang&age=18',
+	headers: { 'Content-Type': 'application/x-www-form-urlencoded'}
+}
+//json字符串格式
+{
+	method: 'put',
+	body: JSON.stringify({
+		name: 'joycechu',
+		age: 20
+	}),
+	headers: { 'Content-Type': 'application/json'}
+}
+
+=====================
+XMLHttpRequest()  返回response的responseType格式
+ArrayBuffer, Blob, Document,JSON, string,
+
+axios: 基于promise的HTTP请求库  从浏览器中创建XMLHttpRequest   从node中创建http请求
+   1.支持浏览器和node.js
+   2.支持合并发请求
+   3.能拦截请求和响应
+   4.能取消请求
+   5.能转换请求和响应数据
+   6.自动转换json数据
+   7.客户端支持防御CSRF(XSRF跨站请求伪造)  
+
+npm init --yes
+npm install axios --save-dev(-D) |  bower  install  axios  | yarn  add axios
+
+Vue.prototype.$axios=axios;  局部时  把全局axios赋值给vue原型链上
+========================axios使用 
+(1)axios-api    //axios(config)   axios(url[, config]) 默认get
+(2)请求别名    //axios.get(url)   axios.get(url[,config])
+                    //axios.post(url[, data])  axios.post(url[,data] [,config])
+
+(3)请求并发   //axios.all([req1, req2])   axios.spread(function(res1, res2){})
+axios.all([getUserAccount(), getUserPermissions()])
+  .then(axios.spread(function (acct, perms) {
+    console.log(acct)
+    console.log(perms)
+}));
+(4)实例         //axios.create(config) 可以使用自定义配置新建一个 axios 实例
+var instance = axios.create({
+	baseURL: 'http://localhost:3000/'
+})
+instance.defaults.headers.common    //创建后再添加
+(5)请求配置   //params data headers timeout  responseType  cancelToken transformRequest: [function(){}]   
+(6)响应结构   //data  headers  config request status statusText
+(7)全局配置   //axios.defaults.baseURL  headers.post  实例配置与全局相同
+(8)优先顺序   //在lib/defaults.js 找到的库的默认值, 然后是实例的 defaults 属性, 最后是请求的 config 参数
+(9)拦截器     //axios.interceptors.request.use(function(config){}, function(error) {})  a
+        移除    //axios.interceptors.request.eject(myInterceptor);
+(10)错误处理 //axios.get().catch(function(error))
+(11)取消请求  // var CancelToken = axios.CancelToken; var cancel;
+                    //请求配置   cancelToken: new CancelToken(function excutor(c) { var cancel = c })
+                    //取消请求   cancel('取消请求');
+    axios.isCancel(error)  判断是否是取消请求错误
+
+(12) 请求数据格式     浏览器端使用qs库  
+       //node.js:
+       const querystring = require('querystring');
+       axios.post('http://something.com/', querystring.stringify({ foo: 'bar' }));
+
+============================
+特殊:  params传递参数对应接收的是 req.query
+=============请求参数与后台接收
+get delete参数: (1)传统url?id=123  (2)restful格式 /123  (3)params方式: {  params: { id:789 }  }  第二个参数
+            接收方式(1)req.query.id      (2)req.params.id  (地址匹配test/:id)    (3)req.query.id
+// get请求参数 query参数 | restful参数 |  第二个参数{ params: {} }  |  配置对象中 params: {} 
+params可以接受对象 | URLSearchParams
+(1) http://localhost:3000/axios?id=123
+(2) http://localhost:3000/axios/456
+(3) { params: { id:789 } }      // params会拼接到url中去   与query方式一模一样
+(4)  params: { id: 789 }    |   params: params
+
+=========================================post和put
+axios#post(url[, data[, config]])     后台统一使用 :  req.body
+
+// post请求数据 string | 对象 | URLSearchParams | FormData
+(1)data: 'uname=bang&pwd=123456'   |   'uname=bang&pwd=123456'
+(2)data: { uname:'bang',pwd: '123' }       |   { uname:'bang',pwd: '123' }  
+(3)data: params                                     |   params
+(4)data: queryString(formData)              |   queryString(formData)
+
+==============formData传参(第二个参数)  异步上传一个二进制文件
+(1)普通文本域也是需要序列化一下 qs.stringify() 是将对象序列化成URL的形式, 以&进行拼接
+                                                  qs.parse()  是将URL解析成对象的形式
+    序列化后格式: Content-Type: 'application/x-www-form-urlencoded'
+    不序列化需要使用中间件处理multer    格式为Content-Type: multipart/form-data; boundary=----WebKitFormBoundaryWvOpTMQRm11DnKst
+   
+(2)文件需要中间件multer处理     req.files  其他文本域: req.body
+(3)blob需要中间件multer处理    req.files   其他文本域: req.body
+
+7.async/await
+async function queryData(url) {
+ 	let res = await new Promise(function(resolve,reject){
+		setTimeout(function(){
+			resolve('ni hao');
+		},200)	
+	});
+	return res;
+}
+queryData('adata').then(function(res){
+ 	console.log(res)
+});
+async中return  值
+return 1     then接收
+throw 2     catch接收
+return Promise.resolve(3)   then接收
+return Promise.reject(4)     catch接收
+await  右侧promise对象  返回promise处理的结果
+不是promise对象     得到表达式本身的结果
+
+node  server
+json-server --watch --port 3000 db.json  //开启json-server服务器
+停止服务器  ctrl + c               application/x-www-form-urlencoded    application/json
+http    请求行(method方式 url地址)  请求头(host 多个)  请求体
+          状态行(200(status) ok(statusText))    响应头(多个text/html  text/json)    实体内容
+
+
+===============================(5)请求配置
+/* 常用:
+	url method baseURL data params headers 
+	timeout responseType transformRequest cancelToken
+	onUploadProgress 上传配置
+*/
+transformRequest: [function(data) {return data}]  
+// 只能用于post | put | patch,  后面数组中的函数必须返回一个字符串，或 ArrayBuffer，或 Stream
+transformResponse: [function(data) { return data}]
+headers: []   //请求头
+params: {  }   // `params` 是即将与请求一起发送的 URL 参数, 必须是一个无格式对象(plain object)或 URLSearchParams 对象
+data: {}   //`data` 是作为请求主体被发送的数据, 用于post| put | patch请求
+// 数据格式 string, plain object,, URLSearchParams, ArrayBuffer, ArrayBufferView
+// 浏览器专属：FormData, File, Blob,
+// Node 专属： Stream
+timeout: 1000, // 超过请求时长, 请求中断
+responseType: 'json', // default   //表示服务器响应的数据类型
+cancelToken: new CancelToken(function (cancel) { })    //用于取消请求
+onUploadProgress(process)   //请求进度   process.onload
+===============================(6)响应结构
+六种: 
+config          //配置信息
+data             //响应数据
+headers        //请求头
+request        //xhr对象
+status          //响应状态码
+statusText   //响应状态信息
+===============================(7)全局配置
+axios.defaults.baseURL = 'http://localhost:3000'
+axios.defaults.timeout = 3000
+axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
+axios.defaults.headers.common['Authorization'] = 'test-token'
+
+===============================(8)配置优先级  
+lib/default.js  <  实例配置   < 发请求config
+
+===============================(9)拦截器
+// axios.interceptors.request.use()   //请求拦截器
+	// axios.interceptors.response.use()  //响应拦截器
+	// axios.interceptors.request.eject(request2) //取消拦截器
+===============================(10)错误处理
+axios.get('http://localhost/user/12345')
+        .catch(function (error) {}
+===============================(11)取消请求
+	const CancelToken = axios.CancelToken;
+	let cancel;
+	axios.get('http://localhost:3000/axios/123', {
+		cancelToken: new CancelToken(function executor(c) {
+			// executor 函数接收一个 cancel 函数作为参数
+			cancel = c;
+		})
+	})
+	.then(res => {
+		console.log(res)
+	 cancel = null;
+	})
+	.catch(error => {
+		if (axios.isCancel(error)) {
+			console.log(error.message)
+		}
+	 cancel = null;
+	})
+	// cancel the request
+	cancel('请求错误!');
+========================(12)请求数据格式   浏览器端使用qs库  Qs.stringify   Qs.parse  
+node.js:
+    const querystring = require('querystring');
+    axios.post('http://something.com/', querystring.stringify({ foo: 'bar' }));
+
+
+https://github.com/webgm
+===================VUE中使用
+总结: 
+(1) 定义base.js管理不同请求地址及环境(开发 | 上线)
+(3) http实例化axios并配置  请求错误信息  请求提示语
+(3) article具体请求模块  引入http.js配置和base.js接口地址    导出方法
+(4) 配合vuex使用
+
+
+1.main.js中
+import api from './request/api/index'; // 引入api
+Vue.prototype.$api = api;
+后续就可以直接this.$api.article.方法()使用
+
+2.request/api/index.js
+import article from './article';
+export default {  article, }
+
+3.request/api/article.js   依赖于base.js   http.js 
+import base from './base'; // 导入接口域名列表
+import axios from '@/request/http'; // 导入http中创建的axios实例
+import qs from 'qs'; // 根据需求是否导入qs模块
+
+export default {    
+    apiGet(params) {
+         return axios.get(`${base.sq}posts/1`, {            
+            params: params        
+        });
+    }
+}
+
+4.request/api/base.js
+export default {    
+    dev: 'http://localhost:3000/',    
+    bd: 'http://xxxxx22222.com/api'
+}
+
+5.request/http.js
+// 在http.js中引入axios
+import axios from 'axios'; // 引入axios
+import QS from 'qs'; // 引入qs模块，用来序列化post类型的数据，后面会提到
+// vant的toast提示框组件，大家可根据自己的ui组件更改。
+import { Toast } from 'vant'; 
+// 先导入vuex,因为我们要使用到里面的状态对象
+// vuex的路径根据自己的路径去写
+import store from '@/store/index';
+import router from '@/router/index';
+
+axios.defaults.timeout = 10000;
+axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
+
+
+/** 
+ * 提示函数 
+ * 禁止点击蒙层、显示一秒后关闭
+ */
+const tip = msg => {    
+    Toast({        
+        message: msg,        
+        duration: 1000,        
+        forbidClick: true    
+    });
+}
+/** 
+ * 跳转登录页
+ * 携带当前页面路由，以期在登录页面完成登录后返回当前页面
+ */
+const toLogin = () => {
+    router.replace({
+        path: '/login',        
+        query: {
+            redirect: router.currentRoute.fullPath
+        }
+    });
+}
+
+/** 
+ * 请求失败后的错误统一处理 
+ * @param {Number} status 请求失败的状态码
+ */
+const errorHandle = (status, other) => {
+    // 状态码判断
+    switch (status) {
+        // 401: 未登录状态，跳转登录页
+        case 401:
+            toLogin();
+            break;
+        // 403 token过期
+        // 清除token并跳转登录页
+        case 403:
+            tip('登录过期，请重新登录');
+            localStorage.removeItem('token');
+            store.commit('loginSuccess', null);
+            setTimeout(() => {
+                toLogin();
+            }, 1000);
+            break;
+        // 404请求不存在
+        case 404:
+            tip('请求的资源不存在'); 
+            break;
+        default:
+            console.log(other);   
+    }
+}
+
+// 创建axios实例
+var instance = axios.create({ timeout: 1000 * 12});
+// 设置post请求头
+instance.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+/** 
+ * 请求拦截器 
+ * 每次请求前，如果存在token则在请求头中携带token 
+ */ 
+instance.interceptors.request.use(    
+    config => {        
+        // 登录流程控制中，根据本地是否存在token判断用户的登录情况        
+        // 但是即使token存在，也有可能token是过期的，所以在每次的请求头中携带token        
+        // 后台根据携带的token判断用户的登录情况，并返回给我们对应的状态码        
+        // 而后我们可以在响应拦截器中，根据状态码进行一些统一的操作。        
+        const token = store.state.token; 
+        console.log(token)       
+        token && (config.headers.Authorization = token);        
+        return config;    
+    },    
+    error => Promise.error(error))
+
+// 响应拦截器
+instance.interceptors.response.use(    
+    // 请求成功
+    res => {
+    	if(res.status === 200) {
+    		// store.state.token = 'joycechu';  
+            // store.commit('changeToken','joycechu');   
+            store.dispatch('changeTokenAct','joycechu')  //修改token
+            // console.log('成功',res) 
+    		return Promise.resolve(res)
+    	}else {
+    		return Promise.reject(res)
+    	}
+    } ,    
+    // 请求失败
+    error => {
+        const { response } = error;
+        if (response) {
+            // 请求已发出，但是不在2xx的范围 
+            errorHandle(response.status, response.data.message);
+            return Promise.reject(response);
+        } else {
+            // 处理断网的情况
+            // eg:请求超时或断网时，更新state的network状态
+            // network状态在app.vue中控制着一个全局的断网提示组件的显示隐藏
+            // 关于断网组件中的刷新重新获取数据，会在断网组件中说明
+            if (!window.navigator.onLine) {
+               store.commit('changeNetwork', false);
+            } else {
+                return Promise.reject(error);
+            }
+        }
+    });
+
+export default instance;
+
+
+// 请求拦截器axios.interceptors.request.use(    
+    config => {        
+        // 每次发送请求之前判断vuex中是否存在token        
+        // 如果存在，则统一在http请求的header都加上token，这样后台根据token判断你的登录情况
+        // 即使本地存在token，也有可能token是过期的，所以在响应拦截器中要对返回状态进行判断 
+        const token = store.state.token;        
+        token && (config.headers.Authorization = token);        
+        return config;    
+    },    
+    error => {        
+        return Promise.error(error);    
+})
+一般是在登录完成之后，将用户的token通过localStorage或者cookie存在本地，然后用户每次在进入页面的时候（即在main.js中），会首先从本地存储中读取token，如果token存在说明用户已经登陆过，则更新vuex中的token状态
+
+

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #box {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100px;
+            height: 100px;
+            background: red;
+        }
+        #box2{
+            position: absolute;
+            left: 10px;
+        }
+    </style>
+</head>
+<body>
+   <div id="box"></div>
+   <div id="box2"></div>
+<script>
+/*
+    鼠标按下
+        鼠标移动
+        鼠标抬起
+*/
+var box2 = document.querySelector("#box2"); //10px
+console.log(getComputedStyle(box2)["left"])
+{
+    let box = document.querySelector("#box");
+    let startMouse = {}; //  摁下时 鼠标坐标
+    let startOffset = {}; // 摁下时 元素坐标
+     // 鼠标移动的处理函数
+    let move = (e)=>{
+        let nowMouse = {
+            x: e.clientX,
+            y: e.clientY
+        };
+        let dis = {
+            x: nowMouse.x - startMouse.x,
+            y: nowMouse.y - startMouse.y
+        };
+        // 元素当前的坐标
+        let nowOffset = {
+            x: dis.x + startOffset.x,
+            y: dis.y + startOffset.y
+        };
+
+        box.style.left = nowOffset.x + "px";
+        box.style.top = nowOffset.y + "px";
+    }
+    box.addEventListener("mousedown",(e)=>{
+        startMouse = {
+            x: e.clientX,
+            y: e.clientY
+        };
+        startOffset = {
+            x: parseFloat(getComputedStyle(box)["left"]),
+            y: parseFloat(getComputedStyle(box)["top"])
+        }
+        document.addEventListener("mousemove",move);
+
+        document.addEventListener("mouseup",()=>{
+            document.removeEventListener("mousemove",move);
+        },{
+            once: true
+        })
+        // 只执行一次
+    });
+
+
+}
+</script>       
+</body>
+</html>

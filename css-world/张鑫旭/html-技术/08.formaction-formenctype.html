@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.p {
+			border-left: solid #eee;
+			border-bottom: solid #eee;
+		}
+	</style>
+</head>
+<body>
+	<!-- 
+	form: 所属表单
+	formaction: 提交地址
+	formenctype: 提交数据的编码
+	formnovalidate: 布尔值属性
+	formmethod: 提交方法
+	formtarget:  _blank(新的) _self(自身) _parent父的浏览器上下文(iframe) _top顶级浏览器上下文
+	 -->
+<!-- 
+	form属性 合并到另一个form中, 提交按钮提交另一个form
+-->
+<!-- 
+	formaction属性只能作用于具有提交性质的按钮（type='submit'/'image'）上，作用和名称一样，如果通过当前按钮提交表单，在表单提交地址会使用formaction属性值而不是form元素的action属性值。
+	借助formaction属性可以实现一个表单内的两个按钮分别提交到不同地址的效果。
+-->
+<!-- 
+	formenctype属性只能作用于具有提交性质的按钮（type='submit'/'image'）上，作用和名称一样，如果通过当前按钮提交表单，在表单提交地址会使用formenctype属性值而不是form元素的enctype属性值
+
+	enctype: 指定提交数据的编码方式
+	默认: application/x-www-form-urlencoded, 对数据进行序列化处理
+	multipart/form-data: 二进制形式传输
+	application/json: json格式的字符串
+-->
+
+<!--
+	formmethod属性只能作用于具有提交性质的按钮（type='submit'/'image'）上，可以覆盖目标<form>元素的method属性值（默认为get） 
+-->
+<!-- 
+	formnovalidate是一个布尔属性值，只能作用于具有提交性质的按钮（type='submit'/'image'）上，可以通过此按钮提交的表单不进行原生的数据验证，重置的是<form>元素的novalidate属性
+-->
+<!-- 
+	formtarget属性只能作用于具有提交性质的按钮（type='submit'/'image'）上，可以覆盖目标<form>元素的target属性值（默认为_self） 
+-->
+<!-- form -->
+<form id="form">
+	<input type="text" name="username">
+	<input type="submit" name="" value="提交">
+</form>
+<input type="text" name="age" form="form">
+
+<!-- formaction -->
+<form id="formaction">
+    表单序号：<input name="formIndex" value="1" readonly>
+</form>
+<form id="form2">
+    表单序号：<input name="formIndex" value="2" readonly>
+    <input type="submit" value="提交" form="formaction" formaction="blank.html">
+</form>
+<!-- formnovalidate -->
+<p class="p">formnovalidate</p>
+<form id="formnovalidate">
+	<input type="text" name="username" pattern="[A-Z]{3}" value="1">
+	<input type="submit" name="" value="提交检测">
+	<input type="submit" name="" formnovalidate value="提交不检测" >
+</form>
+<p class="p">formmethod</p>
+<form id="formnovalidate">
+	<input type="text" name="username" value="1">
+	<input type="submit" name="" value="提交" formmethod="post">
+</form>
+</body>
+</html>

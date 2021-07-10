@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.par {
+			background-color: #eee;
+			margin-bottom: 20px;
+		}
+		.box {
+			float: left;
+			width: 100px;
+			height: 100px;
+			background-color: red;
+		}
+		.par1 {
+			height: 100px;
+		}
+		.par3 {
+			overflow: hidden;
+		}
+		.par4:after {
+			content: '';
+			display: block;
+			clear: both;
+			height: 0;
+			overflow: hidden;
+		}
+		.par4 {
+			*zoom: 1;
+		}
+
+	</style>
+</head>
+<body>
+	<!-- 
+	
+
+	 -->
+<div class="par par1">
+	<div class="box box1"></div>
+</div>
+<div class="par par2">
+	<div class="box box1"></div>
+	<div style="clear: both;"></div>
+</div>
+
+<div class="par par3">
+	<div class="box box2"></div>
+</div>
+<div class="par par4">
+	<div class="box box3"></div>
+</div>
+</body>
+</html>

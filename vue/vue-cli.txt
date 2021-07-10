@@ -1,0 +1,486 @@
+where vue  查看vue命令的地址
+v-for中key的作用--为了高效的diff算法
+:key='item.id'
+
+工具:  lodash.js   打乱数组
+=====虚拟DOM  不操作dom元素,只操作数据可以重新渲染页面
+key为了更高效的渲染dom
+diff算法 
+====$emit  $on  同级组件当中
+var event = new Vue()    使用一个vue实例来做
+event.$emit('item-a',this.a)   event.$event('item-b',this.b)
+event.$on('item-a',(a)+{this.a = a})   event.$on('item-b',(b)+{this.b = b})
+
+====vue-router   组件内的守卫    路由懒加载(待学习)
+====路由实现  导航完成之前的获取
+
+==============================vue-cli 2.x  3.x
+nvm use 14.0.0
+node -v
+
+npm i -g vue-cli  安装的是2.x的最新版本
+npm i -g @vue/cli-init         3.x版本搭桥2.x版本   安装3.x再安装2.x
+npm uninstall -g vue-cli  卸载
+# `vue init` 的运行效果将会跟 `vue-cli@2.x` 相同
+vue init  < template-name >  < project-name >
+vue init webpack my-project(项目名);   // 问答方式
+============webpack-name
+wepack   包含优化
+wepack-simple   不包含优化
+browserify    浏览器引包
+browserify-simple
+pwa
+simple
+
+npm i -g @vue/cli  安装3.x版本的
+1.vue create my_project
+2.vue ui 图形化界面
+
+npm run dev     //启动项目
+看一下webpack.config.js
+autoOpenBrowser: true,  自动打开   config/index.js    elint关闭也在这
+.gitignore   git忽略文件
+@src路径
+===============================
+
+
+
+===============================
+restful规范
+1.面向资源的编程
+https://api.example.com/v1/zoos    获取zoo信息
+2.http动词
+get  post 
+put 在服务器更新资源(客户端提供改变后的完整资源)
+patch 在服务器更新(客户提供改变的属性)
+delete  从服务器删除资源
+3.url体现版本
+4.url中体现api
+5.url中的过滤条件
+?limit = 10 & per_page=100
+6.https
+7.响应时设置状态码
+8.返回值
+9.返回错误信息
+10.hypermedia api
+11.身份认证使用OAuth 2.0框架
+    返回json
+
+
+===========项目  mint-ui  element-ui 饿了么
+@  代表src目录下
+1.引入mint-ui  引入mint.css
+import MintUi from 'mint-ui'
+Vue.use(MintUi)
+import 'mint-ui/lib/style.min.css'
+2.删除<!DOCTYPE html>
+3.引入全局样式
+4.引入axios请求轮播图
+组件使用v-for  使用key  提升性能
+组件的名字会是一个类名
+5.九宫格创建好
+
+=====第二天  提前组件   封装组件
+1.九宫格
+ul li 的全局组件创建
+2.底部navbar路由跳转  watch selected(newV,oldV){}
+九宫格路由
+1.router-link to:
+2.index.js  中的路由声明
+3.写对应的组件
+3.新闻列表
+组成头部为全局组件  props:['title']
+请求数据  拉样式   v-for  
+全局过滤器   moment  Moment(data).format("YYYY年MM月DD日")   data.substr(0,count)
+title  img_url add_time
+4.新闻详情   三板斧
+{name:"NewsDetail",params:id.news.id}
+path:"/news/detail/:id"
+this.$route.params.id   let {id} = this.$route.params
+v-html  只能用全局样式   scoped不能生效  两者不结合
+5.图文分享 PhotoList   query: {categoryId:0}
+/photo/list
+this.$route.query.id   获取query参数   发请求  接收数据  渲染数据
+v-if="$route.query.categoryId === 0"   直接使用query参数
+v-lazy 的使用  图片多才使用插件缓存
+6.图文分享详情
+(1)slot不会存在的   router-view 会有一个div
+slot 样式可以孙  不能管理子
+使用  自己管理自己
+(2)vue-preview 插件使用     要有w h  msrc
+
+moment(time).formNow();
+
+
+query: /xxx?id=1   path: '/xxx'    组件接收  this.$route.query.id    :to ="{name: 'name',{params:{ id: 1}}}"
+params: /xxx/1      path 'xxx/:id'                this.$route.params.id   :to ="{name: 'name',{query:{ id: 1}}}"
+this.$router.push({
+        name: newV
+});
+this.$router.replace({})  这个方法不会向history里面添加新的记录 ,返回上上页面
+this.$router.go(-1)   //返回指定历史记录
+
+第五天: 
+7.goods
+/**
+ * 总结:  loadmore中的属性 
+ *     1:buttomLoad 函数  
+ *     2:禁止buttomLoad  bottom-all-loaded 默认为false ,true就禁止
+ *     3: auto-fill 默认true，自动检测父容器，并调用buttomLoad直到撑满父容器
+ *     4: pull 拉动未满足70px ,  drop 达到70px ,loading加载中
+ *     5: loadmore组件对象的 onBottomLoaded() 通知结束loading进入Pull状态
+ *     6: 在组件上写ref="xxx"   在js中通过this.$refs.xxx 获取组件对象
+ *     6: 在普通元素上写ref="xxx"   在js中通过this.$refs.xxx 获取DOM对象
+ *     7: 上拉加载更多公式
+ *         进入检测机制 =>   可视高度 + 卷入高度 = 所有的数据高度
+ */
+
+1.beforeRouteEnter(to,from,next){   next(vm=>{ vm.myTitle = title })}   通过vm(this)可以操作data数据
+
+2.
+服务端渲染:   一整个页面返回
+客户端渲染:  首屏卡顿, 同样第一个页面比较慢
+
+前后端分离
+1.不依赖后端的运行环境
+2.需要响应页面ngix
+3.需要请求数据ajax
+4.需要得到数据json-server模拟数据
+
+子传父: 
+1.computed: {}   可以添油加醋  不能直接修改父组件数据
+2.
+(1)父传递一个修改的事件   子接收事件     子调用事件进行修改
+父   :changeHandler="changeStus"   changeStus(data){ }
+子   this.changeHandler([]);
+(2) 常见的办法
+父:  @change = 'changeHandler'     changeHandler(data){  }
+子: 执行  this.$emit('change',data);
+   
+(3)通过eventbus事件   父: eventBus.$on('changeData',(data)=>{ }    子: this.$emit('changeData',[1,2,3]);
+
+3.async_update   修饰符方法
+父  v-bind:imgs.sync="imgs"   
+子  this.$emit('update:imgs',[]);
+
+使用myBus处理子父数据交互
+使用GoodsTools处理处理购物车数据保存
+
+组件内路由钩子: beforeRouteLeave   beforeRouteEnter  beforeRouteUpdate
+
+Object.keys(window.test.goodsObj).join(',')     处理id参数
+Object.values(window.test.goodsObj)            处理商品数量
+
+
+transition    默认同进同出     out-in  先出后进
+<transition name="fade" mode="out-in">
+      <router-view class= "tmpl"/>
+</transition>
+
+limit:4096  //小于则css: url(base64编码)
+
+productionSourceMap:true,  //加快打包速度  体积较大  map文件产出
+
+
+========http-sever
+npm i -g http-server
+hs -o -p  8080   //打开http-server
+
+
+===========优化
+1.mint-ui 按需加载
+2.vue-router   懒加载 
+babel-core   @babel/core有区别
+下载
+
+
+=============history
+1.Vue.user(VueRouter)   //监视hashchange 或者popstate   给route添加监视defineProperty 更改后改变视图
+2.router-link :to="/xxx"=> <a href="#/xxx"><a/>
+3.匹配routes规则  找到组件
+4.得到matched保存到_route中    router-view中使用
+5.history.popState  改变地址栏#/xxx
+6.组件的render函数   渲染_route
+
+
+href= "#add"
+===hashchange
+1.安装插件  监视hashchange事件   监视_route
+2.处理routes获取path相关的组件
+3.等待hashchange触发  匹配routes组件  得到matched  赋值给_route
+4.触发_route监视,router-view 这个组件获取到_router来作为渲染的内容
+
+
+=======骨架屏所使用到的技术(插件)
+1.全部隐藏  根据location.pathname;   location.hash 判断显示哪个骨架
+2.加载完成后替换掉骨架屏内容
+
+根据history做路由导航
+默认事件隐藏
+// 变更地址栏
+history.pushState({},'',href);
+=====使用插件来做
+const MyPlugin = require('./myPlugin.js');
+new MyPlugin({
+      text:'1234567'
+})  挂载插件
+MyPlugin.js
+MyPlugin.prototype.apply = function(compiler) {
+      compiler.plugin('compilation',(compilation)=>{
+    	compilation.plugin('html-webpack-plugin-before-html-processing',(htmlData,callback) => {}
+      }
+}
+
+=============跨域
+webpack按数组顺序执行的
+webpack插件
+
+
+=============多页应用
+npm i -D html-webpack-plugin
+1. 多个html插件挂载   
+2. js入口多入口
+     配置不同filename和template属性
+     chunks描述各自引入的资源
+1.webpack.base.conf.js下修改entry
+entry: {
+    user: './src/projects/user/main.js',
+    goods:'./src/projects/goods/main.js'
+  },
+2.webpack.dev.conf.js下修改plugins
+   new HtmlWebpackPlugin({     //1111111111
+      filename: 'user.index.html',
+      template: path.join(__dirname,'../src/projects/user/index.html'),
+      inject: true,
+                  // 入口实际就是entry的key
+      chunks:['manifest','vendor','user'],  //指定引入的第三方js文件
+      minify: {
+        removeComments: true,
+        collapseWhitespace: true,
+        removeAttributeQuotes: true
+      },
+      chunksSortMode: 'dependency'
+    }),
+  new HtmlWebpackPlugin({   //222222222
+      filename: 'goods.index.html',
+      template: path.join(__dirname,'../src/projects/goods/index.html'),
+      inject: true,
+                  // 入口实际就是entry的key
+      chunks:['manifest','vendor','goods'],
+      minify: {
+        removeComments: true,
+        collapseWhitespace: true,
+        removeAttributeQuotes: true
+      },
+      chunksSortMode: 'dependency'
+    }),
+
+// dev-server 自动打开浏览器    打开指定页面
+webpack-dev-server --inline --progress --config build/webpack.dev.conf.js --open-page user.index.html
+
+============跨域(代理)  webpack处理   开发proxy-middleware代理   生成nginx
+devServer: {
+    historyApiFallback: true,
+    noInfo: true,
+    overlay: true,
+    proxy:{  //加上
+      '/api': {
+        target: 'https://list.jd.com/list.html?cat=1318,1462,1480&callback=jQuery942326&md=9&l=jdlist&go=0',
+        pathRewrite: {'^/api' : ''},
+        changeOrigin:true   //必须的
+      }
+    }
+  },
+设置默认地址为'/api/'
+
+====nginx.conf   生成环境
+location /api {
+    //可以用原来的参数进行复用和重写
+    proxy_pass  https://list.jd.com/list.html?cat=1318,1462,1480&callback=jQuery942326&md=9&l=jdlist&go=0
+}
+
+
+=============预渲染  解决seo
+npm i  vue-cli-plugins-prerender-spa
+首先加载index.html    不利于seo  搜索引擎优化
+先提前生成页面(关于我们)   URL反馈
+
+=======自定义指令  vue init webpack-simple 01_directive  ( babel ) 
+directive(全局)   directives(局部)
+使用v-demo  
+Vue.directive('demo',{ })
+
+
+this.$nextTick(function(){  //修改元素为show  获取不到元素   在使用ref中    使用自定义指令则不需要
+     this.refs.input.focus();  //setTimeout(function(){},0)  同理
+})
+
+=======pwa  渐进式/web/application  
+持续关注pwa  积极研究其中应用场景 谷歌将现有的技术,结合起来推广的一整套方案
+chrome  55以上
+ios11 safari支持
+支持率caniuse
+service worker (发请求,拦截请求 node服务器)  缓存的机器
+install 预先缓存资源
+activate  更新资源 检测更新
+message  浏览器和serviceworker通信的事件
+数据存储  CacaheAPI
+
+vue ui(pwa)  安装插件axios
+算法策略
+缓存优先
+网络优先
+缓存优先,更新缓存
+只能在localhost   https下运行
+
+==================nuxt.js(vue)  服务端渲染(解决seo的问题)   next.js(react)    
+前端history    通过history.pushState更改url,进而局部组件更新
+vue init nuxt-community/starter-template  project_name
+assets  需要考虑缓存问题的less css js
+static   不需要编译  管理缓存问题的资源文件
+pages  路由页面
+
+1.刷新,地址栏回车 =>url 改变  服务端渲染
+2.点击nuxt组件,点击a标签,禁止a标签跳转,根据其href属性,通过history.pushState改变地址栏,并发起请求或者具体的客户端渲染行为,局部替换内容
+
+请求 => store action =>中间件(全局/局部) => validate() => 
+asyncData()(服务端渲染的页面数据请求)fetch()(同步vuex数据)
+fetch   同步 vuex数据
+
+npm  i @nuxt.js/axios @nuxt.js/proxy
+
+content对象
+req res  route  params  query  fetch  
+
+总结: 
+1.vue服务端渲染  客户端渲染  请求url返回整个页面  
+2.async   fetch   content
+3.路由配置
+
+
+=========vue源码解析
+1.new  Vue({template: { <App/>}}) 
+
+=================
+用于快速生成vue项目基础架构
+npm  i  -g  @vue/cli
+
+vue create my-project //my-project项目名称
+空格 => 选择
+项目结构分析
+node_modules  依赖包目录
+public               静态资源
+src                    所有源代码  assets资源   components    views  mian.js(打包入口文件)  router.js(路由配置)
+.eslintrc.js
+.gitignore
+.browerslistrc
+babel.config.js
+
+自定义配置
+(1)package.json  不推荐
+"vue": {
+    "devServer": {
+      "port": 8888,
+      "open": true
+    }
+}
+(2)vue.config.js
+module.exports = {
+    devServer: {
+      	port: 8888,  //端口号
+      	open: true  //自动打开浏览器
+    }
+}
+
+
+element-ui    基于vue2.0的桌面端组件库
+npm i -S element-ui   //安装
+// 完整使用
+import elementUI from 'element-ui'
+import 'element-ui/lib/theme-chalk/index.css'
+Vue(elementUI)
+
+vue-cli-plugin-element //通过这个插件可以安装element-ui
+
+项目实战:
+1.能够基于Vue初始化项目
+2.能够使用Vue技术栈进行项目开发
+3.能够使用Vue的第三方组件进行项目开发
+4.能够说出前后端分离的开发模式
+登录/退出
+主页布局
+用户管理
+权限管理 *
+分类管理
+参数管理
+商品管理
+订单管理
+数据统计
+
+概述: pc端  移动app  移动web  微信小程序 pc后台管理 通用一个服务器接口  数据库
+
+前后端分离模式:
+前端基于vue技术栈的SPA项目
+前端技术栈
+Vue 
+VueRouter
+Element-UI
+Axios
+Echarts
+
+后端技术栈
+Node.js
+Express
+Jwt        类似session记录功能
+Mysql    
+Sequelize   操作数据库的框架
+
+
+
+组件通信:
+(1)props  
+(2)自定义事件  绑定  监听@emit(name,params)
+(3)发布 订阅  pubsub
+(4)插槽slot 
+(5)vuex
+
+npm info public-js
+订阅  ==绑定事件监听
+发布  ==触发监听事件
+PubSub.subscribe('dTodo', (msg, index) => {  //index就是传递过来的数据
+	
+})
+PubSub.publish('dTodo', index)   //index是要传递的数据
+
+ajax 
+vue-resource   1.x使用  现在不用了
+axios
+
+import Axios from 'axios'
+Vue.prototype.$axios = Axios
+
+//mint-ui使用
+import 'mint-ui/lib/style.css'
+import { Button } from 'mint-ui'
+Vue.component(Button.name, Button)
+//按需导入
+需要插件
+npm i babel-plugin-componenet
+
+组件使用: Indicator(图标+文字)  MessageBox(alert prompt confirm)  Action sheet(操作表)  Popup(弹出框)
+Swipe  Lazy load   Range(滑块)  Progress  Picker  dateTime(时间) 索引列表
+Header  Tabbar  Navbar  Button  cell  面板切换
+switch  checklist  radio  Field  badge
+
+vue-router
+步骤: 定义路由(xxx.vue)   注册路由(path,component)   使用路由(router-link router-view)
+
+(1)keep-alive    缓存组件对象
+(2)watch  改变路由参数时  使用监视$route
+(3)router-view  同样可以传递数据
+(4)编程式导航  this.$router.push('/home')
+    hash  history  方式路由
+    push()  replace()   go(-1)  back()
+    数组存储    栈和队列
+    this.$route    当前组件     @click="$router.back()"
+    this.$router   路由器   this.$router.push(`/home/message/detail/${id}`)

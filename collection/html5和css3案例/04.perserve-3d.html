@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		body {
+			
+		}
+		.box1 {
+			/*perspective: 1000px;*/
+			width: 200px;
+			height: 200px;
+			margin: 0 auto;
+			border: 5px solid red;
+			transform: rotateY(30deg);
+			transform-style: preserve-3d;
+		}
+		.box1 img {
+			display: block;
+			width: 50%;
+			margin: 0 auto;
+			border: 5px solid blue;
+			transform: rotateY(30deg);
+		}
+		.box2 {
+			perspective: 1000px;
+			position: relative;
+			width: 300px;
+			height: 200px;
+			margin: 100px auto;
+			transform-style: preserve-3d;
+			background: url(../assets/images/BBB_Poster.png) no-repeat 100% 100%;
+		}
+		.box2 div {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 300px;
+			height: 200px;
+			background: url(../assets/images/1.jpg) no-repeat 100% 100%; 
+		}
+		.box2 div:nth-child(1) {
+			transform: rotateY(0deg) translateZ(400px);
+		}
+		.box2 div:nth-child(2) {
+			transform: rotateY(60deg) translateZ(400px);
+		}
+		.box2 div:nth-child(3) {
+			transform: rotateY(120deg) translateZ(400px);
+		}
+		.box2 div:nth-child(4) {
+			transform: rotateY(180deg) translateZ(400px);
+		}
+		.box2 div:nth-child(5) {
+			transform: rotateY(240deg) translateZ(400px);
+		}
+		.box2 div:nth-child(6) {
+			transform: rotateY(300deg) translateZ(400px);
+		}
+	</style>
+</head>
+<body>
+<div class="box1">
+	<img src="../assets/images/1.jpg">
+</div>
+<!-- <div class="box2">
+	<div></div>
+	<div></div>
+	<div></div>
+	<div></div>
+	<div></div>
+	<div></div>
+</div> -->
+<div style="height: 1000px;"></div>
+</body>
+</html>

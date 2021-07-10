@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+</head>
+<body>
+    <iframe src="http://192.168.71.172:8080/04.window.name-c.html" frameborder="0" onload="load()" id="iframe"></iframe>
+    <script>
+        let first = true
+        function load(){
+            console.log('iframe load')
+            if(first){
+                let iframe = document.getElementById('iframe');
+                iframe.src="http://192.168.71.172:8081/04.window.name-b.html";
+                first = false;
+            }else{
+                console.log(iframe.contentWindow.name)
+            }
+        }
+    </script>
+</body>
+</html>

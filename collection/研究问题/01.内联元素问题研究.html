@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		body {
+			/*font-family: 'simsun';*/
+			/*font-family: 'microsoft yahei';*/
+			line-height: normal;
+			line-height: 1.33;
+		}
+		.box1 {
+			/*font-size: 28px;*/
+			/*5  21 - 16*/
+			/*8  37 - 28 = 9*/
+		}
+		.box1 a {
+			background-color: red;
+		}
+		.box1 span {
+			background-color: red;
+			margin-left: -5px;
+		}
+		.box1-1 a,
+		.box1-1 span {
+			background-color: red;
+		}
+		.box1-2 {
+			font-size: 0;
+		}
+		.box1-2 a {
+			background-color: red;
+			font-size: 16px;
+		}
+		.box1-2 span {
+			background-color: red;
+			font-size: 16px;
+		}
+		.box1-3 {
+			overflow: hidden;
+		}
+		.box1-3 a {
+			background-color: red;
+			float: left;
+		}
+		.box1-3 span {
+			background-color: red;
+			float: left;
+		}
+		.box2 a {
+			background-color: red;
+			margin-right: 10px;
+		}
+		.box2 span {
+			background-color: red;
+			margin-top: 10px;
+			margin-left: 10px;
+		}
+		.box3 a {
+			display: inline-block;
+			background-color: red;
+		}
+		.box3 span {
+			display: inline-block;
+			background-color: red;
+			margin-top: 10px;
+		}
+		
+		.box4 a {
+			background-color: red;
+		}
+		.box4 span {
+			background-color: red;
+		}
+		.box4 img	{
+			width: 20px;
+			height: 40px;
+			margin-top: -5px;
+		}
+		.box5 {
+			background-color: #eee;
+		}
+		.box5 .son {
+			display: inline;
+			padding: 6px 12px;
+			background-color: red;
+		}
+		.il .inline {
+			display: inline;
+		}
+		.il .inline-block {
+			display: inline-block;
+		}
+		.il .inline-table {
+			display: inline-table;
+		}
+	</style>
+</head>
+<body>
+	<!-- 
+		1.内联元素之间的间隙问题  使用margin-left, 难控制
+			(1) 在标签之间不添加任何的换行和空格.
+			(2) 给父元素的字体大小设置为0px; 然后再单独给子元素设置字体大小.
+			(3) 元素浮动
+
+		2. display计算值为inline的非替换内联元素垂直margin无效
+		   水平margin有效
+		3. display:inline-block;可以margin-top 但是受基线对齐的影响 所有内联元素都会移动
+		4. 图片影响文字的位置, 图片margin-top负值有限制基线对齐
+		   正值跟文字一起向下
+
+		5.内联元素大小由内容撑开, padding左右也可以撑大
+		  padding垂直方向上没有影响
+	-->
+<!--  -->
+<div class="box1">
+	<a href="#">按钮</a>
+	<span>中国</span>
+</div>
+<div class="box1-1">
+	<a href="#">按钮</a><span>中国</span>
+</div>
+<div class="box1-2">
+	<a href="#">按钮</a>
+	<span>中国</span>
+</div>
+<div class="box1-3">
+	<a href="#">按钮</a>
+	<span>中国</span>
+</div>
+<div class="box2">
+	<a href="#">按钮</a>
+	<span>中国</span>
+</div>
+<div class="box3">
+	<a href="#">按钮</a>
+	<span>中国</span>
+</div>
+<div class="box4">
+	<a href="#">按钮</a>
+	<span>中国</span>
+	<img src="../assets/images/1.jpg">
+</div>
+<div class="box5">
+	<div class="son">中国</div>
+</div>
+
+<div class="il">
+	<div class="inline">inline</div>		
+	<div class="inline-block">inline-block</div>		
+	<div class="inline-table">inline-table</div>		
+</div>
+</body>
+</html>

@@ -1,0 +1,69 @@
+dom.currentStyle.width/height;      //只有IE支持
+window.getComputedStyle(dom).width/height;  //兼容性好
+=================================Event============================
+事件：添加  删除
+function addEventListener(element, type, fn) {
+  if (element.addEventListener) {
+    element.addEventListener(type, fn, false);
+  } else if (element.attachEvent){
+    element.attachEvent('on' + type,fn);
+  } else {
+    element['on'+type] = fn;
+  }
+}
+function removeEventListener(element, type, fn) {
+  if (element.removeEventListener) {
+    element.removeEventListener(type, fn, false);
+  } else if (element.detachEvent) {
+    element.detachEvent('on' + type, fn);
+  } else {
+    element['on'+type] = null;
+  }
+}
+第三个参数:   false冒泡   true捕获   默认是false    e.eventPhase
+第一个阶段： 捕获阶段  1
+第二个阶段： 当前目标阶段   2  目标元素
+第三个阶段： 冒泡阶段  3
+onclick    attachEvent都是冒泡型事件
+onclick    addEventListener同一事件后面绑定的先执行
+
+事件委托: 原理事件冒泡  可以让只改变点击到的li改变   e.target.style.backgroundColor
+e.type                  没有on   click  mouseover mouseenter
+
+事件兼容:
+e  指的是事件对象       // window.event 老版IE  用的是
+e.preventDefault();     // e.returnValue = false;   取消默认行为
+e.stopPropagation()   // e.cancelBubble = true;   阻止冒泡   true是最远那个   false是最近那个
+e.x                            // e.pageX   鼠标当前坐标
+
+event.target              // e.srcElement   返回触发事件的元素   目标阶段
+event.currentTarget   // 当前处理该事件的元素,文档,窗口   返回绑定事件的元素   冒泡到谁就是谁  相当于this  
+
+keyup   键盘弹起  文字已经输入   keydown > keypress > keyup
+keydown   键盘按下 文字没有输入
+e.keyCode   数字在48到57
+
+事件的三个阶段：
+(1)0.没有触发  1.捕获阶段   2.当前目标阶段  3.冒泡阶段   (e.eventPhase属性可以查看事件触发时所处的阶段)
+(3) event.type 获取事件类型
+     clientX/clientY      所有浏览器都支持，窗口位置
+     pageX/pageY       IE8以前不支持，页面位置
+     event.target  ||  event.srcElement   用于获取触发事件的元素
+     event.preventDefault()   取消默认行为
+     滚轮事件   onmousewheel         IE     e.detail(-3 || 3)
+     火狐(谷歌)中 DOMMouseScroll   e.wheelDelta  (-120 || 120)
+冒泡和捕获事件的区别：
+(1) 冒泡型事件：事件按照从最特定的事件目标到最不特定的事件目标(document对象)的顺序触发。
+  IE 5.5: div -> body -> document
+  IE 6.0: div -> body -> html -> document
+  Mozilla 1.0: div -> body -> html -> document -> window
+(2) 捕获型事件(event capturing)：事件从最不精确的对象(document 对象)开始触发，然后到最精确(也可以在窗口级别捕获事件，不过必须由开发人员特别指定)。
+(3) DOM事件流：同时支持两种事件模型：捕获型事件和冒泡型事件，但是，捕获型事件先发生。两种事件流会触及DOM中的所有对象，从document对象开始，也在document对象结束。
+  DOM事件模型最独特的性质是，文本节点也触发事件(在IE中不会)。
+(4) 
+// 第三个参数true和false
+// true表示该元素在事件的“捕获阶段”（由外往内传递时）响应事件；
+// false表示该元素在事件的“冒泡阶段”（由内向外传递时）响应事件。
+
+disabled = true  不能点击
+

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		li + li{
+			animation: lianimation 2s linear;
+		}
+		@keyframes lianimation {
+			0% {
+				/*background-color: red;*/
+				transform: translateY(20px);
+			}
+			100% {
+				transform: translateY(0px);
+				/*background-color: #000;*/
+			}
+		}
+	</style>
+</head>
+<body>
+	<ul class="ul">
+		<li>123456</li>
+	</ul>
+<script type="text/javascript">
+	setInterval(function(){
+		var li = document.createElement('li');
+		var text = document.createTextNode('中国');
+		li.append(text);
+		document.querySelector('.ul').append(li);
+
+		console.log(li);
+
+	},2000);
+</script>
+</body>
+</html>

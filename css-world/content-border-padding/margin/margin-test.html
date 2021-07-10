@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.container {
+			width: 1000px;
+			margin: 0 auto;
+			overflow: hidden;
+		}
+		.container .cont-l,
+		.container .cont-r {
+			float: left;
+			width: 50%;
+			margin-bottom: -9999px;
+			padding-bottom: 9999px;
+		}
+		.container .cont-l {
+			background-color: red;
+		}
+		.container .cont-r {
+			background-color: #eee;
+		}
+		.clearfix:after {
+			content: '';
+			display: block;
+			clear: both;
+		}
+		.clearfix {
+			*zoom: 0; 
+		}
+		.container2 {
+			width: 1000px;
+			border-left: 200px solid #096;
+			box-sizing: border-box;
+			margin: 0 auto;
+		}
+		.container2 .cont2-l,
+		.container2 .cont2-r {
+			float: left;
+		}
+		.container2 .cont2-l {
+			width: 200px;
+			margin-left: -200px;
+			background-color: #eee;
+		}
+		.container2 .cont2-r {
+			width: 100%;
+			padding: 10px;
+			box-sizing: border-box;
+			background-color: #ccc;
+		}
+		.container3 {
+			width: 1000px;
+			margin: 0 auto;
+		}
+		.container3 .cont3-l {
+			display: table-cell;
+			width: 200px;
+			background-color: #eee;
+		}
+		.container3 .cont3-r {
+			display: table-cell;
+			width: 800px;
+			background-color: #ccc;
+		}
+
+	</style>
+</head>
+<body>
+<div class="container">
+	<div class="cont-l">
+		<p>left</p>
+		<p>left</p>
+		<p>left</p>
+	</div>
+	<div class="cont-r">
+		<p>right</p>
+		<p>right</p>
+		<p>right</p>
+		<p>right</p>
+	</div>
+</div>
+<div class="container2 clearfix">
+	<div class="cont2-l">
+		<p>left</p>
+		<p>left</p>
+		<p>left</p>
+	</div>
+	<div class="cont2-r">
+		<p>right</p>
+		<p>right</p>
+		<p>right</p>
+		<p>right</p>
+		<p>right</p>
+		<p>right</p>
+		<p>right</p>
+	</div>
+</div>
+<div class="container3">
+	<div class="cont3-l">
+		<p>left</p>
+		<p>left</p>
+		<p>left</p>
+	</div>
+	<div class="cont3-r">
+		<p>right</p>
+		<p>right</p>
+		<p>right</p>
+		<p>right</p>
+		<p>right</p>
+		<p>right</p>
+		<p>right</p>
+	</div>
+</div>
+</body>
+</html>

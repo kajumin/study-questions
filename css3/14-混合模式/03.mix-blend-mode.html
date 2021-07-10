@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.box {
+			width: 300px;
+			height: 400px;
+		}
+		.box1 {
+			background: url(../../css-world/images/xiaolu.jpg);
+			background-size: 100%;
+		}
+		.box1 img {
+			width: 300px;
+			height: 400px;
+			mix-blend-mode: screen;
+		}
+		.box2 {
+			width: 150px;
+			height: 267px;
+			background: url(../../css-world/images/fire.jpg);
+			background-size: 100%;
+		}
+		.box2 video {
+			display: block;
+			width: 150px;
+			height: 267px;
+			mix-blend-mode: screen;
+		}
+		.box3 {
+			width: 150px;
+			height: 267px;
+			background: url(../../css-world/images/rains.jpg);
+			background-size: 100%;
+		}
+		.box3 video {
+			display: block;
+			width: 150px;
+			height: 267px;
+			mix-blend-mode: screen;
+		}
+	</style>
+</head>
+<body>
+	<!-- 
+	mix-blend-mode: 默认情况下是会混合所有比起层叠顺序低的元素的,
+	    可以试试使用CSS3 isolation:isolate; 进行隔离 
+	-->
+<div class="box box1">
+	<img src="../../css-world/images/forward1.jpg">
+</div>
+<div class="box box2">
+	<video src="../../css-world/images/fire.mp4" muted playsinline="true" autoplay loop="" preload="auto"></video>
+</div>
+
+<div class="box box3">
+	<video src="../../css-world/images/rains-s.mp4" muted playsinline="true" autoplay loop="" preload="auto"></video>
+</div>
+
+</body>
+</html>

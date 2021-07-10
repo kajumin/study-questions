@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		a {
+			display: block;
+			width: 10px;
+			height: 10px;
+			/*padding: 100px;*/
+			border: 100px solid transparent;
+			background-image: url('../../images/1.jpg');
+			/*background-origin: content-box;*/
+			/*background-clip: content-box;*/
+		}
+	</style>
+</head>
+<body>
+	<a></a>
+<script type="text/javascript">
+	// json克隆 深拷贝
+	var obj = {
+		"name": "bang",
+		"age": 20
+	} 
+	var newObj = JSON.parse(JSON.stringify(obj))
+	console.log(newObj)
+	console.log(newObj === obj)  //false
+
+	// 获取url中的指定值
+	function getQueryString(name) { 
+	  	var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i"); 
+	  	// var reg = new RegExp("(^|&)" + name + "=([^&]*)", "i"); 
+	  	// (&|$) //要么&要么结尾  不加也可以
+	  	console.log(reg)
+	  	console.log(location.search)
+	  	console.log(window.location.search.substr(1))
+	  	var r = window.location.search.substr(1).match(reg);
+	  	console.log(r)
+	  	if (r != null) return unescape(r[2]); return null; 
+	}
+	console.log(getQueryString('name'))
+	var str10="1234578adfgdag";
+	console.log(str10.match(/[0-9]/)) //返回数组 
+	// ["1", index: 0, input: "1234578adfgdag", groups: undefined]
+	console.log(str10.match(/[0-9]/g)) //返回数组 数组第一个为匹配到的值
+
+	// 数组降维
+	var arr=[[1,2],[3,4]];
+	function Jw(obj){
+	    return Array.prototype.concat.apply([],obj);
+	}
+	console.log(Jw(arr));
+	console.log([].concat([1,2].concat([3,4])));
+
+	var  str12="123*456";
+	console.log(new RegExp(/abc/ig, 'i').flags)
+	// replace() 第二个参数可以是匿名函数  第一个形参必须是match  其他参数是编码$  不能少些 可以不使用形参
+	console.log(str12.replace(/(\d{3})\*([0-9]{3})/, function(match,$1,$2){
+		return $2+"*"+$1;
+	})); //456*123
+</script>
+</body>
+</html>

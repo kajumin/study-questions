@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.container1 {
+			width: 600px;
+			height: 600px;
+			background-color: #f1f1f1;
+			margin: 0 auto;
+			display: flex;
+			/*当子元素没有设置height时*/
+			align-items: stretch;
+		}
+		.container1 .box {
+			width: 100px;
+			/*height: 100px;*/
+			background-color: red;
+		}
+		.container2 {
+			width: 600px;
+			height: 600px;
+			background-color: #f1f1f1;
+			margin: 0 auto;
+			display: flex;
+			align-items: baseline;
+		}
+		.container2 .box:nth-child(3) {
+			font-size: 24px;
+		}
+		.container2 .box {
+			width: 100px;
+			height: 100px;
+			background-color: red;
+		}
+	</style>
+</head>
+<body>
+
+<div class="container1">
+	<div class="box box1">box1</div>
+	<div class="box box2">box2</div>
+	<div class="box box3">box3</div>
+	<div class="box box4">box4</div>
+	<div class="box box5">box5</div>
+</div>
+
+<div class="container2">
+	<div class="box box1">box1</div>
+	<div class="box box2">box2</div>
+	<div class="box box3">box3</div>
+	<div class="box box4">box4</div>
+	<div class="box box5">box5</div>
+</div>
+</body>
+</html>

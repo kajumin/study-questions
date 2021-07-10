@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<!-- 
+1.什么是继承?
+  继承就是子类继承父类的特征和行为, 使得子类对象(实例)具有父类的实例和方法, 或者子类从父类继承方法, 使得子类具有父类相同的行为
+2.继承的优缺点:
+  优点: 
+  1.避免代码重复和逻辑臃肿
+  2.创建子类的对象时, 无须创建父类的对象
+  3.提高了系统的可扩展性 (开辟原则, 扩展功能, 父类不修改)
+  缺点: 子类和父类之间紧密耦合, 子类依赖于父类的的实现, 子类缺乏独立性
+3.图解: 
+   构造函数的prototype属性 指向 原型对象中construtor指向构造函数
+   问题:
+   1.为什么constructor的指针域指向person构造函数呢 ?
+      因为实例和构造函数之间没有直接联系, 通过.__proto__关联到Person.prototype原型对象, 再通过属性constructor指向构造函数
+    2.为什么每个person实例需要一个__proto__属性指向原型
+      为了找到原型对象中的属性
+5.常见的继承方式
+  1.原型链继承(完全继承)  SubType.prototype = new SupType()
+  2.构造函数继承(不完全继承)  SupType.call(this, name)  不能继承到父类原型方式
+  3.寄生式继承 定义一个对象字面量
+  js是基于对象编程, java是面向对象编程
+ -->
+ <script type="text/javascript">
+ 	function A() {
+
+ 	}
+ 	console.log(A.prototype.constructor.name)  //A
+
+
+ 	function SupType() {
+
+ 	}
+ 	function SubType() {
+
+ 	}
+ 	var sup = new SupType()
+ 	console.log(sup.constructor) //SupType
+ 	SubType.prototype = new SupType()
+ 	SubType.prototype.constructor = SubType
+ 	var sub = new SubType()
+ 	// 不修改constructor属性指向 就会指向父类
+ 	// console.log(sub.__proto__.constructor) //SupType
+ 	// 修改之后就不会
+ 	console.log(sub.__proto__.constructor) //Subtype
+
+
+ 	function createAnother (original) {
+ 		// var clone = Object(original)
+ 		var clone = Object.create(original)
+ 		clone.sayHi = function () {
+ 			console.log('hello world')
+ 		}
+ 		return clone
+ 	}
+ 	var person = {
+ 		name: 'bang',
+ 		age: 18
+ 	}
+ 	var p = createAnother(person)
+ 	console.log(p)
+ 	console.log(p.__proto__.constructor.name) //Object
+ 	console.log(p.__proto__.__proto__.constructor.name) //Object
+
+ 	
+ 	console.log(p.__proto__) //{ name: 'bang', age: 18 }
+ 	console.log(p.__proto__.__proto__.constructor.name) //Object.prototype
+ 	console.log(p.__proto__.__proto__.__proto__) //null
+ </script>
+</body>
+</html>

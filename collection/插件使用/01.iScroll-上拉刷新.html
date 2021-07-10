@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+        body {  
+            margin: 0;
+            padding: 0;
+            font-size: 14px;
+            font-family: "MicroSoft YaHei", sans-serif;
+            /*overflow: hidden;*/
+        }
+        ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+        .header,
+        .footer {
+        	position: absolute;
+        	left: 0;
+        	right: 0;
+        	height: 40px;
+        	line-height: 40px;
+        	background-color: #ddd;
+        	text-align: center;
+        	z-index: 1;
+        }
+        .footer {
+        	bottom: 0;
+        }
+        .container {
+        	position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            background-color: #eee;
+            overflow: hidden;
+        }
+        .scroll {
+        	/*margin-top: -60px;*/
+        }
+        .pullDown,
+        .pullUp {
+        	/*height: 100px;*/
+        	/*padding-top: 46px;*/
+        	text-align: center;
+        	background-color: #096;
+        }
+        ul li {
+        	line-height: 100px;
+        }
+	</style>
+</head>
+<body>
+<div class="header">顶部的数据 朋友圈</div>
+<div class="container">
+	<div class="scroll">
+		<div class="pullDown">
+			<img style="display: none;" width="24" width="100" src="./assets/images/loading.gif" alt=""><span style="margin-left: 5px;height: 40px;line-height:40px;">下拉刷新</span>
+		</div>
+		<ul>
+			<li>1246</li>
+			<li>1246</li>
+			<li>1246</li>
+			<li>1246</li>
+			<li>1246</li>
+			<li>1246</li>
+			<li>1246</li>
+			<li>1246</li>
+			<li>1246</li>
+		</ul>
+		<div class="pullUp">
+			<img style="display: none;" width="24" width="100" src="./assets/images/loading.gif" alt=""><span style="margin-left: 5px;height: 40px;line-height:40px;">上拉刷新</span>
+		</div>
+	</div>
+</div>
+<div class="footer">底部的数据，讲师数据各种show</div>
+<script src="./assets/js/zepto.min.js"></script>
+<script src="./assets/js/iscroll.js"></script>
+<script type="text/javascript">
+	var iscroll = new IScroll(".container", {
+        mouseWheel: true,
+        scrollbars: true,
+        probeType: 2
+    });
+     var winHeight = 0;
+    var contentHeight = 0;
+    var down = false;
+    var up = false;
+	iscroll.on("scroll",function(){
+            var distince = this.y;
+            console.log(distince)
+            if(distince > 30){
+                down = true;
+                console.log('下拉')
+                document.querySelector(".pullDown span").innerHTML="释放加载";
+                //document.querySelector(".pullDown img").style.display="";
+             }
+            //滚动加载..  这个判断相当来说要麻烦一些.
+            //我要获取内容的高度，我要获取窗口的高度，我要获取滚动的距离.
+            var  contentHeight=$(".scroll").height();
+            var winHeight=$(window).height();
+            console.log(contentHeight)
+            console.log(winHeight)
+            console.log(distince)
+            // 内容高度 - 窗口高度 - 滚动高度
+            if(contentHeight - winHeight < Math.abs(distince) - 30){
+            	console.log('上拉')
+            	// console.log((winHeight+Math.abs(distince))-contentHeight)
+                document.querySelector(".pullUp span").innerHTML="释放加载";
+                up=true;
+            }
+    });
+    iscroll.on("scrollEnd", function() {
+        //在这里滚动结束之后，根据用户的行为进行具体的代码实现.
+        console.log("winHeight", winHeight)
+        console.log("contentHeight", contentHeight)
+        if (down) {
+            document.querySelector(".pullDown span").innerHTML = "下拉刷新";
+            document.querySelector(".pullDown img").style.display = "none";
+            down = false;
+        }
+        if (up) {
+            up = false;
+            document.querySelector(".pullUp span").innerHTML = "上拉刷新";
+            document.querySelector(".pullUp img").style.display = "none";
+        }
+    });
+</script>
+</body>
+</html>

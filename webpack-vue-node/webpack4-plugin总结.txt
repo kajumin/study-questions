@@ -1,0 +1,30 @@
+===============compress-webpack-plugin  gizp压缩
+npm i -D compress-webpack-plugin
+configureWebpack: (config) => {
+    if (isProd) {
+      // 配置webpack 压缩
+      config.plugins.push(
+        new CompressionWebpackPlugin({
+          test: /\.js$|\.html$|\.css$/,
+          // 超过4kb压缩
+          threshold: 4096
+        })
+      )
+    }
+  },
+==============moment优化
+// 同时建议在项目中使用更轻量级的day.js代替moment
+  chainWebpack: (config) => {
+    // 优化moment 去掉国际化内容
+    config
+      .plugin('ignore')
+      // 忽略/moment/locale下的所有文件
+      .use(new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/))
+  }
+================删除console.log  配置babel.config.js
+npm i -D babel-plugin-transform-remove-console
+// 发布阶段，则向`prodPlugins `数组中加入插件`transform-remove-console`
+if (process.env.NODE_ENV === 'production') {
+  prodPlugins.push('transform-remove-console')
+}
+plugins: [ ...prodPlugins ]

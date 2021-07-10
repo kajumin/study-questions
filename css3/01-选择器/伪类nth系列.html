@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <style>
+    .ul1-1 li:nth-child(-n+4) { 
+			background-color: red;
+			/*不是li无效 li计算在个数内*/
+		}
+		.ul1-2 li:nth-of-type(-n+4) {
+			background-color: red;
+			/*不是li不计算在个数内*/
+		}
+		.ul1-3 li:nth-child(n+2) {
+			background-color: pink;
+		}
+		.ul1-4 li:nth-of-type(n+2) {
+			background-color: pink;
+		}
+		.ul1-5 li:nth-last-of-type(-n+3) {
+			background-color: pink;
+		}
+		.ul2 li:nth-of-type(3n) {
+			background-color: green;
+		}
+        .ul3 li:nth-of-type(n+2):nth-of-type(-n+6) {
+            background-color: yellow;
+        }
+
+    </style>
+</head>
+<body>
+<p>nth-child(-n+4)  nth-of-type(-n+4): 前4个有效</p>
+<ul class="ul1-1">
+	<li>1</li>
+	<li>2</li>
+	<p>强行插入</p>
+	<li>3</li>
+	<li>4</li>
+	<li>5</li>
+</ul>
+<ul class="ul1-2">
+	<li>1</li>
+	<li>2</li>
+	<p>强行插入</p>
+	<li>3</li>
+	<li>4</li>
+	<li>5</li>
+</ul>
+<p>nth-child(n+2)  nth-of-type(n+2): 2之后有效</p>
+<ul class="ul1-3">
+	<li>1</li>
+	<li>2</li>
+	<p>强行插入</p>
+	<li>3</li>
+	<li>4</li>
+	<li>5</li>
+</ul>
+<ul class="ul1-4">
+	<li>1</li>
+	<li>2</li>
+	<p>强行插入</p>
+	<li>3</li>
+	<li>4</li>
+	<li>5</li>
+</ul>
+<p>最后三个: nth-last-of-type(-n+3)</p>
+<ul class="ul1-5">
+	<li>1</li>
+	<li>2</li>
+	<p>强行插入</p>
+	<li>3</li>
+	<li>4</li>
+	<li>5</li>
+</ul>
+<p>nth-of-type(3n) 3的倍数有效</p>
+<ul class="ul2">
+	<li>1</li>
+	<li>2</li>
+	<p>强行插入</p>
+	<li>3</li>
+	<li>4</li>
+	<li>5</li>
+	<li>6</li>
+	<li>7</li>
+	<li>8</li>
+</ul>
+<p>:nth-of-type(n+2):nth-of-type(-n+6) 选择2-6</p>
+<ul class="ul3">
+	<li>1</li>
+	<li>2</li>
+	<p>强行插入</p>
+	<li>3</li>
+	<li>4</li>
+	<li>5</li>
+	<li>6</li>
+	<li>7</li>
+	<li>8</li>
+</ul>
+
+
+</body>
+</html>

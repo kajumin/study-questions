@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		body {
+			background-color: #eee;
+		}
+		.box {
+			width: 100px;
+			height: 100px;
+			margin-bottom: 30px;
+			background-color: red; 
+		}
+		.box1 {
+			position: relative;
+			z-index: -1;
+		}
+		.box2-1 img {
+			width: 100px;
+			height: 100px;
+			position: relative;
+			z-index: -1;
+			left: 50px;
+		}
+		.box2-2 {
+			position: relative;
+			z-index: 0;
+			background-color: red;
+		}
+		.box2-2 img {
+			width: 100px;
+			height: 100px;
+			position: relative;
+			z-index: -1;
+			left: 50px;
+		}
+
+		.box3 {
+			position: relative;
+			z-index: 0;
+		}
+		.box3 img:nth-child(1) {
+			width: 100px;
+			height: 100px;
+			position: relative;
+			left: 50px;
+		}
+		.box3 img:nth-child(2) {
+			width: 100px;
+			height: 100px;
+			position: absolute;
+			top: -10px;
+			left: 0;
+			z-index: -1;
+		}
+		.box4-1 {
+			position: relative;
+			z-index: 0;
+			background-color: transparent;
+		}
+		.box4-1:after {
+			content: '';
+			position: absolute;
+			top: 0;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			background-color: red;
+			z-index: -1;
+		}
+		.box4-1 img:nth-child(1) {
+			width: 100px;
+			height: 100px;
+			position: relative;
+			left: 50px;
+		}
+		.box4-1 img:nth-child(2) {
+			width: 100px;
+			height: 100px;
+			position: absolute;
+			top: -10px;
+			left: 0;
+			z-index: -2;
+		}
+		.par4 {
+			position: relative;
+		}
+		.par4 > img {
+			width: 100px;
+			height: 100px;
+			position: absolute;
+			top: -10px;
+			z-index: -1;
+		}
+		.box4-2 {
+			position: relative;
+			z-index: 0;
+			background-color: red;
+		}
+		.box4-2 img:nth-child(1) {
+			width: 100px;
+			height: 100px;
+			position: relative;
+			left: 50px;
+		}
+		.box4-2 img:nth-child(2) {
+			width: 100px;
+			height: 100px;
+			position: absolute;
+			top: -10px;
+			left: 0;
+			z-index: -2;
+		}
+		.box5 {
+			position: relative;
+			z-index: 0;
+		}
+		.box5:after {
+			content: '';
+			position: absolute;
+			top: 0;
+			width: 50px;
+			height: 50px;
+			background-color: #096;
+			z-index: -1;
+		}
+	</style>
+</head>
+<body>
+<!-- 
+1.z-index负值不能让元素在body背景之后
+2.  (1)z-index负值在背景颜色之下  说明背景元素不是层叠上下文元素
+    (2)z-index负值在背景颜色之上  说明背景元素是层叠上下文元素
+3.层叠上下文元素不能使子元素在其之后
+4.针对上面的问题  (1)背景使用伪类创建 (2)兄弟元素
+5.伪元素同样不能在层叠上下文元素后面
+
+ --> 
+<h3>box1-z-index负值不能让元素在body背景之后</h3>
+<div class="box box1"></div>
+
+<h3>box2</h3>
+<div class="box box2-1">
+	<img src="../../images/1.jpg">
+</div>
+<div class="box box2-2">
+	<img src="../../images/1.jpg">
+</div>
+
+<h3>box3</h3>
+<div class="box box3">
+	<img src="../../images/1.jpg">
+	<img src="../../images/80.png">
+</div>
+
+<h3>box4</h3>
+<div class="box box4-1">
+	<img src="../../images/1.jpg">
+	<img src="../../images/80.png">
+</div>
+<div class="par4"> 
+	<div class="box box4-2">
+		<img src="../../images/1.jpg">
+	</div>
+	<img src="../../images/80.png">
+</div>
+
+
+<div class="box box5">
+	
+</div>
+</body>
+</html>

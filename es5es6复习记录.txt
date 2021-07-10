@@ -1,0 +1,91 @@
+!!: 逻辑非，任何值都会被强制转化为一个布尔值变量，再对其值取反
+!!只是单纯的将操作数执行两次逻辑非
+是否有id值: (1)!!id  (2)id ? true:false  (3)Boolean(id)
+
+~: 按位取反 -> 二进制 -> 按位取反 -> 反码 -> 补码 -> 十进制 
+~5 -> 0000 0101 -> 1111 1010 -> 1000 0101 -> 1000 0110 -> -6
+~~: 双非按位取反  Math.floor()更快的方法
+
++: 将变量转为数字
+
+&: 按位非 7 & 3  -> 二进制 -> 按位与  -> 十进制
+     const isOdd = num => !!(num & 1);
+&&: 逻辑与 返回第一个为假的值 都假返回最后一个  短路逻辑
+
+||: 逻辑或 返回第一个为真的值 都真返回最后一个  默认值赋值
+
+==     判断值是否相等
+===   判断值与类型是否都相等
+
+^: 按位异或  交换值(三次即可完成)
+
+数值表示法 科学计数法   3e9  3e9一样  -3e9  -3e-4(-0.0004)
+
+0B  0O 0X
+转为其他进制toString(16)  转为十进制parseInt('c', 16)
+
+sort: 返回值大于0  位置不变   返回值小于0  位置不变
+.concat.apply: 用于拉平数组  递归
+.push.apply: 拼接操作
+length:  (1)值需要为正整数  (2)传递字符串会被尝试转为数字类型
+            delete 删除最高索引元素 长度不变  
+            得到稀疏数组
+            清空数组
+
+toString.call()  判断数据类型 
+JSON.parse()  JSON.stringify()  深拷贝  性能不好
+o == -0 -> true  NaN == NaN -> false
+Object.is(0, -0) -> false Object.is(NaN, NaN)
+
+正数的原码、反码、补码都是它本身
+负数的反码：在其原码的基础上, 符号位不变，其余各个位取反
+负数的补码：负数的反码 + 1
+-1 + 1 原码计算不好  反码计算0会带符号  补码计算则不会带符号
+
+=======================14个面试问题
+1.typeof  number string boolean undefind object symbol function
+   toString()  -> [object Arguments]
+2. var f = function g(){ return 23; }; typeof g();//报错
+    g不能变动, 而变量f可以被重新赋值
+    g只能在函数体内部访问, 外部不能访问, 报错
+3.delete操作符只能作用在对象的属性上，对变量和函数名无效, 不会直接释放内存
+4.var y = 1, x = y = typeof x; x;    x -> "undefined"  
+
+5.(function f(f){
+   return typeof f();//"number"
+})(function(){ return 1; });
+
+6.对象方法用变量保存起来, this就会丢失了
+
+7.对象方法提取出来, this丢失
+
+8.返回最后一个操作对象的值
+var f = (function f(){ return '1'; }, function g(){ return 2; })();
+typeof f;//"number"
+
+9. f在函数外部不能访问
+var x = 1; 
+if (function f(){}) {
+    x += typeof f;
+}
+x; //"1undefined"
+
+10. typeof检测出来结果是string类型
+var x = [typeof x, typeof y][1];
+typeof typeof x;//"string"
+  
+11.视觉诡计
+(function(foo){
+    return typeof foo.bar;//"undefined"
+})({ foo: { bar: 1 } });
+
+12.函数提升
+(function f(){
+    function f(){ return 1; }
+    return f();//2
+    function f(){ return 2; }
+})();
+13.构造函数返回复杂数据类型时, 就不会返回this对象了
+function f(){ return f; }
+new f() instanceof f;//false
+     

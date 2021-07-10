@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+	 	body {
+	 		margin: 0;
+			padding: 2em;
+		  	font: 1em / 1.5 'Open Sans', sans-serif;
+		  	color: #333;
+		}
+		p {
+			margin: 0;
+		}
+		blockquote {
+		   	font: 2em 'Berkshire Swash', cursive;
+  			margin: 0;
+  			text-align: center;
+		 	/*跨栏*/
+		  	column-span: all;
+		}
+		.box1 {
+		  max-width: 800px;
+		  margin: 0 auto;
+		  /*至少为14em*/
+		  column-width: 14em;
+		  /*列间隙线样式*/
+		  column-rule: 1px solid #eee;
+		  /*列间隙*/
+		  column-gap: 1em;
+		}
+		figure {
+		  margin: 0;
+		  break-inside: avoid;
+		  /*break-before: always;*/
+		}
+
+		figcaption {
+		  font: .9em 'Berkshire Swash', cursive;
+		  text-align: center;
+		}
+
+		img {
+		  max-width: 100%;
+		}
+
+		h2 {
+		  font: 1.4em 'Berkshire Swash', cursive;
+		}
+	</style>
+</head>
+<body>
+	<!-- 多列布局 CSS Columns
+		IE10+  firefox需要前缀
+	1. column-width不可以为0或者负值 应用在block、inline-block、table-cell元素上
+	2. column-count主要用于给元素指定允许的最大列数
+	3. 列间距column-gap用于定义相邻两列之间的空白间距
+	4. rule 该属性用于绘制位于列间距水平中心的线条
+	5. column-span属性用来定义子元素是否跨列
+	6. 列填充属性column-fill  默认auto  balance统一高度  保证列等高
+	7. columns: column-width column-count;
+	列数*(列宽+列间距) - 列间距 = 元素宽度
+	 -->
+<div class="box1">
+  <p>By way of precaution, when all was complete De Rozier made a few short captive excursions, the balloon being fastened to earth by a rope. But all proving satisfactory, he decided to hazard a “right away” trip on the 21st of November 1783, when he was also to be accompanied by an equally courageous fellow-countryman, the Marquis d’Arlandes. It would be difficult to conceive a more daring and perilous enterprise than these two brave Frenchmen set themselves. They were to venture, by an untried way, into unknown realms where no mortal had been before; they were to entrust their lives to a frail craft whose capabilities had never yet been tested, and at a giddy height they were to soar aloft with an open fire, which at any moment might set light to the inflammable balloon and hurl them to destruction.</p>
+   <figure>
+      <img src="../../images/1.jpg">
+      <figcaption>The Authoress, her Father and Mr. Spencer making an ascent</figcaption>
+    </figure>
+    <h2>The Coming of The Gas Balloon</h2>
+	<p>Wild indeed was the applause of the crowd as the mighty craft, after due inflation, rose majestically into the sky, carrying with it its two brave voyagers—</p>
+
+	<blockquote><p>the first that ever burst
+  	Into that silent sea;</p></blockquote>
+
+  	<p>and with what anxiety was its course followed as, rising rapidly to a height of 3000 feet, it drifted away on an upper current which bore it right over the city of Paris. The travellers themselves experienced various excitements during their adventurous trip. They had constantly to stir the fire and feed it with fresh fuel; they had also with wet sponges continually to extinguish the flames when the light fabric from time to time ignited. At one period they feared descending into the river or on the house-tops, at another a sharp shock gave them the impression that their balloon had burst. But they came safely in the end through all perils and alarms, descending quietly, after a voyage of twenty-five minutes’ duration, five miles from their starting-place.</p>
+ 
+  	
+</div>
+</body>
+</html>

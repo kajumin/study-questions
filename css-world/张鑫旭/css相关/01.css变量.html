@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		:root {
+			--1: #111;
+			--2: #222;
+			--3: #333;
+			--4: #444;
+			--5: #555;
+			--15: #fff;
+		}
+		.box1 {
+			--color5: #555;
+			background-color: var(--color5);
+			color: var(--15);
+		}
+
+		.box {
+		    --columns: 4;
+		    --margins: calc(24px / var(--columns));
+		    --space: calc(4px * var(--columns));
+		    --fontSize: calc(20px - 4 / var(--columns));
+		}
+		.box {
+		    width: 50%;
+		    min-width: 320px;
+		    margin: auto;
+		    overflow: hidden;
+		}
+		.cell {
+		    width: calc((100% - var(--margins) * var(--columns) * 2) / var(--columns));
+		    margin: var(--margins);
+		    box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12);
+		    background-color: #f0f3f9;
+		    float: left;
+		}
+		.cell-header {
+		    background: currentColor;    
+		}
+		.cell-title {
+		    color: #fff;
+		    padding: var(--space);
+		    font-size: var(--fontSize);
+		}
+		.cell-content {
+		    height: 150px;
+		    padding: var(--space);
+		    font-size: var(--fontSize);
+		}
+		@media screen and (max-width: 1200px) {
+		    .box {
+		        --columns: 3;
+		    }
+		}
+		@media screen and (max-width: 900px) {
+		    .box {
+		        --columns: 2;
+		    }
+		}
+		@media screen and (max-width: 600px) {
+		    .box {
+		        --columns: 1;
+		    }
+		}
+	</style>
+</head>
+<body>
+	<!-- 
+	1.声明 --*: 值  使用: var(--*)
+	2.css规则中属性名不能使用变量
+	3.var(--*, default)  没有声明则默认值
+	4.不合法的缺省特性 使用默认值
+	5.空格尾随特性  var(--size)px   --size:20  无效
+
+	用途:
+	(1)可维护性
+	(2)语义化
+	(3)更方便的实现@media媒体查询
+	-->
+
+<div class="box1">中国</div>
+
+<div class="box">
+    <div class="cell" style="color: #F44336;">
+        <header class="cell-header">
+          <div class="cell-title">红色</div>
+        </header>
+        <main class="cell-content">改变浏览器的宽度</main>
+      </div>
+      <div class="cell" style="color: #E91E63;">
+        <header class="cell-header">
+          <div class="cell-title">粉色</div>
+        </header>
+        <main class="cell-content">会看到布局发生了变化</main>
+      </div>
+      <div class="cell" style="color: #9C27B0;">
+        <header class="cell-header">
+          <div class="cell-title">紫色</div>
+        </header>
+        <main class="cell-content">仅仅是通过CSS改变一个变量值实现</main>
+      </div>
+      <div class="cell" style="color: #00BCD4;">
+        <header class="cell-header">
+          <div class="cell-title">青色</div>
+        </header>
+        <main class="cell-content">这比传统的响应式处理要更省代码更好维护</main>
+      </div>
+      <div class="cell" style="color: #009688;">
+        <header class="cell-header">
+          <div class="cell-title">茶色</div>
+        </header>
+        <main class="cell-content">本例子主要为了演示响应式与变化效果</main>
+      </div>
+      <div class="cell" style="color: #4CAF50;">
+        <header class="cell-header">
+          <div class="cell-title">绿色</div>
+        </header>
+        <main class="cell-content">所以，至于布局变化细节是否合理就不用在意了。</main>
+    </div>
+</div>
+<div id="box" style="--color:lightgreen;background-color: var(--color)"></div>    
+<script>
+　　var oBox = document.getElementById('box');
+　　console.log(oBox.style.getPropertyValue('--color'));//'lightgreen'
+</script>
+
+<script type="text/javascript">
+
+	// 1.获取变量的值
+	// (1)window.getComputedStyle(box1).getPropertyValue('--color5')
+	// (2)style.getPropertyValue('--color6')只能获取style中有的变量
+	// 2.设置变量
+	// box1.style.setProperty('--color5', '#444')
+
+
+	var box1 = document.querySelector('.box1')
+	var color5 = window.getComputedStyle(box1).getPropertyValue('--color5')
+	var color6 = box1.style.getPropertyValue('--color5')
+	console.log(color5)
+	console.log(color6)
+	box1.style.setProperty('--color5', '#444')
+
+</script>
+</body>
+</html>

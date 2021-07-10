@@ -1,0 +1,174 @@
+vue 3.0   bate公测版
+新增: 
+make it faster
+make it smaller
+make ir more maintainable
+make it easier to target native
+make your lift easier
+特性: 
+数据劫持:  object.definedProperty()
+proxy
+虚拟diff重构  
+typescript
+
+api: 函数式api
+Composition
+
+githob.com/vue/vue-next
+vue-composition-api-rfc-netlify.app/zh/api.html
+
+npm -v
+nrm  ls
+vue  -V
+vue create vue3-study
+cd vue3-study
+vue add vue-next
+vscode vue3  Snippets
+
+
+
+学习
+setup(props)  第一个参数  第二个参数(上下文对象context) { attrs emit slot }
+setup不能访问this    用执行上下文代替 
+获取props数据   setup(props)   props是代理对象
+执行比beforeCreate早  
+有返回值  return { name: 'tom' }   可以直接使用 相当于data里的  但是不具有响应式
+
+2.xx
+Vue.obserable({ })  接收一下对象   返回响应式对象
+
+响应式系统api:    vue3.0响应式都是通过代理对象
+import { reactive} from 'vue'
+reactive({   //返回响应式  代理对象
+ name: 'tom',
+ age: 18
+});
+const data = reactive({
+count     //reactive中使用ref对象  无需.value
+})
+data.count  === 1
+data.count = 6    修改
+
+ref创建响应式对象   参数一     不是代理对象
+import { ref } from 'vue'
+const count = ref(1);
+count.value === 1   拿数据.value
+{{ count }}   无需.value   {{}}模板自动解套
+
+事件也需要返回 才能被外部访问
+return  {
+   count,
+   change
+}
+vue3.0都是通过setup返回对象
+
+====计算属性   只读计算属性
+setup(){
+const count = ref(1);
+//根据count创建一个响应式的计算属性
+const plusOne = computed(()=>{
+    return count.value++
+})
+console.log(plusOne.value)
+}
+
+return {
+      count,
+      plusOne
+}
+
+//计算属性可读可写
+const plusOne = computed(
+   set: (val)=>{
+	count.value = val * 2;	
+   }
+   get: ()=>{
+	
+	return count.value++
+    }
+})
+
+//只读对象      是个代理对象
+const state = reactive({count: 1});
+const proxy = readonly(state);
+console.log(state.count)  //1   修改原始对象   代理对象也会变  state.count = 2;
+console.log(proxy.count) //1   不能修改
+
+
+watch 数据监视  可以单个数据或者多个数据
+watch(count,(newValu,oldValue)=>{   //监视res数据源  跟监视props一样可以直接写
+	console.log(oldValue,newValue)  //改了就输出
+});
+const state = reactive({count:1});
+state.count //监视它不行
+watch(()=>state.count,(newValue,oldValue)=>{   //监视res数据源
+	console.log(oldValue,newValue)  //改了就输出
+});
+
+//监视多个
+watch([name,age],([newName,newAge],[oldName,oldAge])=>{   //监视res数据源
+	console.log(oldName,newName)  //改了就输出
+	console.log(oldAge,newAge)
+});
+
+取消监视
+//2.xx
+var unwatch = watch({});   返回一个用于取消的函数
+调用unwatch就取消监视了
+
+作业要求:
+使用vue3.0来实现
+
+immdiate  立即触发监视
+watchEffect  立即触发一次监视
+watchEffect(()=>{
+	console.log(count.value)
+
+})
+
+响应式系统工具集
+isRef(count)
+isReactive(state)
+isReadonly(readonly)
+isProxy(proxy)    reactive创建的是代理对象  readyOnly也是代理对象
+
+unref(count)   是ref对象就返回value  不是就返回本身
+
+toRef(state,'age')   根据age创建ref对象  const ageRef =   toRef(state,'age')  ageRef.value 
+
+toRefs(state)     整个对象
+
+展开运算符后  reactive对象不支持响应式
+...toRefs(state)   //全部具有响应式  又展开了
+
+生命周期  都写在setup
+setup                   代替   beforeCreate   created 
+onBeforeMount   代替    beforeMounted
+onMounted         代替    mounted
+onBeforeUpdate  代替    beforeUpdate
+onUpdate            代替    update
+onBeforeUnmount 代替  beforeDestory
+onUnmounted      代替      destoryed
+onErrorCaptured   代替      errorCaptured   
+
+依赖注入  在setup中使用
+//祖先    
+provide('color','pink');  //传普通数据    不具有响应式
+//孙子
+const = inject('color');  //获取数据
+
+provide('colorRef',colorRef);  // 传响应式对象
+const coloreRef = inject('colorRef');
+
+
+
+模板refs
+ref()函数还是可以应用页面的元素或组件, 功能类似于vue2.x的this.refs
+<h3>我想获取h3元素<h3>
+1.创建ref对象
+  const h3Ref = ref(null)
+  return {
+	h3Ref
+  }
+2.页面上绑定ref = "h3Ref"
+3.获取h3Ref  加载完页面才能获取onMounted(()=>{  });

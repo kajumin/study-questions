@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.section {
+			border: 1px solid red;
+		}
+		.p {
+			margin: 0;
+			border-bottom: 2px solid #adc;
+		}
+		img {
+			width: 100px;
+		}
+		.img {
+			width: 300px;
+			height: 200px;
+		}
+		.img1 {
+			display: inline-block;
+			width: 150px;
+			height: 100px;
+		}
+		img	{
+			visibility: hidden;
+		}
+		.img1[src] {
+			visibility: visible;
+		}
+		.box1::before {
+			content: url('../../images/1.jpg');
+			width: 200px;
+			height: 200px;
+		}
+	</style>
+</head>
+<body>
+<!-- 
+1.替换元素: 通过修改某个属性值呈现的内容被替换的元素  
+img vedio object iframe textarea input
+(1)内容的外观不受页面上的css的影响 appearance  单复选框
+(2)有自己的尺寸 300*150(video, iframe, canvas)  0(img) 不定(input)
+(3)在很多css属性上有自己的一套表现规则 (下边缘vertical-align)
+替换元素的display: inline | inline-block  都是内联元素
+          chrome          firefox          ie
+input     inline-block    inline           inline-block
+button    inline-block    inline-block     inline-block
+
+替换元素的尺寸计算规则: css > html > 固有
+(1)固定尺寸指的是内容原本的尺寸  img video(内容自己的尺寸) input不加修饰的尺寸
+(2)html尺寸 width
+(3)css尺寸  content-box
+
+固有尺寸含有固定的比例, 设置一边也可以
+内联替换元素和块级替换元素使用一套尺寸计算规则
+src没有写不会发请求  透明的占位符
+无法改变固有尺寸而已覆盖
+img 默认是object-fit: fill;
+img 没有src时伪元素才能生效
+
+2.普通元素和替换元素之间的距离
+(1)src属性
+(2)content属性
+
+content和替换元素之间的关系
+content生成的内容都是替换元素, 所以替换元素和普通元素内容有很多不同的特性表现
+(1) content生成的文本无法被选中,无法复制
+(2) 无法获取生成的值
+(3) 无法左右:empty伪类, 生成的内容依然当做是空
+
+3.content生成技术都是使用在伪元素中::before ::after
+(1) 辅助元素生成  清除浮动 水平垂直居中 两端对齐
+(2) 生成字符内容 字体图标  ...
+(3) 图片生成  base64数据格式才有用
+(4) 了解content开启闭合符号生成
+(5) attr属性值内容生成
+(6) counter计数器
+counter-reset 普照源 计算器-重置 默认为0  counter-reset: wangxiaoer 2; 默认为2
+           none   inherit  取消重置和继承
+counter-increment 普照递增  第二个参数为增减值(数值)  none inherit
+counter(name, style)  输出
+counters  counters(name, string) 父元素需要重置counter-reset: wangxiaoer;
+		counters(wangxiaoer, '-', '.');
+counter  style:
+disc | circle | square | decimal | lower-roman | upper-roman
+
+ -->
+<div class="section">
+ 	<p class="p">自己的尺寸</p>
+ 	<video></video>
+ 	<canvas></canvas>
+ 	<iframe></iframe>
+ 	<img>
+</div>
+
+<div class="section">
+ 	<p class="p">自己的表现规则-元素的下边缘</p>
+ 	x<img src="../../images/1.jpg" height="200">y
+</div>
+
+<div class="section">
+ 	<p class="p">button与input textarea和input 火狐inline 其他inline-block</p>
+ 	<input type="button" name="" value="提交">
+	<button>提交</button>
+</div>
+
+ <div class="section">
+	<p class="p">替换元素的计算规则: css > html > 固有</p>
+	<p>(1)规定尺寸指的是内容原本的尺寸 img video  input不加修饰的尺寸</p>
+	<img src="../../images/1.jpg">
+	<p>(2)html尺寸 width height</p>
+	<img src="../../images/1.jpg" width="200" height="200">
+	<p>(3)css尺寸  content-box</p>
+	<img src="../../images/1.jpg" width="200" class="img">
+	<p>固有尺寸含有固定的比例, 设置一边也可以, width: 150px;</p>
+	<img src="../../images/1.jpg" width="150">
+</div>
+
+<div>
+	<p>无法改变固有尺寸而已覆盖, 还是图片原来的尺寸</p>
+	<div class="box1"></div>
+	<p>img 没有src chrome | foxfire 0*0</p>
+	<img>
+	<p>透明占位符</p>
+	<img class="img1">
+</div>
+
+ <script type="text/javascript">
+ 	var img1 = document.querySelector('.img1')
+ 	console.log(img1)
+ 	setTimeout(() => {
+ 		img1.src ='../../images/1.jpg';
+ 	}, 2000)
+ </script>
+</body>
+</html>

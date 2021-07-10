@@ -1,0 +1,157 @@
+端口开放:   22  80 8080  3000 4000 5000  3389
+主机 = 公网ip
+用户名: root   密码: YImi19812  端口号: 22
+fileZilla   操作linux服务器
+putty      操作linux命令  用户名: root  密码: YImi19812
+
+=====命令
+cat start_nginx.sh  看谁启动了那个文件 不知道nginx所指的路径时
+ssh root@192.168.0.31   //切换进入linux系统
+cd   /            进入根目录
+ll                  查看目录
+cd  home     进入目录
+
+解压缩
+tar -zxvf nginx-1.12.0.tar.gz
+
+选择再鼠标右键 可以快速复制到命令行中
+
+1.mkdir a     创建文件夹
+2.ls   ll(详情)          查看
+3.rm  -rf  a   删除文件夹
+4.vi  a.js        创建文件
+5.cp a.js a1.js        复制文件
+6.mv a1.js src/a.js  移动文件
+7.rm a.js
+9.cat a.js查看文件
+10.head -n 1 a.js  头部   第一行
+11.tail -n 2   a.js尾部  后两行
+12.grep '2'   a.js
+============ngnix需要环境
+yum -y install gcc-c++    安装c++   可能服务器有可能没有   都执行一下
+yum -y install pcre-devel   
+yum -y install zlib-devel     
+yum -y install openssl openssl-devel       https 协议
+
+进入源码目录  灵活使用tab
+cd  nginx-1.12.0
+以此安装如下顺序：
+./configure
+make      //发生错误请看linux错误1  linux错误2
+make install
+
+pwd   现在所在的目录
+
+ngnix 所在位置/ usr/local/
+===启动nginx
+cd /usr/local/nginx/sbin
+./nginx
+
+===============配置项目路径
+配置   /usr/local/nginx/conf/nginx.conf
+cp nginx.conf  ngnix.conf.back    //备份nginx.conf
+vim    nginx.conf   配置   O: read-only, 只读，不能改E: 可以改，从前的修改都丢失R: 恢复(从前的修改)D: 删去(我没用过，估计是删去.test.txt.swp)Q: 退出（什么也不做）A: 半途放弃(没用过)
+
+a       编辑
+esc    退出编辑   
+:wq   保存退出
+:q!     强制退出
+
+在/usr/local/nginx/sbin输入以下命令重启ngnix
+./nginx -t    查看修改后的配置是否有错
+./nginx -s reload  重启 
+
+server { 
+	listen  80;
+                server_name:  localhost;
+	#server_name:  www.baidu.com;
+ 	location  /{
+	root /usr/local/ngnix/movie/h5;
+                index index.html  index.htm;
+	}
+}
+
+
+404107262@qq.com  124578  Hbuilder账号
+===================pm2
+1.动态监控文件的上传  (0秒热启动)
+2.负载均衡  (cpu)
+3.内存的使用高了   cpu调度太频繁  重启
+4.restart
+{
+	"name": "node-app",
+	"script": "app.js",
+	"log_date_format": "YYYY-MM-DD HH:mm Z",
+	"out_file": "log/node-app.stdout.log",
+	"watch": true,
+	"instances": "max",  //cpu占满
+	"exec_mode": "cluster"
+
+} 
+============使用  
+pm2 stop all       停止全部   pm2 stop 0  停掉0进程
+pm2 reload all    #重载PM2列表中所有的进程
+pm2 restart all    #重启PM2列表中所有的进程
+pm2 restart app-name(vue-todo)  重启进程
+pm2  list                    查看进程
+pm2  monit               监控
+pm2  keymetrics         网上监控平台
+ps aux | grep node     找到node进程
+lsof -s tcp:8080          找到端口被占用
+kill -9 pid
+ssh 用户名@地址(免密登录)
+
+unzip build.zip
+wget xxx         linux下载网络文件
+
+=====使用配置文件 指定环境
+pm2 start pm2.json    pm2 start app.js
+pm2 start pm2.yml --env production  启动vue-todo
+================Node.js并配置
+1.wget  https://npm.taobao.org/mirrors/node/v10.15.0/node-v10.15.0-linux-x64.tar.gz  || 或者下载拉进去
+2.tar -zxvf node-v10.15.0-linux-x64.tar.gz 
+3.配置全局命令
+ln -s /usr/local/node/node-v10.15.0-linux-x64/bin/npm /usr/local/bin/npm
+ln -s /usr/local/node/node-v10.15.0-linux-x64/bin/node /usr/local/bin/node
+4.npm install --production
+====安装pm2还需要安装  bufferutil@^4.0.1   utf-8-validate@^5.0.2
+npm list -g --depth 0  查看全局安装的包
+ln -s /usr/local/node/node-v10.15.0-linux-x64/bin/node /usr/local/bin/node
+ln -s /usr/local/node/node-v10.15.0-linux-x64/bin/pm2 /usr/local/bin/   建立软连接
+
+=====deploy.js
+
+===================MySQL   https://www.mysql.com/downloads/
+1.https://cdn.mysql.com//Downloads/MySQL-5.7/mysql-5.7.26-linux-glibc2.12-x86_64.tar.gz  下载好拉进去
+rpm -qa | grep mysql     检测是否安装过
+whereis mysql  检测文件  然后删除  rm -rf
+2.tar -xzvf  mysql-5.7.26-linux-glibc2.12-x86_64.tar.gz -C /usr/local/   解压到/usr/local/
+3.创建用户和组  groupadd mysql     &&      useradd -r -g mysql mysql
+4.将安装目录所有者及所属组改为mysql      chown -R mysql.mysql /usr/local/mysql
+5.创建data文件夹，用于存放数据库表之类的数据   [root@localhost mysql]# mkdir data #进入mysql文件夹
+6.安装依赖包 yum install libaio
+初始化  记住保存它的临时密码
+[root@localhost mysql]# /usr/local/mysql/bin/mysqld --user=mysql --basedir=/usr/local/mysql/ --datadir=/usr/local/mysql/data --initialize
+7.配置文件  /etc/my.cnf
+8.将mysql加入到服务中
+[root@localhost mysql]# cp /usr/local/mysql/support-files/mysql.server /etc/init.d/mysql
+9.开机启动            [root@localhost mysql]# chkconfig mysql on
+10.启动mysql服务  [root@localhost mysql]# service mysql start
+11.登录mysql    建立软连接
+ln -s /usr/local/mysql/bin/mysql /usr/bin/mysql
+mysql -uroot -p
+12.修改密码  set password for root@localhost = password('123456');
+13.数据库迁移
+create database blog;
+use blog;
+set  names utf8;
+source  /usr/local/nginx/node-blog/database/blog.sql
+
+账号 root  密码  123456
+
+http://120.78.148.176:8080/
+http://120.78.148.176:3000/
+
+
+
+

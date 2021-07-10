@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.box1 {
+		    border: 1em solid black;
+		    -webkit-transition: font-size 2s;
+		    transition:font-size 2s;
+		    font: 20px/100px "宋体";
+		    text-align: center;
+		}    
+		.box1:hover {
+		    font-size: 40px;
+		}
+	</style>
+</head>
+<body>
+	<!-- 
+	transitionEnd的事件对象具有以下3个私有属性　　
+　　(1)propertyName：发生transition效果的CSS属性名
+　　(2) elapsedTime：代表发生实际效果的持续时间。
+		若完整进行，则返回完整时间；若中途中断，则返回实际时间
+	(3)pseudoElement：如果transition效果发生在伪元素，
+	  会返回该伪元素的名称，以“::”开头。
+	  如果不发生在伪元素上, 则返回一个空字符串''
+	 -->
+<div class="box1">
+	测试文字
+</div>
+<script type="text/javascript">
+	var index = 0;
+	var box1 = document.querySelector('.box1');
+	// 兼容低版本safari、IOS、android
+	box1.addEventListener("webkitTransitionEnd", myFunction);
+	// 标准语法
+	box1.addEventListener("transitionend", myFunction);
+	function myFunction(e) {
+	    index++;
+	    this.innerHTML = index;
+	    console.log(e.propertyName) //font-size
+	    console.log(e.elapsedTime)  //2
+	    console.log(e.pseudoElement)// 空字符串
+	    if(index == 1){
+	        box1.removeEventListener("webkitTransitionEnd", myFunction);
+	        box1.removeEventListener("transitionend", myFunction);
+	    }
+	}
+</script>
+</body>
+</html>

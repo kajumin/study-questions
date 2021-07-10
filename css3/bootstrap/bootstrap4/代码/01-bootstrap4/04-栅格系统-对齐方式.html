@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="lib/css/bootstrap.css">
+    <title>栅格布局</title>
+    <style>
+        .container>.row{
+            height: 200px;
+            background-color: pink;
+        }
+        .container>div>div:nth-child(1){
+            background-color: red;
+        }
+
+        .container>div>div:nth-child(2){
+            background-color: green;
+        }
+
+        .container>div>div:nth-child(3){
+            background-color: blue;
+        }
+
+        .container>div>div:nth-child(4){
+            background-color: purple;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="row align-items-center">
+        <div class="col-md-3">第一部分</div>
+        <div class="col-md-3">第二部分</div>
+        <div class="col-md-3">第三部分</div>
+        <div class="col-md-3">第四部分</div>
+    </div>
+</div>
+
+<br>
+<br>
+<br>
+
+<div class="container">
+    <div class="row align-items-center justify-content-around">
+        <div class="col-md-3">第一部分</div>
+        <div class="col-md-3">第二部分</div>
+    </div>
+</div>
+
+<script src="lib/js/jquery-3.3.1.js"></script>
+<script src="lib/js/popper.js"></script>
+<script src="lib/js/bootstrap.js"></script>
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.box1 > div {
+			width: 60px;
+			max-height: 0;
+			overflow: hidden;
+			transition: max-height 0.5s;
+			background-color: red;
+		}
+		.box1 > button:hover + div {
+			max-height: 666px;
+		}
+		.box2 {
+			width: 200px;
+		}
+		input[type="checkbox"] {
+    		position: absolute;
+    		clip: rect(0 0 0 0);
+    	}
+		.element {
+ 			max-height: 0;
+ 		 	overflow: hidden;
+ 		 	transition: max-height .25s;
+		}
+		.check-out {
+			display: none;
+		}
+		#check:checked ~ .element {
+ 			max-height: 666px;
+		}
+		#check:checked ~ .check-out {
+			display: inline-block;
+		}
+		#check:checked ~ .check-in {
+			display: none;
+		}
+	</style>
+</head>
+<body>
+	<!-- 
+	max-height:0;
+	max-height:足够大的值;
+	transition: max-height 0.25s;
+	 -->
+<div class="box1">
+	<button>按钮</button>
+	<div>中国中国中国中国中国中国中国中国</div>
+</div>
+
+<div class="box2">
+	<input id="check" type="checkbox">
+	<p>个人觉得，...</p>
+	<div class="element">
+  		<p>display:table-cell其他内容其他内容其他内容其他内容其他内容其他内容其他内容其他内容其他内容其他内容其他内容其他内容其他内容其他内容其他内容其他内容</p>
+	</div>
+	<label for="check" class="check-in">更多↓</label>
+	<label for="check" class="check-out">收起↑</label>
+</div>
+</body>
+</html>

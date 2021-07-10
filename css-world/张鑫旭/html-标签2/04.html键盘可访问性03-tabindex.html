@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<!-- 
+	tabindex 负值都是-1 一样的, 可以被鼠标和js focus, 但不能被键盘focus
+	缺省值只有firefox解析为1, 其他无效
+
+	超过32767, chrome和firefox可以正常使用
+	tabindex="0" 键盘索引顺序从数值1开始的
+	模拟按钮要使用tabindex="0"
+	div或span模拟按钮时, 需要设置tabindex="0", role="button"
+	-->
+	<!-- 
+	tabindex="-1" 键盘不能focus 鼠标和js可以focus
+	tabindex="0"  默认访问顺序
+	tabindex="1"  顺序最优先, 优先于0
+ 	tabindex缺省值无效
+	 -->
+	<!-- 
+	在通常的web开发中，你只要不犯一些HTML常识性错误，例如使用<div>或者<span>元素作为按钮，或者全局去除outline的错误，tabindex属性就算不出场，网站的键盘无障碍访问支持已经及格了
+
+	 -->
+	<!-- 
+		使用场景:
+		1. hover div显示下拉键盘支持
+		2. 对网站模块进行自定义的键盘支持
+		3. 临时改变页面索引起始位置 
+	-->
+<div tabindex="-1">tabindex="-1"</div>
+<div tabindex="32769">tabindex="32769"</div>
+<div tabindex="32768">tabindex="32768"</div>
+<div tabindex="32767">tabindex="32767"</div>
+<div tabindex="32766">tabindex="32766"</div>
+<div tabindex="1">tabindex="1"</div>
+<div tabindex="0">tabindex="0"</div>
+<input type="text" name="username">
+<div tabindex="">tabindex=""</div>
+
+<!-- <div tabindex="0">tabindex="0"</div>
+<div tabindex="1">tabindex="1"</div>
+<div tabindex="-1">tabindex="1"</div> -->
+
+</body>
+</html>

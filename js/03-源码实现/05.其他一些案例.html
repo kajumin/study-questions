@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<style type="text/css">
+		.box1 {
+			width: 100px;
+			height: 100px;
+			background-color: red;		
+		}
+	</style>
+</head>
+<body>
+	<div class="box1"></div>
+<img src="../../images/1.jpg" class="img" width="100">
+<input type="submit" name="submit" class="submit">
+<input type="submit" name="submit2" class="submit2">
+</body>
+<script type="text/javascript">
+	/*
+	9.对象冒充
+	10.异步同步加载js文件, 非阻塞加载模式, 并发
+	   阻塞加载模式
+	11.拖拉
+	12.图片原始尺寸大小
+	13.阻止表单提交
+	14.随机产生颜色
+		十进制转为十六进制 num.toString(16)
+	    0x(16) 0(8)
+	15.转为deg rad
+	16.sort
+	17.计算时间差
+	18.千分位分隔
+	19.是否为质数
+	20.出现最多的字符串, 并统计次数 charAt for in 
+	*/
+</script>
+<script type="text/javascript">
+	// 9.对象冒充
+	var obj = {}
+	function Person(name, age) {
+		this.age = age
+		this.name = name
+		this.sayHello = function() {
+			console.log('hello, I am ' + this.name)
+		}
+	}
+	Person.call(obj, 'bang', 20)
+	console.log(obj)
+	obj.sayHello()
+
+	var img = document.querySelector('.img')
+	var newImg = document.createElement('img')
+	newImg.src = img.src
+	newImg.onload = function(e) {
+		console.log(e)
+		console.log(this.width)
+		console.log(this.height)
+	}
+
+	var submit = document.querySelector('.submit')
+	var submit2 = document.querySelector('.submit2')
+	
+	submit.onclick = function(e) {
+		console.log('提交')
+		this.disabled = true
+	}
+	var flag = true
+	submit2.onclick = function(e) {
+		if(flag) {
+			console.log('提交')
+			flag = false
+		} else {
+			console.log('禁止提交')
+		}
+	}
+
+	var num = 255;
+	console.log(num.toString(16)) //ff
+
+	var box1 = document.querySelector('.box1')
+	setInterval(() => {
+		box1.style.backgroundColor = 'rgb('+Math.floor(Math.random()*256)+', '+Math.floor(Math.random()*256)+', '+Math.floor(Math.random()*256)+')'
+	}, 2000)
+
+	var deg = 30
+	var rad = deg*Math.PI/180
+	deg = rad*180/Math.PI
+	console.log(rad)
+	console.log(deg)
+
+	var d1 = new Date('2020-1-22 8:0:0')
+	var d2 = new Date('2020-1-24 13:12:8')
+	var d3 = d2.getTime() - d1.getTime()
+	console.log(d3)
+	console.log('年数: ', Math.floor(d3/(365*24*3600*1000)))
+
+	var leave1 = d3%(365*24*3600*1000)
+	console.log('天数: ', Math.floor(leave1/(24*3600*1000)))
+
+	var leave2 = d3%(24*3600*1000)
+	console.log('小时: ', Math.floor(leave2/(3600*1000)))
+
+	var leave3 = d3%(3600*1000)
+	console.log('分钟: ', Math.floor(leave3/(60*1000)))
+
+	var leave4 = d3%(60*1000)
+	console.log('秒数: ', Math.floor(leave4/(1000)))
+	console.log('差: '+ Math.floor(d3/(365*24*3600*1000))+'年'+Math.floor(leave1/(24*3600*1000))+'天'+Math.floor(leave2/(3600*1000))+'小时'+Math.floor(leave3/(60*1000))+'分钟'+Math.floor(leave4/(1000))+'秒')
+
+	// 千分分隔
+	// (1)不是数字或者.开始无效
+	// (2)纯数字 加个.
+	// (3)加上两个00, 在保留两位小数
+	// (4).变成,
+	// (5)(数字 三个数字),  变成数字,三个数字
+	// (6)最后的,变为.
+
+	function cc2(s) {
+        if(/[^0-9\.]/.test(s)) return "invalid value";
+        // 整数加 .
+        s=s.replace(/^(\d*)$/,"$1.");
+        console.log(s)
+        // 保留两位小数
+        s=(s+"00").replace(/(\d*\.\d{2})\d*/,"$1");
+        console.log(s)
+        // . 换成 ,
+        s=s.replace(".", ",");
+        console.log(s)
+        // 数字+ 三个数字 + ,的
+        // 变成数字,三个数字,        
+        var re=/(\d)(\d{3},)/;
+        while(re.test(s)) {
+        	s=s.replace(re,"$1,$2");
+        	console.log(s)	
+        }
+        // ,换回小数点.
+        s=s.replace(/,\d{2}$/,".$1");	
+       	console.log(s)
+       	// .开头的换成0.
+        return "￥" + s.replace(/^\./,"0.")
+    }
+	console.log(cc2('123465'))
+	console.log(cc2('123456.4'))
+	console.log(cc2('.12'))
+
+	var reg = /(\d)(?=(\d{3})+(?:\.|$))/g;
+	function thousandth (num) {
+		return (num + '').replace(reg, function($0, $1) {
+			return $1 + ','
+		})
+	}
+	console.log(thousandth(1234567.00))
+	console.log(thousandth(1234567894578))
+	console.log(thousandth(111234567.8945788))
+
+	// 是否为质数
+	function fn(input) {
+		input = parseInt(input)
+		return isPrime(input) ? 'is Prime' : 'no Prime'
+	}
+	function isPrime(input) {
+		if(input < 2) {
+			return false
+		} else {
+			for(var i = 2; i < Math.sqrt(input); i++) {
+				if(input % i == 0) {
+					return true
+				}
+			}
+		} 
+		return false
+	}
+	console.log(fn(12))
+	console.log(fn(5))
+	console.log(fn(11))
+
+	// 判断字符最多, 并统计次数
+	function countStr(str) {
+		var obj = {}
+		for(var i = 0; i < str.length; i++) {
+			k = str.charAt(i)
+			if(obj[k]) {
+				obj[k]++
+			} else {
+				obj[k] = 1
+			}
+		}
+		var m = 0, i= null
+
+		for(var k in obj) {
+			if(obj[k] > m) {
+				m = obj[k]
+				i = k
+			}
+		}
+		return i + ":" + m
+	}
+	console.log(countStr("asdfgasdgasdgsadgasdgaewt456123154784"))
+</script>
+</html>

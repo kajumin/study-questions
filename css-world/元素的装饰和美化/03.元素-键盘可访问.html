@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.box {
+			width: 100px;
+			height: 100px;
+			background-color: red;
+			margin-bottom: 20px;
+		}
+		.display {
+			display: none;
+		}
+		.visibility {
+			position: absolute;
+			visibility: hidden;
+		}
+		.opacity {
+			position: absolute;
+			opacity: 0;
+		}
+
+		.index-par {
+			position: relative;
+			height: 100px;
+			background-color: red;
+		}
+		.index {
+			position: absolute;
+			height: 10px;
+			background-color: green;
+			z-index: -1;
+		}
+		.absolute {
+			position: absolute;
+			clip: rect(0 0 0 0);
+		}
+		.display:focus {
+			display: block;
+		}
+		.visibility:focus {
+			visibility: hidden;
+		}
+		.opacity:focus {
+			opacity: 1;
+		}
+		.index:focus {
+			z-index: 0;
+		}
+		.absolute:focus {
+			clip: auto;
+		}
+	</style>
+</head>
+<body>
+	<div class="box display" tabindex="0"></div>
+	<div class="box visibility" tabindex="0"></div>
+	<div class="box opacity" tabindex="0"></div>
+	<div class="index-par" ><div class="box index" tabindex="0"></div></div>
+	<div class="box absolute" tabindex="0"></div>
+</body>
+</html>

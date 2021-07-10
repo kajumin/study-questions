@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<script type="text/javascript">
+		console.log(document.querySelector('.box1'))
+	</script>
+	<div class="box1">中国</div>
+	<script type="text/javascript">
+		console.log(document.querySelector('.box1'))
+	</script>
+<!-- 
+对于defer标志位而言：
+(1)添加了defer标志位的script标签所加载回来的脚本会在HTML解析完之后，DOMContendLoaded事件发生之前执行。
+(2)如果文档中有多个设置了defer标志位的script标签的话，它们会按照在文档出现的顺序来加载和执行的。
+
+(1)添加了async标志位的script标签所加载完就执行。
+(2)如果文档中有多个设置了async标志位的script标签的话，它们不会按照在文档出现的顺序来加载和执行的，它们都是乱序的主。 load事件之前执行
+ -->
+
+ <script type="text/javascript" defer src="js/defer1.js"></script>
+ <script type="text/javascript" defer src="js/defer2.js"></script>
+ <script type="text/javascript" async src="js/async1.js"></script>
+ <script type="text/javascript" async src="js/async2.js"></script> 
+ <script type="text/javascript">
+ 	window.addEventListener('DOMContentLoaded', function() {
+ 		console.log('DOMContentLoaded')
+ 		// console.log(a)
+ 	})
+ 	window.addEventListener('load', function() {
+ 		console.log('load')
+ 		// console.log(a)
+ 	})
+ </script>
+ <script type="text/javascript">
+ 	console.log('script')
+ </script>
+</body>
+</html>

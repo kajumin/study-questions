@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		body {
+			margin: 0;
+		}
+		.father {
+			width: 200px;
+		}
+		.float {
+			float: left;
+		}
+		.float img {
+			width: 120px;
+		}
+		.father2 {
+			width: 200px;
+		}
+		.father2 img {
+			width: 100px;
+			opacity: 0.3;
+		}
+		.animal {
+			margin-left: -200px;
+		}
+		.animal:first-line {
+			background-color: #ccc;
+			color: white;
+		}
+		.box4  {
+			width: 350px;
+		}
+		.box4 > div{
+			float: left;
+			width: 100px;
+			height: 100px;
+			margin-left: 10px;
+			margin-right: 10px;
+			margin-top: 50px;
+			margin-bottom: 50px;
+			background-color: red;
+		}
+		.box4 > div:nth-child(even) {
+			background-color: #096;
+		}
+	</style>
+</head>
+<body>
+<!-- float: 为了实现文字环绕,文字环绕这图片的显示效果. 后来被使用在满屏布局
+	1.包裹性  包裹性(子元素的宽度就是浮动元素的宽度)  自适应性(不会超过浮动元素的父元素的宽度)
+	2.块级化并格式上下文   inline-table => table 其他display: block;
+	3.破坏文档流
+	4.没有任何的margin合并
+ -->
+ <!-- 
+	float作用机制是父元素高度塌陷 为了实现文字环绕
+
+	行框元素和浮动元素的不可重叠性 导致设置margin-left负值无作用
+  -->
+
+ <!-- 包裹性 width: 120px; -->
+<!--  <div class="father">
+ 	<div class="float">
+ 		<img src="../../images/zza/1.jpg">
+ 	</div>
+ </div>  -->
+
+ <!-- 自适应 width: 200px;  长英文就不是200px -->
+<!--  <div class="father">
+ 	<div class="float">
+ 		<img src="../../images/zza/1.jpg">我是一个帅哥我是一个帅哥我是一个帅哥我是一个帅哥我是一个帅哥我是一个帅哥
+ 	</div>
+ </div>  -->
+<!--  <div class="father">
+ 	<div class="float">
+ 		<img src="../../images/zza/1.jpg">kajuminkajuminkajuminkajuminkajuminkajuminkajuminkajumin
+ 	</div>
+ </div> -->
+
+ <div class="box4">
+ 	<div></div>
+ 	<div></div>
+ 	<div></div>
+ 	<div></div>
+ 	<div></div>
+ </div>
+
+ <!-- 块状化  除了inline-table 是table  其他都是block -->
+<script type="text/javascript">
+	var span = document.createElement('span')
+	document.body.appendChild(span)
+	console.log(window.getComputedStyle(span).display)
+	span.style.cssFloat = 'left'
+	console.log(window.getComputedStyle(span).display)
+</script>
+</body>
+</html>

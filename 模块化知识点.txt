@@ -1,0 +1,261 @@
+1.一个函数就是一个模块
+   缺点: 污染全局变量, 无法保证不会与其它模块发生冲突, 而且模块成员之间看不出直接关系
+
+2.一个对象就是一个模块
+    缺点: 会暴露所有模块成员, 内部的状态可能被改写
+3. 立即执行函数为一个模块
+    优点: 利用闭包不保留模块成员
+
+commonJS: 
+(1)暴露模块   var exports = {}  module = { exports:  exports }   return module.exports
+      module.exports.name = 'bang'       //有效
+      module.exports = { name: 'bang'}   //有效
+      exports.name = 'bang'  //有效
+      exports = {}  //无效
+(2)引用模块 require(表达式 || 字符串)  
+(3)模块标识符  核心模块 路径模块 自定义模块(node_modules里)
+(4)commonJS的特点
+var  lindaidai = require('lindaidai')
+在NodeJS中, 省略了扩展名的文件, 会依次补充上.js, .node, .json来尝试, 如果传入的是一个目录, 
+那么NodeJS会把它当成一个包来看待, 会采用以下方式确定文件名
+
+第一步, 找出目录下的package.json, 用JSON.parse()解析出main字段
+
+第二步, 如果main字段指定的文件还是省略了扩展, 那么会依次补充.js, .node, .json尝试.
+
+第三步, 如果main字段制定的文件不存在, 或者根本就不存在package.json, 
+那么会默认加载这个目录下的index.js, index.node, index.json文件.
+
+以上就是文件定位的过程, 再搭配上路径分析的过程, 进行排列组合, 这得有多少种可能呀. 
+所以说, 自定义模块的引入, 是最费性能的.
+
+特点:
+(1)模块作用域, 不会污染全局
+(2)模块是同步加载的, 即只有加载完成, 才能执行后面的操作
+(3)模块在首次执行后就会缓存, 再次加载只返回缓存结果, 如果想要再次执行，可清除缓存;
+(4)输出的是值的拷贝
+
+=========================AMD:  require.js 浏览器端,  异步加载模块  依赖前置
+
+它采用异步方式加载模块，模块的加载不影响它后面语句的运行。
+所有依赖这个模块的语句，都定义在一个回调函数中，等到加载完成之后，这个回调函数才会运行。
+define(id?, dependencies?, factory)  id模块名  dependercies依赖数组  fectory取得模块后操作
+define(function() {})  ma.js
+define(['m1'], function(){})    math.js
+require(['math'], function(math) {} )  app.js
+执行时: 
+m1  ->  math -> app
+
+======================cmd 浏览器端 异步加载模块  就近依赖
+AMD和CMD的区别: 
+AMD中会把当前模块的依赖模块放到dependencies中加载，并在factory回调中拿到加载成功的依赖
+CMD 一般不在dependencies中加载，而是写在factory中，使用require加载某个依赖模块
+
+AMD和CMD最大的区别是对依赖模块的执行时机处理不同，
+注意不是加载的时机或者方式不同，二者皆为异步加载模块。
+
+1、AMD推崇依赖前置，在定义模块的时候就要声明其依赖的模块
+2、CMD推崇就近依赖，只有在用到某个模块的时候再去require
+seajs.config({  })  配置信息
+seajs.use(['./app-cmd.js'], function(app){}  //入口
+define(function(require, exports, module) { } )  //定义模块
+require('./math.js')  //加载模块 
+========================es modules规范
+export命令和import命令可以出现在模块的任何位置，只要处于模块顶层就可以。
+
+1.export导出:  (1)命名式导出  (2)默认导出
+export 1   错误
+let a = 1 export  a   错误
+export { a }
+
+2.import导入: (1)命名式导入(名称导入)  (2)默认导入
+
+3.export  from 导出又导出
+
+特点:
+输入的模块变量是不可重新赋值的，它只是个可读引用，不过却可以改写属性
+import命令具有提升效果，会提升到整个模块的头部，首先执行。
+
+CommonJS 与 ES6 Modules规范的区别
+1.CommonJS模块是运行时加载, ES6 Modules是编译时输出接口
+2.CommonJS输出是值的拷贝, ES6 Modules输出的是值的引用, 被输出模块的内部的改变会影响引用的改变
+3.CommonJs导入的模块路径可以是一个表达式，因为它使用的是require()方法；而ES6 Modules只能是字符串
+4.ES6 Modules中没有这些顶层变量: arguments、require、module、exports、__filename、__dirname
+5.CommonJS this指向当前模块，ES6 Modules this指向undefined
+
+===========js规范
+1.不要在同一行里声明多个变量
+2.命名要有意义, 使用驼峰命名法
+3.语句要加分号
+4.使用 ===或者!==来比较true/false或者数值
+5.switch必须带default分支
+6.函数应该有返回值
+=======jquery使用建议
+1.减少对dom元素的访问和操作
+2.避免绑定多个相同类型的事件处理函数
+3.尽量避免使用toggle
+=======类型值
+基本数据类型存储在栈中,       空间小 大小固定
+引用数据类型存储在堆中, 指针存储在栈中.  空间大  大小不固定
+
+======跨域
+1.适用于主域相同
+document.domain	var iframe = document.querySelector('#iframe').contentWindow.document;
+2.window.name
+3.jsonp
+
+====web引用从服务器主动推送data到客户端的方式
+js数据推送:   commet 
+基于web socket 的推送: SSE
+=====attribute property
+attribute是dom元素在文档中作为html标签拥有的属性
+property是dom元素在js中作用对象拥有的属性
+对于html的标准属性来说  attribute和property是同步的,是会自动更新的,
+但是对于自定义属性,他们是不同步的
+
+
+=====宏任务和微任务
+js引擎: 有堆栈之分   堆=>对象    栈=>函数
+宏任务主要是由script(全局任务)，setTimeout ，setInterval ，setImmediate ，I/O ，UI render  ajax回调
+微任务主要是proccess.nextTick,  Promise.then,  MutationObserver(h5 观察者), Object.observer,  
+1.执行代码，遇到宏仁务放入宏仁务队列，遇到微任务放入微任务队列，执行其他函数的时候放入执行上下文
+2.执行上下文中全部执行完毕后，执行微任务队列
+3.微任务队列执行完毕后，再到宏仁务队列中取出第一项放入执行上下文中执行
+4.接着就不停循环1-3的步骤，这就是浏览器环境中的js事件环
+注意: (1) 宏任务中添加微任务, 这个微任务会比其他宏任务先执行
+        (2) 执行微任务的时候添加微任务 ,也会在微任务的最后执行
+        (3) async 中的await调用的函数会立刻执行
+proccess.nextTick()  先于promise.then执行
+
+setInterval
+我们已经知道不是每过ms秒会执行一次fn，而是每过ms秒，会有fn进入Event Queue。一旦setInterval的回调函数fn执行时间超过了延迟时间ms，那么就完全看不出来有时间间隔了
+
+==========node.js事件轮回
+1.timers: 这个阶段执行setTimeout()和setInterval()设定的回调。
+2.pending callbacks(IO操作): 系统操作  上一轮循环中有少数的 I/O callback会被延迟到这一轮的这一阶段执行。
+3.idle, prepare:  仅内部使用。
+4.poll:  执行 I/O callback，在适当的条件下会阻塞在这个阶段
+5.check: 执行setImmediate()设定的回调。
+6.close callbacks: 执行比如socket.on('close', ...)的回调。
+同步代码执行，清空微任务队列，执行timer阶段的回调函数（也就是setTimeout，setInterval）
+全部执行完毕，清空微任务队列，执行pending callbacks阶段的回调函数
+全部执行完毕，清空微任务队列，执行idle, prepare阶段的回调函数
+全部执行完毕，清空微任务队列，执行poll阶段的回调函数
+全部执行完毕，清空微任务队列，执行check阶段的回调函数（也就是setImmediate）
+全部执行完毕，清空微任务队列，执行close callbacks阶段的回调函数
+然后循环1-6阶段
+
+====进程和线程
+进程是CPU资源分配的最小单位；线程是CPU调度的最小单位; 一个进程由一个或多个线程组成
+
+浏览器常驻线程: 
+1.GUI渲染线程  
+主要负责页面的渲染，解析HTML、CSS，构建DOM树，布局和绘制等。
+当界面需要重绘或者由于某种操作引发回流时，将执行该线程。
+该线程与JS引擎线程互斥，当执行JS引擎线程时，GUI渲染会被挂起，当任务队列空闲时，主线程才会去执行GUI渲染。
+
+2.JS引擎线程
+该线程当然是主要负责处理 JavaScript脚本，执行代码。
+也是主要负责执行准备好待执行的事件，即定时器计数结束，或者异步请求成功并正确返回时，将依次进入任务队列，等待 JS引擎线程的执行。
+当然，该线程与 GUI渲染线程互斥，当 JS引擎线程执行 JavaScript脚本时间过长，将导致页面渲染的阻塞。
+
+3.定时器触发线程
+负责执行异步定时器一类的函数的线程，如： setTimeout，setInterval。
+主线程依次执行代码时，遇到定时器，会将定时器交给该线程处理，当计数完毕后，事件触发线程会将计数完毕后的事件加入到任务队列的尾部，等待JS引擎线程执行。
+
+4.事件触发线程
+主要负责将准备好的事件交给 JS引擎线程执行。
+
+5.异步http请求线程
+负责执行异步请求一类的函数的线程，如： Promise，axios，ajax等。
+主线程依次执行代码时，遇到异步请求，会将函数交给该线程处理，当监听到状态码变更，如果有回调函数，事件触发线程会将回调函数加入到任务队列的尾部，等待JS引擎线程执行。
+
+(1)浏览器端事件循环中的异步队列有两种：macro（宏任务）队列和 micro（微任务）队列。宏任务队列可以有多个，微任务队列只有一个。
+
+node.js
+外部输入数据-->轮询阶段(poll)-->检查阶段(check)-->关闭事件回调阶段(close callback)-->定时器检测阶段(timer)-->I/O事件回调阶段(I/O callbacks)-->闲置阶段(idle, prepare)-->轮询阶段
+timers i/ocallback prepare  poll check  close callbacks
+timers、poll、check 重点
+timers定时器   有几个setTimeout/setInterval都会依次执行  必须在队列中了   node11之前
+poll  是重要的阶段 
+   如果 poll 队列不为空，会遍历回调队列并同步执行，直到队列为空或者达到系统限制
+   如果 poll 队列为空时，会有两件事发生
+          如果有 setImmediate 回调需要执行，poll 阶段会停止并且进入到 check 阶段执行回调
+          如果没有 setImmediate 回调需要执行，会等待回调被加入到队列中并立即执行回调，这里同样会有个超时时间设置防止一直等待下去
+
+如果设置了timer的话, 会判断是否有 timer 超时，如果有的话会回到 timer 阶段执行回调。
+	
+(1)回到执行timer阶段的回调
+(2)执行 i/o 回调
+check:  setImmediate()的回调会被加入check队列中，check阶段的执行顺序在poll阶段之后
+
+
+区别: setImmediate setTimeout
+setImmediate    设计在poll阶段完成时执行，即check阶段；
+setTimeout        设计在poll阶段为空闲时，且设定时间到达后执行，但它在timer阶段执行
+
+setTimeout 可能在先也可能在后
+在i/o回调中, setImmediate 永远先执行。因为两个代码写在 IO 回调中，IO 回调是在 poll 阶段执行，
+当回调执行完毕后队列为空，发现存在 setImmediate 回调，所以就直接跳转到 check 阶段去执行回调了。
+
+(2) process.nextTick
+这个函数其实是独立于 Event Loop 之外的，它有一个自己的队列，当每个阶段完成后，如果存在 nextTick 队列，就会清空队列中的所有回调函数，并且优先于其他 microtask 执行。
+
+总结: node11
+Node端，   microtask微任务  在事件循环的各个阶段之间执行
+浏览器端， microtask微任务  在事件循环的 macrotask宏任务 执行完之后执行
+
+如果是 node11 版本一旦执行一个阶段里的一个宏任务(setTimeout,setInterval和setImmediate)就立刻执行对应的微任务队列。
+
+======输入url地址到最终页面渲染完成
+1.DNS解析,将域名地址解析为IP地址
+   --浏览器缓存
+   --系统dns缓存
+   --路由器dns缓存
+   --网络运营商dns缓存
+   --递归搜索:  blog.baidu.com  先去.com域名下查找  => .baidu找  => .blog查找  =>找不到
+2.TCP三次握手 
+    第一次: 浏览器发起, 告诉服务器要发请求了
+    第二次: 服务器发请求, 我准备接收了, 你赶紧发送吧
+    第三次: 浏览器发起 告诉服务器 我马上发了 准备接收吧
+3.发送请求   请求报文
+4.接收响应   响应报文
+5.渲染页面
+   调用html解析器解析成token标记并构建成DOM树
+   css解析器,处理css标记并构建cssom树
+   调用js解析器, 处理script代码
+   将dom和cssom树合并成一个渲染树  根据渲染树计算布局  计算每个节点的集合信息(布局) 绘制到屏幕上
+   
+    注意: 多次布局和渲染
+6.断开连接  tcp四次握手
+    第一次挥手: 浏览器发起  告诉服务器  我东西发送完了  你准备关闭吧
+    第二次挥手; 服务器发起  告诉浏览器   我东西接受完了   我准备关闭了  你也准备吧
+    第三次挥手: 服务器发起  告诉浏览器  我东西发送完了  你准备关闭吧
+    第四次挥手: 浏览器发起  告诉服务器  我东西接受完了   我准备关闭了  你也准备吧 
+
+es5和es6继承有什么不同
+ES5 的继承使用借助构造函数实现，实质是先创造子类的实例对象this，然后再将父类的方法添加到this上面。ES6 的继承机制完全不同，实质是先创造父类的实例对象this（所以必须先调用super方法），然后再用子类的构造函数修改this。
+ES6 在继承的语法上不仅继承了类的原型对象，还继承了父类的静态属性和静态方法
+采用寄生组合式继承
+super内部的this指向Es6WebDeveloper  在父类的时候也是
+实行父类原型上方法,this指向子类实例
+如果super用作对象且不在子类的原型对象中调用，而是在子类的静态方法中调用，那么super指代父类而不是父类的原型对象，同理调用父类静态方法时this指向子类而不是父类
+//__proto__存在于实例与构造函数的原型对象之间
+// Es6WebDeveloper看做一个实例对象
+// Es6Person看做一个原型对象
+// 因此Es6WebDeveloper继承了Es6Person的所有属性和方法
+// 实现了类的静态属性和方法的继承
+// 子类的原型是父类
+// console.log(Es6WebDeveloper.__proto__ === Es6Person)  //ture
+// 这里类似于 Es6WebDeveloper.prototype = new Es6Person() //true
+// 子类的原型对象是父类的原型对象的实例
+//console.log(Es6WebDeveloper.prototype.__proto__ === Es6Person.prototype)
+class A extends B {
+}
+A.__proto__ === B // true
+A.prototype.__proto__ === B.prototype // true
+
+class A {
+}
+A.__proto__ === Function.prototype // true
+A.prototype.__proto__ === Object.prototype // true

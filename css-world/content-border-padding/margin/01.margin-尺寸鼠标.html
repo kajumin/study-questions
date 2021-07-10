@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		body {
+			margin: 0;
+		}
+		.box1 {
+			position: relative;
+		}
+		.box1 .son {
+			position: absolute;
+			left: 10px;
+			top: 10px;
+			width: 100px;
+			height: 100px;
+			background-color: red;
+		}
+		.box2 {
+			position: relative;
+		}
+		.box2 .son {
+			position: absolute;
+			left: 10px;
+			top: 500px;
+			width: 100px;
+			height: 100px;
+			background-color: red;
+		}
+		.box3 {
+			position: relative;
+		}
+		.box3 .son {
+			position: absolute;
+			top: 200px;
+			left: 10px;
+			width: 100px;
+			height: 100px;
+			border: 11px solid #096;
+			background-color: red;
+		}
+		.box4 {
+			position: relative;
+		}
+		.box4 .son {
+			position: absolute;
+			top: 300px;
+			left: 10px;
+			width: 100px;
+			height: 100px;
+			border: 11px solid #096;
+			background-color: red;
+		}
+		.box5 {
+			position: relative;
+		}
+		.box5 .son {
+			position: absolute;
+			top: 400px;
+			left: 10px;
+			width: 100px;
+			height: 100px;
+			border: 11px solid #096;
+			background-color: red;
+		}
+
+	</style>
+</head>
+<body>
+	<!-- 
+	clientX: 相对浏览器可视区域左上角距离, 不随页面滚动而改变
+	pageX: 相对文档区域左上角距离，会随着页面滚动而改变
+	offsetX: 相对被触发dom的左上角距离  padding-box 点到border会是负值
+	layerX: 相对被触发dom的边框左上角距离
+	screenX: 相对于屏幕左上角距离
+	-->
+	<div class="box1">
+		<div class="son"></div>
+	</div>
+	<div class="box2">
+		<div class="son"></div>
+	</div>
+	<div class="box3">
+		<div class="son"></div>
+	</div>
+	<div class="box4">
+		<div class="son"></div>
+	</div>
+	<div class="box5">
+		<div class="son"></div>
+	</div>
+	<div style="height: 1000px;"></div>
+<script type="text/javascript">
+	var box1 = document.querySelector('.box1')
+	box1.onclick = function(e) {
+		console.log(e)
+		console.log('e.clientX', e.clientX)
+		console.log('e.clientX', e.clientY)
+	}
+	var box2 = document.querySelector('.box2')
+	box2.onclick = function(e) {
+		console.log(e)
+		console.log('e.pageX', e.pageX)
+		console.log('e.pageY', e.pageY)
+	}
+	var box3 = document.querySelector('.box3')
+	box3.onclick = function(e) {
+		console.log(e)
+		console.log('e.offsetX', e.offsetX)
+		console.log('e.offsetY', e.offsetY)
+	}
+	var box4 = document.querySelector('.box4')
+	box4.onclick = function(e) {
+		console.log(e)
+		console.log('e.layerX', e.layerX)
+		console.log('e.layerY', e.layerY)
+	}
+	var box5 = document.querySelector('.box5')
+	box5.onclick = function(e) {
+		console.log(e)
+		console.log(e.screenX)
+		console.log('clientY', e.clientY)
+		console.log('screenY', e.screenY)
+	}
+
+</script>
+</body>
+</html>

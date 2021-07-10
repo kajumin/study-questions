@@ -1,0 +1,321 @@
+ctrl + k +l 转小写   ctrl+k +u转大写  \n换行
+ctrl + a  ctrl+k  ctrl+2(层级)   快速收缩
+ctrl + shift+{  /  }   收缩
+
+1.输出内容:
+echo        同时输出多个内容    echo "value1","value2";    输出简单数据类型，如字符串、数值
+print        只能打印一个参数    print_r($array)
+print_r()：输出复杂数据类型，如数组
+sprintf(%s,%d,$str,$num)
+sprintf ("%.2f", 10.6875);   10.69
+var_dump()：输出详细信息，如对象、数组    是一个函数  各种类型(有结构的数据)    输出数据和数据类型
+指令式的语句: if(true): echo "hello"  endif; 
+2.TODO: 先写大框架  写细节
+3.解析变量 { $str }   '{$str}'
+4. isset 如果指定变量存在且不为 NULL，则返回 TRUE，否则返回 FALSE
+    empty  "" (空字符串)  || 0 (作为整数的0) || 0.0 (作为浮点数的0) || "0" (作为字符串的0) ||  NULL
+FALSE || array() (空数组) ||   $var; (一个声明了，但是没有值的变量)
+====================================================================
+语法: 变量  顺序结构  分支结构  循环结构  函数  运算符 字面量
+1. 变量: $foo    变量名是foo   $是声明符
+2. 分支结构: if():  endif;
+3. 循环结构:   foreach
+4. 函数: 作用域  不区分大小写   使用全局变量需要global   $_GLOBALS['PHP']
+5. 运算符: 字符串拼接  .
+6. 双引号和单引号   双引号支持变量解析
+====================================================================
+api的定义:application programming interface
+提供某种特定能的事物,特点是有输入有输出,
+任何编程语言本身并没有太多能力,具体的能力大多数都来源于API
+=============================require include==========================
+require和include:
+1.require 'config.php';     require_once  'config.php';     一旦文件不存在报致命错误    配置预定义函数
+2.include  'config.php';    include_once('config.php')   文件不存在警告(可以关闭) 
+3.include('config.php')   有返回值  return      
+=====================================================================
+常用的函数:
+1. echo phpinfo();  检测版本
+2. phpversion();     输出版本信息
+2. intdiv(a, b)    该函数返回值为a除以b的值并取整
+==============================header 头===============================
+1. header("Content-Type:text/html;charset=uft-8");   
+    header('Content-Type:application/json');
+    header('Content-Type: text/css');
+    header('Content-Type: application/javascript');
+    header('Cache-Control: no-cache, must-revalidate');  //不缓存      jquery设置cache:false,
+    header('Access-Control-Allows-Methods', 'get,post')  //可能不一样
+    header('Access-Control-Allow-Credentials',true)   //可能不一样
+    header('Access-Control-Allow-Origin:*'); 
+2. header("location: 1.php");   header('Location: 01-type-content.php');
+3. header("Refresh:10;url=http://www.baidu.com");     多少秒后自动跳转
+4. header专门用于设置响应头
+5. $arr=getallheader();           获取请求头  $arr['User-Agent']
+
+6.下载  a.php 里   header('Content-Type:aplaction/octet-stream')
+header('Content-Disposition: attachment; filename=demo.txt');   定义默认文件名字
+header( 'Location: '. $_SERVER[HTTP_REFERER] )
+window.location.href='/index.php'
+===============================$_SERVER================================
+$_SERVER:
+$_SERVER['REQUEST_METHOD']==='POST'
+$_SERVER['PHP_SELF']  $_SERVER['HTTP_HOST']   $_SERVER['HTTP_REFERER']
+$_SERVER['REMOTE_ADDR'];   127.0.0.1
+<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>   可以防止注入
+（通过 PHP trim() 函数）去除用户输入数据中不必要的字符（多余的空格、制表符、换行）
+（通过 PHP stripslashes() 函数）删除用户输入数据中的反斜杠（\）
+function test_input($data) {
+  $data = trim($data);
+  $data = stripslashes($data);
+  $data = htmlspecialchars($data);
+  return $data;
+}
+============================== 字符串的使用 ========================
+1.字符串拼接  .
+2.strlen($str);    获取中文字符串长度  你好=6    一个是三个   
+3.mb_xxx      宽字符集  mb_strlen
+4.substr($source,"2");   从第几个开始截取
+5.trim($str)   去除空白   ltrim()  rtrim()
+6.strpos($source,"http://")    某些字符首次出现的位置  找不到返回false
+7.explode("|",$str)          分隔字符串相当于split   返回字符串
+   implode(",", $array);    数组变成字符串
+9.strtolower($str)           字符串转化为小写  strtoupper  大写    返回字符串
+10.str_replace("被替换的","替换的","在某个字符")
+11.str_repeat("重复字符",'次数');
+12.iconv('UTF-8','GBK',$str)   转换为gbk编码  解决中文window系统  但是json_decode又只支持gbk  所以还要再转
+13.$(int)result  强制转换为int
+14.strstr($userAgent,'FireFox');  是否存在变量字符
+=================================数组的使用==============================
+数组  索引数组 和 关联数组  array()  [ ](php 5.4)
+创建数组: $arr = array(1,2,3);  普通数组
+               $array = array("username"=>"小旋风","age"=>15);   关联数组
+1.array.keys($arr) 键     array_values($arr)值
+2.array_key_exist('key',$arr)   是否存在    $str['key']   返回boolean值
+3.isset($arr['foo'])                 是否存在   会吞掉警告
+4.empty($arr['foo'])              是否为空   会吞掉警告  empty($arr['foo']) = !isset($arr['foo']) || $arrr['foo']==false
+5.$arr.unique()                     去重
+6.array_push("bang", $source)  array_pop($source)   count($source)   
+7.array_search("bang", $source)   返回下标
+8.in_array($str, $source);                判断是否在数组中
+   array_key_exist('key',$arr)           判断是否在数组中   关联数组(key,value);
+9.array_splice($source,$index,1)    删除数据  (数组,索引,个数)  返回删除的数据
+10.foreach($source as $item)      foreach ($source as $key => $value)
+11.pathinfo($_FILES['avatar']['name'], PATHINFO_EXTENSION)  获取扩展名
+12.count($arr)  数组的长度
+=============================== 时间处理 ================================
+时间处理函数
+1.time()    1970年000到现在的秒数时间戳    int整型
+2.date(格式,时间戳)   默认当前时间  Y/y(两位)-m-d/j/D  H : i : s  时分秒     少8个小时格林威治时间(UTC)
+   date_default_timezone_set('PRC');  更正为中国时间  2. 通过配置文件
+3.$time=strtotime('2017-10-2 15:30:45'); 将有格式的时间字符串转换为一个时间戳 
+   echo date('Y年m月d日<b\r> H:i:s',$time);  //换行
+在php中用字符串'2019-11-06'传递到数据库中
+datetime     2019-11-06 00:00:00  
+date            2019-11-06 
+timestamp   2019-11-06 00:00:00.000000
+1578987065
+  755654400
+=============================== 文件操作 ================================
+文件操作
+file_exists($path)   如果存在这个文件
+file_get_contents($path)   将文件内容以字符串读取
+file_put_contents($path,$data)    file_put_contents('names.txt', $data, FILE_APPEND=8);  不覆盖
+1.basename()   文件名  
+2.copy()   复制      
+3.dirname()
+4.file()  读取文件到数组中
+6.is_dir()   is_file()  判断是否是一个目录 或者文件
+7.mkdir()  创建目录
+8.pathInfo()   返回关于文件路径的信息  pathinfo($_FILES['avatar']['name'], PATHINFO_EXTENSION);只要扩展名
+9.rename()
+10.rmdir()  删除目录 unlink()  删除文件  mkdir('./upload');创建文件夹
+11.move_uploaded_file($source,$target)
+12.unicode字符   中文会使用   json数据格式时
+13.formData格式传递的数据同样使用$_FILES['fileName']接收
+====================================================================
+文件上传错误  $_FILES['file']['error']
+1、UPLOAD_ERR_OK
+其值为 0，没有错误发生，文件上传成功。
+ 2、UPLOAD_ERR_INI_SIZE
+其值为 1，上传的文件超过了 php.ini 中 upload_max_filesize选项限制的值。
+ 3、UPLOAD_ERR_FORM_SIZE
+其值为 2，上传文件的大小超过了 HTML 表单中 MAX_FILE_SIZE 选项指定的值。
+4、UPLOAD_ERR_PARTIAL
+其值为 3，文件只有部分被上传。
+5、UPLOAD_ERR_NO_FILE
+其值为 4，没有文件被上传。
+ 6、UPLOAD_ERR_NO_TMP_DIR
+其值为 6，找不到临时文件夹。PHP 4.3.10 和 PHP 5.0.3 引进。
+7、UPLOAD_ERR_CANT_WRITE
+其值为 7，文件写入失败。PHP 5.1.0 引进。
+==============================全局变量 ==================================
+全局变量  和  超级全局变量
+常量: define函数定义   临时存放数据的容器   用于恒定不变的(如配置文件)
+1.define('SYSTEM_NAME','阿里百秀','是否忽略大小写')        变量和函数书写方式是snake_case
+2.echo SYSTEM_NAME
+3.global $message;   $GLOBALS['message']; 全局变量定义
+=============================表单处理===================================
+表单:  js提交:from.submit()方法
+(1) $_POST['username'];  URL地址栏 $_GET['password'];  请求体的数据  获取表单信息  $_REQUEST['username']
+(2) 提交跟当前页面本身 $_SERVER['REQUEST_METHOD']===POST
+(3) 鲁棒性  action="<?php $_SERVER['PHP_SELF'] ?> "   当前文档路径  
+     <?php echo $_SERVER['PHP_SELF']; ?>?id=<?php echo $user['id']; ?>   当前文件路径传参数
+(4) 提交方式:GET可以在地址栏看到内容  通过URL传递给服务器  大小限制 200字符    *获取数据
+     POST  传递数据类型更多  更安全请求体   *提交数据
+(5) 表单元素处理 
+date   传递到php是字符串
+radio  需要设置value值    因为名字设置一样
+checkbox  多选时  name="funs[]"    名字设置一样
+select option   提交的是text   有value就提交value值
+=====文件上传=====
+文件域 file  需要设置 enctype="multipart/form-data"     上传文件有限制大小 
+单文件域多文件上传    用数组名  name=[name1,name2,name,3];
+move_uploaded_file($source,$target);  返回布尔值
+
+1. $_FILES  
+name文件名  string
+type类型   string 
+tmp_name获取文件暂存  string  'C:\wamp\tmp\php34A7.tmp'
+error   int 0
+size   int 63744
+2.move_uploaded_file($tmp_name,"images/".$fileName);   存起来
+2. 多文件上传:
+============================ 一些细节问题===========================
+(6) 写入文本换行"\r\n"
+(7)<?php echo isset($_POST['username'])?$_POST['username']:'';?>   三段表达式
+(8) exit  程序不再执行了,可以传参数exit('<h1>必须指定参数</h1>')
+(9) return  在函数中使用
+(13) uft-8 with bom  和 uft-8的区别  开头多了一些空格  减少使用txt
+(14).uniqid()     获取唯一的随机字符串
+(15) accept="audio/*"  属性可以设置选择的文件(MINE_TYPE)  image/*所有图片类型  多个扩展名用逗号分开
+(17) break; continue;
+(18) @调用函数时忽略错误或者警告
+=================================================================
+json: 是通过普通字符串描述数据的手段
+1. 属性名一定要用双引号
+2. 字符串字符串必须用双引号
+3. 不允许使用注释
+4. null  "string"   没有undefied 
+    JSON对象   JSON.parse(str)  转化为js对象   JSON.stringify(arr)转化为json
+    字面量是代码中表述数据的手段
+    Json是类似于js字面量的手段
+(1) json_decode($contents, true)反序列化  true表示关联数组   
+   
+    json_decode($json )               ---- json 转 对象/数组  当第二个参数为true返回 array ,默认是false返回object。
+   
+    json_encode($arr / Object )    ---- 对象/数组 转 json  成功返回 json 编码的 string ,失败返回 false
+    json_encode($arrayName, JSON_UNESCAPED_UNICODE)   中文不转译
+    json_encode($arrayName,JSON_PRETTY_PRINT);  转译成json并格式化输出
+================================================================
+数据库(oracle,mysql,sql server): json 数据的仓库,用老按照特定的结构去组织和管理我们的数据,有了数据库我们更方便\便捷操作保存的数据
+=======
+增加
+$sql = "INSERT INTO userlist(username,password,tel,email) values('$username','$password','$tel','$email')";   返回的是ture或者false
+查询
+$sql = "select * from userlist where id>1";
+$result: 等于
+object(mysqli_result)[2]
+  public 'current_field' => int 0
+  public 'field_count' => int 2
+  public 'lengths' => null
+  public 'num_rows' => int 2
+  public 'type' => int 0
+更改
+$sql = "update userlist set username='joycechu' where username='bang'";
+删除
+$sql = "delete from userlist where id=2 and username='bang'
+查询函数
+avg()  max() min() count(id)  count(1)最优  字段
+text
+varchar
+or and in(4,5)   between and  as
+分页查询  limit skip,length   第一个数字是越过几条(page-1)*5   第二个是取几条    只有一个数字是取几条
+skip=(page-1)*length
+
+内连接查询
+SELECT s.id, s.name, s.class_id, c.name class_name, s.gender, s.score  
+FROM students s   INNER JOIN classes c  ON s.class_id = c.id;
+
+==========
+数据库连接及验证:
+1. $conn = mysqli_connection('localhost','root','','demo')  demo为选择的数据库
+  if (!$connection) {
+  // 如果连接失败报错
+  die('<h1>Connect Error (' . mysqli_connect_errno() . ') ' . mysqli_connect_error() .
+  '</h1>');
+  }
+   mysql_select_db('test',$con);
+   mysql_error();
+2. mysql_query($conn,$sql);   获得记录集
+3. $row=mysqli_fetch_assoc($query)  以关联数组的方式去拿数据    遍历结果集  用关键字做索引取值            
+    $row=mysqli_fetch_array($query)  遍历   MYSQLI_ASSOC   MYSQLI_NUM   默认MYSQLI_BOTH
+    $row=mysqli_fetch_row()              用数字索引取值  $row[0]
+总结 array = row  + assoc
+    $row=mysqli_fetch_object()将一行取回到一个对象中，然后通过类的方式取值  $row->username
+4. mysqli_affected_rows($conn)         受影响行数
+5. mysqli_free_result($query)     释放结果集
+6. mysqli_close($conn)                断开数据库连接
+
+================
+避免乱码
+mysqli_query($conn, 'set name utf8');
+mysqli_query($conn, 'set character_set_client = utf-8');
+mysqli_query($conn, 'set character_set_results = utf-8');
+================
+REPL环境下操作数据库
+char        不支持中文   不可变字符串,补空格
+varchar   支持中文  可变字符串    date   decimal
+数据库查询: 查找  增加 删除 更改
+字符集:uft8  latin1拉丁字符集
+select 1 from users  选择111111111111
+配置字符集:  在mysql下新建my.ini编写如下
+[mysqld]
+character_set_server=utf8
+=====================================================================
+cookie:
+1.// 设置  两个参数键,值   传递第三个参数是设置过期时间
+setcookie('key2', 'value2', time() + 1 * 24 * 60 * 60);
+header('Set-Cookie: foo=bar');  模仿设置
+2.第四个参数     设置路径path:  
+(1) '/' 只要是网址根目录以下的都可以访问cookie
+(2) '/day02'
+3.第五个参数
+常设''     damin
+子域可以访问
+第六个参数  secure 安全的
+只有https才可以用
+第七个参数  httponly
+=====
+追杀cookie:  setcookie('password','',-1);      注意看没有写错的
+cookie  伪造小票  2.加密  1.记总账
+=====
+js操作cookie   掌握js.cookie使用
+1.document.cookie            获取
+2.document.cookie='js=fuck'   不会覆盖只会增加
+new Date().toGMTString()
+setYear(2028)   可以用cookie把广告去除年份加大
+
+跨域不会携带cookie到服务端
+1.客户端  xhr.withCredentials = true;
+2.服务端  Access-Control-Allow-Credentials: true
+======================================================================
+session  会话
+$_SEESION['key']=value;      设置session
+$_SEESION['KEY']                 获取session
+unset($_SESSION['count']);   删除session
+
+=========阻止重复投票
+if(empty($_COOKIE["voted"])) {
+    setcookie("voted","yes!",time()+60*60*24*365);
+} else {
+    die("您已经投过票！");
+}
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.par {
+			position: relative;
+		}
+		.box1 {
+			position: absolute;
+			width: 100px;
+			height: 100px;
+			background-color: red;
+			animation-name: move;
+			animation-duration: 2s;
+			animation-timing-function: linear;
+			animation-delay: 1s;
+			animation-direction: alternate;
+			animation-iteration-count: 2;
+			animation-fill-mode: forwards;
+			/* animation-fill-mode: backwards; */
+		}
+		.box1:hover {
+			animation-play-state: paused;
+		}
+		@keyframes move {
+			from {
+				left: -10px;
+			}
+			to {
+				left: 100px;
+			}
+		}
+	</style>
+</head>
+<body>
+	<div class="par">
+		<div class="box1"></div>
+	</div>
+
+</body>
+</html>

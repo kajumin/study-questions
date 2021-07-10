@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		// rem 单位换算：定为 75px 只是方便运算，750px-75px、640-64px、1080px-108px，如此类推
+		$vm_fontsize: 75; // iPhone 6尺寸的根元素大小基准值
+		@function rem($px) {
+		    @return ($px / $vm_fontsize ) * 1rem;
+		}
+		// 根元素大小使用 vw 单位
+		$vm_design: 750;
+		html {
+		    font-size: ($vm_fontsize / ($vm_design / 2)) * 100vw; 
+		    // 同时，通过Media Queries 限制根元素最大最小值
+		    @media screen and (max-width: 320px) {
+		        font-size: 64px;
+		    }
+		    @media screen and (min-width: 540px) {
+		        font-size: 108px;
+		    }
+		}
+		// body 也增加最大最小宽度限制，避免默认100%宽度的 block 元素跟随 body 而过大过小
+		body {
+		    max-width: 540px;
+		    min-width: 320px;
+		}
+		{
+		    loader: 'postcss-loader',
+		    options: {
+		         plugins: ()=>[
+		             require('autoprefixer')({
+		                browsers: ['last 5 versions']
+		             }),
+		             require('postcss-px-to-viewport')({
+		                 viewportWidth: 375, //视口宽度（数字)
+		               viewportHeight: 1334, //视口高度（数字）
+		                unitPrecision: 3, //设置的保留小数位数（数字）
+		                viewportUnit: 'vw', //设置要转换的单位（字符串）
+		                selectorBlackList: ['.ignore', '.hairlines'], //不需要进行转换的类名（数组）
+		                minPixelValue: 1, //设置要替换的最小像素值（数字）
+		                mediaQuery: false//允许在媒体查询中转换px（true/false）
+		            })
+		        ]
+		    }
+
+		module.exports = {
+		   plugins: {
+			     'autoprefixer': {
+			       browsers: ['Android >= 4.0', 'iOS >= 7']
+			     },
+			     'postcss-pxtorem': {
+			         rootValue: 37.5,
+			         propList: ['*', '!font-size'],
+			         selectorBlackList: ['van-circle__layer', 'ignore'],
+			    }
+  			}
+		}
+	</style>
+</head>
+<body>
+<script type="text/javascript">
+	
+</script>
+</body>
+</html>

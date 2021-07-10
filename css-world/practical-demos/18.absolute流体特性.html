@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		p {
+			border-bottom: 3px solid #adc;
+		}
+		.box {
+			position: relative;
+			width: 300px;
+			height: 300px;
+			margin-top: 20px;
+			background-color: #eee;
+		}
+		.box1 .son {
+			position: absolute;
+			width: 100px;
+			height: 100px;
+			left: 0;
+			right: 0;
+			margin-left: auto;
+			margin-right: 20px;
+			background-color: red;
+		}
+		.box2 .son {
+			position: absolute;
+			width: 100px;
+			height: 100px;
+			left: 0;
+			right: 0;
+			margin: auto;
+			background-color: red;
+		}
+		.box3 .son {
+			position: absolute;
+			left: 0;
+			top: 0;
+			bottom: 0;
+			right: 0;
+			/*width: 100px;*/
+			height: 100px;
+			background-color: red;
+			margin-left: -15px;
+			margin-right: -15px;
+		}
+		.box4 .son {
+			width: 100px;
+			height: 100px;
+			background-color: red;
+			margin-left: auto;
+			margin-right: 10px;
+		}
+
+		.box5 .son {
+			position: absolute;
+			left: 0;
+			top: 0;
+			bottom: 0;
+			right: 0;
+			width: 100px;
+			height: 100px;			
+			margin: auto;
+			background-color: red;
+		}
+ 	</style>
+</head>
+<body>
+<!-- 
+当定位元素处理流体状态时, 各个盒模型相关属性的解析和普通流体元素都是一模一样的, margin负值可以让元素尺寸更大, 并且可以使用margin: auto;让绝对定位元素保持居中
+
+注意: 必须是流体状态时 跟 普通元素一样   IE8+
+1.如果一侧定值, 另一侧auto; auto为剩余空间大小
+2.如果两侧都是auto; 则平分剩余空间
+
+3.margin负值可以让元素尺寸更大
+
+
+1.absolute的流体特性  IE7+
+2.左右形成流体
+3.有了流体特性可以使用margin增加元素尺寸
+4.普通元素的流体特性
+5.absolute与margin: auto; IE8+ 推荐使用
+ -->
+ <p>绝对定位元素的流体特性</p>
+ <div class="box box1">
+ 	<div class="son"></div>
+ </div> 
+ <div class="box box2">
+ 	<div class="son">只有左右形成流体</div>
+ </div>
+ <div class="box box3">
+ 	<div class="son"></div>
+ </div>
+
+<!-- 普通元素 -->
+<p>普通元素的流体特性</p>
+ <div class="box box4">
+ 	<div class="son"></div>
+ </div>
+
+<p>水平垂直居中</p>
+ <div class="box box5">
+ 	<div class="son"></div>
+ </div>
+
+
+
+</body>
+</html>

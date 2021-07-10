@@ -1,0 +1,157 @@
+===============position
+static:默认位置
+relative: 相对定位 原来的位置仍占据空间
+absolute:绝对定位 在标准流中不占位置
+fixed: 固定定位 在标准流中不占位置 
+================BFC 块级格式化上下文    IFC内联格式化上下文 
+BFC就是页面上的一个隔离的独立容器，容器里面的子元素不会影响到外面的元素。
+触发条件
+    html根元素
+(1)float的值不为none
+(2)overflow的值为auto, scroll 或 hidden 不为visible
+(3)display的值为inline-block, table-cell, table-caption中的任何一个。
+(4)position的值不为relative  static
+
+overflow:auto/hidden IE7+
+display:inline-block IE6/IE7
+display:table-cell IE8+
+
+BFC布局规则：
+(1)内部的Box会在垂直方向，一个接一个地放置。
+(2)Box垂直方向的距离由margin决定。属于同一个BFC的两个相邻Box的margin会发生重叠
+(3)BFC的区域不会与float box重叠
+(4)BFC就是页面上的一个隔离的独立容器，容器里面的子元素不会影响到外面的元素。反之也如此。
+(5)计算BFC的高度时，浮动元素也参与计算
+(6)每个元素的margin box的左边， 与包含块border box的左边相接触(对于从左往右的格式化，否则相反)。即使存在浮动也是如此
+作用
+1. 自适应两栏布局
+2. 清除内部浮动  因为bfc计算高度会把浮动元素计算进去
+3. 防止垂直 margin 重叠
+4. 子margin-top  父跟着动
+
+12.1 
+(1)高度塌陷的原因
+    当父元素未设置高度时，所有子元素浮动后，造成子元素脱离文档流进而无法把父元素撑开，父元素高度为0 ,产生高度塌陷，称为高度塌陷问题。
+(2) clear清除float的原理
+    元素盒子的边不能和前面的浮动元素相邻
+
+清除浮动: 
+(1)父元素设置宽高
+(2)空元素 clear: both;
+(3)父元素一起浮动
+(4)bfc  overflow: hidden auto scroll;  不为visible;
+(5)伪类和zoom
+.clearfix:after {
+ content: '\200B'; 
+ display: block;
+ height: 0;
+ clear: both;
+}
+.clearfix {
+ *zoom:1; /*照顾IE6，IE7就可以了*/
+}
+
+=================元素居中
+======定宽高
+absolute  +   负margin  tansform不好   
+absolute  +   margin  auto   bottom  top  left  right   IE8以上首选
+absolute  +   calc    left: calc(50%-50px)
+======不定宽高
+1.relative   子: absolute + transform
+2.line-height等于父高度 + text-align: center;  子: inline-block
+3.table + table-cell
+4.table-cell + text-align: center;   子:  vertical-align + inline-block
+5.flex  justify-content:center; align-items:center
+6.grid  align-self: center; justify-self: center;
+
+=======多列等宽布局
+1.浮动 + 百分数平分
+2.table布局 父容器指定display: table，设置布局行为table-layout: fixed，指定每个表格等宽
+3.使用column布局
+4.flex布局
+=======多列等高布局
+1.table布局  自动等高
+2.flex布局    默认情况下, display: flex的元素align-items属性值为stretch，如果项目未设置高度或设为auto，将占满整个容器的高度。
+========两栏布局
+1.left浮动定宽, right: margin-left: -200px;
+2.left浮动定宽, right: overflow: hidden;
+3.将左右元素用一个display: table的元素包裹，左右元素设置为display: table-cell
+4.flex
+======三栏布局
+1.左右定宽 + float左右 +中间自适应  margin: 0 200px    (左右中)
+2.左右定宽 + float左右 +中间自适应  overflow: hidden;   (左右中)
+3.双飞翼布局
+                  main left right(float: left)
+                  main(margin: 0 200px; width: 100%;)
+                  left(margin-left: -100%;)
+                  right(margin-left: -200px;)
+4.圣杯布局   main left right(float: left) 
+                   main(width: 100%;)
+                   left,right(position:relative;) 
+                   left(margin-left: -100%, left: -200px;)  right(margin-left: -200px; right-200px;)
+5.flex布局
+
+
+================隐藏技术
+不可见   不占据空间  辅助设备无法访问  不渲染                           使用: script
+不可见   不占据空间  辅助设备无法访问  资源加载 dom可以访问   使用: display:none
+不可见   不占据空间  辅助设备无法访问  显隐可以有动画              使用absolute  hidden  + opcity
+不可见   占据空间     辅助设备无法访问  不能点击                        使用visibility:hidden
+不可见   不占据空间  键盘可以访问        不能点击          使用clip  absolute
+不可见   占据空间      键盘可以访问       不能点击           使用relative +  z-index
+不可见  不占据空间   可以点击                                     使用absolute  opacity
+不可见  占据空间       可以点击                                    使用opacity
+希望有transition  max-height: 0; overflow: hidden;
+
+=====比较display  opacity  visibility
+都能让元素不可见
+
+不同: 
+占据空间: display不占据
+点击性:  display不能点击
+属性继承: display opacity非继承 不能通过修改子元素属性让子元素显示
+性能: display会发生回流    opacity  visibility会发生重绘
+
+=============box-sizing
+设置CSS盒模型为标准模型或IE怪异盒模型 content-box; border-box;
+标准盒模型的宽度(width)只包括 content，二IE模型包括 border和 padding
+
+============px，em，rem 的区别
+px 像素(Pixel)。绝对单位。像素 px 是 相对于显示器屏幕分辨率而言的，是一个虚拟长度单位，是计算 机系统的数字化图像长度单位，如果 px 要换算成物理长度，需要指定精度 DPI。em 是相对长度单位， 相对于当前对象内文本的字体尺寸。如当前对行内文本的字体尺寸未被人为设置， 则相对于浏览器的默认字体尺寸。它会继承父级元素的字体大小，因此并不是一个固定的值。rem 是 CSS3 新增的一个相对单位(root em，根 em)，使用 rem 为元素设定字体大小时，仍然是相对大小， 但 相对的只是HTML根元素。
+
+============CSS 引入的方式有哪些? link 和@import 的区别是?
+有四种：内联(元素上的style属性)、内嵌(style标签)、外链(link)、导入(@import)link和@import的区：
+(1)link是XHTML标签，除了加载CSS外，还可以定义RSS等其他事务； @import属于CSS范畴， 只能加载CSS
+(2)link引用CSS时，在 页面载入时同时加载； @import需要页面网页完全载入以后加载
+(3)link是XHTML标签， 无兼容问题； @import是在CSS2.1提出的， 低版本的浏览器不支持
+(4)link支持使用Javascript控制DOM去 改变样式；而 @import不支持
+
+==============流式布局和响应式布局布局
+流式布局使用非固定像素来定义网页内容， 也就是百分比布局，通过盒子的宽度设置成百分比来根据屏幕的宽度来进行伸缩，不受固定像素的限制，内容向两侧填充。
+响应式开发利用CSS3 中的 Media Query(媒介查询)，通过查询 screen 的宽度来指定某个宽度区间的网页布局。
+超小屏幕(移动设备) 768px 以下
+小屏设备 768px-992px
+中等屏幕 992px-1200px
+宽屏设备 1200px 以上
+框架: bootstrap
+===============渐进增强和优雅降级
+优雅降级观点认为应该针对那些最高级、最完善的浏览器来设计网站, 然后在对低版本浏览器做兼容处理
+渐进增强观点则认为应关注于内容本身，优先考虑低版本。
+================显示与隐藏
+占据空间:
+visibility: hidden; 不占据空间使用absolute
+opacity: 0;   不存在空间使用absolute
+z-index: -1; 
+可以点击: opacity
+键盘可访问: 
+opacity
+z-index负值
+absolute + clip
+
+2.logo文字隐藏
+absolute-clip最佳可访问性隐藏 上策
+color: transparent;(IE8+) 移动端上策, 桌面端中策
+text-indent(超出屏幕时, 屏幕阅读器忽略)  中策 
+display:none; visibility: hidden; (屏幕阅读器忽略) 下策
+
+==================

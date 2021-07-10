@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		body {
+			margin: 6px;
+		}
+		.box1 {
+			padding: 16px;
+			border: 12px solid pink;
+		}
+		.box1 .son1 {
+			width: 100px;
+			height: 100px;
+			padding: 15px;
+			border: 11px solid #096;
+		}
+		.box2 {
+			position: relative;
+			height: 200px;
+			padding: 16px;
+			border: 12px solid pink;
+		}
+		.box2 .son2 {
+			position: absolute;
+			left: 88px;
+			width: 100px;
+			height: 100px;
+			margin: 20px;
+			padding: 15px;
+			border: 11px solid #096;
+		}
+		
+	</style>
+</head>
+<body>
+<!-- 
+1.元素尺寸 offsetWidth => outerWidth  => content+padding+border
+  元素内部尺寸 clientWidth => innerWidth => content+padding - 滚动条宽度
+  元素外部尺寸 没有原生 => outerWidth(true)   => content+padding+border+margin
+ -->
+<div class="box1">
+	中国<span class="son1"></span>
+</div>
+
+<div class="box2">
+	<div class="son2"></div>
+</div>
+
+ <div style="height: 1000px;background-color: red;"></div>
+
+<script type="text/javascript">
+	// offset系列: offsetWidth offsetLeft offsetParent
+
+	// offsetParent: 父级定位元素 || body 
+	
+ 	var box1  = document.querySelector('.box1')
+ 	var son1  = document.querySelector('.box1 .son1')
+
+ 	console.log(son1.offsetWidth) //152
+ 	console.log(son1.offsetLeft) //12border + 16padding + 中间元素
+ 	console.log(son1.offsetParent) //body
+
+ 	var box2  = document.querySelector('.box2')
+ 	var son2  = document.querySelector('.box2 .son2')
+
+ 	console.log(son2.offsetWidth) //152
+ 	console.log(son2.offsetLeft) //left88 + margin20
+ 	console.log(son2.offsetParent) //box2
+</script>
+</body>
+</html>

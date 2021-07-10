@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		ul {
+			margin: 0;
+			padding: 0;
+			list-style-type: none;
+		}
+		/* 隐藏默认三角 */
+		::-webkit-details-marker {
+		    display: none;
+		}
+		::-moz-list-bullet {
+		    font-size: 0;
+		    float: left;
+		}
+		summary {
+			outline: none;
+			user-select: none;
+			padding: 6px 28px 6px 8px;
+			border-left: 1px solid #eee;
+			border-right: 1px solid #eee;
+		}
+		summary::after {
+		    content: '';
+		    position: absolute;
+		    width: 12px; height: 12px;
+		    margin: 4px 0 0 .5ch;
+		    background: url(https://www.zhangxinxu.com/study/201801/arrow-on.svg) no-repeat;
+		    background-size: 100% 100%;
+		    transition: transform .2s;
+		}
+		[open] summary::after {
+		    transform: rotate(180deg)
+		}
+		ul li {
+			float: left;
+			padding: 6px 12px;
+		}
+		ul:after {
+			content: '';
+			display: block;
+			clear: both;
+		}
+		details > div {
+			max-width: 105px;
+			line-height: 30px;
+			border: 1px solid #eee;
+		}
+		details > div > a {
+			display: block;
+			text-decoration: none;
+			border-bottom: 1px solid #eee;
+		}
+	</style>
+</head>
+<body>
+<div>
+	<ul>
+		<li>
+			<details>
+				<summary>我的消息</summary>
+				<div>
+					<a href>我的回答<sup>12</sup></a>
+					<a href>我的私信</a>
+					<a href>未评价订单<sup>2</sup></a>
+					<a href>我的关注</a>
+				</div>
+			</details>
+		</li>
+	</ul>
+</div>
+</body>
+</html>

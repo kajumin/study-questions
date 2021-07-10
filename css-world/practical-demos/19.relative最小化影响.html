@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.box {
+			width: 200px;
+			height: 200px;
+			margin-bottom: 20px;
+			background-color: #eee;
+		}
+		.box1 > .son {
+			position: relative;
+			left: 10%;
+			width: 100px;
+			height: 100px;
+			background-color: red;
+		}
+		.box2 > .son {
+			position: relative;
+			left: 20px;
+			right: 50px;
+			width: 100px;
+			height: 100px;
+			background-color: red;
+		}
+	</style>
+</head>
+<body>
+<!-- relative是absolute的亲大哥
+
+fixed relative absolute都可以使absolute的定位产生限制
+但是relative是正常的文档流 -->
+
+<!-- 
+1.1.百分比是相对于包含块
+1.2.top/bottom同时存在  bottom失效  left/right同时存在  right失效
+2.1.relative的最小化影响元素
+(1) 尽量不要使用relative  考虑能否使用无依赖的绝对定位
+(2) 如果使用场景首先  一定要使用relative  则relative务必最小化影响 -->
+
+
+<div class="box box1">
+	<div class="son"></div>
+</div>
+<div class="box box2">
+	<div class="son"></div>
+</div>
+<!-- 
+    最小化影响实例对比
+	(1)无依赖特性 
+	(2)没有采用最小化relative影响
+	(3)采用最小化relative影响    
+-->
+<div style="border: 1px solid red;">
+	<img src="../images/new.jpg" style="position: absolute; width: 10px;height: 10px;">
+	<p>内容内容内容</p>
+	<p>内容内容内容</p>
+	<p>内容内容内容</p>
+</div>
+<div style="position: relative;border: 1px solid red;">
+	<img src="../images/new.jpg" style="position: absolute;top: 0;left: 0;width: 10px;height: 10px;">
+	<p>内容内容内容</p>
+	<p>内容内容内容</p>
+	<p>内容内容内容</p>
+</div>
+
+<div style="border: 1px solid red;">
+	<div style="position: relative;">
+		<img src="../images/new.jpg" style="position: absolute;top: 0;left: 0;width: 10px;height: 10px;">
+	</div>
+	<p>内容内容内容</p>
+	<p>内容内容内容</p>
+	<p>内容内容内容</p>
+</div>
+</body>
+</html>

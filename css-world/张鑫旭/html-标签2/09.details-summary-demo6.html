@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		/* 隐藏默认三角 */
+		::-webkit-details-marker {
+		    display: none;
+		}
+		::-moz-list-bullet {
+		    font-size: 0;
+		    float: left;
+		}
+		details {
+		    padding-left: 20px;
+		}
+		summary {
+			user-select: none;
+			outline: none;
+		}
+		summary::before {
+		    content: '';
+		    display: inline-block;
+		    width: 12px; height: 12px;
+		    border: 1px solid #999;
+		    background: linear-gradient(to right, #999, #999) no-repeat center, linear-gradient(to top, #999, #999) no-repeat center;
+		    background-size: 2px 10px, 10px 2px;
+		    vertical-align: -2px;
+		    margin-right: 6px;
+		    margin-left: -20px;
+		}
+		[open] > summary::before {
+		    background: linear-gradient(to right, #999, #999) no-repeat center;
+		    background-size: 10px 2px;
+		}
+	</style>
+</head>
+<body>
+<details>
+    <summary>我的视频</summary>
+    <details>
+        <summary>爆肝工程师的异世界狂想曲</summary>
+        <div>tv1-720p.mp4</div>
+        <div>tv2-720p.mp4</div>
+        <div>tv3-720p.mp4</div>
+        <div>tv4-720p.mp4</div>
+        <div>tv5-720p.mp4</div>
+        <div>tv6-720p.mp4</div>
+        <div>tv7-720p.mp4</div>
+        <div>tv8-720p.mp4</div>
+        <div>tv9-720p.mp4</div>
+        <div>tv10-720p.mp4</div>
+    </details>
+    <details>
+        <summary>七大罪</summary>
+        <div>七大罪B站00合集.mp4</div>
+    </details>
+    <div>珍藏动漫网盘地址.txt</div>
+    <div>我们的小美好.mp4</div>
+</details>
+</body>
+</html>

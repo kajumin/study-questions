@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		div {
+			border: 1px solid red;
+		}
+		.box1 .in {
+			display: none;
+		}.box2 .in {
+			opacity: 0;
+		}.box3 .in {
+			visibility: hidden;
+		}
+		.box1 .in span,
+		.box2 .in span,
+		.box3 .in span {
+			display: block;
+			visibility: visible;
+			opacity: 1;
+		}
+		.box4 {
+			
+		}
+		img {
+			/*max-width: 300px;*/
+			/*transform: scale(0.625);*/
+			/*box-sizing: border-box;
+			padding: 90px;*/
+			/*width: 300px!important;不可以*/
+		}
+	</style>
+</head>
+<body>
+<div class="box1">
+	<div class="in">box1 in <span>inininin</span></div>
+</div>
+<div class="box2">
+	<div class="in">box1 in <span>inininin</span></div>
+</div>
+<div class="box3">
+	<div class="in">box1 in <span>inininin</span></div>
+</div>
+
+<div class="box4"><img src="../images/1.jpg" style="width: 480px!important;"></div>
+<script type="text/javascript">
+	var display = document.querySelector('.box1')
+	var opacity = document.querySelector('.box2')
+	var visibility = document.querySelector('.box3')
+
+	display.addEventListener('click', function() {
+		console.log('display')
+	})
+	opacity.addEventListener('click', function() {
+		console.log('opacity')
+	})
+	visibility.addEventListener('click', function() {
+		console.log('visibility')
+	})
+</script>
+</body>
+</html>

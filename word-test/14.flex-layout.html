@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title></title>
+  <style>
+    body {
+      margin: 0;
+    }
+    .aside {
+      float: left;
+      width: 240px;
+      height: 100vh;
+      background-color: #adc;
+    }
+    .m-main {
+      overflow: hidden;
+      margin-left: 260px;
+    }
+    .container  {
+      overflow: hidden;
+      height: 1000px;
+      margin-top: 20px;
+      background-color: #eee;
+    }
+    .box1 {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+      background-color: #fff;
+    }
+    .box1 .box1-son {
+      width: 500px;
+      height: 200px;
+      background-color: red;
+    }
+    .box1 .box1-son + .box1-son {
+      margin-left: 20px;
+    }
+    .box1-son {
+      display: flex;
+    }
+    .box1-son .box1-image {
+      width: 100px;
+      height: 100px;
+      background-color: #fff;
+    }
+  </style>
+</head>
+<body>
+  <div class="aside"></div>
+  <div class="m-main">
+    <div class="container">
+      <div class="box1">
+        <div class="box1-son">
+          <div class="box1-image"></div>
+          <div class="box1-text">文字文字文字</div>
+          <div class="box1-btn">
+            <button>按钮</button>
+          </div>
+        </div>
+        <div class="box1-son">2</div>
+        <div class="box1-son">3</div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

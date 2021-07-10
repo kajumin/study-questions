@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.box2 {
+		    border: 1em solid black;
+		    -webkit-transition: font-size 2s;
+		    transition: font-size 2s;
+		    font: 20px/100px "宋体";
+		    text-align: center;
+		}    
+		.box2:hover {
+		    font-size: 40px;
+		    /*border-right-width: 1em;*/
+		}
+		.box3 {
+		    width: 100px;
+		    height: 100px;
+		    background-color: red;
+		    -webkit-transition: width 4s;
+		    transition: width 4s;
+		}    
+		.box3:hover{
+		    width: auto;
+		}
+	</style>
+</head>
+<body>
+	<!-- 
+		过渡开始时间 = 样式改变时 + 过渡延迟
+		过渡结束时间 = 过渡开始时间 + 过渡持续时间
+		1.过渡阶段: 前进和反向 
+		2.隐式过渡是指一个属性改变时引起另一个属性的改变
+		3.过渡起始值或过渡开始值不能为auto
+
+		触发条件: hover active focus @media 点击事件(js触发)
+	-->
+<div class="box2">
+	测试文字
+</div>
+<div class="box3">
+	测试文字
+</div>
+</body>
+</html>

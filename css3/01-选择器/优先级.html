@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		li[data-active] {
+			background-color: pink;
+		}
+		li:nth-child(1) {
+			background-color: yellow;
+		}	
+		.li1 {
+			background-color: red;
+		}
+		#li3 {
+			background-color: #096;
+		}
+		.li3.li3.li3.li3.li3.li3.li3.li3.li3.li3.li3 {
+			background-color: red;
+		}
+		ul li + li {
+			color: red;
+		}
+		li + .li2 {
+			color: yellow;
+		}
+		p + p {
+			background-color: red;
+		}
+		p{
+			background-color: green;
+		}
+	</style>
+</head>
+<body>
+<!-- 
+第一个   行内样式style  
+第二个   id选择器 属性
+第三个   属性 = 伪类 > 类  通常属性和伪类都带一个标签或类选择器  
+第四个   元素  伪元素
+
+p + p 0 0 0 2   大于 p
+p:nth-child(1) 0 0 1 1
+#sidebar p:first-line 0 1 0 2(两个都是元素)
+ -->
+ <ul class="ul1">
+ 	<li class="li1" data-active="true">1</li>
+ 	<li class="li2">2</li>
+ 	<li id="li3" class="li3">3</li>
+ </ul>
+ <p>p段落</p>
+ <p>p段落</p>
+</body>
+</html>

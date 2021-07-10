@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<script>
+	var getJson = function(url) {
+		var promise = new Promise((resolve, reject) => {
+			var client = new XMLHttpRequest()
+			client.open('GET', url)
+			client.onreadystatechange = handle
+			client.responseType = 'json'
+			client.setRequestHeader('Accept', 'application/json; charset=utf-8')
+			client.send()
+
+			function handle() {
+				if(this.readyState !== 4) {
+					return;
+				}
+				if(this.status === 200) {
+					resolve(this.response)
+				} else {
+					reject(new Error(this.statusText))
+				}
+			}
+		})
+		return promise
+	}
+	getJson('http://localhost:3000/getJson').
+	then(res => {
+		console.log(res)
+	})
+	.catch(err => {
+		console.log(err)
+	})
+	getJson('http://localhost:3000/getJson-error').
+	then(res => {
+		console.log(res)
+	})
+	.catch(err => {
+		console.log(err)
+	} )
+</script>
+</body>
+</html>

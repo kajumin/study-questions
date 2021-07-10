@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		body {
+			min-width: 320px;
+			max-width: 540px;
+			margin: 0 auto;
+			padding: 0;
+		}
+		a {
+			text-decoration: none;
+			color: #333;
+		}
+		ul {
+			margin: 0;
+			padding: 0;
+			list-style-type: none;
+		}
+		header img {
+			display: block;
+			width: 100%;
+			max-height: 150px;
+		}
+		.nav {
+			margin: 12px;
+		}
+		.grid-nav {
+			display: flex;
+			/*height: 100px;*/
+			margin-bottom: 1px;
+			line-height: 80px;
+			font-size: 12px;
+			border-top-left-radius: 8px;
+    		border-top-right-radius: 8px;
+		}
+		.grid-nav .grid-nav-item1 {
+			flex: 0 1 31%;
+		}
+		.grid-nav .grid-nav-item2 {
+			flex: 0 1 23%;
+			text-align: center;
+		}
+		.grid-nav .grid-nav-item3 {
+			flex: 0 1 46%;
+			text-align: center;
+		}
+		.grid-nav div {
+			height: 80px;
+		}
+		.grid-nav div + div {
+			border-left: 1px solid #eee;
+		}
+		.grid-nav div a {
+			display: block;
+			color: #fff;
+		}
+		.grid-nav.grid-nav-hotel {
+			background: -webkit-gradient(linear,left top,right top,from(#fa5956),color-stop(54%,#fb8650));
+    		background: linear-gradient(to right,#fa5956,#fb8650 54%);
+		}
+		.grid-nav-hotel .grid-nav-item1-hotel {
+			background: url(../assets/images/xiecheng/hotel-bg.png) no-repeat;
+    		background-size: 73px auto;
+    		background-position: right bottom;
+		}
+		.grid-nav-hotel .grid-nav-item2-minsu {
+			background: url(../assets/images/xiecheng/minsu-bg.png) no-repeat;
+    		background-size: 37px auto;
+    		background-position: left bottom;
+
+		}
+		.grid-nav-hotel .grid-nav-item3-hot {
+			background: -webkit-gradient(linear,left top,right top,from(#ffbc49),to(#ffd252));
+    		background: linear-gradient(to right,#ffbc49,#ffd252);
+    		border-top-right-radius: 8px;
+		}
+		.grid-nav-hotel .grid-nav-item3-hot a {
+			background: url(../assets/images/xiecheng/hot-bg.png) right bottom no-repeat;
+    		background-size: 100% auto;
+		}
+		.grid-nav.grid-nav-flight {
+			border-radius: 0;
+			background: -webkit-gradient(linear,left top,right top,from(#4b8fed),to(#53bced));
+    		background: linear-gradient(to right,#4b8fed,#53bced);
+		}
+		.grid-nav-flight .grid-nav-item1-flight {
+			background: url(../assets/images/xiecheng/flight-bg.png) no-repeat;
+    		background-size: 73px auto;
+    		background-position: right bottom;
+		}
+		.grid-nav-flight .grid-nav-item2-train {
+			background: url(../assets/images/xiecheng/train-bg.png) no-repeat;
+    		background-size: 37px auto;
+    		background-position: left bottom;
+
+		}
+		.grid-nav-flight .grid-nav-item3-bus {
+			display: flex;
+		}
+		.grid-nav-flight .grid-nav-item3-bus a {
+			flex: 1 1 50%;
+		}
+		.grid-nav-flight .grid-nav-item3-bus a:first-child {
+			border-right: 1px solid #fff;
+		}
+		.grid-nav.grid-nav-travel {
+			border-radius: 0;
+			border-bottom-left-radius: 8px;
+    		border-bottom-right-radius: 8px;
+			background: -webkit-gradient(linear,left top,right top,from(#34c2aa),to(#6cd557));
+    		background: linear-gradient(to right,#34c2aa,#6cd557);
+		}
+		.grid-nav-travel .grid-nav-item1-travel {
+			background: url(../assets/images/xiecheng/travel-bg.png) no-repeat;
+    		background-size: 94px auto;
+    		background-position: right bottom;
+		}
+		.grid-nav-travel .grid-nav-item2-dingzhi {
+			order: 1;
+			background: url(../assets/images/xiecheng/dingzhi.png) no-repeat;
+    		background-size: 37px auto;
+    		background-position: left bottom;
+    		
+		}
+		.grid-nav-travel .grid-nav-item3-ship {
+			display: flex;
+		}
+		.grid-nav-travel .grid-nav-item3-ship a {
+			flex: 1 1 50%;
+		}
+		.grid-nav-travel .grid-nav-item3-ship a:first-child {
+			border-right: 1px solid #fff;
+		}
+		
+		
+	</style>
+</head>
+<body>
+	<header>
+		<img src="../../images/1.jpg">
+	</header>
+	<div class="nav">
+		<nav class="grid-nav grid-nav-hotel">
+			<div class="grid-nav-item1 grid-nav-item1-hotel">
+				<a href="#">酒店</a>
+			</div>
+			<div class="grid-nav-item2 grid-nav-item2-minsu">
+				<a href="#">民宿·客栈</a>
+			</div>
+			<div class="grid-nav-item3 grid-nav-item3-hot">
+				<a href="#">特价·劲爆</a>
+			</div>
+		</nav>
+		<nav class="grid-nav grid-nav-flight">
+			<div class="grid-nav-item1 grid-nav-item1-flight">
+				<a href="#">酒店</a>
+			</div>
+			<div class="grid-nav-item2 grid-nav-item2-train">
+				<a href="#">民宿·客栈</a>
+			</div>
+			<div class="grid-nav-item3 grid-nav-item3-bus">
+				<a href="#">汽车·船票</a>
+				<a href="#">专车·租车</a>
+			</div>
+		</nav>
+		<nav class="grid-nav grid-nav-travel">
+			<div class="grid-nav-item1 grid-nav-item1-travel">
+				<a href="#">酒店</a>
+			</div>
+			<div class="grid-nav-item2 grid-nav-item2-dingzhi">
+				<a href="#">民宿·客栈</a>
+			</div>
+			<div class="grid-nav-item3 grid-nav-item3-ship">
+				<a href="#">邮轮游</a>
+				<a href="#">定制游</a>
+			</div>
+		</nav>
+	</div>
+	
+</body>
+</html>

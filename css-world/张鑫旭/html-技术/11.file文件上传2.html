@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+</head>
+<body>
+	<form enctype="multipart/form-data" method="post" id="form1" target="myResultsDiv">
+		<input type="file" name="avatar">
+		<input type="submit" name="" value="提交">
+	</form>
+	<div id="myResultsDiv"></div>
+	<button class="submit">选择文件</button>
+	<iframe id="frames1"></iframe>
+<script type="text/javascript" src="../js/jquery-1.2.6.js"></script>
+<script type="text/javascript" src="../js/jquery.form.js"></script>
+<script type="text/javascript">
+	$('#form1').bind('submit', function(e) {
+		console.log('submit') 
+		// prevent native submit
+	    e.preventDefault();
+	    $(this).ajaxSubmit({
+	    	url: 'http://localhost:3000/upload2',
+	        target: '#myResultsDiv',
+	        success: function(data) {
+	        	console.log(data)
+	        }
+	    })
+	});
+	// target: '#output',          //把服务器返回的内容放入id为output的元素中    
+ //   	beforeSubmit: showRequest,  //提交前的回调函数
+ //   	success: showResponse,      //提交后的回调函数
+ //   	//url: url,                 //默认是form的action， 如果申明，则会覆盖
+ //   	//type: type,               //默认是form的method（get or post），如果申明，则会覆盖
+ //   	//dataType: null,           //html(默认), xml, script, 	json...接受服务端返回的类型
+ //   	//clearForm: true,          //成功提交后，清除所有表单元素的值
+ //   	//resetForm: true,          //成功提交后，重置所有表单元素的值
+ //   	timeout: 3000               //限制请求的时间，当请求大于3秒后，跳出请求
+ // iframe 布尔值，用来指示表单是否需要提交到一个iframe里。 这个用在表单里有file域要上传文件时。更多信息请参考 代码示例 页面里的File Uploads 文档。 缺省值： false
+
+</script>
+</body>
+</html>

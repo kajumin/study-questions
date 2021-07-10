@@ -1,0 +1,219 @@
+javascript:;    ||   javascript://    ||   javascript: void(0);
+<a href="JavaScript:alert('Hello World!!!')">请单击</a>
+<a href="#" onclick="alert('Hello World!!!')">请单击</a>
+<a href="JavaScript://" onclick="alert('Hello World!!!')">请单击</a> 
+<a href="JavaScript:void(0)" onclick="alert('Hello World!!!')">请单击</a>
+
+遍历数组   for while  forEach  for-of  reduce性能最差
+复制数组   arr.slice() 和 连接方法 [].concat(arr)  性能高  Array.from()  [...arr]  map(x=>x)都不如
+
+typeof   function   object   number  string  boolean  symbol
+
+优先级:
+()
+.  []  new ()   . 成员访问    需计算的成员访问   new 关键字  函数调用    链式调用
+++ --  !(逻辑非)  ~(按位非)  + - (一元加减法) +(字符串连接)   typeof void delete  await
+**
+*  /  %
++ - 
+<<  >>  按位左右移
+<  >  <=  >=  in  instanceof
+==   !=  ===  !== 
+&  (按位与) 
+^  (按位异或)
+ |   (按位或)  
+&&  逻辑与
+ ||    逻辑或
+ ?     条件运算符
+ =   赋值  -= += *=  /=  %= 
+yield 
+展开运算符
+逗号 
+
+不能删除变量、原型中的变量、函数    delete对象属性
++号的用途:  (1)作为计算的加法运算符使用 (2)字符串连接符
+new Set([...document.querySelectorAll('*')].map(v => v.tagName));   .size获取个数
+javascript:;   禁止默认事件
+Array.isArray(arr)
+arr instanceof Array
+arr.constructor === Array
+Object.prototype.toString.call(arr)
+===================类型转换
+强类型转换    Number()   String()   Boolean()   toString()
+parseInt()   parseFloat()
+隐式转换:  if()  +-*/    == while   && || !    isNaN
+================Math
+random  PI  pow(指数)  abs(绝对值)  floor(向下)  ceil(向上)  trunc(直接切)  round(四舍五入)  
+max  min
+hypot(3,4)勾股
+sign(隐式转换成数字类型)  1, -1, 0, -0, NaN 代表的各是1(正数), -1(负数), 0(正零/null/[]/''/' '), -0(负零), NaN(NaN/其他)
+=================Date对象
+new Date().getTime()   //当前时间戳    +new  Date(); Date.now();
+=================Number
+isInteger()   是否是正整数    1.0 / 1才是true
+isFinite()      是否是有穷数    1.23是真    '12' null 是假
+isNaN()       检测是否NaN
+NaN   是一个数值, 它表示一个不能产生正常结果的运算结果.
+parseInt()      可解析一个字符串，并返回一个整数  参数二:  要解析的数字的基数   2-36之间  不传或者为0  都是十进制
+parseInt("19",10);		//返回 19 (10+9)
+parseInt("11",2);		//返回 3 (2+1)
+parseInt("17",8);		//返回 15 (8+7)
+parseInt("1f",16);		//返回 31 (16+15)
+["1","2","3"].map(parseInt)  //[1,NaN,NaN]
+Object.is(NaN,NaN) // true   与严格相等基本一致  区别在-0 === +0 //true    NaN===NaN //false
+
+undefined null  false  NaN  ''  0  -0    隐式转换为false
+=========运算时   有一方字符串   
+加法会触发: 将值转换为原始值，转换为数字，转换为字符串。
+[1, 2] + [2, 1] // '1,22,1'   //原始值         
+2 * '2'   // 4                    //转化为数字   字符串转化为数字
+1 + '1' // '11'                  //转化为字符串
++ 'b'   //NaN                 //NaN     
+[] == ![]    //true   [] == false
+
+============new
+1.新生成了一个对象
+2.链接到原型
+3.绑定 this
+4.返回新对象
+
+================逻辑运算
+  ||    并联电路     输出第一个为真的值,  都假  输出最后一个
+&&  短路语法     输出第一个为假的数，都真  输出最后一个
+
+逻辑运算的顺序   先算非(!)   再算与或运算( && || )
+先贴身++   数学运算(+-/*)   关系(<>)   逻辑(&& || )
+
+==================arguments  箭头函数不能用
+Array.prototype.push.call(arguments,[123]);    //添加[1,2,3]  返回数组长度  arguments添加[1,2,3]
+Array.prototype.push.apply(arguments,[123]);   //添加1,2,3
+Array.prototype.slice.call(arguments,0)          //获取到全部arguments数据    
+[].slice.call(arguments)                                             //获取全部arguments
+Array.from(arguments)                                 //深拷贝一个份数组  第二个参数遍历修改每一个值
+
+Array.prototype.push.apply(vegetables, moreVegs); //添加数据
+
+===================数组方法
+forEach(), filter(), reduce(), every() 和some()都会跳过空位。  es最常见的是跳过
+map()会跳过空位，但会保留这个值   跳过当然就是保留啦
+
+join()和toString()会将空位视为undefined，而undefined和null会被处理成空字符串。
+
+Array.prototype    是数组  特殊与Object.prototype  Function.prototype
+Array.of(1,2,3)            //将一系列值转换成数组
+Array.from([1,2])        //将伪数组对象或可遍历对象转换为真数组
+          类似数组的对象（array-like object）和可遍历（iterable）的对象（包括 ES6 新增的数据结构 Set 和 Map）。 
+          [].slice.call(obj)
+Math.max.apply(null, [1,2,3])   //求最大值
+
+indexOf(item, start)              返回索引值 ||  -1   lastIndexOf()  
+forEach(function(item, index, arr))
+map()        返回修改后新数组
+filter()        返回过滤后新数组
+reduce(function(item, index, arr), prev)
+every()    每一个都满足条件    返回布尔值true false
+some()    有满足条件的           返回布尔值true false
+find()                                   返回对象
+findIndex()                           返回第一个值的索引
+
+push() 返回长度  pop()  unshift()  shift()
+concat([1,2,3])       返回浅复制 参数是数组分别添加
+slice(0,3)       //返回浅复制   从0到3索引
+splice()         //替换  添加  删除
+reverse()      //倒序    
+sort()           //a-b  从小到大   b-a从大到小
+join()           //合成字符串
+
+数组塌陷问题   i--;
+===================字符串方法
+charAt(3a)           返回第四个字符   没有则为空字符串
+charCodeAt(0)     a=>97  unicode编码
+indexOf     lastIndexOf()
+concat()
+toUpperCase() toLowerCase()
+
+slice()             不改变原数组  默认最后 负数+长度
+substr()          第二个参数是个数
+substring()
+split()    
+replace(str,newstr)     匹配不成功就不会替换  可以使用正则
+
+
+includes              返回boolean值
+startsWith()         返回boolean值
+endsWith()          返回boolean值
+repeat(number)   返回新字符串
+    数值  小数取整(向下)  负数infinite(报错)  0到-1之间(等于0)  字符串(转为数值)
+
+padStart(10, 'a')   补全   返回新字符串
+padEnd(10, 'a')     补全  返回新字符串
+=================正则
+\d  数字            \D  非数字
+\w 单词字符     \W   a-zA-Z0-9 下划线
+\s  空白字符     \S 非空白字符    (空格  tab 换行 \r回车符 \n换行 \t制表符) 
+   \S是预定义模式，匹配所有非空白字符。只有加了u修饰符，它才能正确匹配码点大于0xFFFF的 Unicode 字符。
+
+正则使用场景：
+split(数组)   //没有全局g
+match(数组(包含索引) null   /g数组(干净的)    //全局g
+search(索引值 -1)          //没有全局g
+replace(替换后字符串)   //全局g
+正则方法： 
+test(布尔值)                //没有全局g
+exec(数组(包含索引))   //["abc", index: 0, input: "abcdefabc", groups: undefined]   //没有全局g
+
+{n} : 硬性量词  表示该字符连续出现n次
+{n,m} :软性量词，表示字符连续出现至少n次最多不能超过m次
+{n,} : 至少出现n次
++  : 表示至少出现1次
+？ : 出现0或者1次
+*   : 任意次
+
+
+
+点字符
+点（.）字符在正则表达式中，含义是除了换行符以外的任意单个字符。对于码点大于0xFFFF的 Unicode 字符，点字符不能识别，必须加上u修饰符。
+
+// unicode字符表示法
+ES6 新增了使用大括号表示 Unicode 字符，这种表示法在正则表达式中必须加上u修饰符，才能识别当中的大括号，否则会被解读为量词。
+
+/g  全局修饰符
+
+/u修饰符     正则实例对象新增unicode属性，表示是否设置了u修饰符。
+//ES6 对正则表达式添加了u修饰符，含义为“Unicode 模式”，用来正确处理大于\uFFFF的 Unicode 字符。也就是说，会正确处理四个字节的 UTF-16 编码。
+
+/s修饰符   ES2018 引入s修饰符，使得.可以匹配任意单个字符。
+/foo.bar/s.test('foo\nbar') // true
+
+/i修饰符
+有些 Unicode 字符的编码不同，但是字型很相近，比如，\u004B与\u212A都是大写的K。
+
+/y修饰符  ES6 的正则实例对象多了sticky属性，表示是否设置了y修饰符。
+
+// ES5 的 source 属性  返回正则表达式的正文
+/abc/ig.source    // "abc"
+
+// ES6 的 flags    属性   返回正则表达式的修饰符
+/abc/ig.flags   // 'gi'
+
+===深浅拷贝与赋值
+对象赋值: 赋的其实是该对象的在栈中的地址，而不是堆中的数据。也就是两个对象指向的是同一个存储空间
+浅拷贝：重新在堆中创建内存，拷贝前后对象的基本数据类型互不影响，但拷贝前后对象的引用类型因共享同一块内存，会相互影响。
+深拷贝：从堆内存中开辟一个新的区域存放新对象，对对象中的子对象进行递归拷贝,拷贝前后的两个对象互不影响。
+
+浅拷贝:
+(1)Object.assign(target, source1)  // [əˈsaɪn]
+(2)lodash库  _.clone()方法
+(3)展开运算符
+(4)Array.protype.concat()
+(5)Array.prototype.slice()
+
+深拷贝
+(1)JSON.parse(JSON.stringify())
+(2)函数库lodash的_.cloneDeep方法
+(3)$.extend(deepCopy, target, object1, [objectN]) //第一个参数为true,就是深拷贝
+
+Vue components =dispatch> actions(backend api) =commit> mutations(devtools) =mutate> state =render>   vuecomponents
+
+
+

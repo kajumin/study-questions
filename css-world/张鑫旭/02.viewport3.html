@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=0.5">
+	<style type="text/css">
+		body {
+			margin: 0;
+			overflow: auto;
+		}
+		.box {
+			height: 1px;
+			margin-top: 20px;
+			background-color: green;
+		}
+		.box1 {
+			width: 100px;
+			height: 100px;
+			background-color: red;
+		}
+		.box2 {
+			width: 370px;
+			height: 370px;
+			background-color: red;
+		}
+		.box3 {
+			width: 740px;
+			height: 100px;
+			background-color: red;
+		}
+		.box4 {
+			height: 100px;
+			background-color: red;
+		}
+	</style>
+</head>
+<body>
+	
+	<div class="box1">1100px</div>
+	<div class="box2">375px;</div>
+	<div class="box3">750px;</div>
+	<div class="box4">auto</div>
+	<div class="box"></div>
+<script type="text/javascript">
+	window.onload = function() {
+		// 不设置viewport  页面宽度为980px  div出现滚动条
+		// scale = 理想视口(375) / 视觉视口
+		// *当scale=1时    理想视口 = 视觉视口 = 布局视口  375px满屏
+		// 当scale=0.5时   理想视口 = 视觉视口 = 布局视口  750px满屏 auto: 750px;
+		// 当scale=2时     理想视口 = 视觉视口 = 布局视口  750px满屏
+		var layout = document.documentElement.clientWidth;
+		console.log(layout)
+		var visual = window.innerWidth;
+		console.log(visual)
+		var ideal = window.screen.width;
+		console.log(ideal)
+	}
+	
+</script>
+</body>
+</html>
