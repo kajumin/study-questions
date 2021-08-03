@@ -1,1 +1,0 @@
-console.log('deter2.js')
