@@ -1,3 +1,0 @@
-轮播数据   图片  标题  内容
-
-INSERT INTO `topswiperdatalist`(`imgUrl`, `dataTitle`, `dataContent`) VALUES ('img/lmp-banner(2).jpg','我在爱尔兰，看着世界的阳光','爱尔兰自然环境保持得相当好，素有“翡翠岛国”之称，全国绿树成荫，河流纵横，草地遍布，所以又有“绿岛”和“绿宝石”之称。')
